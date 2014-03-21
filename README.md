@@ -2,7 +2,7 @@
 
 How it works:
 
- 1. You create a `Dockerfile` in your Github repo
+ 1. You create a [`Dockerfile`](https://www.docker.io/) in your Github repo
  2. You give us your Github repo coordinates (and a private SSH key, if necessary)
  3. We pull your repo and start a container (with a public IP and open ports)
  4. Every five minutes we pull your repo and restart a container on changes
