@@ -1,3 +1,5 @@
+[Thindeck.com](http://www.thindeck.com) is a web hosting that deploys itself.
+
 How it works:
 
  1. You create a `Dockerfile` in your Github repo
@@ -6,7 +8,7 @@ How it works:
  4. Every five minutes we pull your repo and restart a container on changes
  5. You pay for our CPU usage (per load!) and traffic (per Gb)
 
-We're aware of their existence:
+We're aware of their existence (you also should be):
 
  * aws.amazon.com
  * heroku.com
@@ -18,14 +20,11 @@ We're aware of their existence:
 
 Our advantages are:
 
- 1. you don't need to "push/deploy" any more, we pull it instead (means convenience)
- 2. we charge per CPU load, not per hour (means cost optimization)
+ 1. you don't need to "push/deploy", we pull instead (means big convenience)
+ 2. we charge per CPU load, not per hour (means big saving)
 
-What this can be used for:
+What Thindeck can be used for:
 
- * Hosting of simple stateless PHP/Python/Ruby websites (alternative to shared hosting)
+ * Hosting of simple stateless PHP/Python/Ruby/etc websites
+   (as an alternative of a traditional FTP-deployable shared hosting)
  * Pre-production testing and staging
-
-Questions to think about:
-
- * What about persistence? If I have a MySQL database inside a container, would be a shame to loose everything on restart

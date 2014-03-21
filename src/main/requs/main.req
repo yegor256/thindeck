@@ -1,0 +1,13 @@
+UC1 where User (a user) hosts Repository (a repo):
+    1. The user creates the repo;
+    2. The user "reads deployment logs" using the repo;
+    2. The user "reads traffic stats" using the repo;
+    3. The user deletes the repo.
+
+User includes:
+    repository as Repository.
+
+Repository needs:
+    name,
+    uri,
+    key.
