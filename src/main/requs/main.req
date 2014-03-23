@@ -1,13 +1,17 @@
+SuD is "a web hosting that deploys itself".
+
 UC1 where User (a user) hosts Repository (a repo):
     1. The user creates the repo;
-    2. The user "reads deployment logs" using the repo;
-    2. The user "reads traffic stats" using the repo;
-    3. The user deletes the repo.
+    2. SuD "deploys" the repo;
+    3. The user "reads deployment logs" of the repo;
+    4. The user "reads traffic stats" of the repo;
+    5. The user deletes the repo.
 
 User includes:
-    repository as Repository.
+    repo-s? as Repository,
+    URN as "a unique identifier of itself, for example urn:github:526301".
 
 Repository needs:
-    name,
-    uri,
-    key.
+    name as "a unique name of the repo in Thindeck",
+    URI as "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git",
+    key as "a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography".
