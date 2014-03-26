@@ -1,7 +1,7 @@
 SuD is "a web hosting that deploys itself".
 
-f67e73:UC1 is specified.
-f67e73:UC1 is a must.
+f869e1:UC1 is specified.
+f869e1:UC1 is a must.
 UC1 where User (a user) hosts Repository (a repo):
     1. The user registers the repo;
     2. SuD deploys the repo;
