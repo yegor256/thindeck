@@ -8,6 +8,8 @@ How it works:
  4. Every five minutes we pull your repo and restart a container on changes
  5. You pay for our CPU usage (per load!) and traffic (per Gb)
 
+See our [Software Requirements Specification (SRS)](http://doc.thindeck.com/requs/srs.xml).
+
 We're aware of their existence (you also should be):
 
  * aws.amazon.com
