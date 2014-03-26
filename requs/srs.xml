@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="srs.xsl" type="text/xsl"?><spec>
    <requs>
-      <version>2.0-SNAPSHOT</version>
-      <revision>daf78a7</revision>
-      <date>2014-03-25 11:35</date>
+      <version>1.1</version>
+      <revision>4893d06</revision>
+      <date>2014-03-25 16:10</date>
    </requs>
    <types>
       <type>
-         <name>SuD</name>
+         <name>Hoster</name>
          <mentioned>
             <where>1</where>
-            <where>47</where>
+            <where>6</where>
+         </mentioned>
+         <info>
+            <informal>a an owner of a web server, who wants to
+install Thindeck locally and host containers himself</informal>
+         </info>
+      </type>
+      <type>
+         <name>SuD</name>
+         <mentioned>
+            <where>13</where>
+            <where>59</where>
          </mentioned>
          <info>
             <informal>a web hosting that deploys itself</informal>
@@ -19,14 +30,14 @@
       <type>
          <name>User</name>
          <mentioned>
-            <where>5</where>
-            <where>13</where>
-            <where>15</where>
-            <where>39</where>
-            <where>59</where>
-            <where>66</where>
-            <where>72</where>
+            <where>17</where>
+            <where>25</where>
+            <where>27</where>
+            <where>51</where>
+            <where>71</where>
             <where>78</where>
+            <where>84</where>
+            <where>90</where>
          </mentioned>
          <info>
             <informal>a person identified in the system (logged in)</informal>
@@ -35,7 +46,7 @@
             <slot>
                <name>repo</name>
                <mentioned>
-                  <where>16</where>
+                  <where>28</where>
                </mentioned>
                <arity>ANY</arity>
                <type>Repository</type>
@@ -43,7 +54,7 @@
             <slot>
                <name>URN</name>
                <mentioned>
-                  <where>17</where>
+                  <where>29</where>
                </mentioned>
                <info>
                   <informal>a unique identifier of itself, for example urn:github:526301</informal>
@@ -54,9 +65,9 @@
       <type>
          <name>Repository</name>
          <mentioned>
-            <where>19</where>
-            <where>21</where>
-            <where>26</where>
+            <where>31</where>
+            <where>33</where>
+            <where>38</where>
          </mentioned>
          <info>
             <informal>a storage of source code together with Dockerfile</informal>
@@ -65,7 +76,7 @@
             <slot>
                <name>name</name>
                <mentioned>
-                  <where>22</where>
+                  <where>34</where>
                </mentioned>
                <info>
                   <informal>a unique name of the repo in user's account</informal>
@@ -74,7 +85,7 @@
             <slot>
                <name>URI</name>
                <mentioned>
-                  <where>23</where>
+                  <where>35</where>
                </mentioned>
                <info>
                   <informal>a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git</informal>
@@ -83,7 +94,7 @@
             <slot>
                <name>key</name>
                <mentioned>
-                  <where>24</where>
+                  <where>36</where>
                </mentioned>
                <info>
                   <informal>a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography</informal>
@@ -92,7 +103,7 @@
             <slot>
                <name>deployment</name>
                <mentioned>
-                  <where>27</where>
+                  <where>39</where>
                </mentioned>
                <arity>ANY</arity>
                <type>Deployment</type>
@@ -102,7 +113,7 @@
       <type>
          <name>Deployment</name>
          <mentioned>
-            <where>29</where>
+            <where>41</where>
          </mentioned>
          <info>
             <informal>a result (plain text log) of a Docker container start</informal>
@@ -111,7 +122,7 @@
       <type>
          <name>Manifest</name>
          <mentioned>
-            <where>31</where>
+            <where>43</where>
          </mentioned>
          <info>
             <informal>a YAML configuration file, stored in the repository, and
@@ -120,15 +131,44 @@
       </type>
    </types>
    <methods>
-      <method seal="f67e73">
-         <id>UC1</id>
+      <method seal="7ab935">
+         <id>UC8</id>
          <attributes>
-            <attribute seal="f67e73">specified</attribute>
-            <attribute seal="f67e73">must</attribute>
+            <attribute seal="7ab935">specified</attribute>
+            <attribute seal="7ab935">must</attribute>
          </attributes>
          <mentioned>
-            <where>5</where>
-            <where>35</where>
+            <where>6</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_sud</name>
+               <type>SuD</type>
+            </binding>
+            <binding>
+               <name>_self</name>
+               <type>Hoster</type>
+            </binding>
+         </bindings>
+         <object>_self</object>
+         <signature>install</signature>
+         <info>
+            <informal>he just downloads the app (either as a TGZ archive of RPM package
+    or Chef cookbook, or any of that) and installs it locally. Then he
+    starts it as a Java standalone app, or Linux service, or something
+    similar. And it works with a local collection of users and local
+    docker installation</informal>
+         </info>
+      </method>
+      <method seal="f869e1">
+         <id>UC1</id>
+         <attributes>
+            <attribute seal="f869e1">specified</attribute>
+            <attribute seal="f869e1">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>17</where>
+            <where>47</where>
          </mentioned>
          <bindings>
             <binding>
@@ -155,7 +195,7 @@
             <step>
                <number>1</number>
                <mentioned>
-                  <where>6</where>
+                  <where>18</where>
                </mentioned>
                <object>user</object>
                <signature>registers</signature>
@@ -167,7 +207,7 @@
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>35</where>
+                              <where>47</where>
                            </mentioned>
                            <object>_sud</object>
                            <signature>"a message that the repository exists already in his account"</signature>
@@ -179,7 +219,7 @@
             <step>
                <number>2</number>
                <mentioned>
-                  <where>7</where>
+                  <where>19</where>
                </mentioned>
                <object>_sud</object>
                <signature>deploys</signature>
@@ -188,7 +228,7 @@
             <step>
                <number>3</number>
                <mentioned>
-                  <where>8</where>
+                  <where>20</where>
                </mentioned>
                <object>user</object>
                <signature>reads deployment logs</signature>
@@ -199,7 +239,7 @@
             <step>
                <number>4</number>
                <mentioned>
-                  <where>9</where>
+                  <where>21</where>
                </mentioned>
                <object>user</object>
                <signature>reads traffic stats</signature>
@@ -210,7 +250,7 @@
             <step>
                <number>5</number>
                <mentioned>
-                  <where>10</where>
+                  <where>22</where>
                </mentioned>
                <object>user</object>
                <signature>compensates usage</signature>
@@ -221,7 +261,7 @@
             <step>
                <number>6</number>
                <mentioned>
-                  <where>11</where>
+                  <where>23</where>
                </mentioned>
                <object>user</object>
                <signature>terminates</signature>
@@ -236,7 +276,7 @@
             <attribute seal="c7facf">must</attribute>
          </attributes>
          <mentioned>
-            <where>39</where>
+            <where>51</where>
          </mentioned>
          <bindings>
             <binding>
@@ -264,7 +304,7 @@
             <attribute seal="d74fbb">must</attribute>
          </attributes>
          <mentioned>
-            <where>47</where>
+            <where>59</where>
          </mentioned>
          <bindings>
             <binding>
@@ -296,7 +336,7 @@
             <attribute seal="f54bb8">must</attribute>
          </attributes>
          <mentioned>
-            <where>59</where>
+            <where>71</where>
          </mentioned>
          <bindings>
             <binding>
@@ -330,7 +370,7 @@
             <attribute seal="d4828b">must</attribute>
          </attributes>
          <mentioned>
-            <where>66</where>
+            <where>78</where>
          </mentioned>
          <bindings>
             <binding>
@@ -363,7 +403,7 @@
             <attribute seal="521dde">must</attribute>
          </attributes>
          <mentioned>
-            <where>72</where>
+            <where>84</where>
          </mentioned>
          <bindings>
             <binding>
@@ -396,7 +436,7 @@
             <attribute seal="254de3">must</attribute>
          </attributes>
          <mentioned>
-            <where>78</where>
+            <where>90</where>
          </mentioned>
          <bindings>
             <binding>
@@ -422,7 +462,7 @@
       <ambiguity.overall>1</ambiguity.overall>
    </metrics>
    <build>
-      <duration>1013</duration>
-      <time>2014-03-25T13:41:36</time>
+      <duration>6715</duration>
+      <time>2014-03-26T19:56:54</time>
    </build>
 </spec>
