@@ -74,7 +74,7 @@
     </ciManagement>
     <distributionManagement>
         <site>
-            <id>github-pages</id>
+            <id>github</id>
             <url>http://doc.thindeck.com</url>
         </site>
     </distributionManagement>
