@@ -126,6 +126,7 @@
                             </closures>
                             <sources>
                                 <file>classdiag-1.tex</file>
+                                <file>usecasediag-uc1.tex</file>
                             </sources>
                         </configuration>
                     </execution>

@@ -44,38 +44,26 @@
 
 \begin{center}
 \begin{tikzpicture}
-\umlclass[y=5]{Thindeck}{}
-{
-    deploy(Repo repo)
-}
+\begin{umlsystem}[x=4, fill=red!10]{Thindeck}
+\umlusecase[width=2cm]{UC1: \linebreak user hosts repo}
+\umlusecase[x=8, y=5]{UC2: user registers repo}
+\umlusecase[x=8, y=3]{UC3: SuD deploys repo}
+\umlusecase[x=9, y=1]{UC4: User reads deployment logs}
+\umlusecase[x=10, y=-1]{UC5: User reads traffic stats using repo}
+\umlusecase[x=9.8, y=-3]{UC6: user compensates usage using repo}
+\umlusecase[x=8.5, y=-5]{UC7: user terminates repo}
+\end{umlsystem}
 
-\umlclass{Repo}{
-    name : String \\
-    uri : URI
-    key : String
-}
-{
-    logs() : List<Deployment>\\
-    stats()
-}
+\umlactor{user}
 
-\umlclass[x=-8]{User}{
-    urn : String
-}{
-    register(Repo repo)\\
-    compensate(Repo repo)\\
-    terminate(Repo repo)
-}
+\umlassoc{user}{usecase-1}
+\umlinclude[name=incl]{usecase-1}{usecase-2}
+\umlinclude[name=incl]{usecase-1}{usecase-3}
+\umlinclude[name=incl]{usecase-1}{usecase-4}
+\umlinclude[name=incl]{usecase-1}{usecase-5}
+\umlinclude[name=incl]{usecase-1}{usecase-6}
+\umlinclude[name=incl]{usecase-1}{usecase-7}
 
-\umlclass[x=8]{Deployment}{}
-{
-    result() : String
-}
-
-\umluniaggreg[mult2=0..*]{Thindeck}{Repo}
-\umlunicompo[mult2=0..*]{User}{Repo}
-\umlunicompo[mult2=0..*]{Repo}{Deployment}
 \end{tikzpicture}
 \end{center}
-
 \end{document}

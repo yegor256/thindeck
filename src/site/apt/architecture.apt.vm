@@ -51,7 +51,7 @@ thindeck.com Architecture
 
   Class Diagram CLS1 describes the data model of the SuD in terms of classes,
   attributes, methods, and associations between them.
-  
+
   [texry/classdiag-1.png]
 
 ~~ @todo #1 Let's define the packaging structure of Thindeck. Describe the
@@ -77,6 +77,8 @@ UC1: "User Hosts Repo"
 
   Use case diagram UC1 describes, at the highest level, the functions that are
   available to a user who wants to host a repo.
+
+  [texry/usecasediag-uc1.png]
 
 7. Technical Risks
 
