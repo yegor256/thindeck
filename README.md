@@ -12,6 +12,11 @@ How it works:
 
 See our [Software Requirements Specification (SRS)](http://doc.thindeck.com/requs/srs.xml).
 
+Technical documentation is deployed
+[here](http://doc.thindeck.com/)
+on
+[every build](http://www.rultor.com/s/thindeck).
+
 We're aware of their existence (you also should be):
 
  * aws.amazon.com
