@@ -1,3 +1,5 @@
+<img src="http://img.thindeck.com/logo-384x128.png" width="192px" height="64px" />
+
 [Thindeck.com](http://www.thindeck.com) is a web hosting that deploys itself.
 
 How it works:

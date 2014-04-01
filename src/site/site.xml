@@ -31,9 +31,9 @@
     <googleAnalyticsAccountId>UA-1963507-30</googleAnalyticsAccountId>
     <bannerLeft>
         <name>thindeck.com</name>
-        <src>http://img.thindeck.com/logo-256x256.png</src>
+        <src>http://img.thindeck.com/logo-384x128.png</src>
         <href>http://doc.thindeck.com/</href>
-        <width>64</width>
+        <width>192</width>
         <height>64</height>
     </bannerLeft>
     <body>
