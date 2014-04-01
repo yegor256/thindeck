@@ -111,27 +111,6 @@
                     </reportPlugins>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.texry</groupId>
-                <artifactId>texry-maven-plugin</artifactId>
-                <version>0.2.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                        <configuration>
-                            <closures>
-                                <file>tikz-uml.sty</file>
-                            </closures>
-                            <sources>
-                                <file>classdiag-1.tex</file>
-                                <file>usecasediag-uc1.tex</file>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 </project>

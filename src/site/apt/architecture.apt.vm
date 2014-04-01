@@ -44,19 +44,22 @@ thindeck.com Architecture
 
 2. Assumptions
 
+  To be continued...
+
 ~~ @todo #1 The specification is still rather vague for now. I haven't written
 ~~  any assumptions here just yet. Let's write them down here as they come up.
 
 3. Class diagrams
 
-  Class Diagram CLS1 describes the data model of the SuD in terms of classes,
-  attributes, methods, and associations between them.
+  To be continued...
 
-  [texry/classdiag-1.png]
-
+~~ @todo #1 We should have a class diagram here. Ideally, we should have a tool
+~~  that autogenerates the diagrams at deploy time from text data. However, we
+~~  haven't decided yet on what this tool should be. Once that's been agreed
+~~  upon, include the class diagrams right here.
 ~~ @todo #1 Let's define the packaging structure of Thindeck. Describe the
 ~~  purposes of each package, the classes and resources that they contain, etc.
-~~  Create a diagram showing how they are all related.
+~~  Include a diagram showing how they are all related.
 
 4. Component View
 
@@ -73,12 +76,10 @@ thindeck.com Architecture
 
 6. Use Cases, Sequence Diagrams
 
-UC1: "User Hosts Repo"
+  To be continued...
 
-  Use case diagram UC1 describes, at the highest level, the functions that are
-  available to a user who wants to host a repo.
-
-  [texry/usecasediag-uc1.png]
+~~ @todo #1 Requs should automatically generate the use case sequence diagrams.
+~~  It doesn't support it yet, but when it does, let's include that here.
 
 7. Technical Risks
 
@@ -86,6 +87,8 @@ UC1: "User Hosts Repo"
 ~~  document those risks in this section.
 
 8. Decisions Made
+
+  To be continued...
 
 ~~ @todo #1 Let's document the architectural and design decisions in this
 ~~  section.
