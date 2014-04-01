@@ -51,6 +51,8 @@ thindeck.com Architecture
 
   Class Diagram CLS1 describes the data model of the SuD in terms of classes,
   attributes, methods, and associations between them.
+  
+  [texry/classdiag-1.png]
 
 ~~ @todo #1 Let's define the packaging structure of Thindeck. Describe the
 ~~  purposes of each package, the classes and resources that they contain, etc.
@@ -87,3 +89,6 @@ UC1: "User Hosts Repo"
 ~~  section.
 
 9. References
+
+  UML 2.0, Infrastructure and Superstructure, by OMG,
+  {{http://www.omg.org/spec/UML/2.0/}}.
