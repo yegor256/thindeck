@@ -1,10 +1,10 @@
-SuD is "a web hosting that deploys itself".
+System is "a web hosting that deploys itself".
 
 f869e1:UC1 is specified.
 f869e1:UC1 is a must.
 UC1 where User (a user) hosts Repository (a repo):
     1. The user registers the repo;
-    2. SuD deploys the repo;
+    2. The repo deploys itself;
     3. The user reads deployment logs of the repo;
     4. The user reads traffic stats of the repo;
     5. The user compensates usage of the repo;
@@ -44,7 +44,7 @@ UC2 where User registers Repository:
 
 d74fbb:UC3 is specified.
 d74fbb:UC3 is a must.
-UC3 where SuD deploys Repository:
+UC3 where Repository deploys itself:
     "We fetch the repository every five minutes and check the difference
     between existing source code and the latest version. If there are
     any changes, we stop its Docker container, and start a new one with
