@@ -78,12 +78,15 @@
             <url>http://doc.thindeck.com</url>
         </site>
     </distributionManagement>
+    <properties>
+        <requs.version>1.2.1</requs.version>
+    </properties>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.requs</groupId>
                 <artifactId>requs-maven-plugin</artifactId>
-                <version>1.2</version>
+                <version>${requs.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -99,7 +102,7 @@
                         <plugin>
                             <groupId>org.requs</groupId>
                             <artifactId>requs-maven-plugin</artifactId>
-                            <version>1.2</version>
+                            <version>${requs.version}</version>
                             <reportSets>
                                 <reportSet>
                                     <reports>
