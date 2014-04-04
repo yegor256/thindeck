@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href='markdown.xsl' type='text/xsl'?><pages>
+   <methods>
+      <method file="md/methods/UC8.md" id="UC8">The following table describes all technical details of Use Case `UC8`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC8&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; install SuD&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;Hoster&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td/&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"he just downloads the app (either as a TGZ archive of RPM package or Chef cookbook, or any of that) and installs it locally. Then he starts it as a Java standalone app, or Linux service, or something similar. And it works with a local collection of users and local docker installation"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Hoster&lt;/td&gt;
+            &lt;td&gt;"a an owner of a web server, who wants to install Thindeck locally and host containers himself"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</method>
+      <method file="md/methods/UC1.md" id="UC1">The following table describes all technical details of Use Case `UC1`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC1&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;user&lt;/code&gt; hosts &lt;code&gt;repo&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;repo&lt;/code&gt; as Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; registers &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;2. &lt;code&gt;repo&lt;/code&gt; deploys itself&lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; reads deployment logs using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;4. &lt;code&gt;user&lt;/code&gt; reads traffic stats using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;5. &lt;code&gt;user&lt;/code&gt; compensates usage using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;6. &lt;code&gt;user&lt;/code&gt; terminates &lt;code&gt;repo&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a storage of source code together with Dockerfile"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URI&lt;/code&gt;:  "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;key&lt;/code&gt;:  "a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</method>
+      <method file="md/methods/UC2.md" id="UC2">The following table describes all technical details of Use Case `UC2`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC2&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; registers&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td/&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"The user enters a new unique name of the repository, its URI and an optional SSH key (should be all in one form). Then he clicks ADD and the repository appears in the list of other repositories in his account"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</method>
+      <method file="md/methods/UC3.md" id="UC3">The following table describes all technical details of Use Case `UC3`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC3&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; deploys itself&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td/&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"We fetch the repository every five minutes and check the difference between existing source code and the latest version. If there are any changes, we stop its Docker container, and start a new one with the latest version of the source code. Besides Dockerfile, which is used for the Docker container, we should look for a Manifest of the repository. According to the informaiton in the Manifest we should configure the container after its start. While the repository is used, we should track its CPU and traffic consumption, and assign to its owner"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a storage of source code together with Dockerfile"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URI&lt;/code&gt;:  "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;key&lt;/code&gt;:  "a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</method>
+      <method file="md/methods/UC4.md" id="UC4">The following table describes all technical details of Use Case `UC4`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC4&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; reads deployment logs using &lt;code&gt;_arg0&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_arg0&lt;/code&gt; as Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"The user clicks his repository and opens a page with a list of latest deployments. Every Deployment can be viewed in a browser, as a plain text."&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a storage of source code together with Dockerfile"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URI&lt;/code&gt;:  "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;key&lt;/code&gt;:  "a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</method>
+      <method file="md/methods/UC5.md" id="UC5">The following table describes all technical details of Use Case `UC5`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC5&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; reads traffic stats using &lt;code&gt;_arg0&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_arg0&lt;/code&gt; as Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"The user clicks his repository in his account page and opens a new page with information about CPU usage and traffic consumption"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a storage of source code together with Dockerfile"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URI&lt;/code&gt;:  "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;key&lt;/code&gt;:  "a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</method>
+      <method file="md/methods/UC6.md" id="UC6">The following table describes all technical details of Use Case `UC6`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC6&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; compensates usage using &lt;code&gt;_arg0&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_arg0&lt;/code&gt; as Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"The user adds funds to his account, when it goes to a negative value. Funds can be added through PayPal only"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a storage of source code together with Dockerfile"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URI&lt;/code&gt;:  "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;key&lt;/code&gt;:  "a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</method>
+      <method file="md/methods/UC7.md" id="UC7">The following table describes all technical details of Use Case `UC7`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC7&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; terminates&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td/&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"The user just removes the repository and we immediately terminate the Docker container, close all ports, and stops routing domain names. This operation is irrevertable"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</method>
+   </methods>
+</pages>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href='index.xsl' type='text/xsl'?><index>
+   <facets>
+      <facet id="toc">
+         <file>index.xml</file>
+         <description>Table of Contents, List of all facets</description>
+      </facet>
+      <facet id="srs">
+         <file>main.xml</file>
+         <description>Software Requirements Specification, Main Document</description>
+      </facet>
+      <facet id="md">
+         <file>markdown.xml</file>
+         <description>Use Cases and Entities in Markdown</description>
+      </facet>
+      <facet id="ambiguity">
+         <file>ambiguity.xml</file>
+         <description>Ambiguity Analysis</description>
+      </facet>
+   </facets>
+</index>
