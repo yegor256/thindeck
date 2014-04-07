@@ -3,8 +3,8 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns="http://www.w3.org/1999/xhtml" version="2.0"
     exclude-result-prefixes="xs">
-    <xsl:output method="xml"/>
-    <xsl:strip-space elements="*" />
+    <xsl:output method="xml" omit-xml-declaration="yes"/>
+    <xsl:strip-space elements="*"/>
     <xsl:template match="/">
         <html lang="en">
             <head>
@@ -20,7 +20,7 @@
                 </style>
             </head>
             <body>
-                <xsl:apply-templates select="facets"/>
+                <xsl:apply-templates select="index/facets"/>
             </body>
         </html>
     </xsl:template>
