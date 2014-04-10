@@ -17,5 +17,9 @@
          <file>ambiguity.xml</file>
          <description>Ambiguity Analysis</description>
       </facet>
+      <facet id="tbd">
+         <file>tbds.xml</file>
+         <description>TBDs (to be determined)</description>
+      </facet>
    </facets>
 </index>

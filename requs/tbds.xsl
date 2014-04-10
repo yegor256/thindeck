@@ -8,29 +8,38 @@
     <xsl:template match="/">
         <html lang="en">
             <head>
-                <title>ambiguity</title>
-                <meta name="description" content="ambiguity metrics"/>
+                <title>TBDs</title>
+                <meta name="description" content="TBDs"/>
                 <meta name="keywords" content="software requirements specification"/>
                 <meta name="author" content="requs"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link rel="stylesheet" type="text/css" href="requs.css"/>
             </head>
             <body>
-                <xsl:apply-templates select="/metrics"/>
+                <xsl:apply-templates select="/tbds"/>
             </body>
         </html>
     </xsl:template>
-    <xsl:template match="metrics">
-        <h1><xsl:text>Ambiguity Metrics</xsl:text></h1>
-        <ul>
-            <xsl:apply-templates select="metric"/>
-        </ul>
+    <xsl:template match="tbds">
+        <h1><xsl:text>TBDs</xsl:text></h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Subject</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <xsl:apply-templates select="tbd"/>
+            </tbody>
+        </table>
     </xsl:template>
-    <xsl:template match="metric">
-        <li>
-            <xsl:value-of select="@id"/>
-            <xsl:text>: </xsl:text>
-            <xsl:value-of select="."/>
-        </li>
+    <xsl:template match="tbd">
+        <tr>
+            <td><xsl:value-of select="@id"/></td>
+            <td><xsl:value-of select="subject"/></td>
+            <td><xsl:value-of select="description"/></td>
+        </tr>
     </xsl:template>
 </xsl:stylesheet>
