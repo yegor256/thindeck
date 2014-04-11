@@ -1,5 +1,7 @@
 <img src="http://img.thindeck.com/logo-384x128.png" width="192px" height="64px" />
 
+[![Build Status](https://travis-ci.org/yegor256/thindeck.svg?branch=master)](https://travis-ci.org/yegor256/thindeck)
+
 [Thindeck.com](http://www.thindeck.com) is a web hosting that deploys itself.
 
 How it works:
