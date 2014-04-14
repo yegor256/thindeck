@@ -114,6 +114,37 @@
                     </reportPlugins>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.github.jeluard</groupId>
+                <artifactId>plantuml-maven-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                <sourceFiles>
+                    <directory>${basedir}/src/main/plantuml/</directory>
+                    <includes>
+                        <include>**/*.txt</include>
+                    </includes>
+                </sourceFiles>
+                <outputDirectory>
+                    ${project.build.directory}/site/plantuml
+                </outputDirectory>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sourceforge.plantuml</groupId>
+                        <artifactId>plantuml</artifactId>
+                        <version>7976</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                <execution>
+                    <phase>site</phase>
+                    <goals>
+                        <goal>generate</goal>
+                    </goals>
+                </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
