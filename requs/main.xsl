@@ -21,6 +21,8 @@
                     .method { margin-top: 1em; margin-left: 1em; }
                     .steps { margin-top: 1em; margin-left: 1em }
                     .step { margin-top: 0.25em; }
+                    .nfrs { margin-top: 1em; margin-left: 1em }
+                    .nfr { margin-top: 0.25em; }
                     .exception { margin-left: 1em; margin-top: 1em; margin-bottom: 1em; }
                     .informal { color: #666; }
                     .warning { color: #d9534f; }
@@ -140,6 +142,9 @@
                 <xsl:apply-templates select="info/informal"/>
                 <xsl:apply-templates select="steps"/>
             </div>
+            <div class="nfrs">
+                <xsl:apply-templates select="nfrs/nfr"/>
+            </div>
         </div>
     </xsl:template>
     <xsl:template match="attribute">
@@ -180,6 +185,13 @@
             <xsl:value-of select="when"/>
             <xsl:text>&quot;:</xsl:text>
             <xsl:apply-templates select="steps"/>
+        </div>
+    </xsl:template>
+    <xsl:template match="nfr">
+        <div class="nfr">
+            <xsl:value-of select="id"/>
+            <xsl:text> must </xsl:text>
+            <xsl:apply-templates select="info/informal"/>
         </div>
     </xsl:template>
     <xsl:template match="informal">

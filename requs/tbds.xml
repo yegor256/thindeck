@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/tbds.xsl" type="text/xsl"?><tbds>
+<?xml-stylesheet href="tbds.xsl" type="text/xsl"?><tbds>
    <tbd id="TBD-bcac18c96">
       <subject>UC8</subject>
       <description>Method UC8 has an informal description that increases its ambiguity and has to be eliminated</description>

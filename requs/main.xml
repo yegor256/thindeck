@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-04-11T12:09:14">
+<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-04-21T16:58:53">
    <requs>
-      <version>1.3</version>
-      <revision>6b84827</revision>
-      <date>2014-04-10 13:58</date>
+      <version>1.5</version>
+      <revision>7ba00b6</revision>
+      <date>2014-04-20 16:34</date>
    </requs>
    <types>
       <type>
@@ -138,6 +138,8 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="e4a215">must</attribute>
          </attributes>
          <mentioned>
+            <where>4</where>
+            <where>5</where>
             <where>6</where>
          </mentioned>
          <bindings>
@@ -163,6 +165,8 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="685eb1">must</attribute>
          </attributes>
          <mentioned>
+            <where>15</where>
+            <where>16</where>
             <where>17</where>
             <where>47</where>
          </mentioned>
@@ -267,6 +271,8 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="e63229">must</attribute>
          </attributes>
          <mentioned>
+            <where>49</where>
+            <where>50</where>
             <where>51</where>
          </mentioned>
          <bindings>
@@ -291,6 +297,8 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="b066a0">must</attribute>
          </attributes>
          <mentioned>
+            <where>57</where>
+            <where>58</where>
             <where>59</where>
          </mentioned>
          <bindings>
@@ -319,6 +327,8 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="9f34d5">must</attribute>
          </attributes>
          <mentioned>
+            <where>69</where>
+            <where>70</where>
             <where>71</where>
          </mentioned>
          <bindings>
@@ -349,6 +359,8 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="a9263a">must</attribute>
          </attributes>
          <mentioned>
+            <where>76</where>
+            <where>77</where>
             <where>78</where>
          </mentioned>
          <bindings>
@@ -378,6 +390,8 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="1eae00">must</attribute>
          </attributes>
          <mentioned>
+            <where>82</where>
+            <where>83</where>
             <where>84</where>
          </mentioned>
          <bindings>
@@ -407,6 +421,8 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="9c63d3">must</attribute>
          </attributes>
          <mentioned>
+            <where>88</where>
+            <where>89</where>
             <where>90</where>
          </mentioned>
          <bindings>
