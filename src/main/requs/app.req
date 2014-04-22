@@ -1,6 +1,8 @@
 Hoster is "a an owner of a web server, who wants to
 install Thindeck locally and host containers himself".
 
+SuD is "System under Development (thindeck itself)".
+
 e4a215:UC8 is specified.
 e4a215:UC8 is a must.
 UC8 where Hoster install SuD:
