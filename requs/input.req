@@ -1,6 +1,8 @@
 Hoster is "a an owner of a web server, who wants to
 install Thindeck locally and host containers himself".
 
+System is "System under Development (thindeck itself)".
+
 e4a215:UC8 is specified.
 e4a215:UC8 is a must.
 UC8 where Hoster install SuD:
@@ -12,8 +14,8 @@ UC8 where Hoster install SuD:
 
 System is "a web hosting that deploys itself".
 
-685eb1:UC1 is specified.
-685eb1:UC1 is a must.
+07c01a:UC1 is specified.
+07c01a:UC1 is a must.
 UC1 where User (a user) hosts Repository (a repo):
     1. The user registers the repo;
     2. The repo deploys itself;
