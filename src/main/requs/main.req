@@ -59,7 +59,8 @@ UC3 where Repository deploys itself:
 UC4 where User reads deployment logs of Repository:
     "The user clicks his repository and opens a page with a list
     of latest deployments. Every Deployment can be viewed in a browser,
-    as a plain text.".
+    as a plain text. SuD allows logging of standard streams (stdout/stderr/stdin)  of each process container
+    for real-time or batch retrieval".
 
 a9263a:UC5 is specified.
 a9263a:UC5 is a must.
