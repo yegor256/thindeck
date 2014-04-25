@@ -21,7 +21,7 @@ on
 
 We're aware of their existence (you also should be):
 
- * aws.amazon.com
+ * [elastic beanstalk](http://aws.typepad.com/aws/2014/04/aws-elastic-beanstalk-for-docker.html)
  * heroku.com
  * cloudbees.com
  * quay.io
