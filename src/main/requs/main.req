@@ -1,5 +1,16 @@
 System is "a web hosting that deploys itself".
 
+Feature is "an attribute of the System that is understood to be critical
+for success. Features critical for success are:
+    1. High Availability ensuring continuous and stable availability of all services provided.
+    2. Quick resolution of all and any problems that affect system availability.
+    3. Efficient use of system resources via deployment of lightweight, portable, self-sufficient containers.
+    4. Enhanced security that protects the client from brute force and DDoS attacks.
+    5. Simple and easy to use application deployment that allows clients to get online in minutes.
+    6. 24-hour availability of free, skilled and dedicated Technical Support
+    7. Transparent CPU-usage and Traffic-usage pricing model.
+    8. Complete control over your applications and services via Thindeck Control Panel.".
+
 07c01a:UC1 is specified.
 07c01a:UC1 is a must.
 UC1 where User (a user) hosts Repository (a repo):
