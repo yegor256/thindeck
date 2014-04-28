@@ -21,5 +21,9 @@
          <file>tbds.xml</file>
          <description>TBDs (to be determined)</description>
       </facet>
+      <facet id="nfr">
+         <file>nfrs.xml</file>
+         <description>Non-Functional Requirements</description>
+      </facet>
    </facets>
 </index>
