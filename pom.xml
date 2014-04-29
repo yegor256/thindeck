@@ -79,7 +79,11 @@
         </site>
     </distributionManagement>
     <properties>
+<<<<<<< HEAD
         <requs.version>1.6</requs.version>
+=======
+        <requs.version>1.6.2</requs.version>
+>>>>>>> origin/master
     </properties>
     <build>
         <plugins>
