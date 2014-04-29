@@ -12,7 +12,7 @@ How it works:
  4. Every five minutes we pull your repo and restart a container on changes
  5. You pay for our CPU usage (per load!) and traffic (per Gb)
 
-See our [Software Requirements Specification (SRS)](http://doc.thindeck.com/requs/srs.xml).
+See our [Software Requirements Specification (SRS)](http://doc.thindeck.com/requs/main.xml).
 
 Technical documentation is deployed
 [here](http://doc.thindeck.com/)
@@ -21,7 +21,7 @@ on
 
 We're aware of their existence (you also should be):
 
- * aws.amazon.com
+ * [elastic beanstalk](http://aws.typepad.com/aws/2014/04/aws-elastic-beanstalk-for-docker.html)
  * heroku.com
  * cloudbees.com
  * quay.io
