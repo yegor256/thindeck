@@ -59,7 +59,7 @@ a7df74:UC4 is a must.
 UC4 where User reads deployment logs of Repository:
     "The user clicks his repository and opens a page with a list
     of latest deployments. Every Deployment can be viewed in a browser,
-    as a plain text.".
+    as a plain text after Deployment has been executed. System will not display logs in real-time (live)".
 
 cb298f:UC5 is specified.
 cb298f:UC5 is a must.
