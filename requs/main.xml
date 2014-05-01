@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-05-01T12:07:10">
+<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-05-01T15:33:42">
    <requs>
-      <version>1.6.2</version>
-      <revision>edbbaca</revision>
-      <date>2014-04-29 20:13</date>
+      <version>1.6.4</version>
+      <revision>4318c3b</revision>
+      <date>2014-05-01 17:01</date>
    </requs>
    <types>
       <type>
@@ -133,11 +133,11 @@ install Thindeck locally and host containers himself</informal>
       </type>
    </types>
    <methods>
-      <method seal="b33b0e">
+      <method seal="d8d0c9">
          <id>UC8</id>
          <attributes>
-            <attribute seal="b33b0e">specified</attribute>
-            <attribute seal="b33b0e">must</attribute>
+            <attribute seal="d8d0c9">specified</attribute>
+            <attribute seal="d8d0c9">must</attribute>
          </attributes>
          <mentioned>
             <where>6</where>
@@ -160,11 +160,11 @@ install Thindeck locally and host containers himself</informal>
     docker installation</informal>
          </info>
       </method>
-      <method seal="f7917e">
+      <method seal="2edb8f">
          <id>UC1</id>
          <attributes>
-            <attribute seal="f7917e">specified</attribute>
-            <attribute seal="f7917e">must</attribute>
+            <attribute seal="2edb8f">specified</attribute>
+            <attribute seal="2edb8f">must</attribute>
          </attributes>
          <mentioned>
             <where>17</where>
@@ -266,11 +266,11 @@ install Thindeck locally and host containers himself</informal>
             </step>
          </steps>
       </method>
-      <method seal="0de450">
+      <method seal="7781f7">
          <id>UC2</id>
          <attributes>
-            <attribute seal="0de450">specified</attribute>
-            <attribute seal="0de450">must</attribute>
+            <attribute seal="7781f7">specified</attribute>
+            <attribute seal="7781f7">must</attribute>
          </attributes>
          <mentioned>
             <where>51</where>
@@ -292,11 +292,11 @@ install Thindeck locally and host containers himself</informal>
     repositories in his account</informal>
          </info>
       </method>
-      <method seal="8467e2">
+      <method seal="433912">
          <id>UC3</id>
          <attributes>
-            <attribute seal="8467e2">specified</attribute>
-            <attribute seal="8467e2">must</attribute>
+            <attribute seal="433912">specified</attribute>
+            <attribute seal="433912">must</attribute>
          </attributes>
          <mentioned>
             <where>59</where>
@@ -322,11 +322,11 @@ install Thindeck locally and host containers himself</informal>
     track its CPU and traffic consumption, and assign to its owner</informal>
          </info>
       </method>
-      <method seal="a7df74">
+      <method seal="54180c">
          <id>UC4</id>
          <attributes>
-            <attribute seal="a7df74">specified</attribute>
-            <attribute seal="a7df74">must</attribute>
+            <attribute seal="54180c">specified</attribute>
+            <attribute seal="54180c">must</attribute>
          </attributes>
          <mentioned>
             <where>71</where>
@@ -354,11 +354,11 @@ install Thindeck locally and host containers himself</informal>
     as a plain text.</informal>
          </info>
       </method>
-      <method seal="cb298f">
+      <method seal="c2c280">
          <id>UC5</id>
          <attributes>
-            <attribute seal="cb298f">specified</attribute>
-            <attribute seal="cb298f">must</attribute>
+            <attribute seal="c2c280">specified</attribute>
+            <attribute seal="c2c280">must</attribute>
          </attributes>
          <mentioned>
             <where>78</where>
@@ -385,11 +385,11 @@ install Thindeck locally and host containers himself</informal>
     page with information about CPU usage and traffic consumption</informal>
          </info>
       </method>
-      <method seal="f6d0cb">
+      <method seal="cc7e07">
          <id>UC6</id>
          <attributes>
-            <attribute seal="f6d0cb">specified</attribute>
-            <attribute seal="f6d0cb">must</attribute>
+            <attribute seal="cc7e07">specified</attribute>
+            <attribute seal="cc7e07">must</attribute>
          </attributes>
          <mentioned>
             <where>84</where>
@@ -416,11 +416,11 @@ install Thindeck locally and host containers himself</informal>
     Funds can be added through PayPal only</informal>
          </info>
       </method>
-      <method seal="cdf0e5">
+      <method seal="70cee1">
          <id>UC7</id>
          <attributes>
-            <attribute seal="cdf0e5">specified</attribute>
-            <attribute seal="cdf0e5">must</attribute>
+            <attribute seal="70cee1">specified</attribute>
+            <attribute seal="70cee1">must</attribute>
          </attributes>
          <mentioned>
             <where>90</where>
