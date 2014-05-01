@@ -5,7 +5,7 @@ System is "System under Development (thindeck itself)".
 
 d8d0c9:UC8 is specified.
 d8d0c9:UC8 is a must.
-UC8 where Hoster install SuD:
+UC8 where Hoster install System:
     "he just downloads the app (either as a TGZ archive of RPM package
     or Chef cookbook, or any of that) and installs it locally. Then he
     starts it as a Java standalone app, or Linux service, or something
