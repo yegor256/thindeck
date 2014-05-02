@@ -555,7 +555,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Brief&lt;/td&gt;
-            &lt;td&gt;"The user clicks his repository and opens a page with a list of latest deployments. Every Deployment can be viewed in a browser, as a plain text."&lt;/td&gt;
+            &lt;td&gt;"The user clicks his repository and opens a page with a list of latest deployments. Every Deployment can be viewed as plain text in a browser, after Deployment has been executed. System will not display logs in real-time (live)"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -628,7 +628,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Brief&lt;/td&gt;
-            &lt;td&gt;"The user clicks his repository and opens a page with a list of latest deployments. Every Deployment can be viewed in a browser, as a plain text."&lt;/td&gt;
+            &lt;td&gt;"The user clicks his repository and opens a page with a list of latest deployments. Every Deployment can be viewed as plain text in a browser, after Deployment has been executed. System will not display logs in real-time (live)"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;

@@ -29,7 +29,7 @@ The following table describes all technical details of Use Case `UC4`:
          </tr>
          <tr>
             <td>Brief</td>
-            <td>"The user clicks his repository and opens a page with a list of latest deployments. Every Deployment can be viewed in a browser, as a plain text."</td>
+            <td>"The user clicks his repository and opens a page with a list of latest deployments. Every Deployment can be viewed as plain text in a browser, after Deployment has been executed. System will not display logs in real-time (live)"</td>
          </tr>
       </tbody>
    </table>
