@@ -21,7 +21,26 @@ User is "a person identified in the system (logged in)".
 
 User includes:
     repo-s? as Repository,
-    URN as "a unique identifier of itself, for example urn:github:526301".
+    URN as "a unique identifier of itself, for example urn:github:526301",
+    authTokens as "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc.",
+    balance as "amount of money available, can be stored as integer number of cents".
+
+Anonymous is "a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in".
+97b47f:UC9 is a must.
+UC9 where Anonymous (a anonymous) signs up:
+    1. The anonymous "intiates sign in via one of auth providers, e.g., Facebook, Google+, etc.";
+    2. The system "requests permission from the OAuth provider chosen by the anonymous";
+    3. The system creates User(a user);
+    4. The system "adds $5 to the user.balance";
+    5. The anonymous logs in.
+UC9/2 when "a user is already signed up":
+    1. The anonymous logs in.
+UC9/2 when "an OAuth provider denied access":
+    1. Fail since "Not authorized by chosen OAuth provider".
+
+b49c63:UC10 is a must.
+UC10 where Anonymous (a anonymous) logs in using User(a user):
+    1. The system "from now on treats the anonymous as a User".
 
 Repository is "a storage of source code together with Dockerfile".
 
