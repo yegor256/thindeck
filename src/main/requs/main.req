@@ -14,7 +14,18 @@ User is "a person identified in the system (logged in)".
 
 User includes:
     repo-s? as Repository,
-    URN as "a unique identifier of itself, for example urn:github:526301".
+    URN as "a unique identifier of itself, for example urn:github:526301",
+    email as "a valid e-mail address",
+    password as "a salted hash of a password which a user must enter to log in".
+
+UnregisteredUser is "a person who is not identified in the system (not logged in). He can actually have a UserAccount in our System, but we can't tell it until he logs in".
+
+UC9 where UnregisteredUser (a unregisteredUser) signs up:
+    1. The unregisteredUser "fills in the sign up form providing his email and password";
+    2. The system creates User(a user).
+UC9/1 when "A user with such email already exists":
+    1. "We notify the unregisteredUser that account with such email already exists and propose him to log in or to restore the password in case he had forgotten it";
+    2. Fail since "a user with the email unregisteredUser entered is already exists".
 
 Repository is "a storage of source code together with Dockerfile".
 
