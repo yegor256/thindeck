@@ -1,7 +1,7 @@
 System is "a web hosting that deploys itself".
 
-07c01a:UC1 is specified.
-07c01a:UC1 is a must.
+a38bf2:UC1 is specified.
+a38bf2:UC1 is a must.
 UC1 where User (a user) hosts Repository (a repo):
     1. The user registers the repo;
     2. The repo deploys itself;
@@ -45,16 +45,16 @@ Manifest is "a YAML configuration file, stored in the repository, and
 UC1/1 when "repo already exists":
     1. Fail since "a message that the repository exists already in his account".
 
-e63229:UC2 is specified.
-e63229:UC2 is a must.
+8b2416:UC2 is specified.
+8b2416:UC2 is a must.
 UC2 where User registers Repository:
     "The user enters a new unique name of the repository,
     its URI and an optional SSH key (should be all in one form). Then
     he clicks ADD and the repository appears in the list of other
     repositories in his account".
 
-b066a0:UC3 is specified.
-b066a0:UC3 is a must.
+d1aac0:UC3 is specified.
+d1aac0:UC3 is a must.
 UC3 where Repository deploys itself:
     "We fetch the repository every five minutes and check the difference
     between existing source code and the latest version. If there are
@@ -65,27 +65,27 @@ UC3 where Repository deploys itself:
     container after its start. While the repository is used, we should
     track its CPU and traffic consumption, and assign to its owner".
 
-9f34d5:UC4 is specified.
-9f34d5:UC4 is a must.
+ca85b1:UC4 is specified.
+ca85b1:UC4 is a must.
 UC4 where User reads deployment logs of Repository:
     "The user clicks his repository and opens a page with a list
     of latest deployments. Every Deployment can be viewed in a browser,
     as a plain text.".
 
-a9263a:UC5 is specified.
-a9263a:UC5 is a must.
+8e073c:UC5 is specified.
+8e073c:UC5 is a must.
 UC5 where User reads traffic stats of Repository:
     "The user clicks his repository in his account page and opens a new
     page with information about CPU usage and traffic consumption".
 
-1eae00:UC6 is specified.
-1eae00:UC6 is a must.
+63e8fd:UC6 is specified.
+63e8fd:UC6 is a must.
 UC6 where User compensates usage of Repository:
     "The user adds funds to his account, when it goes to a negative value.
     Funds can be added through PayPal only".
 
-9c63d3:UC7 is specified.
-9c63d3:UC7 is a must.
+711b61:UC7 is specified.
+711b61:UC7 is a must.
 UC7 where User terminates Repository:
     "The user just removes the repository and we immediately terminate
     the Docker container, close all ports, and stops routing domain names.
