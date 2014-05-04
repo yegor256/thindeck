@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-05-02T11:53:25">
+<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-05-04T11:52:59">
    <requs>
       <version>1.6.4</version>
       <revision>4318c3b</revision>
@@ -48,11 +48,11 @@ for success. Features critical for success are:
             <where>26</where>
             <where>34</where>
             <where>36</where>
-            <where>60</where>
-            <where>80</where>
-            <where>87</where>
-            <where>93</where>
+            <where>79</where>
             <where>99</where>
+            <where>106</where>
+            <where>112</where>
+            <where>118</where>
          </mentioned>
          <info>
             <informal>a person identified in the system (logged in)</informal>
@@ -75,15 +75,44 @@ for success. Features critical for success are:
                   <informal>a unique identifier of itself, for example urn:github:526301</informal>
                </info>
             </slot>
+            <slot>
+               <name>authTokens</name>
+               <mentioned>
+                  <where>39</where>
+               </mentioned>
+               <info>
+                  <informal>a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc.</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>balance</name>
+               <mentioned>
+                  <where>40</where>
+               </mentioned>
+               <info>
+                  <informal>amount of money available, can be stored as integer number of cents</informal>
+               </info>
+            </slot>
          </slots>
+      </type>
+      <type>
+         <name>Anonymous</name>
+         <mentioned>
+            <where>42</where>
+            <where>44</where>
+            <where>56</where>
+         </mentioned>
+         <info>
+            <informal>a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in</informal>
+         </info>
       </type>
       <type>
          <name>Repository</name>
          <mentioned>
-            <where>40</where>
-            <where>42</where>
-            <where>47</where>
-            <where>68</where>
+            <where>59</where>
+            <where>61</where>
+            <where>66</where>
+            <where>87</where>
          </mentioned>
          <info>
             <informal>a storage of source code together with Dockerfile</informal>
@@ -92,7 +121,7 @@ for success. Features critical for success are:
             <slot>
                <name>name</name>
                <mentioned>
-                  <where>43</where>
+                  <where>62</where>
                </mentioned>
                <info>
                   <informal>a unique name of the repo in user's account</informal>
@@ -101,7 +130,7 @@ for success. Features critical for success are:
             <slot>
                <name>URI</name>
                <mentioned>
-                  <where>44</where>
+                  <where>63</where>
                </mentioned>
                <info>
                   <informal>a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git</informal>
@@ -110,7 +139,7 @@ for success. Features critical for success are:
             <slot>
                <name>key</name>
                <mentioned>
-                  <where>45</where>
+                  <where>64</where>
                </mentioned>
                <info>
                   <informal>a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography</informal>
@@ -119,7 +148,7 @@ for success. Features critical for success are:
             <slot>
                <name>deployment</name>
                <mentioned>
-                  <where>48</where>
+                  <where>67</where>
                </mentioned>
                <arity>ANY</arity>
                <type>Deployment</type>
@@ -129,7 +158,7 @@ for success. Features critical for success are:
       <type>
          <name>Deployment</name>
          <mentioned>
-            <where>50</where>
+            <where>69</where>
          </mentioned>
          <info>
             <informal>a result (plain text log) of a Docker container start</informal>
@@ -138,7 +167,7 @@ for success. Features critical for success are:
       <type>
          <name>Manifest</name>
          <mentioned>
-            <where>52</where>
+            <where>71</where>
          </mentioned>
          <info>
             <informal>a YAML configuration file, stored in the repository, and
@@ -184,7 +213,7 @@ for success. Features critical for success are:
             <where>24</where>
             <where>25</where>
             <where>26</where>
-            <where>56</where>
+            <where>75</where>
          </mentioned>
          <bindings>
             <binding>
@@ -219,7 +248,7 @@ for success. Features critical for success are:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>56</where>
+                              <where>75</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"a message that the repository exists already in his account"</signature>
@@ -280,6 +309,144 @@ for success. Features critical for success are:
             </step>
          </steps>
       </method>
+      <method seal="1dcada">
+         <id>UC9</id>
+         <attributes>
+            <attribute seal="1dcada">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>43</where>
+            <where>44</where>
+            <where>51</where>
+            <where>53</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>Anonymous</type>
+            </binding>
+            <binding>
+               <name>anonymous</name>
+               <type>Anonymous</type>
+            </binding>
+            <binding>
+               <name>user</name>
+               <type>User</type>
+            </binding>
+         </bindings>
+         <object>anonymous</object>
+         <signature>signs up</signature>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>45</where>
+               </mentioned>
+               <object>anonymous</object>
+               <signature>"initiates sign in via one of auth providers, e.g., Facebook, Google+, etc."</signature>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>46</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"requests permission from the OAuth provider chosen by the anonymous"</signature>
+               <exceptions>
+                  <exception>
+                     <when>a user is already signed up</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>51</where>
+                           </mentioned>
+                           <object>anonymous</object>
+                           <signature>logs in</signature>
+                        </step>
+                     </steps>
+                  </exception>
+                  <exception>
+                     <when>an OAuth provider denied access</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>53</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"Not authorized by chosen OAuth provider"</signature>
+                        </step>
+                     </steps>
+                  </exception>
+               </exceptions>
+            </step>
+            <step>
+               <number>3</number>
+               <mentioned>
+                  <where>47</where>
+               </mentioned>
+               <object>system</object>
+               <signature>creates</signature>
+               <result>user</result>
+            </step>
+            <step>
+               <number>4</number>
+               <mentioned>
+                  <where>48</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"adds $5 to the user.balance"</signature>
+            </step>
+            <step>
+               <number>5</number>
+               <mentioned>
+                  <where>49</where>
+               </mentioned>
+               <object>anonymous</object>
+               <signature>logs in</signature>
+            </step>
+         </steps>
+      </method>
+      <method seal="b49c63">
+         <id>UC10</id>
+         <attributes>
+            <attribute seal="b49c63">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>55</where>
+            <where>56</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>Anonymous</type>
+            </binding>
+            <binding>
+               <name>anonymous</name>
+               <type>Anonymous</type>
+            </binding>
+            <binding>
+               <name>user</name>
+               <type>User</type>
+            </binding>
+         </bindings>
+         <object>anonymous</object>
+         <signature>logs in</signature>
+         <args>
+            <arg>user</arg>
+         </args>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>57</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"from now on treats the anonymous as a User"</signature>
+            </step>
+         </steps>
+      </method>
       <method seal="7781f7">
          <id>UC2</id>
          <attributes>
@@ -287,9 +454,9 @@ for success. Features critical for success are:
             <attribute seal="7781f7">must</attribute>
          </attributes>
          <mentioned>
-            <where>58</where>
-            <where>59</where>
-            <where>60</where>
+            <where>77</where>
+            <where>78</where>
+            <where>79</where>
          </mentioned>
          <bindings>
             <binding>
@@ -313,9 +480,9 @@ for success. Features critical for success are:
             <attribute seal="433912">must</attribute>
          </attributes>
          <mentioned>
-            <where>66</where>
-            <where>67</where>
-            <where>68</where>
+            <where>85</where>
+            <where>86</where>
+            <where>87</where>
          </mentioned>
          <bindings>
             <binding>
@@ -343,9 +510,9 @@ for success. Features critical for success are:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>78</where>
-            <where>79</where>
-            <where>80</where>
+            <where>97</where>
+            <where>98</where>
+            <where>99</where>
          </mentioned>
          <bindings>
             <binding>
@@ -375,9 +542,9 @@ for success. Features critical for success are:
             <attribute seal="c2c280">must</attribute>
          </attributes>
          <mentioned>
-            <where>85</where>
-            <where>86</where>
-            <where>87</where>
+            <where>104</where>
+            <where>105</where>
+            <where>106</where>
          </mentioned>
          <bindings>
             <binding>
@@ -406,9 +573,9 @@ for success. Features critical for success are:
             <attribute seal="cc7e07">must</attribute>
          </attributes>
          <mentioned>
-            <where>91</where>
-            <where>92</where>
-            <where>93</where>
+            <where>110</where>
+            <where>111</where>
+            <where>112</where>
          </mentioned>
          <bindings>
             <binding>
@@ -437,9 +604,9 @@ for success. Features critical for success are:
             <attribute seal="70cee1">must</attribute>
          </attributes>
          <mentioned>
-            <where>97</where>
-            <where>98</where>
-            <where>99</where>
+            <where>116</where>
+            <where>117</where>
+            <where>118</where>
          </mentioned>
          <bindings>
             <binding>

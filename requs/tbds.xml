@@ -28,4 +28,20 @@
       <subject>UC7</subject>
       <description>Method UC7 has an informal description that increases its ambiguity and has to be eliminated</description>
    </tbd>
+   <tbd id="TBD-1a3fc0478">
+      <subject>UC9</subject>
+      <description>Step #1 in method UC9 has an informal signature "initiates sign in via one of auth providers, e.g., Facebook, Google+, etc." that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-c39f7cf61">
+      <subject>UC9</subject>
+      <description>Step #2 in method UC9 has an informal signature "requests permission from the OAuth provider chosen by the anonymous" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-79d9b669f">
+      <subject>UC9</subject>
+      <description>Step #4 in method UC9 has an informal signature "adds $5 to the user.balance" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-cea9aa291">
+      <subject>UC10</subject>
+      <description>Step #1 in method UC10 has an informal signature "from now on treats the anonymous as a User" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
 </tbds>

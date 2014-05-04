@@ -49,6 +49,10 @@ Actors taking participation in the Use Case have the following properties:
                      <code>repo</code>: Repository</li>
                   <li>
                      <code>URN</code>:  "a unique identifier of itself, for example urn:github:526301"</li>
+                  <li>
+                     <code>authTokens</code>:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."</li>
+                  <li>
+                     <code>balance</code>:  "amount of money available, can be stored as integer number of cents"</li>
                </ul>
             </td>
          </tr>
