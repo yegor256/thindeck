@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-05-04T11:52:59">
+<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-05-04T19:58:57">
    <requs>
-      <version>1.6.4</version>
-      <revision>4318c3b</revision>
-      <date>2014-05-01 17:01</date>
+      <version>1.7</version>
+      <revision>2e0ed86</revision>
+      <date>2014-05-04 21:22</date>
    </requs>
    <types>
       <type>
@@ -29,30 +29,16 @@ install Thindeck locally and host containers himself</informal>
          </info>
       </type>
       <type>
-         <name>Feature</name>
-         <mentioned>
-            <where>17</where>
-         </mentioned>
-         <info>
-            <informal>an attribute of the System that is understood to be critical
-for success. Features critical for success are:
-    1. High availability - much higher than anyone else can offer.
-    2. Low cost - lower than anyone.
-    3. Easy (re)deployment - a unique 'pull' deployment mechanism.
-    4. Simple control panel - one form and your site is ready in 5 minutes.</informal>
-         </info>
-      </type>
-      <type>
          <name>User</name>
          <mentioned>
-            <where>26</where>
-            <where>34</where>
-            <where>36</where>
-            <where>79</where>
+            <where>19</where>
+            <where>27</where>
+            <where>29</where>
+            <where>72</where>
+            <where>92</where>
             <where>99</where>
-            <where>106</where>
-            <where>112</where>
-            <where>118</where>
+            <where>105</where>
+            <where>111</where>
          </mentioned>
          <info>
             <informal>a person identified in the system (logged in)</informal>
@@ -61,7 +47,7 @@ for success. Features critical for success are:
             <slot>
                <name>repo</name>
                <mentioned>
-                  <where>37</where>
+                  <where>30</where>
                </mentioned>
                <arity>ANY</arity>
                <type>Repository</type>
@@ -69,7 +55,7 @@ for success. Features critical for success are:
             <slot>
                <name>URN</name>
                <mentioned>
-                  <where>38</where>
+                  <where>31</where>
                </mentioned>
                <info>
                   <informal>a unique identifier of itself, for example urn:github:526301</informal>
@@ -78,7 +64,7 @@ for success. Features critical for success are:
             <slot>
                <name>authTokens</name>
                <mentioned>
-                  <where>39</where>
+                  <where>32</where>
                </mentioned>
                <info>
                   <informal>a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc.</informal>
@@ -87,7 +73,7 @@ for success. Features critical for success are:
             <slot>
                <name>balance</name>
                <mentioned>
-                  <where>40</where>
+                  <where>33</where>
                </mentioned>
                <info>
                   <informal>amount of money available, can be stored as integer number of cents</informal>
@@ -98,9 +84,9 @@ for success. Features critical for success are:
       <type>
          <name>Anonymous</name>
          <mentioned>
-            <where>42</where>
-            <where>44</where>
-            <where>56</where>
+            <where>35</where>
+            <where>37</where>
+            <where>49</where>
          </mentioned>
          <info>
             <informal>a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in</informal>
@@ -109,10 +95,10 @@ for success. Features critical for success are:
       <type>
          <name>Repository</name>
          <mentioned>
+            <where>52</where>
+            <where>54</where>
             <where>59</where>
-            <where>61</where>
-            <where>66</where>
-            <where>87</where>
+            <where>80</where>
          </mentioned>
          <info>
             <informal>a storage of source code together with Dockerfile</informal>
@@ -121,7 +107,7 @@ for success. Features critical for success are:
             <slot>
                <name>name</name>
                <mentioned>
-                  <where>62</where>
+                  <where>55</where>
                </mentioned>
                <info>
                   <informal>a unique name of the repo in user's account</informal>
@@ -130,7 +116,7 @@ for success. Features critical for success are:
             <slot>
                <name>URI</name>
                <mentioned>
-                  <where>63</where>
+                  <where>56</where>
                </mentioned>
                <info>
                   <informal>a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git</informal>
@@ -139,7 +125,7 @@ for success. Features critical for success are:
             <slot>
                <name>key</name>
                <mentioned>
-                  <where>64</where>
+                  <where>57</where>
                </mentioned>
                <info>
                   <informal>a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography</informal>
@@ -148,7 +134,7 @@ for success. Features critical for success are:
             <slot>
                <name>deployment</name>
                <mentioned>
-                  <where>67</where>
+                  <where>60</where>
                </mentioned>
                <arity>ANY</arity>
                <type>Deployment</type>
@@ -158,7 +144,7 @@ for success. Features critical for success are:
       <type>
          <name>Deployment</name>
          <mentioned>
-            <where>69</where>
+            <where>62</where>
          </mentioned>
          <info>
             <informal>a result (plain text log) of a Docker container start</informal>
@@ -167,7 +153,7 @@ for success. Features critical for success are:
       <type>
          <name>Manifest</name>
          <mentioned>
-            <where>71</where>
+            <where>64</where>
          </mentioned>
          <info>
             <informal>a YAML configuration file, stored in the repository, and
@@ -210,10 +196,10 @@ for success. Features critical for success are:
             <attribute seal="2edb8f">must</attribute>
          </attributes>
          <mentioned>
-            <where>24</where>
-            <where>25</where>
-            <where>26</where>
-            <where>75</where>
+            <where>17</where>
+            <where>18</where>
+            <where>19</where>
+            <where>68</where>
          </mentioned>
          <bindings>
             <binding>
@@ -236,7 +222,7 @@ for success. Features critical for success are:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>27</where>
+                  <where>20</where>
                </mentioned>
                <object>user</object>
                <signature>registers</signature>
@@ -248,7 +234,7 @@ for success. Features critical for success are:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>75</where>
+                              <where>68</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"a message that the repository exists already in his account"</signature>
@@ -260,7 +246,7 @@ for success. Features critical for success are:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>28</where>
+                  <where>21</where>
                </mentioned>
                <object>repo</object>
                <signature>deploys itself</signature>
@@ -268,7 +254,7 @@ for success. Features critical for success are:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>29</where>
+                  <where>22</where>
                </mentioned>
                <object>user</object>
                <signature>reads deployment logs</signature>
@@ -279,7 +265,7 @@ for success. Features critical for success are:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>30</where>
+                  <where>23</where>
                </mentioned>
                <object>user</object>
                <signature>reads traffic stats</signature>
@@ -290,7 +276,7 @@ for success. Features critical for success are:
             <step>
                <number>5</number>
                <mentioned>
-                  <where>31</where>
+                  <where>24</where>
                </mentioned>
                <object>user</object>
                <signature>compensates usage</signature>
@@ -301,7 +287,7 @@ for success. Features critical for success are:
             <step>
                <number>6</number>
                <mentioned>
-                  <where>32</where>
+                  <where>25</where>
                </mentioned>
                <object>user</object>
                <signature>terminates</signature>
@@ -315,10 +301,10 @@ for success. Features critical for success are:
             <attribute seal="1dcada">must</attribute>
          </attributes>
          <mentioned>
-            <where>43</where>
+            <where>36</where>
+            <where>37</where>
             <where>44</where>
-            <where>51</where>
-            <where>53</where>
+            <where>46</where>
          </mentioned>
          <bindings>
             <binding>
@@ -340,7 +326,7 @@ for success. Features critical for success are:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>45</where>
+                  <where>38</where>
                </mentioned>
                <object>anonymous</object>
                <signature>"initiates sign in via one of auth providers, e.g., Facebook, Google+, etc."</signature>
@@ -348,7 +334,7 @@ for success. Features critical for success are:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>46</where>
+                  <where>39</where>
                </mentioned>
                <object>system</object>
                <signature>"requests permission from the OAuth provider chosen by the anonymous"</signature>
@@ -359,7 +345,7 @@ for success. Features critical for success are:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>51</where>
+                              <where>44</where>
                            </mentioned>
                            <object>anonymous</object>
                            <signature>logs in</signature>
@@ -372,7 +358,7 @@ for success. Features critical for success are:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>53</where>
+                              <where>46</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"Not authorized by chosen OAuth provider"</signature>
@@ -384,7 +370,7 @@ for success. Features critical for success are:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>47</where>
+                  <where>40</where>
                </mentioned>
                <object>system</object>
                <signature>creates</signature>
@@ -393,7 +379,7 @@ for success. Features critical for success are:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>48</where>
+                  <where>41</where>
                </mentioned>
                <object>system</object>
                <signature>"adds $5 to the user.balance"</signature>
@@ -401,7 +387,7 @@ for success. Features critical for success are:
             <step>
                <number>5</number>
                <mentioned>
-                  <where>49</where>
+                  <where>42</where>
                </mentioned>
                <object>anonymous</object>
                <signature>logs in</signature>
@@ -414,8 +400,8 @@ for success. Features critical for success are:
             <attribute seal="b49c63">must</attribute>
          </attributes>
          <mentioned>
-            <where>55</where>
-            <where>56</where>
+            <where>48</where>
+            <where>49</where>
          </mentioned>
          <bindings>
             <binding>
@@ -440,7 +426,7 @@ for success. Features critical for success are:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>57</where>
+                  <where>50</where>
                </mentioned>
                <object>system</object>
                <signature>"from now on treats the anonymous as a User"</signature>
@@ -454,9 +440,9 @@ for success. Features critical for success are:
             <attribute seal="7781f7">must</attribute>
          </attributes>
          <mentioned>
-            <where>77</where>
-            <where>78</where>
-            <where>79</where>
+            <where>70</where>
+            <where>71</where>
+            <where>72</where>
          </mentioned>
          <bindings>
             <binding>
@@ -480,9 +466,9 @@ for success. Features critical for success are:
             <attribute seal="433912">must</attribute>
          </attributes>
          <mentioned>
-            <where>85</where>
-            <where>86</where>
-            <where>87</where>
+            <where>78</where>
+            <where>79</where>
+            <where>80</where>
          </mentioned>
          <bindings>
             <binding>
@@ -510,9 +496,9 @@ for success. Features critical for success are:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>97</where>
-            <where>98</where>
-            <where>99</where>
+            <where>90</where>
+            <where>91</where>
+            <where>92</where>
          </mentioned>
          <bindings>
             <binding>
@@ -542,9 +528,9 @@ for success. Features critical for success are:
             <attribute seal="c2c280">must</attribute>
          </attributes>
          <mentioned>
-            <where>104</where>
-            <where>105</where>
-            <where>106</where>
+            <where>97</where>
+            <where>98</where>
+            <where>99</where>
          </mentioned>
          <bindings>
             <binding>
@@ -573,9 +559,9 @@ for success. Features critical for success are:
             <attribute seal="cc7e07">must</attribute>
          </attributes>
          <mentioned>
-            <where>110</where>
-            <where>111</where>
-            <where>112</where>
+            <where>103</where>
+            <where>104</where>
+            <where>105</where>
          </mentioned>
          <bindings>
             <binding>
@@ -604,9 +590,9 @@ for success. Features critical for success are:
             <attribute seal="70cee1">must</attribute>
          </attributes>
          <mentioned>
-            <where>116</where>
-            <where>117</where>
-            <where>118</where>
+            <where>109</where>
+            <where>110</where>
+            <where>111</where>
          </mentioned>
          <bindings>
             <binding>
@@ -623,5 +609,38 @@ for success. Features critical for success are:
          </info>
       </method>
    </methods>
+   <pages>
+      <page>
+         <title>Vision</title>
+         <info>
+            <informal>
+
+Requirements providers are:
+
+ * Yegor Bugayenko
+
+Key success factors are:
+
+ * High availability - much higher than anyone else can offer.
+ * Low cost - lower than anyone.
+ * Easy (re)deployment - a unique 'pull' deployment mechanism.
+ * Simple control panel - one form and your site is ready in 5 minutes.".
+
+</informal>
+         </info>
+         <mentioned>
+            <where>129</where>
+         </mentioned>
+      </page>
+   </pages>
    <errors/>
+   <facets>
+      <facet file="index.xml" id="toc">Table of Contents, List of all facets</facet>
+      <facet file="main.xml" id="srs">Software Requirements Specification, Main Document</facet>
+      <facet file="markdown.xml" id="md">Use Cases and Entities in Markdown</facet>
+      <facet file="pages.xml" id="pages">Markdown Pages</facet>
+      <facet file="ambiguity.xml" id="ambiguity">Ambiguity Analysis</facet>
+      <facet file="tbds.xml" id="tbd">TBDs (to be determined)</facet>
+      <facet file="nfrs.xml" id="nfr">Non-Functional Requirements</facet>
+   </facets>
 </spec>

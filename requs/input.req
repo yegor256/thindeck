@@ -14,13 +14,6 @@ UC8 where Hoster install SuD:
 
 System is "a web hosting that deploys itself".
 
-Feature is "an attribute of the System that is understood to be critical
-for success. Features critical for success are:
-    1. High availability - much higher than anyone else can offer.
-    2. Low cost - lower than anyone.
-    3. Easy (re)deployment - a unique 'pull' deployment mechanism.
-    4. Simple control panel - one form and your site is ready in 5 minutes.".
-
 2edb8f:UC1 is specified.
 2edb8f:UC1 is a must.
 UC1 where User (a user) hosts Repository (a repo):
@@ -119,4 +112,19 @@ UC7 where User terminates Repository:
     "The user just removes the repository and we immediately terminate
     the Docker container, close all ports, and stops routing domain names.
     This operation is irrevertable".
+
+Vision: """
+
+Requirements providers are:
+
+ * Yegor Bugayenko
+
+Key success factors are:
+
+ * High availability - much higher than anyone else can offer.
+ * Low cost - lower than anyone.
+ * Easy (re)deployment - a unique 'pull' deployment mechanism.
+ * Simple control panel - one form and your site is ready in 5 minutes.".
+
+""".
 

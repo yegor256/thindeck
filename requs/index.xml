@@ -13,6 +13,10 @@
          <file>markdown.xml</file>
          <description>Use Cases and Entities in Markdown</description>
       </facet>
+      <facet id="pages">
+         <file>pages.xml</file>
+         <description>Markdown Pages</description>
+      </facet>
       <facet id="ambiguity">
          <file>ambiguity.xml</file>
          <description>Ambiguity Analysis</description>
