@@ -7,13 +7,13 @@ for success. Features critical for success are:
     3. Easy (re)deployment - a unique 'pull' deployment mechanism.
     4. Simple control panel - one form and your site is ready in 5 minutes.".
 
-2edb8f:UC1 is specified.
-2edb8f:UC1 is a must.
+7c7d96:UC1 is specified.
+7c7d96:UC1 is a must.
 UC1 where User (a user) hosts Repository (a repo):
     1. The user registers the repo;
     2. The repo deploys itself;
     3. The user reads deployment logs of the repo;
-    4. The user reads traffic stats of the repo;
+    4. The user reads usage stats of the repo;
     5. The user compensates usage of the repo;
     6. The user terminates the repo.
 
@@ -87,11 +87,15 @@ UC4 where User reads deployment logs of Repository:
     of latest deployments. Every Deployment can be viewed as plain text in a browser,
     after Deployment has been executed. System will not display logs in real-time (live)".
 
-c2c280:UC5 is specified.
-c2c280:UC5 is a must.
-UC5 where User reads traffic stats of Repository:
-    "The user clicks his repository in his account page and opens a new
-    page with information about CPU usage and traffic consumption".
+991382:UC5 is specified.
+991382:UC5 is a must.
+UC5 where User(a user) reads usage stats using Repository(a repo):
+    1. The user "selects a time interval, like: last 7 days, last month, custom (from date, to date)";
+    2. The system "reads usage records corresounding to the repo within specified time interval";
+    3. The system "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
+    Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
+    Last row contains totals by all containers. The values in the table are usage stats by container
+    within specified time interval".
 
 cc7e07:UC6 is specified.
 cc7e07:UC6 is a must.
