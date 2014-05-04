@@ -105,3 +105,25 @@ UC7 where User terminates Repository:
     "The user just removes the repository and we immediately terminate
     the Docker container, close all ports, and stops routing domain names.
     This operation is irrevertable".
+
+f623bb:UC11 is a must.
+UC11 where User(a user) stops deploying using Repository(a repo):
+    1. The user "tells the system to stop deploying the repo";
+    2. The system "terminates the Docker container, closes all ports, and 
+    stops routing domain names";
+    3. The system updates the deployment;
+    4. The system "adds the 'deployment stopped' event to the deployment log".
+UC11/2 when "the repository is not deployed":
+    1. Fail since "a message that the repository is not deployed".
+
+6c345a:UC12 is a must.
+UC12 where User(a user) starts deploying using Repository(a repo):
+    1. The user "tells the system to deploy the repo";
+    2. The system creates Deployment(a deployment);
+    3. The system "creates a Docker container using the repo, configures it 
+    using dockerfile, starts the container and applies the configuration 
+    defined in Manifest";
+    4. The system updates the deployment;
+    5. The system "adds the 'deployment started' event to the deployment log".
+UC12/2 when "the repository is already deployed":
+    1. Fail since "a message that the repository is already deployed".
