@@ -1,5 +1,8 @@
 System is "a web hosting that deploys itself".
 
+TrafficConsumpion is "a measure of how much data a user us using inside their container. 
+Traffic Consumption is determined by calculating all the data that user's container sends to or receives from the internet during deployment or regular operation. User will then be charged per GB of traffic consumed".
+
 2edb8f:UC1 is specified.
 2edb8f:UC1 is a must.
 UC1 where User (a user) hosts Repository (a repo):
