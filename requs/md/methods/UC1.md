@@ -31,7 +31,7 @@ The following table describes all technical details of Use Case `UC1`:
             <td>Success Flow</td>
             <td>1. <code>user</code> registers <code>repo</code>
                <br/>2. <code>repo</code> deploys itself<br/>3. <code>user</code> reads deployment logs using <code>repo</code>
-               <br/>4. <code>user</code> reads traffic stats using <code>repo</code>
+               <br/>4. <code>user</code> reads usage stats using <code>repo</code>
                <br/>5. <code>user</code> compensates usage using <code>repo</code>
                <br/>6. <code>user</code> terminates <code>repo</code>
             </td>

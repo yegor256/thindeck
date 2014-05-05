@@ -15,7 +15,7 @@ The following table describes all technical details of Use Case `UC5`:
          <tr>
             <td>Signature</td>
             <td>
-               <code>_self</code> reads traffic stats using <code>_arg0</code>
+               <code>user</code> reads usage stats using <code>repo</code>
             </td>
          </tr>
          <tr>
@@ -25,11 +25,14 @@ The following table describes all technical details of Use Case `UC5`:
          <tr>
             <td>Actors</td>
             <td>
-               <code>_arg0</code> as Repository</td>
+               <code>user</code> as User; <code>repo</code> as Repository</td>
          </tr>
          <tr>
-            <td>Brief</td>
-            <td>"The user clicks his repository in his account page and opens a new page with information about CPU usage and traffic consumption"</td>
+            <td>Success Flow</td>
+            <td>1. <code>user</code> "selects a time interval, like: last 7 days, last month, custom (from date, to date)"<br/>2. <code>system</code> "reads usage records corresounding to the repo within specified time interval"<br/>3. <code>system</code> "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
+    Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
+    Last row contains totals by all containers. The values in the table are usage stats by container
+    within specified time interval"</td>
          </tr>
       </tbody>
    </table>
@@ -44,6 +47,20 @@ Actors taking participation in the Use Case have the following properties:
          </tr>
       </thead>
       <tbody>
+         <tr>
+            <td>User</td>
+            <td>"a person identified in the system (logged in)"<ul>
+                  <li>
+                     <code>repo</code>: Repository</li>
+                  <li>
+                     <code>URN</code>:  "a unique identifier of itself, for example urn:github:526301"</li>
+                  <li>
+                     <code>authTokens</code>:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."</li>
+                  <li>
+                     <code>balance</code>:  "amount of money available, can be stored as integer number of cents"</li>
+               </ul>
+            </td>
+         </tr>
          <tr>
             <td>User</td>
             <td>"a person identified in the system (logged in)"<ul>
