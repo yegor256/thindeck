@@ -1,5 +1,14 @@
 System is "a web hosting that deploys itself".
 
+Docker is "the technology on which System utilizes. Reasons for choosing this technology over alternatives are:
+Cost: Docker is an Open Source project
+File system isolation: each process container runs in a completely separate root file system.
+Resource isolation: system resources like CPU and memory can be allocated differently to each process container, using cgroups.
+Network isolation: each process container runs in its own network namespace, with a virtual interface and IP address of its own.
+Copy-on-write: root file systems are created using copy-on-write, which makes deployment extremely fast, memory-cheap and disk-cheap.
+Logging: the standard streams (stdout/stderr/stdin) of each process container are collected and logged for real-time or batch retrieval.
+Change management: changes to a container's file system can be committed into a new image and re-used to create more containers. No templating or manual configuration required".
+
 TrafficConsumpion is "a measure of how much data a user us using inside their container. 
 Traffic Consumption is determined by calculating all the data that user's container sends to or receives from the internet during deployment or regular operation. User will then be charged per GB of traffic consumed".
 
