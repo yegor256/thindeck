@@ -35,7 +35,11 @@ b49c63:UC10 is a must.
 UC10 where Anonymous (a anonymous) logs in using User(a user):
     1. The system "from now on treats the anonymous as a User".
 
-Repository is "a storage of source code together with Dockerfile".
+Repository is "a storage of source code together with Dockerfile. One repository may have a number
+	of containers running at the same time. We will guarantee our users that their websites will
+	always be available online. In order to achieve this, we will have to have redundancy.
+	We will start a number of containers. Moreover, we will increase their number according to the
+	load - the more traffic a website is getting, the bigger the number of containers".
 
 Repository needs:
     name as "a unique name of the repo in user's account",
@@ -99,24 +103,22 @@ UC7 where User terminates Repository:
     the Docker container, close all ports, and stops routing domain names.
     This operation is irrevertable".
 
-f623bb:UC11 is a must.
+f16c24:UC11 is a specified.
+f16c24:UC11 is a must.
 UC11 where User(a user) stops deploying using Repository(a repo):
-    1. The user "tells the system to stop deploying the repo";
-    2. The system "terminates the Docker container, closes all ports, and 
-    stops routing domain names";
-    3. The system updates the deployment;
-    4. The system "adds the 'deployment stopped' event to the deployment log".
-UC11/2 when "the repository is not deployed":
+    1. The system "terminates all Docker containers deployed for the repo,
+	closes all ports, and stops routing domain names";
+    2. The system "adds the 'deployment stopped' event to the deployment log".
+UC11/1 when "the repository is not deployed":
     1. Fail since "a message that the repository is not deployed".
 
-6c345a:UC12 is a must.
+4f6a11:UC12 is a specified.
+4f6a11:UC12 is a must.
 UC12 where User(a user) starts deploying using Repository(a repo):
-    1. The user "tells the system to deploy the repo";
-    2. The system creates Deployment(a deployment);
-    3. The system "creates a Docker container using the repo, configures it 
+    1. The system creates Deployment(a deployment);
+    2. The system "creates a Docker container using the repo, configures it 
     using dockerfile, starts the container and applies the configuration 
     defined in Manifest";
-    4. The system updates the deployment;
-    5. The system "adds the 'deployment started' event to the deployment log".
-UC12/2 when "the repository is already deployed":
+    3. The system "adds the 'deployment started' event to the deployment log".
+UC12/1 when "the repository is already deployed":
     1. Fail since "a message that the repository is already deployed".
