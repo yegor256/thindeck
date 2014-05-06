@@ -28,8 +28,8 @@ The following table describes all technical details of Use Case `UC4`:
                <code>_arg0</code> as Repository</td>
          </tr>
          <tr>
-            <td>Brief</td>
-            <td>"The user clicks his repository and opens a page with a list of latest deployments. Every Deployment can be viewed as plain text in a browser, after Deployment has been executed. System will not display logs in real-time (live)"</td>
+            <td>Success Flow</td>
+            <td>1. <code>user</code> "requests a list of deployments for the Repository"<br/>2. <code>system</code> "displays a list of deployments that has already been executed"<br/>3. <code>user</code> "chooses a deployment and initiates viewing its log"<br/>4. <code>system</code> "displays a log for the chosen deployment"</td>
          </tr>
       </tbody>
    </table>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-05-05T20:26:54">
+<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-05-06T12:20:02">
    <requs>
       <version>1.7.1</version>
       <revision>64c439c</revision>
@@ -35,10 +35,10 @@ install Thindeck locally and host containers himself</informal>
             <where>27</where>
             <where>29</where>
             <where>72</where>
-            <where>92</where>
-            <where>99</where>
-            <where>109</where>
-            <where>115</where>
+            <where>93</where>
+            <where>101</where>
+            <where>111</where>
+            <where>117</where>
          </mentioned>
          <info>
             <informal>a person identified in the system (logged in)</informal>
@@ -98,7 +98,7 @@ install Thindeck locally and host containers himself</informal>
             <where>52</where>
             <where>54</where>
             <where>59</where>
-            <where>80</where>
+            <where>81</where>
          </mentioned>
          <info>
             <informal>a storage of source code together with Dockerfile</informal>
@@ -433,16 +433,17 @@ install Thindeck locally and host containers himself</informal>
             </step>
          </steps>
       </method>
-      <method seal="7781f7">
+      <method seal="89090f">
          <id>UC2</id>
          <attributes>
-            <attribute seal="7781f7">specified</attribute>
-            <attribute seal="7781f7">must</attribute>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
             <where>70</where>
             <where>71</where>
             <where>72</where>
+            <where>77</where>
          </mentioned>
          <bindings>
             <binding>
@@ -452,12 +453,39 @@ install Thindeck locally and host containers himself</informal>
          </bindings>
          <object>_self</object>
          <signature>registers</signature>
-         <info>
-            <informal>The user enters a new unique name of the repository,
-    its URI and an optional SSH key (should be all in one form). Then
-    he clicks ADD and the repository appears in the list of other
-    repositories in his account</informal>
-         </info>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>73</where>
+               </mentioned>
+               <object>user</object>
+               <signature>"enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data"</signature>
+               <exceptions>
+                  <exception>
+                     <when>data is incorrect</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>77</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"repository cannot be registered"</signature>
+                        </step>
+                     </steps>
+                  </exception>
+               </exceptions>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>74</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"adds the Repository and displays it in the list of other repositories in the user account"</signature>
+            </step>
+         </steps>
       </method>
       <method seal="433912">
          <id>UC3</id>
@@ -466,9 +494,9 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="433912">must</attribute>
          </attributes>
          <mentioned>
-            <where>78</where>
             <where>79</where>
             <where>80</where>
+            <where>81</where>
          </mentioned>
          <bindings>
             <binding>
@@ -489,16 +517,16 @@ install Thindeck locally and host containers himself</informal>
     track its CPU and traffic consumption, and assign to its owner</informal>
          </info>
       </method>
-      <method seal="28b36f">
+      <method seal="855fd4">
          <id>UC4</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>90</where>
             <where>91</where>
             <where>92</where>
+            <where>93</where>
          </mentioned>
          <bindings>
             <binding>
@@ -515,11 +543,40 @@ install Thindeck locally and host containers himself</informal>
          <args>
             <arg>_arg0</arg>
          </args>
-         <info>
-            <informal>The user clicks his repository and opens a page with a list
-    of latest deployments. Every Deployment can be viewed as plain text in a browser,
-    after Deployment has been executed. System will not display logs in real-time (live)</informal>
-         </info>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>94</where>
+               </mentioned>
+               <object>user</object>
+               <signature>"requests a list of deployments for the Repository"</signature>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>95</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"displays a list of deployments that has already been executed"</signature>
+            </step>
+            <step>
+               <number>3</number>
+               <mentioned>
+                  <where>96</where>
+               </mentioned>
+               <object>user</object>
+               <signature>"chooses a deployment and initiates viewing its log"</signature>
+            </step>
+            <step>
+               <number>4</number>
+               <mentioned>
+                  <where>97</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"displays a log for the chosen deployment"</signature>
+            </step>
+         </steps>
       </method>
       <method seal="991382">
          <id>UC5</id>
@@ -528,9 +585,9 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="991382">must</attribute>
          </attributes>
          <mentioned>
-            <where>97</where>
-            <where>98</where>
             <where>99</where>
+            <where>100</where>
+            <where>101</where>
          </mentioned>
          <bindings>
             <binding>
@@ -555,7 +612,7 @@ install Thindeck locally and host containers himself</informal>
             <step>
                <number>1</number>
                <mentioned>
-                  <where>100</where>
+                  <where>102</where>
                </mentioned>
                <object>user</object>
                <signature>"selects a time interval, like: last 7 days, last month, custom (from date, to date)"</signature>
@@ -563,7 +620,7 @@ install Thindeck locally and host containers himself</informal>
             <step>
                <number>2</number>
                <mentioned>
-                  <where>101</where>
+                  <where>103</where>
                </mentioned>
                <object>system</object>
                <signature>"reads usage records corresounding to the repo within specified time interval"</signature>
@@ -571,7 +628,7 @@ install Thindeck locally and host containers himself</informal>
             <step>
                <number>3</number>
                <mentioned>
-                  <where>102</where>
+                  <where>104</where>
                </mentioned>
                <object>system</object>
                <signature>"shows the user a table with these columns: Container (id), Inbound traffic (Gb),
@@ -588,9 +645,9 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="cc7e07">must</attribute>
          </attributes>
          <mentioned>
-            <where>107</where>
-            <where>108</where>
             <where>109</where>
+            <where>110</where>
+            <where>111</where>
          </mentioned>
          <bindings>
             <binding>
@@ -619,9 +676,9 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="70cee1">must</attribute>
          </attributes>
          <mentioned>
-            <where>113</where>
-            <where>114</where>
             <where>115</where>
+            <where>116</where>
+            <where>117</where>
          </mentioned>
          <bindings>
             <binding>
@@ -658,7 +715,7 @@ Key success factors are:
 </informal>
          </info>
          <mentioned>
-            <where>132</where>
+            <where>135</where>
          </mentioned>
       </page>
    </pages>

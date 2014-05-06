@@ -67,13 +67,14 @@ Manifest is "a YAML configuration file, stored in the repository, and
 UC1/1 when "repo already exists":
     1. Fail since "a message that the repository exists already in his account".
 
-7781f7:UC2 is specified.
-7781f7:UC2 is a must.
+:UC2 is specified.
+:UC2 is a must.
 UC2 where User registers Repository:
-    "The user enters a new unique name of the repository,
-    its URI and an optional SSH key (should be all in one form). Then
-    he clicks ADD and the repository appears in the list of other
-    repositories in his account".
+    1. The user "enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data";
+    2. The system "adds the Repository and displays it in the list of other repositories in the user account".
+
+UC2/1 when "data is incorrect":
+    1. Fail since "repository cannot be registered".
 
 433912:UC3 is specified.
 433912:UC3 is a must.
@@ -90,9 +91,10 @@ UC3 where Repository deploys itself:
 :UC4 is specified.
 :UC4 is a must.
 UC4 where User reads deployment logs of Repository:
-    "The user clicks his repository and opens a page with a list
-    of latest deployments. Every Deployment can be viewed as plain text in a browser,
-    after Deployment has been executed. System will not display logs in real-time (live)".
+    1. The user "requests a list of deployments for the Repository";
+    2. The system "displays a list of deployments that has already been executed";
+    3. The user "chooses a deployment and initiates viewing its log";
+    4. The system "displays a log for the chosen deployment".
 
 991382:UC5 is specified.
 991382:UC5 is a must.
@@ -116,6 +118,7 @@ UC7 where User terminates Repository:
     "The user just removes the repository and we immediately terminate
     the Docker container, close all ports, and stops routing domain names.
     This operation is irrevertable".
+
 Vision: """
 
 Requirements providers are:

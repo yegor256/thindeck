@@ -26,8 +26,8 @@ The following table describes all technical details of Use Case `UC2`:
             <td/>
          </tr>
          <tr>
-            <td>Brief</td>
-            <td>"The user enters a new unique name of the repository, its URI and an optional SSH key (should be all in one form). Then he clicks ADD and the repository appears in the list of other repositories in his account"</td>
+            <td>Success Flow</td>
+            <td>1. <code>user</code> "enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data"<br/>2. <code>system</code> "adds the Repository and displays it in the list of other repositories in the user account"</td>
          </tr>
       </tbody>
    </table>

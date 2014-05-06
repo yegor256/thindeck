@@ -616,8 +616,8 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td/&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
-            &lt;td&gt;Brief&lt;/td&gt;
-            &lt;td&gt;"The user enters a new unique name of the repository, its URI and an optional SSH key (should be all in one form). Then he clicks ADD and the repository appears in the list of other repositories in his account"&lt;/td&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; "enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data"&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "adds the Repository and displays it in the list of other repositories in the user account"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -677,8 +677,8 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td/&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
-            &lt;td&gt;Brief&lt;/td&gt;
-            &lt;td&gt;"The user enters a new unique name of the repository, its URI and an optional SSH key (should be all in one form). Then he clicks ADD and the repository appears in the list of other repositories in his account"&lt;/td&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; "enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data"&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "adds the Repository and displays it in the list of other repositories in the user account"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -866,8 +866,8 @@ Actors taking participation in the Use Case have the following properties:
                &lt;code&gt;_arg0&lt;/code&gt; as Repository&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
-            &lt;td&gt;Brief&lt;/td&gt;
-            &lt;td&gt;"The user clicks his repository and opens a page with a list of latest deployments. Every Deployment can be viewed as plain text in a browser, after Deployment has been executed. System will not display logs in real-time (live)"&lt;/td&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; "requests a list of deployments for the Repository"&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "displays a list of deployments that has already been executed"&lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; "chooses a deployment and initiates viewing its log"&lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "displays a log for the chosen deployment"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -943,8 +943,8 @@ Actors taking participation in the Use Case have the following properties:
                &lt;code&gt;_arg0&lt;/code&gt; as Repository&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
-            &lt;td&gt;Brief&lt;/td&gt;
-            &lt;td&gt;"The user clicks his repository and opens a page with a list of latest deployments. Every Deployment can be viewed as plain text in a browser, after Deployment has been executed. System will not display logs in real-time (live)"&lt;/td&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; "requests a list of deployments for the Repository"&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "displays a list of deployments that has already been executed"&lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; "chooses a deployment and initiates viewing its log"&lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "displays a log for the chosen deployment"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
