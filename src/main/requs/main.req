@@ -71,8 +71,8 @@ UC3 where Repository deploys itself:
     the latest version of the source code. Besides Dockerfile, which is used
     for the Docker container, we should look for a Manifest of the repository.
     According to the informaiton in the Manifest we should configure the
-    container after its start. While the repository is used, we should
-    track its CPU and traffic consumption, and assign to its owner".
+    container after its start. While the repository is used, we should track its CPU 
+    and traffic consumption, and assign to its owner both in quantity and money value".
 
 :UC4 is specified.
 :UC4 is a must.
@@ -95,9 +95,9 @@ UC5 where User(a user) reads usage stats using Repository(a repo):
 cc7e07:UC6 is specified.
 cc7e07:UC6 is a must.
 UC6 where User compensates usage of Repository:
-    "The user adds funds to his account, when it goes to a negative value.
-    Funds can be added through PayPal only".
-
+   "The user prepays funds to his account. When it goes to a value below 5$ the account is blocked
+   and needs to be topped up. Funds can be added through chosen payment system".
+   
 70cee1:UC7 is specified.
 70cee1:UC7 is a must.
 UC7 where User terminates Repository:
