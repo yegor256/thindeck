@@ -59,7 +59,12 @@ Repository needs:
 Repository includes:
     deployment-s? as Deployment.
 
-Deployment is "a result (plain text log) of a Docker container start".
+Deployment is "a summary statistics of Containers related to a Repository, with their statuses and text logs".
+
+Deployment includes:
+    container-s as Container.
+
+Container is "a virtual operating system running a Repository".
 
 Manifest is "a YAML configuration file, stored in the repository, and
     includes a) list of domain names, b) list of open ports.".
