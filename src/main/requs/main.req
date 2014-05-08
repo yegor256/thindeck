@@ -35,10 +35,10 @@ UC10 where Anonymous (a anonymous) logs in using User(a user):
     1. The system "from now on treats the anonymous as a User".
 
 Repository is "a storage of source code together with Dockerfile. One repository may have a number
-	of containers running at the same time. We will guarantee our users that their websites will
-	always be available online. In order to achieve this, we will have to have redundancy.
-	We will start a number of containers. Moreover, we will increase their number according to the
-	load - the more traffic a website is getting, the bigger the number of containers".
+    of containers running at the same time. We will guarantee our users that their websites will
+    always be available online. In order to achieve this, we will have to have redundancy.
+    We will start a number of containers. Moreover, we will increase their number according to the
+    load - the more traffic a website is getting, the bigger the number of containers".
 
 Repository needs:
     name as "a unique name of the repo in user's account",
@@ -66,15 +66,15 @@ UC1/1 when "repo already exists":
 UC2 where User registers Repository:
     1. The user "enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data";
     2. The system creates Repository(a repo);
-	3. The system "displays a repo in the list of other repositories in the user account";
-	4. The system deploys the repo;
-	5. The system "periodically (every 5 minutes) pulls the changes of the repository from its remote source".
+    3. The system "displays a repo in the list of other repositories in the user account";
+    4. The system deploys the repo;
+    5. The system "periodically (every 5 minutes) pulls the changes of the repository from its remote source".
 UC2/1 when "data is incorrect":
     1. Fail since "repository cannot be registered".
 UC2/5 when "system detected changes in repository after it was pulled from its remote source":
-	1. The system "stops all the Docker containers related to the repo";
-	2. The system deploys the repo.
-	
+    1. The system "stops all the Docker containers related to the repo";
+    2. The system deploys the repo.
+
 ebd6a8:UC3 is specified.
 ebd6a8:UC3 is a must.
 UC3 where System(a system) deploys using Repository (a repo):
