@@ -1,14 +1,13 @@
 System is "a web hosting that deploys itself".
 
-7c7d96:UC1 is specified.
-7c7d96:UC1 is a must.
+4db85a:UC1 is specified.
+4db85a:UC1 is a must.
 UC1 where User (a user) hosts Repository (a repo):
     1. The user registers the repo;
-    2. The repo deploys itself;
-    3. The user reads deployment logs of the repo;
-    4. The user reads usage stats of the repo;
-    5. The user compensates usage of the repo;
-    6. The user terminates the repo.
+    2. The user reads deployment logs of the repo;
+    3. The user reads usage stats of the repo;
+    4. The user compensates usage of the repo;
+    5. The user terminates the repo.
 
 User is "a person identified in the system (logged in)".
 
@@ -35,7 +34,11 @@ b49c63:UC10 is a must.
 UC10 where Anonymous (a anonymous) logs in using User(a user):
     1. The system "from now on treats the anonymous as a User".
 
-Repository is "a storage of source code together with Dockerfile".
+Repository is "a storage of source code together with Dockerfile. One repository may have a number
+    of containers running at the same time. We will guarantee our users that their websites will
+    always be available online. In order to achieve this, we will have to have redundancy.
+    We will start a number of containers. Moreover, we will increase their number according to the
+    load - the more traffic a website is getting, the bigger the number of containers".
 
 Repository needs:
     name as "a unique name of the repo in user's account",
@@ -58,29 +61,29 @@ Manifest is "a YAML configuration file, stored in the repository, and
 UC1/1 when "repo already exists":
     1. Fail since "a message that the repository exists already in his account".
 
-:UC2 is specified.
-:UC2 is a must.
+586117:UC2 is specified.
+586117:UC2 is a must.
 UC2 where User registers Repository:
     1. The user "enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data";
-    2. The system "adds the Repository and displays it in the list of other repositories in the user account".
-
+    2. The system creates Repository(a repo);
+    3. The system "displays a repo in the list of other repositories in the user account";
+    4. The system deploys the repo;
+    5. The system "periodically (every 5 minutes) pulls the changes of the repository from its remote source".
 UC2/1 when "data is incorrect":
     1. Fail since "repository cannot be registered".
+UC2/5 when "system detected changes in repository after it was pulled from its remote source":
+    1. The system "stops all the Docker containers related to the repo";
+    2. The system deploys the repo.
 
-433912:UC3 is specified.
-433912:UC3 is a must.
-UC3 where Repository deploys itself:
-    "We fetch the repository every five minutes and check the difference
-    between existing source code and the latest version. If there are
-    any changes, we stop its Docker container, and start a new one with
-    the latest version of the source code. Besides Dockerfile, which is used
-    for the Docker container, we should look for a Manifest of the repository.
-    According to the informaiton in the Manifest we should configure the
-    container after its start. While the repository is used, we should
-    track its CPU and traffic consumption, and assign to its owner".
+ebd6a8:UC3 is specified.
+ebd6a8:UC3 is a must.
+UC3 where System(a system) deploys using Repository (a repo):
+    1. The system "starts a new Docker container with the latest version of the source code configuring it as defined in Dockerfile";
+    2. The system "applies the configuration defined in Manifest file located in the repo to the container";
+    3. The system "tracks the usage of CPU time and traffic by the container".
 
-:UC4 is specified.
-:UC4 is a must.
+855fd4:UC4 is specified.
+855fd4:UC4 is a must.
 UC4 where User reads deployment logs of Repository:
     1. The user "requests a list of deployments for the Repository";
     2. The system "displays a list of deployments that has already been executed";
