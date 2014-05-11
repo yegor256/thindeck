@@ -1,0 +1,13 @@
+Hoster is "a an owner of a web server, who wants to
+install Thindeck locally and host containers himself".
+
+System is "System under Development (thindeck itself)".
+
+d8d0c9:UC8 is specified.
+d8d0c9:UC8 is a must.
+UC8 where Hoster install SuD:
+    "he just downloads the app (either as a TGZ archive of RPM package
+    or Chef cookbook, or any of that) and installs it locally. Then he
+    starts it as a Java standalone app, or Linux service, or something
+    similar. And it works with a local collection of users and local
+    docker installation".

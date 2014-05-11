@@ -1,0 +1,5 @@
+language: java
+install:
+  - sudo apt-get install graphviz
+script: 
+  - mvn clean install -Pqulice --batch-mode --errors
