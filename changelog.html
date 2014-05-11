@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!--
+ * Copyright (c) 2012-2014, jcabi.com
+ * All rights reserved.
+ -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>thindeck - Change Log Report</title>
+        <link media="all" rel="stylesheet" type="text/css" href="./css/jcabi.css"/>
+                            <script>
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-1963507-30']);
+                _gaq.push(['_trackPageview']);
+                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+                                                                                                                
+<link rel="shortcut icon" href="http://img.thindeck.com/favicon.ico"/>
+                                            <script src="./js/jquery-1.8.3.min.js"></script>
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
+        <link href="./css/jcabi.css" rel="stylesheet"/>
+        <script>
+            $(document).ready(
+                function() {
+                    $(".menu-button").click(
+                        function() {
+                            if ($("#here-goes-menu").attr("class") == "menu-off") {
+                                $("#menu").clone().attr("class", "mobile-menu").appendTo("#here-goes-menu");
+                                $("#here-goes-menu").attr("class", "menu-on");
+                            } else {
+                                $(".mobile-menu").hide();
+                                $("#here-goes-menu").attr("class", "menu-off");
+                            }
+                        }
+                    );
+                }
+            );
+        </script>
+    </head>
+    <body>
+                <section class="page">
+            <nav class="menu-section">
+                <ul id="menu">
+                                                                                    <li>
+                            Overview
+                                                            <ul>
+                                                                                                    <li>
+                                                                                    <a href="index.html" title="Introduction">Introduction</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="architecture.html" title="Architecture">Architecture</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                            <li>
+                            Project Documentation
+                                                            <ul>
+                                                                                                    <li>
+                                                                                    <a href="project-info.html" title="Project Information">Project Information</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </li>
+                                                                                                                        <li>
+                                                                                    <a href="project-reports.html" title="Project Reports">Project Reports</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <ul>
+                                                                                                    <li>
+                                                                                    <a href="rempl.html" title="REMPL">REMPL</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="surefire-report.html" title="Surefire Report">Surefire Report</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                            <strong>                        <a href="changelog.html" title="Change Log">Change Log</a>
+        </strong>
+                                                                                                                                                                <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="dev-activity.html" title="Developer Activity">Developer Activity</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="file-activity.html" title="File Activity">File Activity</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="dependency-updates-report.html" title="Dependency Updates Report">Dependency Updates Report</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="plugin-updates-report.html" title="Plugin Updates Report">Plugin Updates Report</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="github-report.html" title="GitHub Report">GitHub Report</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="requs.html" title="Requs">Requs</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                    </ul>
+            </nav>
+            <div id="right-side">
+                <div id="content">
+                    <i class="menu-button fa fa-align-justify"></i>
+                    <div class="logo-section">
+                        <a href="http://doc.thindeck.com/" title="${decoration.bannerLeft.title}">
+                            <img src="http://img.thindeck.com/logo-384x128.png"
+                                alt="thindeck.com"
+                                                                    width="192"
+                                                                                                    height="64"
+                                                            />
+                        </a>
+                    </div>
+                    <div class="date">
+                        <div class="date-numbers">
+                            <strong>1.0-SNAPSHOT</strong>
+                            
+                            07-May-2014
+                        </div>
+                                                                            <div class="github">
+                                <iframe
+                                    class="github-large"
+                                    src="http://ghbtns.com/github-btn.html?user=yegor256&amp;repo=thindeck&amp;type=watch&amp;count=true&amp;size=large"
+                                    allowtransparency="true"
+                                    frameborder="0"
+                                    scrolling="0"
+                                    width="170"
+                                    height="30">
+                                </iframe>
+                                <iframe
+                                    class="github-small"
+                                    src="http://ghbtns.com/github-btn.html?user=yegor256&amp;repo=thindeck&amp;type=watch&amp;count=true&amp;size=small"
+                                    allowtransparency="true"
+                                    frameborder="0"
+                                    scrolling="0"
+                                    width="170"
+                                    height="30">
+                                </iframe>
+                            </div>
+                                            </div>
+                    <div id="here-goes-menu" class="menu-off"></div>
+                    <article>
+                        <div class="section">
+<h2>Change Log Report<a name="Change_Log_Report"></a></h2>
+<p>Total number of changed sets: 1</p>
+<div class="section">
+<h3>Changes between 2014-04-07 and 2014-05-08<a name="Changes_between_2014-04-07_and_2014-05-08"></a></h3>
+<p>Total commits: 1<br />Total number of files changed: 15</p>
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>Timestamp</th>
+<th>Author</th>
+<th>Details</th></tr>
+<tr class="b">
+<td>2014-05-07 22:37:47</td>
+<td>Yegor Bugayenko &lt;yegor@tpc2.com&gt;</td>
+<td><a class="externalLink" href="https://github.com/yegor256/thindeck/.gitattributes"><b>.gitattributes</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/.gitattributes?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/.gitignore"><b>.gitignore</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/.gitignore?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/.travis.yml"><b>.travis.yml</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/.travis.yml?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/LICENSE.txt"><b>LICENSE.txt</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/LICENSE.txt?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/README.md"><b>README.md</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/README.md?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/pom.xml"><b>pom.xml</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/pom.xml?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/src/main/plantuml/README.md">src/main/plantuml/<b>README.md</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/src/main/plantuml/README.md?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/src/main/requs/app.req">src/main/requs/<b>app.req</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/src/main/requs/app.req?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/src/main/requs/main.req">src/main/requs/<b>main.req</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/src/main/requs/main.req?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/src/main/requs/vision.req">src/main/requs/<b>vision.req</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/src/main/requs/vision.req?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/src/site/apt/404.apt.vm">src/site/apt/<b>404.apt.vm</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/src/site/apt/404.apt.vm?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/src/site/apt/architecture.apt.vm">src/site/apt/<b>architecture.apt.vm</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/src/site/apt/architecture.apt.vm?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/src/site/apt/index.apt.vm">src/site/apt/<b>index.apt.vm</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/src/site/apt/index.apt.vm?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/src/site/resources/CNAME">src/site/resources/<b>CNAME</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/src/site/resources/CNAME?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><a class="externalLink" href="https://github.com/yegor256/thindeck/src/site/site.xml">src/site/<b>site.xml</b></a> <a class="externalLink" href="https://github.com/yegor256/thindeck/src/site/site.xml?rev=36a0f176481f1b8eb60d703c645ea5ad99bc8d33&amp;content-type=text/vnd.viewcvs-markup">v 36a0f176481f1b8eb60d703c645ea5ad99bc8d33</a><br /><br />#112 containers inside deployment</td></tr></table></div></div>
+                    </article>
+                    <img class="maven-mobile" src="./images/built-by-maven.png" alt="built by maven"/>
+                </div>
+                <footer class="legal-notes">
+                    Copyright &#169;
+                                                                2014
+                                        <br/>
+                    Thindeck Inc., All Rights Reserved.
+                    <br/>
+                    <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+                </footer>
+            </div>
+        </section>
+    </body>
+</html>

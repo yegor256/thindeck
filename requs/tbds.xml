@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="tbds.xsl" type="text/xsl"?><tbds>
+   <tbd id="TBD-bcac18c96">
+      <subject>UC8</subject>
+      <description>Method UC8 has an informal description that increases its ambiguity and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-b94828a8f">
+      <subject>UC3</subject>
+      <description>Method UC3 has an informal description that increases its ambiguity and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-13e4493f9">
+      <subject>UC6</subject>
+      <description>Method UC6 has an informal description that increases its ambiguity and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-ddbc1f81e">
+      <subject>UC7</subject>
+      <description>Method UC7 has an informal description that increases its ambiguity and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-1a3fc0478">
+      <subject>UC9</subject>
+      <description>Step #1 in method UC9 has an informal signature "initiates sign in via one of auth providers, e.g., Facebook, Google+, etc." that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-c39f7cf61">
+      <subject>UC9</subject>
+      <description>Step #2 in method UC9 has an informal signature "requests permission from the OAuth provider chosen by the anonymous" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-79d9b669f">
+      <subject>UC9</subject>
+      <description>Step #4 in method UC9 has an informal signature "adds $5 to the user.balance" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-cea9aa291">
+      <subject>UC10</subject>
+      <description>Step #1 in method UC10 has an informal signature "from now on treats the anonymous as a User" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-56b633ddc">
+      <subject>UC2</subject>
+      <description>Step #1 in method UC2 has an informal signature "enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-5111ca0e8">
+      <subject>UC2</subject>
+      <description>Step #2 in method UC2 has an informal signature "adds the Repository and displays it in the list of other repositories in the user account" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-0db05f388">
+      <subject>UC4</subject>
+      <description>Step #1 in method UC4 has an informal signature "requests a list of deployments for the Repository" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-a1d4127b7">
+      <subject>UC4</subject>
+      <description>Step #2 in method UC4 has an informal signature "displays a list of deployments that has already been executed" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-59199aa9f">
+      <subject>UC4</subject>
+      <description>Step #3 in method UC4 has an informal signature "chooses a deployment and initiates viewing its log" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-eb4f47af6">
+      <subject>UC4</subject>
+      <description>Step #4 in method UC4 has an informal signature "displays a log for the chosen deployment" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-474656643">
+      <subject>UC5</subject>
+      <description>Step #1 in method UC5 has an informal signature "selects a time interval, like: last 7 days, last month, custom (from date, to date)" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-cc20632f7">
+      <subject>UC5</subject>
+      <description>Step #2 in method UC5 has an informal signature "reads usage records corresounding to the repo within specified time interval" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-4b6bd2bf4">
+      <subject>UC5</subject>
+      <description>Step #3 in method UC5 has an informal signature "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
+    Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
+    Last row contains totals by all containers. The values in the table are usage stats by container
+    within specified time interval" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+</tbds>

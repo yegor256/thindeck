@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-05-07T21:09:46">
+   <requs>
+      <version>1.7.1</version>
+      <revision>64c439c</revision>
+      <date>2014-05-05 16:29</date>
+   </requs>
+   <types>
+      <type>
+         <name>Hoster</name>
+         <mentioned>
+            <where>1</where>
+            <where>8</where>
+         </mentioned>
+         <info>
+            <informal>a an owner of a web server, who wants to
+install Thindeck locally and host containers himself</informal>
+         </info>
+      </type>
+      <type>
+         <name>System</name>
+         <mentioned>
+            <where>4</where>
+            <where>15</where>
+         </mentioned>
+         <info>
+            <informal>System under Development (thindeck itself)</informal>
+            <informal>a web hosting that deploys itself</informal>
+         </info>
+      </type>
+      <type>
+         <name>User</name>
+         <mentioned>
+            <where>19</where>
+            <where>27</where>
+            <where>29</where>
+            <where>77</where>
+            <where>98</where>
+            <where>106</where>
+            <where>116</where>
+            <where>122</where>
+         </mentioned>
+         <info>
+            <informal>a person identified in the system (logged in)</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>repo</name>
+               <mentioned>
+                  <where>30</where>
+               </mentioned>
+               <arity>ANY</arity>
+               <type>Repository</type>
+            </slot>
+            <slot>
+               <name>URN</name>
+               <mentioned>
+                  <where>31</where>
+               </mentioned>
+               <info>
+                  <informal>a unique identifier of itself, for example urn:github:526301</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>authTokens</name>
+               <mentioned>
+                  <where>32</where>
+               </mentioned>
+               <info>
+                  <informal>a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc.</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>balance</name>
+               <mentioned>
+                  <where>33</where>
+               </mentioned>
+               <info>
+                  <informal>amount of money available, can be stored as integer number of cents</informal>
+               </info>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>Anonymous</name>
+         <mentioned>
+            <where>35</where>
+            <where>37</where>
+            <where>49</where>
+         </mentioned>
+         <info>
+            <informal>a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in</informal>
+         </info>
+      </type>
+      <type>
+         <name>Repository</name>
+         <mentioned>
+            <where>52</where>
+            <where>54</where>
+            <where>59</where>
+            <where>86</where>
+         </mentioned>
+         <info>
+            <informal>a storage of source code together with Dockerfile</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>name</name>
+               <mentioned>
+                  <where>55</where>
+               </mentioned>
+               <info>
+                  <informal>a unique name of the repo in user's account</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>URI</name>
+               <mentioned>
+                  <where>56</where>
+               </mentioned>
+               <info>
+                  <informal>a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>key</name>
+               <mentioned>
+                  <where>57</where>
+               </mentioned>
+               <info>
+                  <informal>a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>deployment</name>
+               <mentioned>
+                  <where>60</where>
+               </mentioned>
+               <arity>ANY</arity>
+               <type>Deployment</type>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>Deployment</name>
+         <mentioned>
+            <where>62</where>
+            <where>64</where>
+         </mentioned>
+         <info>
+            <informal>a summary statistics of Containers related to a Repository, with their statuses and text logs</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>container</name>
+               <mentioned>
+                  <where>65</where>
+               </mentioned>
+               <arity>MANY</arity>
+               <type>Container</type>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>Container</name>
+         <mentioned>
+            <where>67</where>
+         </mentioned>
+         <info>
+            <informal>a virtual operating system running a Repository</informal>
+         </info>
+      </type>
+      <type>
+         <name>Manifest</name>
+         <mentioned>
+            <where>69</where>
+         </mentioned>
+         <info>
+            <informal>a YAML configuration file, stored in the repository, and
+    includes a) list of domain names, b) list of open ports.</informal>
+         </info>
+      </type>
+   </types>
+   <methods>
+      <method seal="d8d0c9">
+         <id>UC8</id>
+         <attributes>
+            <attribute seal="d8d0c9">specified</attribute>
+            <attribute seal="d8d0c9">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>6</where>
+            <where>7</where>
+            <where>8</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>Hoster</type>
+            </binding>
+         </bindings>
+         <object>_self</object>
+         <signature>install SuD</signature>
+         <info>
+            <informal>he just downloads the app (either as a TGZ archive of RPM package
+    or Chef cookbook, or any of that) and installs it locally. Then he
+    starts it as a Java standalone app, or Linux service, or something
+    similar. And it works with a local collection of users and local
+    docker installation</informal>
+         </info>
+      </method>
+      <method seal="7c7d96">
+         <id>UC1</id>
+         <attributes>
+            <attribute seal="7c7d96">specified</attribute>
+            <attribute seal="7c7d96">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>17</where>
+            <where>18</where>
+            <where>19</where>
+            <where>73</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>User</type>
+            </binding>
+            <binding>
+               <name>user</name>
+               <type>User</type>
+            </binding>
+            <binding>
+               <name>repo</name>
+               <type>Repository</type>
+            </binding>
+         </bindings>
+         <object>user</object>
+         <signature>hosts</signature>
+         <result>repo</result>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>20</where>
+               </mentioned>
+               <object>user</object>
+               <signature>registers</signature>
+               <result>repo</result>
+               <exceptions>
+                  <exception>
+                     <when>repo already exists</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>73</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"a message that the repository exists already in his account"</signature>
+                        </step>
+                     </steps>
+                  </exception>
+               </exceptions>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>21</where>
+               </mentioned>
+               <object>repo</object>
+               <signature>deploys itself</signature>
+            </step>
+            <step>
+               <number>3</number>
+               <mentioned>
+                  <where>22</where>
+               </mentioned>
+               <object>user</object>
+               <signature>reads deployment logs</signature>
+               <args>
+                  <arg>repo</arg>
+               </args>
+            </step>
+            <step>
+               <number>4</number>
+               <mentioned>
+                  <where>23</where>
+               </mentioned>
+               <object>user</object>
+               <signature>reads usage stats</signature>
+               <args>
+                  <arg>repo</arg>
+               </args>
+            </step>
+            <step>
+               <number>5</number>
+               <mentioned>
+                  <where>24</where>
+               </mentioned>
+               <object>user</object>
+               <signature>compensates usage</signature>
+               <args>
+                  <arg>repo</arg>
+               </args>
+            </step>
+            <step>
+               <number>6</number>
+               <mentioned>
+                  <where>25</where>
+               </mentioned>
+               <object>user</object>
+               <signature>terminates</signature>
+               <result>repo</result>
+            </step>
+         </steps>
+      </method>
+      <method seal="1dcada">
+         <id>UC9</id>
+         <attributes>
+            <attribute seal="1dcada">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>36</where>
+            <where>37</where>
+            <where>44</where>
+            <where>46</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>Anonymous</type>
+            </binding>
+            <binding>
+               <name>anonymous</name>
+               <type>Anonymous</type>
+            </binding>
+            <binding>
+               <name>user</name>
+               <type>User</type>
+            </binding>
+         </bindings>
+         <object>anonymous</object>
+         <signature>signs up</signature>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>38</where>
+               </mentioned>
+               <object>anonymous</object>
+               <signature>"initiates sign in via one of auth providers, e.g., Facebook, Google+, etc."</signature>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>39</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"requests permission from the OAuth provider chosen by the anonymous"</signature>
+               <exceptions>
+                  <exception>
+                     <when>a user is already signed up</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>44</where>
+                           </mentioned>
+                           <object>anonymous</object>
+                           <signature>logs in</signature>
+                        </step>
+                     </steps>
+                  </exception>
+                  <exception>
+                     <when>an OAuth provider denied access</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>46</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"Not authorized by chosen OAuth provider"</signature>
+                        </step>
+                     </steps>
+                  </exception>
+               </exceptions>
+            </step>
+            <step>
+               <number>3</number>
+               <mentioned>
+                  <where>40</where>
+               </mentioned>
+               <object>system</object>
+               <signature>creates</signature>
+               <result>user</result>
+            </step>
+            <step>
+               <number>4</number>
+               <mentioned>
+                  <where>41</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"adds $5 to the user.balance"</signature>
+            </step>
+            <step>
+               <number>5</number>
+               <mentioned>
+                  <where>42</where>
+               </mentioned>
+               <object>anonymous</object>
+               <signature>logs in</signature>
+            </step>
+         </steps>
+      </method>
+      <method seal="b49c63">
+         <id>UC10</id>
+         <attributes>
+            <attribute seal="b49c63">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>48</where>
+            <where>49</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>Anonymous</type>
+            </binding>
+            <binding>
+               <name>anonymous</name>
+               <type>Anonymous</type>
+            </binding>
+            <binding>
+               <name>user</name>
+               <type>User</type>
+            </binding>
+         </bindings>
+         <object>anonymous</object>
+         <signature>logs in</signature>
+         <args>
+            <arg>user</arg>
+         </args>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>50</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"from now on treats the anonymous as a User"</signature>
+            </step>
+         </steps>
+      </method>
+      <method seal="89090f">
+         <id>UC2</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>75</where>
+            <where>76</where>
+            <where>77</where>
+            <where>82</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>User</type>
+            </binding>
+         </bindings>
+         <object>_self</object>
+         <signature>registers</signature>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>78</where>
+               </mentioned>
+               <object>user</object>
+               <signature>"enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data"</signature>
+               <exceptions>
+                  <exception>
+                     <when>data is incorrect</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>82</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"repository cannot be registered"</signature>
+                        </step>
+                     </steps>
+                  </exception>
+               </exceptions>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>79</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"adds the Repository and displays it in the list of other repositories in the user account"</signature>
+            </step>
+         </steps>
+      </method>
+      <method seal="433912">
+         <id>UC3</id>
+         <attributes>
+            <attribute seal="433912">specified</attribute>
+            <attribute seal="433912">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>84</where>
+            <where>85</where>
+            <where>86</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>Repository</type>
+            </binding>
+         </bindings>
+         <object>_self</object>
+         <signature>deploys itself</signature>
+         <info>
+            <informal>We fetch the repository every five minutes and check the difference
+    between existing source code and the latest version. If there are
+    any changes, we stop its Docker container, and start a new one with
+    the latest version of the source code. Besides Dockerfile, which is used
+    for the Docker container, we should look for a Manifest of the repository.
+    According to the informaiton in the Manifest we should configure the
+    container after its start. While the repository is used, we should
+    track its CPU and traffic consumption, and assign to its owner</informal>
+         </info>
+      </method>
+      <method seal="855fd4">
+         <id>UC4</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>96</where>
+            <where>97</where>
+            <where>98</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>User</type>
+            </binding>
+            <binding>
+               <name>_arg0</name>
+               <type>Repository</type>
+            </binding>
+         </bindings>
+         <object>_self</object>
+         <signature>reads deployment logs</signature>
+         <args>
+            <arg>_arg0</arg>
+         </args>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>99</where>
+               </mentioned>
+               <object>user</object>
+               <signature>"requests a list of deployments for the Repository"</signature>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>100</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"displays a list of deployments that has already been executed"</signature>
+            </step>
+            <step>
+               <number>3</number>
+               <mentioned>
+                  <where>101</where>
+               </mentioned>
+               <object>user</object>
+               <signature>"chooses a deployment and initiates viewing its log"</signature>
+            </step>
+            <step>
+               <number>4</number>
+               <mentioned>
+                  <where>102</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"displays a log for the chosen deployment"</signature>
+            </step>
+         </steps>
+      </method>
+      <method seal="991382">
+         <id>UC5</id>
+         <attributes>
+            <attribute seal="991382">specified</attribute>
+            <attribute seal="991382">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>104</where>
+            <where>105</where>
+            <where>106</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>User</type>
+            </binding>
+            <binding>
+               <name>user</name>
+               <type>User</type>
+            </binding>
+            <binding>
+               <name>repo</name>
+               <type>Repository</type>
+            </binding>
+         </bindings>
+         <object>user</object>
+         <signature>reads usage stats</signature>
+         <args>
+            <arg>repo</arg>
+         </args>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>107</where>
+               </mentioned>
+               <object>user</object>
+               <signature>"selects a time interval, like: last 7 days, last month, custom (from date, to date)"</signature>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>108</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"reads usage records corresounding to the repo within specified time interval"</signature>
+            </step>
+            <step>
+               <number>3</number>
+               <mentioned>
+                  <where>109</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"shows the user a table with these columns: Container (id), Inbound traffic (Gb),
+    Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
+    Last row contains totals by all containers. The values in the table are usage stats by container
+    within specified time interval"</signature>
+            </step>
+         </steps>
+      </method>
+      <method seal="cc7e07">
+         <id>UC6</id>
+         <attributes>
+            <attribute seal="cc7e07">specified</attribute>
+            <attribute seal="cc7e07">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>114</where>
+            <where>115</where>
+            <where>116</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>User</type>
+            </binding>
+            <binding>
+               <name>_arg0</name>
+               <type>Repository</type>
+            </binding>
+         </bindings>
+         <object>_self</object>
+         <signature>compensates usage</signature>
+         <args>
+            <arg>_arg0</arg>
+         </args>
+         <info>
+            <informal>The user adds funds to his account, when it goes to a negative value.
+    Funds can be added through PayPal only</informal>
+         </info>
+      </method>
+      <method seal="70cee1">
+         <id>UC7</id>
+         <attributes>
+            <attribute seal="70cee1">specified</attribute>
+            <attribute seal="70cee1">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>120</where>
+            <where>121</where>
+            <where>122</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>User</type>
+            </binding>
+         </bindings>
+         <object>_self</object>
+         <signature>terminates</signature>
+         <info>
+            <informal>The user just removes the repository and we immediately terminate
+    the Docker container, close all ports, and stops routing domain names.
+    This operation is irrevertable</informal>
+         </info>
+      </method>
+   </methods>
+   <pages>
+      <page>
+         <title>Vision</title>
+         <info>
+            <informal>
+
+Requirements providers are:
+
+ * Yegor Bugayenko
+
+Key success factors are:
+
+ * High availability - much higher than anyone else can offer.
+ * Low cost - lower than anyone.
+ * Easy (re)deployment - a unique 'pull' deployment mechanism.
+ * Simple control panel - one form and your site is ready in 5 minutes.".
+
+</informal>
+         </info>
+         <mentioned>
+            <where>140</where>
+         </mentioned>
+      </page>
+   </pages>
+   <errors/>
+   <facets>
+      <facet file="index.xml" id="toc">Table of Contents, List of all facets</facet>
+      <facet file="main.xml" id="srs">Software Requirements Specification, Main Document</facet>
+      <facet file="markdown.xml" id="md">Use Cases and Entities in Markdown</facet>
+      <facet file="pages.xml" id="pages">Markdown Pages</facet>
+      <facet file="ambiguity.xml" id="ambiguity">Ambiguity Analysis</facet>
+      <facet file="tbds.xml" id="tbd">TBDs (to be determined)</facet>
+      <facet file="nfrs.xml" id="nfr">Non-Functional Requirements</facet>
+   </facets>
+</spec>
