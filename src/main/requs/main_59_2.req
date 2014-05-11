@@ -1,0 +1,112 @@
+System is "a web hosting that deploys itself".
+
+7c7d96:UC1 is specified.
+7c7d96:UC1 is a must.
+UC1 where User (a user) hosts Repository (a repo):
+    1. The user registers the repo;
+    2. The repo deploys itself;
+    3. The user reads deployment logs of the repo;
+    4. The user reads usage stats of the repo;
+    5. The user compensates usage of the repo;
+    6. The user terminates the repo.
+
+User is "a person identified in the system (logged in)".
+
+User includes:
+    repo-s? as Repository,
+    URN as "a unique identifier of itself, for example urn:github:526301",
+    authTokens as "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc.",
+    balance as "amount of money available, can be stored as integer number of cents".
+
+Anonymous is "a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in".
+1dcada:UC9 is a must.
+UC9 where Anonymous (a anonymous) signs up:
+    1. The anonymous "initiates sign in via one of auth providers, e.g., Facebook, Google+, etc.";
+    2. The system "requests permission from the OAuth provider chosen by the anonymous";
+    3. The system creates User(a user);
+    4. The system "adds $5 to the user.balance";
+    5. The anonymous logs in.
+UC9/2 when "a user is already signed up":
+    1. The anonymous logs in.
+UC9/2 when "an OAuth provider denied access":
+    1. Fail since "Not authorized by chosen OAuth provider".
+
+b49c63:UC10 is a must.
+UC10 where Anonymous (a anonymous) logs in using User(a user):
+    1. The system "from now on treats the anonymous as a User".
+
+Repository is "a storage of source code together with Dockerfile".
+
+Repository needs:
+    name as "a unique name of the repo in user's account",
+    URI as "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git",
+    key as "a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography".
+
+Repository includes:
+    deployment-s? as Deployment.
+
+Deployment is "a summary statistics of Containers related to a Repository, with their statuses and text logs".
+
+Deployment includes:
+    container-s as Container.
+
+Container is "a virtual operating system running a Repository".
+
+Manifest is "a YAML configuration file, stored in the repository, and
+    includes a) list of domain names, b) list of open ports.".
+
+UC1/1 when "repo already exists":
+    1. Fail since "a message that the repository exists already in his account".
+
+:UC2 is specified.
+:UC2 is a must.
+UC2 where User registers Repository:
+    1. The user "enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data";
+    2. The system "adds the Repository and displays it in the list of other repositories in the user account".
+
+UC2/1 when "data is incorrect":
+    1. Fail since "repository cannot be registered".
+
+433912:UC3 is specified.
+433912:UC3 is a must.
+UC3 where Repository deploys itself:
+    "We fetch the repository every five minutes and check the difference
+    between existing source code and the latest version. If there are
+    any changes, we stop its Docker container, and start a new one with
+    the latest version of the source code. Besides Dockerfile, which is used
+    for the Docker container, we should look for a Manifest of the repository.
+    According to the informaiton in the Manifest we should configure the
+    container after its start. While the repository is used, we should
+    track its CPU and traffic consumption, and assign to its owner".
+
+:UC4 is specified.
+:UC4 is a must.
+UC4 where User reads deployment logs of Repository:
+    1. The user "requests a list of deployments for the Repository";
+    2. The system "displays a list of deployments that has already been executed";
+    3. The user "chooses a deployment and initiates viewing its log";
+    4. The system "displays a log for the chosen deployment".
+
+991382:UC5 is specified.
+991382:UC5 is a must.
+UC5 where User(a user) reads usage stats using Repository(a repo):
+    1. The user "selects a time interval, like: last 7 days, last month, custom (from date, to date)";
+    2. The system "reads usage records corresounding to the repo within specified time interval";
+    3. The system "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
+    Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
+    Last row contains totals by all containers. The values in the table are usage stats by container
+    within specified time interval".
+
+cc7e07:UC6 is specified.
+cc7e07:UC6 is a must.
+UC6 where User compensates usage of Repository:
+    "The user adds funds to his account, when it goes to a negative value.
+    Funds can be added through PayPal only".
+
+:UC7 is specified.
+:UC7 is a must.
+UC7 where User (a user) terminates Repository (a repo):
+1. The user deletes the repo;
+2. The system "stops dispatching domain of the repo";
+3. System (the system) deletes Container (the container).
+    
