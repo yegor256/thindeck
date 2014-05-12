@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-05-07T21:09:46">
+<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-05-12T10:45:30">
    <requs>
-      <version>1.7.1</version>
-      <revision>64c439c</revision>
-      <date>2014-05-05 16:29</date>
+      <version>1.8</version>
+      <revision>214442b</revision>
+      <date>2014-05-12 11:38</date>
    </requs>
    <types>
       <type>
