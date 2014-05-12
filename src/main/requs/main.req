@@ -45,15 +45,42 @@ UC9.2/2 when "an OAuth provider denied access":
 UC9.3 where Anonymous (a anonymous) logs in using User(a user):
     1. The system "from now on treats the anonymous as a User".
 
-Repository is "a storage of source code together with Dockerfile".
-
+Repository is "a local copy of files and folders being pulled every 5 minutes from some remote source".
 Repository needs:
     name as "a unique name of the repo in user's account",
-    URI as "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git",
-    key as "a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography".
+    deployment-? as Deployment,
+    dockerFile as "Docker file",
+    manifest as Manifest.
 
-Repository includes:
-    deployment-s? as Deployment.
+GitRepository is Repository.
+GitRepository is "connected to a remote git (github) repository".
+GitRepository includes:
+    uri as "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git",
+    key-? as "a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography".
+
+SvnRepository is Repository.
+SvnRepository is "connected to a remote subversion repository".
+SvnRepository includes:
+    uri as "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git",
+    username-? as "credentials used to read files from the repository",
+    passwors-? as "credentials used to read files from the repository".
+
+FtpRepository is Repository.
+FtpRepository is "connected to a remote FTP server".
+FtpRepository includes:
+    uri as "a URL containing credentials valid to connect to FTP server, for example ftp://user:password@ftpserver/url-path".
+
+DropboxRepository is Repository.
+DropboxRepository is "connected to a shared Dropbox folder".
+DropboxRepository includes: apiKey as "Dropbox specific connection information".
+
+AmazonSthreeRepository is Repository.
+AmazonSthreeRepository is "connected to an Amazon S3 file storage".
+AmazonSthreeRepository includes: apiKey as "Amazon S3 specific connection information".
+
+GoogleDriveRepository is Repository.
+GoogleDriveRepository is "connected to a Google Drive storage".
+GoogleDriveRepository includes: apiKey as "Google Drive specific connection information".
 
 Deployment is "a summary statistics of Containers related to a Repository, with their statuses and text logs".
 
