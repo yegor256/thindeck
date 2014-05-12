@@ -16,21 +16,33 @@
       <subject>UC7</subject>
       <description>Method UC7 has an informal description that increases its ambiguity and has to be eliminated</description>
    </tbd>
-   <tbd id="TBD-c2c72">
-      <subject>UC9</subject>
-      <description>Step #1 in method UC9 has an informal signature "initiates sign in via one of auth providers, e.g., Facebook, Google+, etc." that increases the ambiguity of the entire method and has to be eliminated</description>
+   <tbd id="TBD-0138a">
+      <subject>UC9.1</subject>
+      <description>Step #1 in method UC9.1 has an informal signature "looks at the front page which contains all the information about pricing, 'how it works', etc" that increases the ambiguity of the entire method and has to be eliminated</description>
    </tbd>
-   <tbd id="TBD-aff1a">
-      <subject>UC9</subject>
-      <description>Step #2 in method UC9 has an informal signature "requests permission from the OAuth provider chosen by the anonymous" that increases the ambiguity of the entire method and has to be eliminated</description>
+   <tbd id="TBD-c6056">
+      <subject>UC9.1</subject>
+      <description>Step #2 in method UC9.1 has an informal signature "reads the stats page containing our runtime stats, similar to https://status.github.com/" that increases the ambiguity of the entire method and has to be eliminated</description>
    </tbd>
-   <tbd id="TBD-50d31">
-      <subject>UC9</subject>
-      <description>Step #4 in method UC9 has an informal signature "adds $5 to the user.balance" that increases the ambiguity of the entire method and has to be eliminated</description>
+   <tbd id="TBD-d2b51">
+      <subject>UC9.1</subject>
+      <description>Step #3 in method UC9.1 has an informal signature "reads our terms page including all the legal wordings" that increases the ambiguity of the entire method and has to be eliminated</description>
    </tbd>
-   <tbd id="TBD-1b9ad">
-      <subject>UC10</subject>
-      <description>Step #1 in method UC10 has an informal signature "from now on treats the anonymous as a User" that increases the ambiguity of the entire method and has to be eliminated</description>
+   <tbd id="TBD-b545a">
+      <subject>UC9.2</subject>
+      <description>Step #1 in method UC9.2 has an informal signature "initiates sign in via one of auth providers, e.g., Facebook, Google+, etc." that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-d440a">
+      <subject>UC9.2</subject>
+      <description>Step #2 in method UC9.2 has an informal signature "requests permission from the OAuth provider chosen by the anonymous" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-7a8eb">
+      <subject>UC9.2</subject>
+      <description>Step #4 in method UC9.2 has an informal signature "adds $5 to the user.balance" that increases the ambiguity of the entire method and has to be eliminated</description>
+   </tbd>
+   <tbd id="TBD-d136d">
+      <subject>UC9.3</subject>
+      <description>Step #1 in method UC9.3 has an informal signature "from now on treats the anonymous as a User" that increases the ambiguity of the entire method and has to be eliminated</description>
    </tbd>
    <tbd id="TBD-59ec4">
       <subject>UC2</subject>
@@ -62,7 +74,7 @@
    </tbd>
    <tbd id="TBD-a9df6">
       <subject>UC5</subject>
-      <description>Step #2 in method UC5 has an informal signature "reads usage records corresounding to the repo within specified time interval" that increases the ambiguity of the entire method and has to be eliminated</description>
+      <description>Step #2 in method UC5 has an informal signature "reads HourlyUsage records corresounding to the repo within specified time interval" that increases the ambiguity of the entire method and has to be eliminated</description>
    </tbd>
    <tbd id="TBD-c039f">
       <subject>UC5</subject>

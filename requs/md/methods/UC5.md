@@ -29,7 +29,7 @@ The following table describes all technical details of Use Case `UC5`:
          </tr>
          <tr>
             <td>Success Flow</td>
-            <td>1. <code>user</code> "selects a time interval, like: last 7 days, last month, custom (from date, to date)"<br/>2. <code>system</code> "reads usage records corresounding to the repo within specified time interval"<br/>3. <code>system</code> "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
+            <td>1. <code>user</code> "selects a time interval, like: last 7 days, last month, custom (from date, to date)"<br/>2. <code>system</code> "reads HourlyUsage records corresounding to the repo within specified time interval"<br/>3. <code>system</code> "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
     Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
     Last row contains totals by all containers. The values in the table are usage stats by container
     within specified time interval"</td>
