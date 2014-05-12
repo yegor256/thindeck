@@ -48,9 +48,20 @@ Repository includes:
 Deployment is "a summary statistics of Containers related to a Repository, with their statuses and text logs".
 
 Deployment includes:
-    container-s as Container.
+    container-s as Container,
+    state as "one of: 'deployment in progress' and 'deployed'",
+    hourlyUsage-s? as HourlyUsage.
 
 Container is "a virtual operating system running a Repository".
+
+HourlyUsage is "an atomic track record of the usage of resources".
+HourlyUsage includes:
+    container as Container,
+    hours as "a calendar hour, for example: 2014-05-02T18",
+    cpuSeconds as "how many seconds our CPU spent working with the container during this hour.
+    Can easily be over 3600, since we may have multiple CPU's working with the container",
+    bytesIn as "an integer number of bytes came in the container",
+    bytesOut as "an integer number of bytes came out of the container".
 
 Manifest is "a YAML configuration file, stored in the repository, and
     includes a) list of domain names, b) list of open ports.".
@@ -87,11 +98,11 @@ UC4 where User reads deployment logs of Repository:
     3. The user "chooses a deployment and initiates viewing its log";
     4. The system "displays a log for the chosen deployment".
 
-991382:UC5 is specified.
-991382:UC5 is a must.
+:UC5 is specified.
+:UC5 is a must.
 UC5 where User(a user) reads usage stats using Repository(a repo):
     1. The user "selects a time interval, like: last 7 days, last month, custom (from date, to date)";
-    2. The system "reads usage records corresounding to the repo within specified time interval";
+    2. The system "reads HourlyUsage records corresounding to the repo within specified time interval";
     3. The system "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
     Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
     Last row contains totals by all containers. The values in the table are usage stats by container
