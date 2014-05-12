@@ -60,15 +60,15 @@ Actors taking participation in the Use Case have the following properties:
          </tr>
          <tr>
             <td>Repository</td>
-            <td>"a storage of source code together with Dockerfile"<ul>
+            <td>"a local copy of files and folders being pulled every 5 minutes from some remote source"<ul>
                   <li>
                      <code>name</code>:  "a unique name of the repo in user's account"</li>
                   <li>
-                     <code>URI</code>:  "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git"</li>
-                  <li>
-                     <code>key</code>:  "a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography"</li>
-                  <li>
                      <code>deployment</code>: Deployment</li>
+                  <li>
+                     <code>dockerFile</code>:  "Docker file"</li>
+                  <li>
+                     <code>manifest</code>: Manifest</li>
                </ul>
             </td>
          </tr>

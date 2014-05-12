@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-05-12T12:19:43">
+<?xml-stylesheet href='main.xsl' type='text/xsl'?><spec time="2014-05-12T20:11:57">
    <requs>
       <version>1.8</version>
       <revision>214442b</revision>
@@ -34,11 +34,11 @@ install Thindeck locally and host containers himself</informal>
             <where>19</where>
             <where>27</where>
             <where>29</where>
-            <where>98</where>
-            <where>119</where>
-            <where>127</where>
-            <where>137</where>
-            <where>143</where>
+            <where>125</where>
+            <where>146</where>
+            <where>154</where>
+            <where>164</where>
+            <where>170</where>
          </mentioned>
          <info>
             <informal>a person identified in the system (logged in)</informal>
@@ -97,27 +97,66 @@ install Thindeck locally and host containers himself</informal>
          <name>Repository</name>
          <mentioned>
             <where>62</where>
-            <where>64</where>
-            <where>69</where>
-            <where>107</where>
+            <where>63</where>
+            <where>134</where>
          </mentioned>
          <info>
-            <informal>a storage of source code together with Dockerfile</informal>
+            <informal>a local copy of files and folders being pulled every 5 minutes from some remote source</informal>
          </info>
          <slots>
             <slot>
                <name>name</name>
                <mentioned>
-                  <where>65</where>
+                  <where>64</where>
                </mentioned>
                <info>
                   <informal>a unique name of the repo in user's account</informal>
                </info>
             </slot>
             <slot>
-               <name>URI</name>
+               <name>deployment</name>
+               <mentioned>
+                  <where>65</where>
+               </mentioned>
+               <arity>OPT</arity>
+               <type>Deployment</type>
+            </slot>
+            <slot>
+               <name>dockerFile</name>
                <mentioned>
                   <where>66</where>
+               </mentioned>
+               <info>
+                  <informal>Docker file</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>manifest</name>
+               <mentioned>
+                  <where>67</where>
+               </mentioned>
+               <type>Manifest</type>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>GitRepository</name>
+         <mentioned>
+            <where>69</where>
+            <where>70</where>
+            <where>71</where>
+         </mentioned>
+         <parents>
+            <type>Repository</type>
+         </parents>
+         <info>
+            <informal>connected to a remote git (github) repository</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>uri</name>
+               <mentioned>
+                  <where>72</where>
                </mentioned>
                <info>
                   <informal>a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git</informal>
@@ -126,27 +165,165 @@ install Thindeck locally and host containers himself</informal>
             <slot>
                <name>key</name>
                <mentioned>
-                  <where>67</where>
+                  <where>73</where>
                </mentioned>
+               <arity>OPT</arity>
                <info>
                   <informal>a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography</informal>
                </info>
             </slot>
+         </slots>
+      </type>
+      <type>
+         <name>SvnRepository</name>
+         <mentioned>
+            <where>75</where>
+            <where>76</where>
+            <where>77</where>
+         </mentioned>
+         <parents>
+            <type>Repository</type>
+         </parents>
+         <info>
+            <informal>connected to a remote subversion repository</informal>
+         </info>
+         <slots>
             <slot>
-               <name>deployment</name>
+               <name>uri</name>
                <mentioned>
-                  <where>70</where>
+                  <where>78</where>
                </mentioned>
-               <arity>ANY</arity>
-               <type>Deployment</type>
+               <info>
+                  <informal>a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>username</name>
+               <mentioned>
+                  <where>79</where>
+               </mentioned>
+               <arity>OPT</arity>
+               <info>
+                  <informal>credentials used to read files from the repository</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>passwors</name>
+               <mentioned>
+                  <where>80</where>
+               </mentioned>
+               <arity>OPT</arity>
+               <info>
+                  <informal>credentials used to read files from the repository</informal>
+               </info>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>FtpRepository</name>
+         <mentioned>
+            <where>82</where>
+            <where>83</where>
+            <where>84</where>
+         </mentioned>
+         <parents>
+            <type>Repository</type>
+         </parents>
+         <info>
+            <informal>connected to a remote FTP server</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>uri</name>
+               <mentioned>
+                  <where>85</where>
+               </mentioned>
+               <info>
+                  <informal>a URL containing credentials valid to connect to FTP server, for example ftp://user:password@ftpserver/url-path</informal>
+               </info>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>DropboxRepository</name>
+         <mentioned>
+            <where>87</where>
+            <where>88</where>
+            <where>89</where>
+         </mentioned>
+         <parents>
+            <type>Repository</type>
+         </parents>
+         <info>
+            <informal>connected to a shared Dropbox folder</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>apiKey</name>
+               <mentioned>
+                  <where>89</where>
+               </mentioned>
+               <info>
+                  <informal>Dropbox specific connection information</informal>
+               </info>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>AmazonSthreeRepository</name>
+         <mentioned>
+            <where>91</where>
+            <where>92</where>
+            <where>93</where>
+         </mentioned>
+         <parents>
+            <type>Repository</type>
+         </parents>
+         <info>
+            <informal>connected to an Amazon S3 file storage</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>apiKey</name>
+               <mentioned>
+                  <where>93</where>
+               </mentioned>
+               <info>
+                  <informal>Amazon S3 specific connection information</informal>
+               </info>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>GoogleDriveRepository</name>
+         <mentioned>
+            <where>95</where>
+            <where>96</where>
+            <where>97</where>
+         </mentioned>
+         <parents>
+            <type>Repository</type>
+         </parents>
+         <info>
+            <informal>connected to a Google Drive storage</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>apiKey</name>
+               <mentioned>
+                  <where>97</where>
+               </mentioned>
+               <info>
+                  <informal>Google Drive specific connection information</informal>
+               </info>
             </slot>
          </slots>
       </type>
       <type>
          <name>Deployment</name>
          <mentioned>
-            <where>72</where>
-            <where>74</where>
+            <where>99</where>
+            <where>101</where>
          </mentioned>
          <info>
             <informal>a summary statistics of Containers related to a Repository, with their statuses and text logs</informal>
@@ -155,7 +332,7 @@ install Thindeck locally and host containers himself</informal>
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>75</where>
+                  <where>102</where>
                </mentioned>
                <arity>MANY</arity>
                <type>Container</type>
@@ -163,7 +340,7 @@ install Thindeck locally and host containers himself</informal>
             <slot>
                <name>state</name>
                <mentioned>
-                  <where>76</where>
+                  <where>103</where>
                </mentioned>
                <info>
                   <informal>one of: 'deployment in progress' and 'deployed'</informal>
@@ -172,7 +349,7 @@ install Thindeck locally and host containers himself</informal>
             <slot>
                <name>hourlyUsage</name>
                <mentioned>
-                  <where>77</where>
+                  <where>104</where>
                </mentioned>
                <arity>ANY</arity>
                <type>HourlyUsage</type>
@@ -182,7 +359,7 @@ install Thindeck locally and host containers himself</informal>
       <type>
          <name>Container</name>
          <mentioned>
-            <where>79</where>
+            <where>106</where>
          </mentioned>
          <info>
             <informal>a virtual operating system running a Repository</informal>
@@ -191,8 +368,8 @@ install Thindeck locally and host containers himself</informal>
       <type>
          <name>HourlyUsage</name>
          <mentioned>
-            <where>81</where>
-            <where>82</where>
+            <where>108</where>
+            <where>109</where>
          </mentioned>
          <info>
             <informal>an atomic track record of the usage of resources</informal>
@@ -201,14 +378,14 @@ install Thindeck locally and host containers himself</informal>
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>83</where>
+                  <where>110</where>
                </mentioned>
                <type>Container</type>
             </slot>
             <slot>
                <name>hours</name>
                <mentioned>
-                  <where>84</where>
+                  <where>111</where>
                </mentioned>
                <info>
                   <informal>a calendar hour, for example: 2014-05-02T18</informal>
@@ -217,7 +394,7 @@ install Thindeck locally and host containers himself</informal>
             <slot>
                <name>cpuSeconds</name>
                <mentioned>
-                  <where>85</where>
+                  <where>112</where>
                </mentioned>
                <info>
                   <informal>how many seconds our CPU spent working with the container during this hour.
@@ -227,7 +404,7 @@ install Thindeck locally and host containers himself</informal>
             <slot>
                <name>bytesIn</name>
                <mentioned>
-                  <where>87</where>
+                  <where>114</where>
                </mentioned>
                <info>
                   <informal>an integer number of bytes came in the container</informal>
@@ -236,7 +413,7 @@ install Thindeck locally and host containers himself</informal>
             <slot>
                <name>bytesOut</name>
                <mentioned>
-                  <where>88</where>
+                  <where>115</where>
                </mentioned>
                <info>
                   <informal>an integer number of bytes came out of the container</informal>
@@ -247,7 +424,7 @@ install Thindeck locally and host containers himself</informal>
       <type>
          <name>Manifest</name>
          <mentioned>
-            <where>90</where>
+            <where>117</where>
          </mentioned>
          <info>
             <informal>a YAML configuration file, stored in the repository, and
@@ -293,7 +470,7 @@ install Thindeck locally and host containers himself</informal>
             <where>17</where>
             <where>18</where>
             <where>19</where>
-            <where>94</where>
+            <where>121</where>
          </mentioned>
          <bindings>
             <binding>
@@ -328,7 +505,7 @@ install Thindeck locally and host containers himself</informal>
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>94</where>
+                              <where>121</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"a message that the repository exists already in his account"</signature>
@@ -588,10 +765,10 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>96</where>
-            <where>97</where>
-            <where>98</where>
-            <where>103</where>
+            <where>123</where>
+            <where>124</where>
+            <where>125</where>
+            <where>130</where>
          </mentioned>
          <bindings>
             <binding>
@@ -605,7 +782,7 @@ install Thindeck locally and host containers himself</informal>
             <step>
                <number>1</number>
                <mentioned>
-                  <where>99</where>
+                  <where>126</where>
                </mentioned>
                <object>user</object>
                <signature>"enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data"</signature>
@@ -616,7 +793,7 @@ install Thindeck locally and host containers himself</informal>
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>103</where>
+                              <where>130</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"repository cannot be registered"</signature>
@@ -628,7 +805,7 @@ install Thindeck locally and host containers himself</informal>
             <step>
                <number>2</number>
                <mentioned>
-                  <where>100</where>
+                  <where>127</where>
                </mentioned>
                <object>system</object>
                <signature>"adds the Repository and displays it in the list of other repositories in the user account"</signature>
@@ -642,9 +819,9 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="433912">must</attribute>
          </attributes>
          <mentioned>
-            <where>105</where>
-            <where>106</where>
-            <where>107</where>
+            <where>132</where>
+            <where>133</where>
+            <where>134</where>
          </mentioned>
          <bindings>
             <binding>
@@ -672,9 +849,9 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>117</where>
-            <where>118</where>
-            <where>119</where>
+            <where>144</where>
+            <where>145</where>
+            <where>146</where>
          </mentioned>
          <bindings>
             <binding>
@@ -695,7 +872,7 @@ install Thindeck locally and host containers himself</informal>
             <step>
                <number>1</number>
                <mentioned>
-                  <where>120</where>
+                  <where>147</where>
                </mentioned>
                <object>user</object>
                <signature>"requests a list of deployments for the Repository"</signature>
@@ -703,7 +880,7 @@ install Thindeck locally and host containers himself</informal>
             <step>
                <number>2</number>
                <mentioned>
-                  <where>121</where>
+                  <where>148</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a list of deployments that has already been executed"</signature>
@@ -711,7 +888,7 @@ install Thindeck locally and host containers himself</informal>
             <step>
                <number>3</number>
                <mentioned>
-                  <where>122</where>
+                  <where>149</where>
                </mentioned>
                <object>user</object>
                <signature>"chooses a deployment and initiates viewing its log"</signature>
@@ -719,7 +896,7 @@ install Thindeck locally and host containers himself</informal>
             <step>
                <number>4</number>
                <mentioned>
-                  <where>123</where>
+                  <where>150</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a log for the chosen deployment"</signature>
@@ -733,9 +910,9 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>125</where>
-            <where>126</where>
-            <where>127</where>
+            <where>152</where>
+            <where>153</where>
+            <where>154</where>
          </mentioned>
          <bindings>
             <binding>
@@ -760,7 +937,7 @@ install Thindeck locally and host containers himself</informal>
             <step>
                <number>1</number>
                <mentioned>
-                  <where>128</where>
+                  <where>155</where>
                </mentioned>
                <object>user</object>
                <signature>"selects a time interval, like: last 7 days, last month, custom (from date, to date)"</signature>
@@ -768,7 +945,7 @@ install Thindeck locally and host containers himself</informal>
             <step>
                <number>2</number>
                <mentioned>
-                  <where>129</where>
+                  <where>156</where>
                </mentioned>
                <object>system</object>
                <signature>"reads HourlyUsage records corresounding to the repo within specified time interval"</signature>
@@ -776,7 +953,7 @@ install Thindeck locally and host containers himself</informal>
             <step>
                <number>3</number>
                <mentioned>
-                  <where>130</where>
+                  <where>157</where>
                </mentioned>
                <object>system</object>
                <signature>"shows the user a table with these columns: Container (id), Inbound traffic (Gb),
@@ -793,9 +970,9 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="cc7e07">must</attribute>
          </attributes>
          <mentioned>
-            <where>135</where>
-            <where>136</where>
-            <where>137</where>
+            <where>162</where>
+            <where>163</where>
+            <where>164</where>
          </mentioned>
          <bindings>
             <binding>
@@ -824,9 +1001,9 @@ install Thindeck locally and host containers himself</informal>
             <attribute seal="70cee1">must</attribute>
          </attributes>
          <mentioned>
-            <where>141</where>
-            <where>142</where>
-            <where>143</where>
+            <where>168</where>
+            <where>169</where>
+            <where>170</where>
          </mentioned>
          <bindings>
             <binding>
@@ -863,7 +1040,7 @@ Key success factors are:
 </informal>
          </info>
          <mentioned>
-            <where>161</where>
+            <where>188</where>
          </mentioned>
       </page>
    </pages>
