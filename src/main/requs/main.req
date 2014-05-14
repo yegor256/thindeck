@@ -121,8 +121,8 @@ UC2 where User registers Repository:
 UC2/1 when "data is incorrect":
     1. Fail since "repository cannot be registered".
 
-433912:UC3 is specified.
-433912:UC3 is a must.
+:UC3 is specified.
+:UC3 is a must.
 UC3 where Repository deploys itself:
     "We fetch the repository every five minutes and check the difference
     between existing source code and the latest version. If there are
@@ -132,6 +132,7 @@ UC3 where Repository deploys itself:
     According to the informaiton in the Manifest we should configure the
     container after its start. While the repository is used, we should
     track its CPU and traffic consumption, and assign to its owner".
+UC3/PERF must "be able to host up to 100 containers and send up to 5Gb in/out traffic per minute".
 
 :UC4 is specified.
 :UC4 is a must.
