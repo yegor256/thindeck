@@ -144,7 +144,7 @@ UC3 where Repository deploys itself:
 
 UC3/1 when "repo exceeds MaxRepoSize":
     1. Fail since "repository exceeds allowed size limit".
-	
+
 :UC4 is specified.
 :UC4 is a must.
 UC4 where User reads deployment logs of Repository:
