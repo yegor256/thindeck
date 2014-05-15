@@ -6,6 +6,12 @@ MTBF is a measure of System reliability via continuous operation and therefore t
 MeanTimeToRecovery is "time that System spends in unscheduled down time until recovery as a result of failure.
 MTTR is a measure of System reliability via service recovery and therefore the MTTR target should be set at the lowest achievable number".
 
+MaxRepoSize is "the maximum allowed size that a repository is allowed to have. Repository size is the sum of sizes from all files contained in the repository.
+Maximum repository size is 100 megabytes".
+
+MaxFileSize is "the maximum allowed size of an individual file that a user may upload.
+Maximum file size is 100 megabytes".
+
 7c7d96:UC1 is specified.
 7c7d96:UC1 is a must.
 UC1 where User (a user) hosts Repository (a repo):
@@ -133,6 +139,9 @@ UC3 where Repository deploys itself:
     container after its start. While the repository is used, we should
     track its CPU and traffic consumption, and assign to its owner".
 
+UC3/1 when "repo exceeds MaxRepoSize":
+    1. Fail since "repository exceeds allowed size limit".
+	
 :UC4 is specified.
 :UC4 is a must.
 UC4 where User reads deployment logs of Repository:
