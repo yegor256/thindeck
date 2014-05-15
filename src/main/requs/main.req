@@ -127,14 +127,14 @@ UC2 where User registers Repository:
 UC2/1 when "data is incorrect":
     1. Fail since "repository cannot be registered".
 
-433912:UC3 is specified.
-433912:UC3 is a must.
+838c8a:UC3 is specified.
+838c8a:UC3 is a must.
 UC3 where Repository deploys itself:
-    "We fetch the repository every five minutes and check the difference
+    1. The system "fetches the repository every five minutes and check the difference
     between existing source code and the latest version. If there are
     any changes, we stop its Docker container, and start a new one with
-    the latest version of the source code. Besides Dockerfile, which is used
-    for the Docker container, we should look for a Manifest of the repository.
+    the latest version of the source code. Note that MaxRepoSize condition must not exceed limit in order to deploy.
+	Besides Dockerfile, which is used for the Docker container, we should look for a Manifest of the repository.
     According to the informaiton in the Manifest we should configure the
     container after its start. While the repository is used, we should
     track its CPU and traffic consumption, and assign to its owner".
