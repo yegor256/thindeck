@@ -103,8 +103,8 @@ Deployment includes:
 
 Container is "a virtual operating system running a Repository".
 Container has:
-MaxContainerSize as "maximum size of an individual container must not exceed 100 megabytes",
-RepositoryLimit as "one container corresponds to one repo".
+maxContainerSize as "maximum size of an individual container may not exceed 100 megabytes",
+repositoryLimit as "one container corresponds to one repo".
 
 HourlyUsage is "an atomic track record of the usage of resources".
 HourlyUsage includes:
