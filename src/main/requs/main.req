@@ -135,8 +135,8 @@ UC3 where Repository deploys itself:
 
 :UC4 is specified.
 :UC4 is a must.
-UC4 where User reads deployment logs of Repository:
-    1. The user "requests a list of deployments for the Repository";
+UC4 where User reads deployment logs using Repository(a repo):
+    1. The system reads Deployment(a deployments) "all deployments of the repo. TODO: replace with 'lists' elementary use case after requs bug is fixed";
     2. The system "displays a list of deployments that has already been executed";
     3. The user "chooses a deployment and initiates viewing its log";
     4. The system "displays a log for the chosen deployment".
