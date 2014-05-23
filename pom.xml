@@ -24,7 +24,7 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>parent</artifactId>
-        <version>0.19.2</version>
+        <version>0.20</version>
     </parent>
     <groupId>com.thindeck</groupId>
     <artifactId>thindeck</artifactId>
@@ -79,7 +79,7 @@
         </site>
     </distributionManagement>
     <properties>
-        <requs.version>1.8</requs.version>
+        <requs.version>1.9</requs.version>
     </properties>
     <build>
         <plugins>
