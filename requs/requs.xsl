@@ -221,6 +221,7 @@ li {
                 <xsl:call-template name="signature">
                     <xsl:with-param name="bindings" select="bindings"/>
                     <xsl:with-param name="home" select="."/>
+                    <xsl:with-param name="typed" select="'true'"/>
                 </xsl:call-template>
                 <xsl:text>:</xsl:text>
                 <xsl:if test="@seal">
@@ -268,6 +269,7 @@ li {
                 <xsl:with-param name="bindings" select="../../bindings"/>
                 <xsl:with-param name="home" select="."/>
             </xsl:call-template>
+            <xsl:apply-templates select="info/informal"/>
             <xsl:apply-templates select="exceptions/exception"/>
         </div>
     </xsl:template>
@@ -298,14 +300,16 @@ li {
     <xsl:template name="signature">
         <xsl:param name="bindings" />
         <xsl:param name="home" />
+        <xsl:param name="typed" select="'false'" />
         <xsl:call-template name="ref">
             <xsl:with-param name="bindings" select="$bindings"/>
             <xsl:with-param name="name" select="$home/object"/>
+            <xsl:with-param name="typed" select="$typed"/>
         </xsl:call-template>
         <xsl:text> </xsl:text>
         <xsl:variable name="uc" select="/spec/methods/method[signature=$home/signature]/id"/>
         <xsl:choose>
-            <xsl:when test="$home/signature='creates' or $home/signature='reads' or $home/signature='updates' or $home/signature='deletes'">
+            <xsl:when test="$home/signature='creates' or $home/signature='reads' or $home/signature='updates' or $home/signature='deletes' or $home/signature='lists'">
                 <span class="crud">
                     <xsl:value-of select="$home/signature"/>
                 </span>
@@ -330,6 +334,7 @@ li {
             <xsl:call-template name="ref">
                 <xsl:with-param name="bindings" select="$bindings"/>
                 <xsl:with-param name="name" select="$home/result"/>
+                <xsl:with-param name="typed" select="$typed"/>
             </xsl:call-template>
         </xsl:if>
         <xsl:if test="$home/args/arg">
@@ -341,6 +346,7 @@ li {
                 <xsl:call-template name="ref">
                     <xsl:with-param name="bindings" select="$bindings"/>
                     <xsl:with-param name="name" select="."/>
+                    <xsl:with-param name="typed" select="$typed"/>
                 </xsl:call-template>
             </xsl:for-each>
         </xsl:if>
@@ -348,6 +354,7 @@ li {
     <xsl:template name="ref">
         <xsl:param name="bindings" />
         <xsl:param name="name" />
+        <xsl:param name="typed" select="'false'"/>
         <xsl:variable name="type" select="$bindings/binding[name=$name]/type"/>
         <a>
             <xsl:attribute name="href">
@@ -359,7 +366,17 @@ li {
                     <xsl:value-of select="$type"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="$name"/>
+                    <xsl:choose>
+                        <xsl:when test="$typed = 'true'">
+                            <xsl:value-of select="$type"/>
+                            <xsl:text> (a </xsl:text>
+                            <xsl:value-of select="$name"/>
+                            <xsl:text>)</xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$name"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:otherwise>
             </xsl:choose>
         </a>

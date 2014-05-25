@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="17006" time="2014-05-25T15:22:09">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="18463" time="2014-05-25T21:08:10">
    <input>Hoster is "a an owner of a web server, who wants to
 install Thindeck locally and host containers himself".
 
@@ -2912,8 +2912,8 @@ Key success factors are:
       </tbd>
    </tbds>
    <requs>
-      <version>1.9</version>
-      <revision>ec4c1b2</revision>
-      <date>2014-05-23 22:55</date>
+      <version>1.10.1</version>
+      <revision>ec2eaf0</revision>
+      <date>2014-05-25 22:34</date>
    </requs>
 </spec>
