@@ -6,8 +6,8 @@ MTBF is a measure of System reliability via continuous operation and therefore t
 MeanTimeToRecovery is "time that System spends in unscheduled down time until recovery as a result of failure.
 MTTR is a measure of System reliability via service recovery and therefore the MTTR target should be set at the lowest achievable number".
 
-7c7d96:UC1 is specified.
-7c7d96:UC1 is a must.
+7d2820:UC1 is specified.
+7d2820:UC1 is a must.
 UC1 where User (a user) hosts Repository (a repo):
     1. The user registers the repo;
     2. The repo deploys itself;
@@ -121,8 +121,8 @@ UC2 where User registers Repository:
 UC2/1 when "data is incorrect":
     1. Fail since "repository cannot be registered".
 
-433912:UC3 is specified.
-433912:UC3 is a must.
+:UC3 is specified.
+:UC3 is a must.
 UC3 where Repository deploys itself:
     "We fetch the repository every five minutes and check the difference
     between existing source code and the latest version. If there are
@@ -151,14 +151,14 @@ UC5 where User(a user) reads usage stats using Repository(a repo):
     Last row contains totals by all containers. The values in the table are usage stats by container
     within specified time interval".
 
-cc7e07:UC6 is specified.
-cc7e07:UC6 is a must.
+:UC6 is specified.
+:UC6 is a must.
 UC6 where User compensates usage of Repository:
     "The user adds funds to his account, when it goes to a negative value.
     Funds can be added through PayPal only".
 
-70cee1:UC7 is specified.
-70cee1:UC7 is a must.
+:UC7 is specified.
+:UC7 is a must.
 UC7 where User terminates Repository:
     "The user just removes the repository and we immediately terminate
     the Docker container, close all ports, and stops routing domain names.
