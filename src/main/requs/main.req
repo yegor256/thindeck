@@ -6,8 +6,8 @@ MTBF is a measure of System reliability via continuous operation and therefore t
 MeanTimeToRecovery is "time that System spends in unscheduled down time until recovery as a result of failure.
 MTTR is a measure of System reliability via service recovery and therefore the MTTR target should be set at the lowest achievable number".
 
-7d2820:UC1 is specified.
-7d2820:UC1 is a must.
+:UC1 is specified.
+:UC1 is a must.
 UC1 where User (a user) hosts Repository (a repo):
     1. The user registers the repo;
     2. The repo deploys itself;
