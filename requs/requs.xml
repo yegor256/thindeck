@@ -1,0 +1,2919 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="17006" time="2014-05-25T15:22:09">
+   <input>Hoster is "a an owner of a web server, who wants to
+install Thindeck locally and host containers himself".
+
+System is "System under Development (thindeck itself)".
+
+:UC8 is specified.
+:UC8 is a must.
+UC8 where Hoster install SuD:
+    "he just downloads the app (either as a TGZ archive of RPM package
+    or Chef cookbook, or any of that) and installs it locally. Then he
+    starts it as a Java standalone app, or Linux service, or something
+    similar. And it works with a local collection of users and local
+    docker installation".
+
+System is "a web hosting that deploys itself".
+
+MeanTimeBetweenFailures is "time that System spends in continuous up time between one failure and the next failure.
+MTBF is a measure of System reliability via continuous operation and therefore the MTBF target should be set at the highest achievable number. Users will not be notified of failures or down time".
+
+MeanTimeToRecovery is "time that System spends in unscheduled down time until recovery as a result of failure.
+MTTR is a measure of System reliability via service recovery and therefore the MTTR target should be set at the lowest achievable number".
+
+:UC1 is specified.
+:UC1 is a must.
+UC1 where User (a user) hosts Repository (a repo):
+    1. The user registers the repo;
+    2. The repo deploys itself;
+    3. The user reads deployment logs of the repo;
+    4. The user reads usage stats of the repo;
+    5. The user compensates usage of the repo;
+    6. The user terminates the repo.
+
+User is "a person identified in the system (logged in)".
+
+User includes:
+    repo-s? as Repository,
+    URN as "a unique identifier of itself, for example urn:github:526301",
+    authTokens as "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc.",
+    balance as "amount of money available, can be stored as integer number of cents".
+
+Anonymous is "a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in".
+
+:UC9.1 is specified.
+:UC9.1 is a should.
+UC9.1 where Anonymous (a anonymous) explores thindeck:
+    1. The anonymous "looks at the front page which contains all the information about pricing, 'how it works', etc";
+    2. The anonymous "reads the stats page containing our runtime stats, similar to https://status.github.com/";
+    3. The anonymous "reads our terms page including all the legal wordings".
+
+:UC9.2 is specified.
+:UC9.2 is a must.
+UC9.2 where Anonymous (a anonymous) signs up:
+    1. The anonymous "initiates sign in via one of auth providers, e.g., Facebook, Google+, etc.";
+    2. The system "requests permission from the OAuth provider chosen by the anonymous";
+    3. The system creates User(a user);
+    4. The system "adds $5 to the user.balance";
+    5. The anonymous logs in.
+UC9.2/2 when "a user is already signed up":
+    1. The anonymous logs in.
+UC9.2/2 when "an OAuth provider denied access":
+    1. Fail since "Not authorized by chosen OAuth provider".
+
+:UC9.3 is specified.
+:UC9.3 is a must.
+UC9.3 where Anonymous (a anonymous) logs in using User(a user):
+    1. The system "from now on treats the anonymous as a User".
+
+Repository is "a local copy of files and folders being pulled every 5 minutes from some remote source".
+Repository needs:
+    name as "a unique name of the repo in user's account",
+    deployment-? as Deployment,
+    dockerFile as "Docker file",
+    manifest as Manifest.
+
+GitRepository is Repository.
+GitRepository is "connected to a remote git (github) repository".
+GitRepository includes:
+    uri as "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git",
+    key-? as "a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography".
+
+SvnRepository is Repository.
+SvnRepository is "connected to a remote subversion repository".
+SvnRepository includes:
+    uri as "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git",
+    username-? as "credentials used to read files from the repository",
+    passwors-? as "credentials used to read files from the repository".
+
+FtpRepository is Repository.
+FtpRepository is "connected to a remote FTP server".
+FtpRepository includes:
+    uri as "a URL containing credentials valid to connect to FTP server, for example ftp://user:password@ftpserver/url-path".
+
+DropboxRepository is Repository.
+DropboxRepository is "connected to a shared Dropbox folder".
+DropboxRepository includes: apiKey as "Dropbox specific connection information".
+
+AmazonSthreeRepository is Repository.
+AmazonSthreeRepository is "connected to an Amazon S3 file storage".
+AmazonSthreeRepository includes: apiKey as "Amazon S3 specific connection information".
+
+GoogleDriveRepository is Repository.
+GoogleDriveRepository is "connected to a Google Drive storage".
+GoogleDriveRepository includes: apiKey as "Google Drive specific connection information".
+
+Deployment is "a summary statistics of Containers related to a Repository, with their statuses and text logs".
+
+Deployment includes:
+    container-s as Container,
+    state as "one of: 'deployment in progress' and 'deployed'",
+    hourlyUsage-s? as HourlyUsage.
+
+Container is "a virtual operating system running a Repository".
+
+HourlyUsage is "an atomic track record of the usage of resources".
+HourlyUsage includes:
+    container as Container,
+    hours as "a calendar hour, for example: 2014-05-02T18",
+    cpuSeconds as "how many seconds our CPU spent working with the container during this hour.
+    Can easily be over 3600, since we may have multiple CPU's working with the container",
+    bytesIn as "an integer number of bytes came in the container",
+    bytesOut as "an integer number of bytes came out of the container".
+
+Manifest is "a YAML configuration file, stored in the repository, and
+    includes a) list of domain names, b) list of open ports.".
+
+UC1/1 when "repo already exists":
+    1. Fail since "a message that the repository exists already in his account".
+
+:UC2 is specified.
+:UC2 is a must.
+UC2 where User registers Repository:
+    1. The user "enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data";
+    2. The system "adds the Repository and displays it in the list of other repositories in the user account".
+
+UC2/1 when "data is incorrect":
+    1. Fail since "repository cannot be registered".
+
+:UC3 is specified.
+:UC3 is a must.
+UC3 where Repository deploys itself:
+    "We fetch the repository every five minutes and check the difference
+    between existing source code and the latest version. If there are
+    any changes, we stop its Docker container, and start a new one with
+    the latest version of the source code. Besides Dockerfile, which is used
+    for the Docker container, we should look for a Manifest of the repository.
+    According to the informaiton in the Manifest we should configure the
+    container after its start. While the repository is used, we should
+    track its CPU and traffic consumption, and assign to its owner".
+
+:UC4 is specified.
+:UC4 is a must.
+UC4 where User reads deployment logs of Repository:
+    1. The user "requests a list of deployments for the Repository";
+    2. The system "displays a list of deployments that has already been executed";
+    3. The user "chooses a deployment and initiates viewing its log";
+    4. The system "displays a log for the chosen deployment".
+
+:UC5 is specified.
+:UC5 is a must.
+UC5 where User(a user) reads usage stats using Repository(a repo):
+    1. The user "selects a time interval, like: last 7 days, last month, custom (from date, to date)";
+    2. The system "reads HourlyUsage records corresounding to the repo within specified time interval";
+    3. The system "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
+    Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
+    Last row contains totals by all containers. The values in the table are usage stats by container
+    within specified time interval".
+
+:UC6 is specified.
+:UC6 is a must.
+UC6 where User compensates usage of Repository:
+    "The user adds funds to his account, when it goes to a negative value.
+    Funds can be added through PayPal only".
+
+:UC7 is specified.
+:UC7 is a must.
+UC7 where User terminates Repository:
+    "The user just removes the repository and we immediately terminate
+    the Docker container, close all ports, and stops routing domain names.
+    This operation is irrevertable".
+
+Vision: """
+
+Requirements providers are:
+
+ * Yegor Bugayenko
+
+Key success factors are:
+
+ * High availability - much higher than anyone else can offer.
+ * Low cost - lower than anyone.
+ * Easy (re)deployment - a unique 'pull' deployment mechanism.
+ * Simple control panel - one form and your site is ready in 5 minutes.".
+
+""".
+
+</input>
+   <types>
+      <type>
+         <name>Hoster</name>
+         <mentioned>
+            <where>1</where>
+            <where>8</where>
+         </mentioned>
+         <info>
+            <informal>a an owner of a web server, who wants to
+install Thindeck locally and host containers himself</informal>
+         </info>
+      </type>
+      <type>
+         <name>System</name>
+         <mentioned>
+            <where>4</where>
+            <where>15</where>
+         </mentioned>
+         <info>
+            <informal>System under Development (thindeck itself)</informal>
+            <informal>a web hosting that deploys itself</informal>
+         </info>
+      </type>
+      <type>
+         <name>MeanTimeBetweenFailures</name>
+         <mentioned>
+            <where>17</where>
+         </mentioned>
+         <info>
+            <informal>time that System spends in continuous up time between one failure and the next failure.
+MTBF is a measure of System reliability via continuous operation and therefore the MTBF target should be set at the highest achievable number. Users will not be notified of failures or down time</informal>
+         </info>
+      </type>
+      <type>
+         <name>MeanTimeToRecovery</name>
+         <mentioned>
+            <where>20</where>
+         </mentioned>
+         <info>
+            <informal>time that System spends in unscheduled down time until recovery as a result of failure.
+MTTR is a measure of System reliability via service recovery and therefore the MTTR target should be set at the lowest achievable number</informal>
+         </info>
+      </type>
+      <type>
+         <name>User</name>
+         <mentioned>
+            <where>25</where>
+            <where>33</where>
+            <where>35</where>
+            <where>131</where>
+            <where>152</where>
+            <where>160</where>
+            <where>170</where>
+            <where>176</where>
+         </mentioned>
+         <info>
+            <informal>a person identified in the system (logged in)</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>repo</name>
+               <mentioned>
+                  <where>36</where>
+               </mentioned>
+               <arity>ANY</arity>
+               <type>Repository</type>
+            </slot>
+            <slot>
+               <name>URN</name>
+               <mentioned>
+                  <where>37</where>
+               </mentioned>
+               <info>
+                  <informal>a unique identifier of itself, for example urn:github:526301</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>authTokens</name>
+               <mentioned>
+                  <where>38</where>
+               </mentioned>
+               <info>
+                  <informal>a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc.</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>balance</name>
+               <mentioned>
+                  <where>39</where>
+               </mentioned>
+               <info>
+                  <informal>amount of money available, can be stored as integer number of cents</informal>
+               </info>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>Anonymous</name>
+         <mentioned>
+            <where>41</where>
+            <where>45</where>
+            <where>52</where>
+            <where>65</where>
+         </mentioned>
+         <info>
+            <informal>a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in</informal>
+         </info>
+      </type>
+      <type>
+         <name>Repository</name>
+         <mentioned>
+            <where>68</where>
+            <where>69</where>
+            <where>140</where>
+         </mentioned>
+         <info>
+            <informal>a local copy of files and folders being pulled every 5 minutes from some remote source</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>name</name>
+               <mentioned>
+                  <where>70</where>
+               </mentioned>
+               <info>
+                  <informal>a unique name of the repo in user's account</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>deployment</name>
+               <mentioned>
+                  <where>71</where>
+               </mentioned>
+               <arity>OPT</arity>
+               <type>Deployment</type>
+            </slot>
+            <slot>
+               <name>dockerFile</name>
+               <mentioned>
+                  <where>72</where>
+               </mentioned>
+               <info>
+                  <informal>Docker file</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>manifest</name>
+               <mentioned>
+                  <where>73</where>
+               </mentioned>
+               <type>Manifest</type>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>GitRepository</name>
+         <mentioned>
+            <where>75</where>
+            <where>76</where>
+            <where>77</where>
+         </mentioned>
+         <parents>
+            <type>Repository</type>
+         </parents>
+         <info>
+            <informal>connected to a remote git (github) repository</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>uri</name>
+               <mentioned>
+                  <where>78</where>
+               </mentioned>
+               <info>
+                  <informal>a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>key</name>
+               <mentioned>
+                  <where>79</where>
+               </mentioned>
+               <arity>OPT</arity>
+               <info>
+                  <informal>a private SSH key, see http://en.wikipedia.org/wiki/Public-key_cryptography</informal>
+               </info>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>SvnRepository</name>
+         <mentioned>
+            <where>81</where>
+            <where>82</where>
+            <where>83</where>
+         </mentioned>
+         <parents>
+            <type>Repository</type>
+         </parents>
+         <info>
+            <informal>connected to a remote subversion repository</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>uri</name>
+               <mentioned>
+                  <where>84</where>
+               </mentioned>
+               <info>
+                  <informal>a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>username</name>
+               <mentioned>
+                  <where>85</where>
+               </mentioned>
+               <arity>OPT</arity>
+               <info>
+                  <informal>credentials used to read files from the repository</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>passwors</name>
+               <mentioned>
+                  <where>86</where>
+               </mentioned>
+               <arity>OPT</arity>
+               <info>
+                  <informal>credentials used to read files from the repository</informal>
+               </info>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>FtpRepository</name>
+         <mentioned>
+            <where>88</where>
+            <where>89</where>
+            <where>90</where>
+         </mentioned>
+         <parents>
+            <type>Repository</type>
+         </parents>
+         <info>
+            <informal>connected to a remote FTP server</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>uri</name>
+               <mentioned>
+                  <where>91</where>
+               </mentioned>
+               <info>
+                  <informal>a URL containing credentials valid to connect to FTP server, for example ftp://user:password@ftpserver/url-path</informal>
+               </info>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>DropboxRepository</name>
+         <mentioned>
+            <where>93</where>
+            <where>94</where>
+            <where>95</where>
+         </mentioned>
+         <parents>
+            <type>Repository</type>
+         </parents>
+         <info>
+            <informal>connected to a shared Dropbox folder</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>apiKey</name>
+               <mentioned>
+                  <where>95</where>
+               </mentioned>
+               <info>
+                  <informal>Dropbox specific connection information</informal>
+               </info>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>AmazonSthreeRepository</name>
+         <mentioned>
+            <where>97</where>
+            <where>98</where>
+            <where>99</where>
+         </mentioned>
+         <parents>
+            <type>Repository</type>
+         </parents>
+         <info>
+            <informal>connected to an Amazon S3 file storage</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>apiKey</name>
+               <mentioned>
+                  <where>99</where>
+               </mentioned>
+               <info>
+                  <informal>Amazon S3 specific connection information</informal>
+               </info>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>GoogleDriveRepository</name>
+         <mentioned>
+            <where>101</where>
+            <where>102</where>
+            <where>103</where>
+         </mentioned>
+         <parents>
+            <type>Repository</type>
+         </parents>
+         <info>
+            <informal>connected to a Google Drive storage</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>apiKey</name>
+               <mentioned>
+                  <where>103</where>
+               </mentioned>
+               <info>
+                  <informal>Google Drive specific connection information</informal>
+               </info>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>Deployment</name>
+         <mentioned>
+            <where>105</where>
+            <where>107</where>
+         </mentioned>
+         <info>
+            <informal>a summary statistics of Containers related to a Repository, with their statuses and text logs</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>container</name>
+               <mentioned>
+                  <where>108</where>
+               </mentioned>
+               <arity>MANY</arity>
+               <type>Container</type>
+            </slot>
+            <slot>
+               <name>state</name>
+               <mentioned>
+                  <where>109</where>
+               </mentioned>
+               <info>
+                  <informal>one of: 'deployment in progress' and 'deployed'</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>hourlyUsage</name>
+               <mentioned>
+                  <where>110</where>
+               </mentioned>
+               <arity>ANY</arity>
+               <type>HourlyUsage</type>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>Container</name>
+         <mentioned>
+            <where>112</where>
+         </mentioned>
+         <info>
+            <informal>a virtual operating system running a Repository</informal>
+         </info>
+      </type>
+      <type>
+         <name>HourlyUsage</name>
+         <mentioned>
+            <where>114</where>
+            <where>115</where>
+         </mentioned>
+         <info>
+            <informal>an atomic track record of the usage of resources</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>container</name>
+               <mentioned>
+                  <where>116</where>
+               </mentioned>
+               <type>Container</type>
+            </slot>
+            <slot>
+               <name>hours</name>
+               <mentioned>
+                  <where>117</where>
+               </mentioned>
+               <info>
+                  <informal>a calendar hour, for example: 2014-05-02T18</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>cpuSeconds</name>
+               <mentioned>
+                  <where>118</where>
+               </mentioned>
+               <info>
+                  <informal>how many seconds our CPU spent working with the container during this hour.
+    Can easily be over 3600, since we may have multiple CPU's working with the container</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>bytesIn</name>
+               <mentioned>
+                  <where>120</where>
+               </mentioned>
+               <info>
+                  <informal>an integer number of bytes came in the container</informal>
+               </info>
+            </slot>
+            <slot>
+               <name>bytesOut</name>
+               <mentioned>
+                  <where>121</where>
+               </mentioned>
+               <info>
+                  <informal>an integer number of bytes came out of the container</informal>
+               </info>
+            </slot>
+         </slots>
+      </type>
+      <type>
+         <name>Manifest</name>
+         <mentioned>
+            <where>123</where>
+         </mentioned>
+         <info>
+            <informal>a YAML configuration file, stored in the repository, and
+    includes a) list of domain names, b) list of open ports.</informal>
+         </info>
+      </type>
+   </types>
+   <methods>
+      <method seal="a3f775">
+         <id>UC8</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>6</where>
+            <where>7</where>
+            <where>8</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>Hoster</type>
+            </binding>
+         </bindings>
+         <object>_self</object>
+         <signature>install SuD</signature>
+         <info>
+            <informal>he just downloads the app (either as a TGZ archive of RPM package
+    or Chef cookbook, or any of that) and installs it locally. Then he
+    starts it as a Java standalone app, or Linux service, or something
+    similar. And it works with a local collection of users and local
+    docker installation</informal>
+         </info>
+         <markdown>The following table describes all technical details of Use Case `UC8`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC8&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; install SuD&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;Hoster&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td/&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"he just downloads the app (either as a TGZ archive of RPM package or Chef cookbook, or any of that) and installs it locally. Then he starts it as a Java standalone app, or Linux service, or something similar. And it works with a local collection of users and local docker installation"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Hoster&lt;/td&gt;
+            &lt;td&gt;"a an owner of a web server, who wants to install Thindeck locally and host containers himself"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC8&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC8&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; install SuD&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;Hoster&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td/&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"he just downloads the app (either as a TGZ archive of RPM package or Chef cookbook, or any of that) and installs it locally. Then he starts it as a Java standalone app, or Linux service, or something similar. And it works with a local collection of users and local docker installation"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Hoster&lt;/td&gt;
+            &lt;td&gt;"a an owner of a web server, who wants to install Thindeck locally and host containers himself"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+      <method seal="7d2820">
+         <id>UC1</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>23</where>
+            <where>24</where>
+            <where>25</where>
+            <where>127</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>User</type>
+            </binding>
+            <binding>
+               <name>user</name>
+               <type>User</type>
+            </binding>
+            <binding>
+               <name>repo</name>
+               <type>Repository</type>
+            </binding>
+         </bindings>
+         <object>user</object>
+         <signature>hosts</signature>
+         <result>repo</result>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>26</where>
+               </mentioned>
+               <object>user</object>
+               <signature>registers</signature>
+               <result>repo</result>
+               <exceptions>
+                  <exception>
+                     <when>repo already exists</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>127</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"a message that the repository exists already in his account"</signature>
+                        </step>
+                     </steps>
+                  </exception>
+               </exceptions>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>27</where>
+               </mentioned>
+               <object>repo</object>
+               <signature>deploys itself</signature>
+            </step>
+            <step>
+               <number>3</number>
+               <mentioned>
+                  <where>28</where>
+               </mentioned>
+               <object>user</object>
+               <signature>reads deployment logs</signature>
+               <args>
+                  <arg>repo</arg>
+               </args>
+            </step>
+            <step>
+               <number>4</number>
+               <mentioned>
+                  <where>29</where>
+               </mentioned>
+               <object>user</object>
+               <signature>reads usage stats</signature>
+               <args>
+                  <arg>repo</arg>
+               </args>
+            </step>
+            <step>
+               <number>5</number>
+               <mentioned>
+                  <where>30</where>
+               </mentioned>
+               <object>user</object>
+               <signature>compensates usage</signature>
+               <args>
+                  <arg>repo</arg>
+               </args>
+            </step>
+            <step>
+               <number>6</number>
+               <mentioned>
+                  <where>31</where>
+               </mentioned>
+               <object>user</object>
+               <signature>terminates</signature>
+               <result>repo</result>
+            </step>
+         </steps>
+         <markdown>The following table describes all technical details of Use Case `UC1`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC1&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;user&lt;/code&gt; hosts &lt;code&gt;repo&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;repo&lt;/code&gt; as Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; registers &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;2. &lt;code&gt;repo&lt;/code&gt; deploys itself&lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; reads deployment logs using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;4. &lt;code&gt;user&lt;/code&gt; reads usage stats using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;5. &lt;code&gt;user&lt;/code&gt; compensates usage using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;6. &lt;code&gt;user&lt;/code&gt; terminates &lt;code&gt;repo&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a local copy of files and folders being pulled every 5 minutes from some remote source"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;dockerFile&lt;/code&gt;:  "Docker file"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;manifest&lt;/code&gt;: Manifest&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC1&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC1&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;user&lt;/code&gt; hosts &lt;code&gt;repo&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;repo&lt;/code&gt; as Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; registers &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;2. &lt;code&gt;repo&lt;/code&gt; deploys itself&lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; reads deployment logs using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;4. &lt;code&gt;user&lt;/code&gt; reads usage stats using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;5. &lt;code&gt;user&lt;/code&gt; compensates usage using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;6. &lt;code&gt;user&lt;/code&gt; terminates &lt;code&gt;repo&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a local copy of files and folders being pulled every 5 minutes from some remote source"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;dockerFile&lt;/code&gt;:  "Docker file"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;manifest&lt;/code&gt;: Manifest&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+      <method seal="b1195c">
+         <id>UC9.1</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">should</attribute>
+         </attributes>
+         <mentioned>
+            <where>43</where>
+            <where>44</where>
+            <where>45</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>Anonymous</type>
+            </binding>
+            <binding>
+               <name>anonymous</name>
+               <type>Anonymous</type>
+            </binding>
+         </bindings>
+         <object>anonymous</object>
+         <signature>explores thindeck</signature>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>46</where>
+               </mentioned>
+               <object>anonymous</object>
+               <signature>"looks at the front page which contains all the information about pricing, 'how it works', etc"</signature>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>47</where>
+               </mentioned>
+               <object>anonymous</object>
+               <signature>"reads the stats page containing our runtime stats, similar to https://status.github.com/"</signature>
+            </step>
+            <step>
+               <number>3</number>
+               <mentioned>
+                  <where>48</where>
+               </mentioned>
+               <object>anonymous</object>
+               <signature>"reads our terms page including all the legal wordings"</signature>
+            </step>
+         </steps>
+         <markdown>The following table describes all technical details of Use Case `UC9.1`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC9.1&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;anonymous&lt;/code&gt; explores thindeck&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;anonymous&lt;/code&gt; as Anonymous&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;anonymous&lt;/code&gt; "looks at the front page which contains all the information about pricing, 'how it works', etc"&lt;br/&gt;2. &lt;code&gt;anonymous&lt;/code&gt; "reads the stats page containing our runtime stats, similar to https://status.github.com/"&lt;br/&gt;3. &lt;code&gt;anonymous&lt;/code&gt; "reads our terms page including all the legal wordings"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+            &lt;td&gt;"a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+            &lt;td&gt;"a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC9.1&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC9.1&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;anonymous&lt;/code&gt; explores thindeck&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;anonymous&lt;/code&gt; as Anonymous&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;anonymous&lt;/code&gt; "looks at the front page which contains all the information about pricing, 'how it works', etc"&lt;br/&gt;2. &lt;code&gt;anonymous&lt;/code&gt; "reads the stats page containing our runtime stats, similar to https://status.github.com/"&lt;br/&gt;3. &lt;code&gt;anonymous&lt;/code&gt; "reads our terms page including all the legal wordings"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+            &lt;td&gt;"a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+            &lt;td&gt;"a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+      <method seal="c452d0">
+         <id>UC9.2</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>50</where>
+            <where>51</where>
+            <where>52</where>
+            <where>59</where>
+            <where>61</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>Anonymous</type>
+            </binding>
+            <binding>
+               <name>anonymous</name>
+               <type>Anonymous</type>
+            </binding>
+            <binding>
+               <name>user</name>
+               <type>User</type>
+            </binding>
+         </bindings>
+         <object>anonymous</object>
+         <signature>signs up</signature>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>53</where>
+               </mentioned>
+               <object>anonymous</object>
+               <signature>"initiates sign in via one of auth providers, e.g., Facebook, Google+, etc."</signature>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>54</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"requests permission from the OAuth provider chosen by the anonymous"</signature>
+               <exceptions>
+                  <exception>
+                     <when>a user is already signed up</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>59</where>
+                           </mentioned>
+                           <object>anonymous</object>
+                           <signature>logs in</signature>
+                        </step>
+                     </steps>
+                  </exception>
+                  <exception>
+                     <when>an OAuth provider denied access</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>61</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"Not authorized by chosen OAuth provider"</signature>
+                        </step>
+                     </steps>
+                  </exception>
+               </exceptions>
+            </step>
+            <step>
+               <number>3</number>
+               <mentioned>
+                  <where>55</where>
+               </mentioned>
+               <object>system</object>
+               <signature>creates</signature>
+               <result>user</result>
+            </step>
+            <step>
+               <number>4</number>
+               <mentioned>
+                  <where>56</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"adds $5 to the user.balance"</signature>
+            </step>
+            <step>
+               <number>5</number>
+               <mentioned>
+                  <where>57</where>
+               </mentioned>
+               <object>anonymous</object>
+               <signature>logs in</signature>
+            </step>
+         </steps>
+         <markdown>The following table describes all technical details of Use Case `UC9.2`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC9.2&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;anonymous&lt;/code&gt; signs up&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;anonymous&lt;/code&gt; as Anonymous; &lt;code&gt;user&lt;/code&gt; as User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;anonymous&lt;/code&gt; "initiates sign in via one of auth providers, e.g., Facebook, Google+, etc."&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "requests permission from the OAuth provider chosen by the anonymous"&lt;br/&gt;3. &lt;code&gt;system&lt;/code&gt; creates &lt;code&gt;user&lt;/code&gt;
+               &lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "adds $5 to the user.balance"&lt;br/&gt;5. &lt;code&gt;anonymous&lt;/code&gt; logs in&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+            &lt;td&gt;"a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+            &lt;td&gt;"a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC9.2&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC9.2&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;anonymous&lt;/code&gt; signs up&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;anonymous&lt;/code&gt; as Anonymous; &lt;code&gt;user&lt;/code&gt; as User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;anonymous&lt;/code&gt; "initiates sign in via one of auth providers, e.g., Facebook, Google+, etc."&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "requests permission from the OAuth provider chosen by the anonymous"&lt;br/&gt;3. &lt;code&gt;system&lt;/code&gt; creates &lt;code&gt;user&lt;/code&gt;
+               &lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "adds $5 to the user.balance"&lt;br/&gt;5. &lt;code&gt;anonymous&lt;/code&gt; logs in&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+            &lt;td&gt;"a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+            &lt;td&gt;"a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+      <method seal="7ec940">
+         <id>UC9.3</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>63</where>
+            <where>64</where>
+            <where>65</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>Anonymous</type>
+            </binding>
+            <binding>
+               <name>anonymous</name>
+               <type>Anonymous</type>
+            </binding>
+            <binding>
+               <name>user</name>
+               <type>User</type>
+            </binding>
+         </bindings>
+         <object>anonymous</object>
+         <signature>logs in</signature>
+         <args>
+            <arg>user</arg>
+         </args>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>66</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"from now on treats the anonymous as a User"</signature>
+            </step>
+         </steps>
+         <markdown>The following table describes all technical details of Use Case `UC9.3`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC9.3&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;anonymous&lt;/code&gt; logs in using &lt;code&gt;user&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;anonymous&lt;/code&gt; as Anonymous; &lt;code&gt;user&lt;/code&gt; as User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;system&lt;/code&gt; "from now on treats the anonymous as a User"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+            &lt;td&gt;"a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+            &lt;td&gt;"a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC9.3&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC9.3&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;anonymous&lt;/code&gt; logs in using &lt;code&gt;user&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;anonymous&lt;/code&gt; as Anonymous; &lt;code&gt;user&lt;/code&gt; as User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;system&lt;/code&gt; "from now on treats the anonymous as a User"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+            &lt;td&gt;"a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Anonymous&lt;/td&gt;
+            &lt;td&gt;"a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+      <method seal="433474">
+         <id>UC2</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>129</where>
+            <where>130</where>
+            <where>131</where>
+            <where>136</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>User</type>
+            </binding>
+         </bindings>
+         <object>_self</object>
+         <signature>registers</signature>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>132</where>
+               </mentioned>
+               <object>user</object>
+               <signature>"enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data"</signature>
+               <exceptions>
+                  <exception>
+                     <when>data is incorrect</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>136</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"repository cannot be registered"</signature>
+                        </step>
+                     </steps>
+                  </exception>
+               </exceptions>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>133</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"adds the Repository and displays it in the list of other repositories in the user account"</signature>
+            </step>
+         </steps>
+         <markdown>The following table describes all technical details of Use Case `UC2`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC2&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; registers&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td/&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; "enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data"&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "adds the Repository and displays it in the list of other repositories in the user account"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC2&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC2&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; registers&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td/&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; "enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data"&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "adds the Repository and displays it in the list of other repositories in the user account"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+      <method seal="e32186">
+         <id>UC3</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>138</where>
+            <where>139</where>
+            <where>140</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>Repository</type>
+            </binding>
+         </bindings>
+         <object>_self</object>
+         <signature>deploys itself</signature>
+         <info>
+            <informal>We fetch the repository every five minutes and check the difference
+    between existing source code and the latest version. If there are
+    any changes, we stop its Docker container, and start a new one with
+    the latest version of the source code. Besides Dockerfile, which is used
+    for the Docker container, we should look for a Manifest of the repository.
+    According to the informaiton in the Manifest we should configure the
+    container after its start. While the repository is used, we should
+    track its CPU and traffic consumption, and assign to its owner</informal>
+         </info>
+         <markdown>The following table describes all technical details of Use Case `UC3`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC3&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; deploys itself&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td/&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"We fetch the repository every five minutes and check the difference between existing source code and the latest version. If there are any changes, we stop its Docker container, and start a new one with the latest version of the source code. Besides Dockerfile, which is used for the Docker container, we should look for a Manifest of the repository. According to the informaiton in the Manifest we should configure the container after its start. While the repository is used, we should track its CPU and traffic consumption, and assign to its owner"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a local copy of files and folders being pulled every 5 minutes from some remote source"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;dockerFile&lt;/code&gt;:  "Docker file"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;manifest&lt;/code&gt;: Manifest&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC3&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC3&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; deploys itself&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td/&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"We fetch the repository every five minutes and check the difference between existing source code and the latest version. If there are any changes, we stop its Docker container, and start a new one with the latest version of the source code. Besides Dockerfile, which is used for the Docker container, we should look for a Manifest of the repository. According to the informaiton in the Manifest we should configure the container after its start. While the repository is used, we should track its CPU and traffic consumption, and assign to its owner"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a local copy of files and folders being pulled every 5 minutes from some remote source"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;dockerFile&lt;/code&gt;:  "Docker file"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;manifest&lt;/code&gt;: Manifest&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+      <method seal="be21ea">
+         <id>UC4</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>150</where>
+            <where>151</where>
+            <where>152</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>User</type>
+            </binding>
+            <binding>
+               <name>_arg0</name>
+               <type>Repository</type>
+            </binding>
+         </bindings>
+         <object>_self</object>
+         <signature>reads deployment logs</signature>
+         <args>
+            <arg>_arg0</arg>
+         </args>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>153</where>
+               </mentioned>
+               <object>user</object>
+               <signature>"requests a list of deployments for the Repository"</signature>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>154</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"displays a list of deployments that has already been executed"</signature>
+            </step>
+            <step>
+               <number>3</number>
+               <mentioned>
+                  <where>155</where>
+               </mentioned>
+               <object>user</object>
+               <signature>"chooses a deployment and initiates viewing its log"</signature>
+            </step>
+            <step>
+               <number>4</number>
+               <mentioned>
+                  <where>156</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"displays a log for the chosen deployment"</signature>
+            </step>
+         </steps>
+         <markdown>The following table describes all technical details of Use Case `UC4`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC4&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; reads deployment logs using &lt;code&gt;_arg0&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_arg0&lt;/code&gt; as Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; "requests a list of deployments for the Repository"&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "displays a list of deployments that has already been executed"&lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; "chooses a deployment and initiates viewing its log"&lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "displays a log for the chosen deployment"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a local copy of files and folders being pulled every 5 minutes from some remote source"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;dockerFile&lt;/code&gt;:  "Docker file"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;manifest&lt;/code&gt;: Manifest&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC4&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC4&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; reads deployment logs using &lt;code&gt;_arg0&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_arg0&lt;/code&gt; as Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; "requests a list of deployments for the Repository"&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "displays a list of deployments that has already been executed"&lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; "chooses a deployment and initiates viewing its log"&lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "displays a log for the chosen deployment"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a local copy of files and folders being pulled every 5 minutes from some remote source"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;dockerFile&lt;/code&gt;:  "Docker file"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;manifest&lt;/code&gt;: Manifest&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+      <method seal="654b76">
+         <id>UC5</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>158</where>
+            <where>159</where>
+            <where>160</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>User</type>
+            </binding>
+            <binding>
+               <name>user</name>
+               <type>User</type>
+            </binding>
+            <binding>
+               <name>repo</name>
+               <type>Repository</type>
+            </binding>
+         </bindings>
+         <object>user</object>
+         <signature>reads usage stats</signature>
+         <args>
+            <arg>repo</arg>
+         </args>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>161</where>
+               </mentioned>
+               <object>user</object>
+               <signature>"selects a time interval, like: last 7 days, last month, custom (from date, to date)"</signature>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>162</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"reads HourlyUsage records corresounding to the repo within specified time interval"</signature>
+            </step>
+            <step>
+               <number>3</number>
+               <mentioned>
+                  <where>163</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"shows the user a table with these columns: Container (id), Inbound traffic (Gb),
+    Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
+    Last row contains totals by all containers. The values in the table are usage stats by container
+    within specified time interval"</signature>
+            </step>
+         </steps>
+         <markdown>The following table describes all technical details of Use Case `UC5`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC5&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;user&lt;/code&gt; reads usage stats using &lt;code&gt;repo&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;repo&lt;/code&gt; as Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; "selects a time interval, like: last 7 days, last month, custom (from date, to date)"&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "reads HourlyUsage records corresounding to the repo within specified time interval"&lt;br/&gt;3. &lt;code&gt;system&lt;/code&gt; "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
+    Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
+    Last row contains totals by all containers. The values in the table are usage stats by container
+    within specified time interval"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a local copy of files and folders being pulled every 5 minutes from some remote source"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;dockerFile&lt;/code&gt;:  "Docker file"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;manifest&lt;/code&gt;: Manifest&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC5&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC5&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;user&lt;/code&gt; reads usage stats using &lt;code&gt;repo&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;repo&lt;/code&gt; as Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; "selects a time interval, like: last 7 days, last month, custom (from date, to date)"&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "reads HourlyUsage records corresounding to the repo within specified time interval"&lt;br/&gt;3. &lt;code&gt;system&lt;/code&gt; "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
+    Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
+    Last row contains totals by all containers. The values in the table are usage stats by container
+    within specified time interval"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a local copy of files and folders being pulled every 5 minutes from some remote source"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;dockerFile&lt;/code&gt;:  "Docker file"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;manifest&lt;/code&gt;: Manifest&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+      <method seal="d537a1">
+         <id>UC6</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>168</where>
+            <where>169</where>
+            <where>170</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>User</type>
+            </binding>
+            <binding>
+               <name>_arg0</name>
+               <type>Repository</type>
+            </binding>
+         </bindings>
+         <object>_self</object>
+         <signature>compensates usage</signature>
+         <args>
+            <arg>_arg0</arg>
+         </args>
+         <info>
+            <informal>The user adds funds to his account, when it goes to a negative value.
+    Funds can be added through PayPal only</informal>
+         </info>
+         <markdown>The following table describes all technical details of Use Case `UC6`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC6&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; compensates usage using &lt;code&gt;_arg0&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_arg0&lt;/code&gt; as Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"The user adds funds to his account, when it goes to a negative value. Funds can be added through PayPal only"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a local copy of files and folders being pulled every 5 minutes from some remote source"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;dockerFile&lt;/code&gt;:  "Docker file"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;manifest&lt;/code&gt;: Manifest&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC6&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC6&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; compensates usage using &lt;code&gt;_arg0&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_arg0&lt;/code&gt; as Repository&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"The user adds funds to his account, when it goes to a negative value. Funds can be added through PayPal only"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Repository&lt;/td&gt;
+            &lt;td&gt;"a local copy of files and folders being pulled every 5 minutes from some remote source"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;name&lt;/code&gt;:  "a unique name of the repo in user's account"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;deployment&lt;/code&gt;: Deployment&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;dockerFile&lt;/code&gt;:  "Docker file"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;manifest&lt;/code&gt;: Manifest&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+      <method seal="35ca6e">
+         <id>UC7</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>174</where>
+            <where>175</where>
+            <where>176</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>User</type>
+            </binding>
+         </bindings>
+         <object>_self</object>
+         <signature>terminates</signature>
+         <info>
+            <informal>The user just removes the repository and we immediately terminate
+    the Docker container, close all ports, and stops routing domain names.
+    This operation is irrevertable</informal>
+         </info>
+         <markdown>The following table describes all technical details of Use Case `UC7`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC7&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; terminates&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td/&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"The user just removes the repository and we immediately terminate the Docker container, close all ports, and stops routing domain names. This operation is irrevertable"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC7&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC7&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;_self&lt;/code&gt; terminates&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td/&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"The user just removes the repository and we immediately terminate the Docker container, close all ports, and stops routing domain names. This operation is irrevertable"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+   </methods>
+   <pages>
+      <page>
+         <title>Vision</title>
+         <info>
+            <informal>
+
+Requirements providers are:
+
+ * Yegor Bugayenko
+
+Key success factors are:
+
+ * High availability - much higher than anyone else can offer.
+ * Low cost - lower than anyone.
+ * Easy (re)deployment - a unique 'pull' deployment mechanism.
+ * Simple control panel - one form and your site is ready in 5 minutes.".
+
+</informal>
+         </info>
+         <mentioned>
+            <where>194</where>
+         </mentioned>
+         <html xmlns:r="org.requs.facet.XsltFuncs">&lt;p&gt;Requirements providers are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Yegor Bugayenko&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Key success factors are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;High availability - much higher than anyone else can offer.&lt;/li&gt;
+&lt;li&gt;Low cost - lower than anyone.&lt;/li&gt;
+&lt;li&gt;Easy (re)deployment - a unique 'pull' deployment mechanism.&lt;/li&gt;
+&lt;li&gt;Simple control panel - one form and your site is ready in 5 minutes.".&lt;/li&gt;
+&lt;/ul&gt;
+</html>
+      </page>
+   </pages>
+   <errors/>
+   <metrics>
+      <metric id="overall">0.95</metric>
+   </metrics>
+   <tbds>
+      <tbd id="TBD-c0bf5">
+         <subject>UC8</subject>
+         <description>Method UC8 has an informal description that increases its ambiguity and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-0ee38">
+         <subject>UC3</subject>
+         <description>Method UC3 has an informal description that increases its ambiguity and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-d4161">
+         <subject>UC6</subject>
+         <description>Method UC6 has an informal description that increases its ambiguity and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-247ba">
+         <subject>UC7</subject>
+         <description>Method UC7 has an informal description that increases its ambiguity and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-0138a">
+         <subject>UC9.1</subject>
+         <description>Step #1 in method UC9.1 has an informal signature "looks at the front page which contains all the information about pricing, 'how it works', etc" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-c6056">
+         <subject>UC9.1</subject>
+         <description>Step #2 in method UC9.1 has an informal signature "reads the stats page containing our runtime stats, similar to https://status.github.com/" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-d2b51">
+         <subject>UC9.1</subject>
+         <description>Step #3 in method UC9.1 has an informal signature "reads our terms page including all the legal wordings" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-b545a">
+         <subject>UC9.2</subject>
+         <description>Step #1 in method UC9.2 has an informal signature "initiates sign in via one of auth providers, e.g., Facebook, Google+, etc." that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-d440a">
+         <subject>UC9.2</subject>
+         <description>Step #2 in method UC9.2 has an informal signature "requests permission from the OAuth provider chosen by the anonymous" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-7a8eb">
+         <subject>UC9.2</subject>
+         <description>Step #4 in method UC9.2 has an informal signature "adds $5 to the user.balance" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-d136d">
+         <subject>UC9.3</subject>
+         <description>Step #1 in method UC9.3 has an informal signature "from now on treats the anonymous as a User" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-59ec4">
+         <subject>UC2</subject>
+         <description>Step #1 in method UC2 has an informal signature "enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-6abcf">
+         <subject>UC2</subject>
+         <description>Step #2 in method UC2 has an informal signature "adds the Repository and displays it in the list of other repositories in the user account" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-06e96">
+         <subject>UC4</subject>
+         <description>Step #1 in method UC4 has an informal signature "requests a list of deployments for the Repository" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-ed5ff">
+         <subject>UC4</subject>
+         <description>Step #2 in method UC4 has an informal signature "displays a list of deployments that has already been executed" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-6c329">
+         <subject>UC4</subject>
+         <description>Step #3 in method UC4 has an informal signature "chooses a deployment and initiates viewing its log" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-d7f59">
+         <subject>UC4</subject>
+         <description>Step #4 in method UC4 has an informal signature "displays a log for the chosen deployment" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-d39d2">
+         <subject>UC5</subject>
+         <description>Step #1 in method UC5 has an informal signature "selects a time interval, like: last 7 days, last month, custom (from date, to date)" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-a9df6">
+         <subject>UC5</subject>
+         <description>Step #2 in method UC5 has an informal signature "reads HourlyUsage records corresounding to the repo within specified time interval" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-c039f">
+         <subject>UC5</subject>
+         <description>Step #3 in method UC5 has an informal signature "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
+    Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
+    Last row contains totals by all containers. The values in the table are usage stats by container
+    within specified time interval" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+   </tbds>
+   <requs>
+      <version>1.9</version>
+      <revision>ec4c1b2</revision>
+      <date>2014-05-23 22:55</date>
+   </requs>
+</spec>
