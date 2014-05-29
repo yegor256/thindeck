@@ -129,7 +129,7 @@ UC3 where Repository deploys itself:
     any changes, we stop its Docker container, and start a new one with
     the latest version of the source code. Besides Dockerfile, which is used
     for the Docker container, we should look for a Manifest of the repository.
-    According to the informaiton in the Manifest we should configure the
+    According to the information in the Manifest we should configure the
     container after its start. While the repository is used, we should
     track its CPU and traffic consumption, and assign to its owner".
 
@@ -161,5 +161,5 @@ UC6 where User compensates usage of Repository:
 :UC7 is a must.
 UC7 where User terminates Repository:
     "The user just removes the repository and we immediately terminate
-    the Docker container, close all ports, and stops routing domain names.
-    This operation is irrevertable".
+    the Docker container, close all ports and stop routing domain names.
+    This operation is irreversible".
