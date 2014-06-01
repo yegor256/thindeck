@@ -98,10 +98,8 @@ Deployment includes:
 Container is "a virtual operating system running a Repository".
 Container has:
 maxContainerSize as "maximum size of an individual container may not exceed 100 megabytes",
-maxRepoSize is "the maximum allowed size that a repository is allowed to have. Repository size is the sum of sizes from all files contained in the repository.
-Maximum repository size is 100 megabytes",
-maxFileSize is "the maximum allowed size of an individual file that a user may upload.
-Maximum file size is 100 megabytes",
+maxRepoSize is "the maximum allowed size that a repository is allowed to have. Repository size is the sum of sizes from all files contained in the repository. Maximum repository size is 100 megabytes",
+maxFileSize is "the maximum allowed size of an individual file that a user may upload. Maximum file size is 100 megabytes",
 repositoryLimit as "one container corresponds to one repo".
 
 HourlyUsage is "an atomic track record of the usage of resources".
@@ -131,7 +129,7 @@ UC2/1 when "data is incorrect":
 :UC3 is specified.
 :UC3 is a must.
 UC3 where Repository deploys itself:
-    1. System "fetches the repository every five minutes and check the difference
+    1. The system "fetches the repository every five minutes and check the difference
     between existing source code and the latest version. If there are
     any changes, we stop its Docker container, and start a new one with
     the latest version of the source code. Note that MaxRepoSize condition must not exceed limit in order to deploy.
