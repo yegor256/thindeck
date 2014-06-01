@@ -137,7 +137,6 @@ UC3 where Repository deploys itself:
     According to the information in the Manifest we should configure the
     container after its start. While the repository is used, we should
     track its CPU and traffic consumption, and assign to its owner".
-    
 UC3/1 when "repo exceeds MaxRepoSize":
     1. Fail since "repository exceeds allowed size limit".
 
