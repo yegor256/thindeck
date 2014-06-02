@@ -17,7 +17,7 @@ UC1 where User (a user) hosts Repository (a repo):
     6. The user terminates the repo.
 UC1/UX must "be in English only".
 
-User is "a person identified in the system (logged in)".
+User is "a person who uses or wants to use hosting and is identified by the system (logged in)".
 
 User includes:
     repo-s? as Repository,
