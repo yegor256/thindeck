@@ -14,6 +14,7 @@ UC1 where User (a user) hosts Repository (a repo):
     3. The user reads usage stats of the repo;
     4. The user compensates usage of the repo;
     5. The user terminates the repo.
+UC1/UX must "be in English only".
 
 User is "a person identified in the system (logged in)".
 
@@ -25,10 +26,12 @@ User includes:
 
 Anonymous is "a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in".
 
+FrontPage is "a front page of Thindeck for Anonymous which contains all the information about pricing, 'how it works', etc.".
+
 :UC9.1 is specified.
 :UC9.1 is a should.
 UC9.1 where Anonymous (a anonymous) explores thindeck:
-    1. The anonymous "looks at the front page which contains all the information about pricing, 'how it works', etc";
+    1. The anonymous reads FrontPage(a frontPage);
     2. The anonymous "reads the stats page containing our runtime stats, similar to https://status.github.com/";
     3. The anonymous "reads our terms page including all the legal wordings".
 
@@ -49,6 +52,11 @@ UC9.2/2 when "an OAuth provider denied access":
 :UC9.3 is a must.
 UC9.3 where Anonymous (a anonymous) logs in using User(a user):
     1. The system "from now on treats the anonymous as a User".
+
+:UC11 is specified.
+:UC11 is a must.
+UC11 where User (a user) logs out:
+    1. The system "from now on treats the user as anonymous and displays a public page".
 
 Repository is "a local copy of files and folders being pulled every 5 minutes from some remote source".
 Repository needs:
@@ -145,10 +153,10 @@ UC4 where User reads deployment logs of Repository:
 :UC5 is specified.
 :UC5 is a must.
 UC5 where User(a user) reads usage stats using Repository(a repo):
-    1. The user "selects a time interval, like: last 7 days, last month, custom (from date, to date)";
-    2. The system "reads HourlyUsage records corresounding to the repo within specified time interval";
-    3. The system "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
-    Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
+    1. The user "selects a time interval, like: last 7 days, current month, last month, custom (from date, to date)";
+    2. The system reads Deployment (a deployment) of the repo;
+    3. The system "shows to the user a table with values from HourlyUsage records corresponding to the deployment and the specified time interval by the following columns: Container (id), Inbound traffic (GB),
+    Outbound traffic (GB), CPU time (minutes), Cost ($). Each table row corresponds to a container.
     Last row contains totals by all containers. The values in the table are usage stats by container
     within specified time interval".
 
