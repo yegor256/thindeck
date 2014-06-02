@@ -127,12 +127,16 @@ UC2 where User registers Repository:
     2. The system creates Repository(a repo);
     3. The system "displays a repo in the list of other repositories in the user account";
     4. The system deploys the repo;
-    5. The system "periodically (every 5 minutes) pulls the changes of the repository from its remote source".
+    5. The system reads the repo "periodically (every 5 minutes) pulling the changes from repository remote source";
+    6. The system redeploys the repo "If the system detected changes after last pull".
 UC2/1 when "data is incorrect":
     1. Fail since "repository cannot be registered".
-UC2/5 when "system detected changes in repository after it was pulled from its remote source":
-    1. The system "stops all Docker containers of the repo";
-    2. The system deploys the repo.
+
+:UC2.1 is specified.
+:UC2.1 is a must.
+UC2.1 where System(a system) redeploys using Repository(a repo):
+    1. The system deletes Container(a containers) "terminates all Docker containers of the repo";
+    2. The system deploys the repo "using updated sources".
 
 :UC3 is specified.
 :UC3 is a must.
@@ -140,7 +144,6 @@ UC3 where System(a system) deploys using Repository (a repo):
     1. The system "starts a new Docker container with the latest version of the source code, configuring it as defined in Dockerfile";
     2. The system "applies the configuration defined in Manifest file to the container after it is started";
     3. The system "tracks the usage of CPU time and traffic by the container".
-
 
 :UC4 is specified.
 :UC4 is a must.
