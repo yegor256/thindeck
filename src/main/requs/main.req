@@ -149,10 +149,10 @@ UC4 where User reads deployment logs of Repository:
 :UC5 is specified.
 :UC5 is a must.
 UC5 where User(a user) reads usage stats using Repository(a repo):
-    1. The user "selects a time interval, like: last 7 days, last month, custom (from date, to date)";
-    2. The system "reads HourlyUsage records corresounding to the repo within specified time interval";
-    3. The system "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
-    Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
+    1. The user "selects a time interval, like: last 7 days, current month, last month, custom (from date, to date)";
+    2. The system reads Deployment (a deployment) of the repo;
+    3. The system "shows to the user a table with values from HourlyUsage records corresponding to the deployment and the specified time interval by the following columns: Container (id), Inbound traffic (GB),
+    Outbound traffic (GB), CPU time (minutes), Cost ($). Each table row corresponds to a container.
     Last row contains totals by all containers. The values in the table are usage stats by container
     within specified time interval".
 
