@@ -51,6 +51,11 @@ UC9.2/2 when "an OAuth provider denied access":
 UC9.3 where Anonymous (a anonymous) logs in using User(a user):
     1. The system "from now on treats the anonymous as a User".
 
+:UC11 is specified.
+:UC11 is a must.
+UC11 where User (a user) logs out:
+    1. The system "from now on treats the user as anonymous and displays a public page".
+
 Repository is "a local copy of files and folders being pulled every 5 minutes from some remote source".
 Repository needs:
     name as "a unique name of the repo in user's account",
