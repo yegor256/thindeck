@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="18666" time="2014-06-03T20:36:44">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="21887" time="2014-06-03T21:41:52">
    <input>Hoster is "an owner of a web server who wants to
 install Thindeck locally and host containers himself".
 
@@ -13,6 +13,9 @@ UC8 where Hoster installs System:
     starts it as a Java standalone app, or Linux service, or something
     similar. And it works with a local collection of users and local
     docker installation".
+UC8/PRICING must "Standalone Thindeck installation is completely free.
+    Thindeck, as a software product, is open source. Anyone should be
+    able to download and install it locally, on his own server(s)".
 
 System is "a web hosting that deploys itself".
 
@@ -32,6 +35,7 @@ UC1 where User (a user) hosts Repository (a repo):
     5. The user compensates usage of the repo;
     6. The user terminates the repo.
 UC1/UX must "be in English only".
+UC1/WEBDESIGN must "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site".
 
 User is "a person who uses or wants to use hosting and is identified by the system (logged in)".
 
@@ -55,7 +59,7 @@ UC9.1 where Anonymous (a anonymous) explores thindeck:
 :UC9.2 is specified.
 :UC9.2 is a must.
 UC9.2 where Anonymous (a anonymous) signs up:
-    1. The anonymous "initiates sign in via one of auth providers, e.g., Facebook, Google+, etc.";
+    1. The anonymous "initiates sign in via one of OAuth providers from this list: Google Plus, Facebook, Github, or Twitter.";
     2. The system "requests permission from the OAuth provider chosen by the anonymous";
     3. The system creates User(a user);
     4. The system "adds $5 to the user.balance";
@@ -220,7 +224,7 @@ install Thindeck locally and host containers himself</informal>
          <name>System</name>
          <mentioned>
             <where>4</where>
-            <where>15</where>
+            <where>18</where>
          </mentioned>
          <info>
             <informal>System under Development (thindeck itself)</informal>
@@ -230,7 +234,7 @@ install Thindeck locally and host containers himself</informal>
       <type>
          <name>MeanTimeBetweenFailures</name>
          <mentioned>
-            <where>17</where>
+            <where>20</where>
          </mentioned>
          <info>
             <informal>time that System spends in continuous up time between one failure and the next failure.
@@ -240,7 +244,7 @@ MTBF is a measure of System reliability via continuous operation and therefore t
       <type>
          <name>MeanTimeToRecovery</name>
          <mentioned>
-            <where>20</where>
+            <where>23</where>
          </mentioned>
          <info>
             <informal>time that System spends in unscheduled down time until recovery as a result of failure.
@@ -250,15 +254,15 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>User</name>
          <mentioned>
-            <where>25</where>
-            <where>34</where>
-            <where>36</where>
-            <where>73</where>
-            <where>139</where>
-            <where>160</where>
-            <where>168</where>
-            <where>178</where>
-            <where>184</where>
+            <where>28</where>
+            <where>38</where>
+            <where>40</where>
+            <where>77</where>
+            <where>143</where>
+            <where>164</where>
+            <where>172</where>
+            <where>182</where>
+            <where>188</where>
          </mentioned>
          <info>
             <informal>a person who uses or wants to use hosting and is identified by the system (logged in)</informal>
@@ -267,7 +271,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>repo</name>
                <mentioned>
-                  <where>37</where>
+                  <where>41</where>
                </mentioned>
                <arity>ANY</arity>
                <type>Repository</type>
@@ -275,7 +279,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>URN</name>
                <mentioned>
-                  <where>38</where>
+                  <where>42</where>
                </mentioned>
                <info>
                   <informal>a unique identifier of itself, for example urn:github:526301</informal>
@@ -284,7 +288,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>authTokens</name>
                <mentioned>
-                  <where>39</where>
+                  <where>43</where>
                </mentioned>
                <info>
                   <informal>a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc.</informal>
@@ -293,7 +297,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>balance</name>
                <mentioned>
-                  <where>40</where>
+                  <where>44</where>
                </mentioned>
                <info>
                   <informal>amount of money available, can be stored as integer number of cents</informal>
@@ -304,10 +308,10 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>Anonymous</name>
          <mentioned>
-            <where>42</where>
-            <where>48</where>
-            <where>55</where>
-            <where>68</where>
+            <where>46</where>
+            <where>52</where>
+            <where>59</where>
+            <where>72</where>
          </mentioned>
          <info>
             <informal>a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in</informal>
@@ -316,7 +320,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>FrontPage</name>
          <mentioned>
-            <where>44</where>
+            <where>48</where>
          </mentioned>
          <info>
             <informal>a front page of Thindeck for Anonymous which contains all the information about pricing, 'how it works', etc.</informal>
@@ -325,9 +329,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>Repository</name>
          <mentioned>
-            <where>76</where>
-            <where>77</where>
-            <where>148</where>
+            <where>80</where>
+            <where>81</where>
+            <where>152</where>
          </mentioned>
          <info>
             <informal>a local copy of files and folders being pulled every 5 minutes from some remote source</informal>
@@ -336,7 +340,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>name</name>
                <mentioned>
-                  <where>78</where>
+                  <where>82</where>
                </mentioned>
                <info>
                   <informal>a unique name of the repo in user's account</informal>
@@ -345,7 +349,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>deployment</name>
                <mentioned>
-                  <where>79</where>
+                  <where>83</where>
                </mentioned>
                <arity>OPT</arity>
                <type>Deployment</type>
@@ -353,7 +357,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>dockerFile</name>
                <mentioned>
-                  <where>80</where>
+                  <where>84</where>
                </mentioned>
                <info>
                   <informal>Docker file</informal>
@@ -362,7 +366,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>manifest</name>
                <mentioned>
-                  <where>81</where>
+                  <where>85</where>
                </mentioned>
                <type>Manifest</type>
             </slot>
@@ -371,9 +375,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>GitRepository</name>
          <mentioned>
-            <where>83</where>
-            <where>84</where>
-            <where>85</where>
+            <where>87</where>
+            <where>88</where>
+            <where>89</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -385,7 +389,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>uri</name>
                <mentioned>
-                  <where>86</where>
+                  <where>90</where>
                </mentioned>
                <info>
                   <informal>a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git</informal>
@@ -394,7 +398,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>key</name>
                <mentioned>
-                  <where>87</where>
+                  <where>91</where>
                </mentioned>
                <arity>OPT</arity>
                <info>
@@ -406,9 +410,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>SvnRepository</name>
          <mentioned>
-            <where>89</where>
-            <where>90</where>
-            <where>91</where>
+            <where>93</where>
+            <where>94</where>
+            <where>95</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -420,7 +424,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>uri</name>
                <mentioned>
-                  <where>92</where>
+                  <where>96</where>
                </mentioned>
                <info>
                   <informal>a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git</informal>
@@ -429,7 +433,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>username</name>
                <mentioned>
-                  <where>93</where>
+                  <where>97</where>
                </mentioned>
                <arity>OPT</arity>
                <info>
@@ -439,7 +443,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>passwors</name>
                <mentioned>
-                  <where>94</where>
+                  <where>98</where>
                </mentioned>
                <arity>OPT</arity>
                <info>
@@ -451,9 +455,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>FtpRepository</name>
          <mentioned>
-            <where>96</where>
-            <where>97</where>
-            <where>98</where>
+            <where>100</where>
+            <where>101</where>
+            <where>102</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -465,7 +469,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>uri</name>
                <mentioned>
-                  <where>99</where>
+                  <where>103</where>
                </mentioned>
                <info>
                   <informal>a URL containing credentials valid to connect to FTP server, for example ftp://user:password@ftpserver/url-path</informal>
@@ -476,9 +480,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>DropboxRepository</name>
          <mentioned>
-            <where>101</where>
-            <where>102</where>
-            <where>103</where>
+            <where>105</where>
+            <where>106</where>
+            <where>107</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -490,7 +494,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>apiKey</name>
                <mentioned>
-                  <where>103</where>
+                  <where>107</where>
                </mentioned>
                <info>
                   <informal>Dropbox specific connection information</informal>
@@ -501,9 +505,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>AmazonSthreeRepository</name>
          <mentioned>
-            <where>105</where>
-            <where>106</where>
-            <where>107</where>
+            <where>109</where>
+            <where>110</where>
+            <where>111</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -515,7 +519,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>apiKey</name>
                <mentioned>
-                  <where>107</where>
+                  <where>111</where>
                </mentioned>
                <info>
                   <informal>Amazon S3 specific connection information</informal>
@@ -526,9 +530,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>GoogleDriveRepository</name>
          <mentioned>
-            <where>109</where>
-            <where>110</where>
-            <where>111</where>
+            <where>113</where>
+            <where>114</where>
+            <where>115</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -540,7 +544,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>apiKey</name>
                <mentioned>
-                  <where>111</where>
+                  <where>115</where>
                </mentioned>
                <info>
                   <informal>Google Drive specific connection information</informal>
@@ -551,8 +555,8 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>Deployment</name>
          <mentioned>
-            <where>113</where>
-            <where>115</where>
+            <where>117</where>
+            <where>119</where>
          </mentioned>
          <info>
             <informal>a summary statistics of Containers related to a Repository, with their statuses and text logs</informal>
@@ -561,7 +565,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>116</where>
+                  <where>120</where>
                </mentioned>
                <arity>MANY</arity>
                <type>Container</type>
@@ -569,7 +573,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>state</name>
                <mentioned>
-                  <where>117</where>
+                  <where>121</where>
                </mentioned>
                <info>
                   <informal>one of: 'deployment in progress' and 'deployed'</informal>
@@ -578,7 +582,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>hourlyUsage</name>
                <mentioned>
-                  <where>118</where>
+                  <where>122</where>
                </mentioned>
                <arity>ANY</arity>
                <type>HourlyUsage</type>
@@ -588,7 +592,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>Container</name>
          <mentioned>
-            <where>120</where>
+            <where>124</where>
          </mentioned>
          <info>
             <informal>a virtual operating system running a Repository</informal>
@@ -597,8 +601,8 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>HourlyUsage</name>
          <mentioned>
-            <where>122</where>
-            <where>123</where>
+            <where>126</where>
+            <where>127</where>
          </mentioned>
          <info>
             <informal>an atomic track record of the usage of resources</informal>
@@ -607,14 +611,14 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>124</where>
+                  <where>128</where>
                </mentioned>
                <type>Container</type>
             </slot>
             <slot>
                <name>hours</name>
                <mentioned>
-                  <where>125</where>
+                  <where>129</where>
                </mentioned>
                <info>
                   <informal>a calendar hour, for example: 2014-05-02T18</informal>
@@ -623,7 +627,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>cpuSeconds</name>
                <mentioned>
-                  <where>126</where>
+                  <where>130</where>
                </mentioned>
                <info>
                   <informal>how many seconds our CPU spent working with the container during this hour.
@@ -633,7 +637,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>bytesIn</name>
                <mentioned>
-                  <where>128</where>
+                  <where>132</where>
                </mentioned>
                <info>
                   <informal>an integer number of bytes came in the container</informal>
@@ -642,7 +646,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>bytesOut</name>
                <mentioned>
-                  <where>129</where>
+                  <where>133</where>
                </mentioned>
                <info>
                   <informal>an integer number of bytes came out of the container</informal>
@@ -653,7 +657,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>Manifest</name>
          <mentioned>
-            <where>131</where>
+            <where>135</where>
          </mentioned>
          <info>
             <informal>a YAML configuration file, stored in the repository, and
@@ -662,7 +666,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       </type>
    </types>
    <methods>
-      <method seal="b1e221">
+      <method seal="2a521a">
          <id>UC8</id>
          <attributes>
             <attribute seal="">specified</attribute>
@@ -672,6 +676,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <where>6</where>
             <where>7</where>
             <where>8</where>
+            <where>16</where>
          </mentioned>
          <bindings>
             <binding>
@@ -688,6 +693,16 @@ MTTR is a measure of System reliability via service recovery and therefore the M
     similar. And it works with a local collection of users and local
     docker installation</informal>
          </info>
+         <nfrs>
+            <nfr>
+               <id>PRICING</id>
+               <info>
+                  <informal>Standalone Thindeck installation is completely free.
+    Thindeck, as a software product, is open source. Anyone should be
+    able to download and install it locally, on his own server(s)</informal>
+               </info>
+            </nfr>
+         </nfrs>
          <markdown>The following table describes all technical details of Use Case `UC8`:
 
 &lt;table&gt;
@@ -718,6 +733,10 @@ MTTR is a measure of System reliability via service recovery and therefore the M
          &lt;tr&gt;
             &lt;td&gt;Brief&lt;/td&gt;
             &lt;td&gt;"he just downloads the app (either as a TGZ archive of RPM package or Chef cookbook, or any of that) and installs it locally. Then he starts it as a Java standalone app, or Linux service, or something similar. And it works with a local collection of users and local docker installation"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;NFRs&lt;/td&gt;
+            &lt;td&gt;PRICING must  "Standalone Thindeck installation is completely free. Thindeck, as a software product, is open source. Anyone should be able to download and install it locally, on his own server(s)"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -770,6 +789,10 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;Brief&lt;/td&gt;
             &lt;td&gt;"he just downloads the app (either as a TGZ archive of RPM package or Chef cookbook, or any of that) and installs it locally. Then he starts it as a Java standalone app, or Linux service, or something similar. And it works with a local collection of users and local docker installation"&lt;/td&gt;
          &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;NFRs&lt;/td&gt;
+            &lt;td&gt;PRICING must  "Standalone Thindeck installation is completely free. Thindeck, as a software product, is open source. Anyone should be able to download and install it locally, on his own server(s)"&lt;/td&gt;
+         &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
 
@@ -791,18 +814,19 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="5bd8ab">
+      <method seal="6bb5a4">
          <id>UC1</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>23</where>
-            <where>24</where>
-            <where>25</where>
-            <where>32</where>
-            <where>135</where>
+            <where>26</where>
+            <where>27</where>
+            <where>28</where>
+            <where>35</where>
+            <where>36</where>
+            <where>139</where>
          </mentioned>
          <bindings>
             <binding>
@@ -825,7 +849,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>26</where>
+                  <where>29</where>
                </mentioned>
                <object>user</object>
                <signature>registers</signature>
@@ -837,7 +861,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>135</where>
+                              <where>139</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"a message that the repository exists already in his account"</signature>
@@ -849,7 +873,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>27</where>
+                  <where>30</where>
                </mentioned>
                <object>repo</object>
                <signature>deploys itself</signature>
@@ -857,7 +881,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>28</where>
+                  <where>31</where>
                </mentioned>
                <object>user</object>
                <signature>reads deployment logs</signature>
@@ -868,7 +892,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>29</where>
+                  <where>32</where>
                </mentioned>
                <object>user</object>
                <signature>reads usage stats</signature>
@@ -879,7 +903,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>5</number>
                <mentioned>
-                  <where>30</where>
+                  <where>33</where>
                </mentioned>
                <object>user</object>
                <signature>compensates usage</signature>
@@ -890,7 +914,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>6</number>
                <mentioned>
-                  <where>31</where>
+                  <where>34</where>
                </mentioned>
                <object>user</object>
                <signature>terminates</signature>
@@ -902,6 +926,12 @@ Actors taking participation in the Use Case have the following properties:
                <id>UX</id>
                <info>
                   <informal>be in English only</informal>
+               </info>
+            </nfr>
+            <nfr>
+               <id>WEBDESIGN</id>
+               <info>
+                  <informal>be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site</informal>
                </info>
             </nfr>
          </nfrs>
@@ -945,7 +975,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;NFRs&lt;/td&gt;
-            &lt;td&gt;UX must  "be in English only"&lt;/td&gt;
+            &lt;td&gt;UX must  "be in English only"&lt;br/&gt;WEBDESIGN must  "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -1045,7 +1075,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;NFRs&lt;/td&gt;
-            &lt;td&gt;UX must  "be in English only"&lt;/td&gt;
+            &lt;td&gt;UX must  "be in English only"&lt;br/&gt;WEBDESIGN must  "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -1106,16 +1136,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="8356f7">
+      <method seal="d407f3">
          <id>UC9.1</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">should</attribute>
          </attributes>
          <mentioned>
-            <where>46</where>
-            <where>47</where>
-            <where>48</where>
+            <where>50</where>
+            <where>51</where>
+            <where>52</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1137,7 +1167,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>49</where>
+                  <where>53</where>
                </mentioned>
                <object>anonymous</object>
                <signature>reads</signature>
@@ -1146,7 +1176,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>50</where>
+                  <where>54</where>
                </mentioned>
                <object>anonymous</object>
                <signature>"reads the stats page containing our runtime stats, similar to https://status.github.com/"</signature>
@@ -1154,7 +1184,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>51</where>
+                  <where>55</where>
                </mentioned>
                <object>anonymous</object>
                <signature>"reads our terms page including all the legal wordings"</signature>
@@ -1283,18 +1313,18 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="77e4fa">
+      <method seal="82c9cb">
          <id>UC9.2</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>53</where>
-            <where>54</where>
-            <where>55</where>
-            <where>62</where>
-            <where>64</where>
+            <where>57</where>
+            <where>58</where>
+            <where>59</where>
+            <where>66</where>
+            <where>68</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1316,15 +1346,15 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>56</where>
+                  <where>60</where>
                </mentioned>
                <object>anonymous</object>
-               <signature>"initiates sign in via one of auth providers, e.g., Facebook, Google+, etc."</signature>
+               <signature>"initiates sign in via one of OAuth providers from this list: Google Plus, Facebook, Github, or Twitter."</signature>
             </step>
             <step>
                <number>2</number>
                <mentioned>
-                  <where>57</where>
+                  <where>61</where>
                </mentioned>
                <object>system</object>
                <signature>"requests permission from the OAuth provider chosen by the anonymous"</signature>
@@ -1335,7 +1365,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>62</where>
+                              <where>66</where>
                            </mentioned>
                            <object>anonymous</object>
                            <signature>logs in</signature>
@@ -1348,7 +1378,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>64</where>
+                              <where>68</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"Not authorized by chosen OAuth provider"</signature>
@@ -1360,7 +1390,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>58</where>
+                  <where>62</where>
                </mentioned>
                <object>system</object>
                <signature>creates</signature>
@@ -1369,7 +1399,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>59</where>
+                  <where>63</where>
                </mentioned>
                <object>system</object>
                <signature>"adds $5 to the user.balance"</signature>
@@ -1377,7 +1407,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>5</number>
                <mentioned>
-                  <where>60</where>
+                  <where>64</where>
                </mentioned>
                <object>anonymous</object>
                <signature>logs in</signature>
@@ -1413,7 +1443,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Success Flow&lt;/td&gt;
-            &lt;td&gt;1. &lt;code&gt;anonymous&lt;/code&gt; "initiates sign in via one of auth providers, e.g., Facebook, Google+, etc."&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "requests permission from the OAuth provider chosen by the anonymous"&lt;br/&gt;3. &lt;code&gt;system&lt;/code&gt; creates &lt;code&gt;user&lt;/code&gt;
+            &lt;td&gt;1. &lt;code&gt;anonymous&lt;/code&gt; "initiates sign in via one of OAuth providers from this list: Google Plus, Facebook, Github, or Twitter."&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "requests permission from the OAuth provider chosen by the anonymous"&lt;br/&gt;3. &lt;code&gt;system&lt;/code&gt; creates &lt;code&gt;user&lt;/code&gt;
                &lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "adds $5 to the user.balance"&lt;br/&gt;5. &lt;code&gt;anonymous&lt;/code&gt; logs in&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
@@ -1484,7 +1514,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Success Flow&lt;/td&gt;
-            &lt;td&gt;1. &lt;code&gt;anonymous&lt;/code&gt; "initiates sign in via one of auth providers, e.g., Facebook, Google+, etc."&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "requests permission from the OAuth provider chosen by the anonymous"&lt;br/&gt;3. &lt;code&gt;system&lt;/code&gt; creates &lt;code&gt;user&lt;/code&gt;
+            &lt;td&gt;1. &lt;code&gt;anonymous&lt;/code&gt; "initiates sign in via one of OAuth providers from this list: Google Plus, Facebook, Github, or Twitter."&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "requests permission from the OAuth provider chosen by the anonymous"&lt;br/&gt;3. &lt;code&gt;system&lt;/code&gt; creates &lt;code&gt;user&lt;/code&gt;
                &lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "adds $5 to the user.balance"&lt;br/&gt;5. &lt;code&gt;anonymous&lt;/code&gt; logs in&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
@@ -1526,16 +1556,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="16474f">
+      <method seal="b6d76b">
          <id>UC9.3</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>66</where>
-            <where>67</where>
-            <where>68</where>
+            <where>70</where>
+            <where>71</where>
+            <where>72</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1560,7 +1590,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>69</where>
+                  <where>73</where>
                </mentioned>
                <object>system</object>
                <signature>"from now on treats the anonymous as a User"</signature>
@@ -1709,16 +1739,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="a20639">
+      <method seal="49580c">
          <id>UC11</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>71</where>
-            <where>72</where>
-            <where>73</where>
+            <where>75</where>
+            <where>76</where>
+            <where>77</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1736,7 +1766,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>74</where>
+                  <where>78</where>
                </mentioned>
                <object>system</object>
                <signature>"from now on treats the user as anonymous and displays a public page"</signature>
@@ -1895,17 +1925,17 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="7285de">
+      <method seal="b6d321">
          <id>UC2</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>137</where>
-            <where>138</where>
-            <where>139</where>
-            <where>144</where>
+            <where>141</where>
+            <where>142</where>
+            <where>143</where>
+            <where>148</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1919,7 +1949,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>140</where>
+                  <where>144</where>
                </mentioned>
                <object>user</object>
                <signature>"enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data"</signature>
@@ -1930,7 +1960,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>144</where>
+                              <where>148</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"repository cannot be registered"</signature>
@@ -1942,7 +1972,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>141</where>
+                  <where>145</where>
                </mentioned>
                <object>system</object>
                <signature>"adds the Repository and displays it in the list of other repositories in the user account"</signature>
@@ -2078,9 +2108,9 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>146</where>
-            <where>147</where>
-            <where>148</where>
+            <where>150</where>
+            <where>151</where>
+            <where>152</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2223,16 +2253,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="ace304">
+      <method seal="30cb34">
          <id>UC4</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>158</where>
-            <where>159</where>
-            <where>160</where>
+            <where>162</where>
+            <where>163</where>
+            <where>164</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2253,7 +2283,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>161</where>
+                  <where>165</where>
                </mentioned>
                <object>user</object>
                <signature>"requests a list of deployments for the Repository"</signature>
@@ -2261,7 +2291,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>162</where>
+                  <where>166</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a list of deployments that has already been executed"</signature>
@@ -2269,7 +2299,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>163</where>
+                  <where>167</where>
                </mentioned>
                <object>user</object>
                <signature>"chooses a deployment and initiates viewing its log"</signature>
@@ -2277,7 +2307,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>164</where>
+                  <where>168</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a log for the chosen deployment"</signature>
@@ -2438,16 +2468,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="aea81d">
+      <method seal="a5eb5a">
          <id>UC5</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>166</where>
-            <where>167</where>
-            <where>168</where>
+            <where>170</where>
+            <where>171</where>
+            <where>172</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2476,7 +2506,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>169</where>
+                  <where>173</where>
                </mentioned>
                <object>user</object>
                <signature>"selects a time interval, like: last 7 days, current month, last month, custom (from date, to date)"</signature>
@@ -2484,7 +2514,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>170</where>
+                  <where>174</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -2496,7 +2526,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>171</where>
+                  <where>175</where>
                </mentioned>
                <object>system</object>
                <signature>"shows to the user a table with values from HourlyUsage records corresponding to the deployment and the specified time interval by the following columns: Container (id), Inbound traffic (GB),
@@ -2727,9 +2757,9 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>176</where>
-            <where>177</where>
-            <where>178</where>
+            <where>180</where>
+            <where>181</where>
+            <where>182</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2912,9 +2942,9 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>182</where>
-            <where>183</where>
-            <where>184</where>
+            <where>186</where>
+            <where>187</where>
+            <where>188</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3073,7 +3103,7 @@ Key success factors are:
 </informal>
          </info>
          <mentioned>
-            <where>202</where>
+            <where>206</where>
          </mentioned>
          <html xmlns:r="org.requs.facet.XsltFuncs">&lt;p&gt;Requirements providers are:&lt;/p&gt;
 
@@ -3123,7 +3153,7 @@ Key success factors are:
       </tbd>
       <tbd id="TBD-b545a">
          <subject>UC9.2</subject>
-         <description>Step #1 in method UC9.2 has an informal signature "initiates sign in via one of auth providers, e.g., Facebook, Google+, etc." that increases the ambiguity of the entire method and has to be eliminated</description>
+         <description>Step #1 in method UC9.2 has an informal signature "initiates sign in via one of OAuth providers from this list: Google Plus, Facebook, Github, or Twitter." that increases the ambiguity of the entire method and has to be eliminated</description>
       </tbd>
       <tbd id="TBD-d440a">
          <subject>UC9.2</subject>
