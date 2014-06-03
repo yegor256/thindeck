@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="20986" time="2014-06-02T10:01:55">
-   <input>Hoster is "a an owner of a web server, who wants to
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="18666" time="2014-06-03T20:36:44">
+   <input>Hoster is "an owner of a web server who wants to
 install Thindeck locally and host containers himself".
 
 System is "System under Development (thindeck itself)".
 
 :UC8 is specified.
 :UC8 is a must.
-UC8 where Hoster install SuD:
+UC8 where Hoster installs System:
     "he just downloads the app (either as a TGZ archive of RPM package
     or Chef cookbook, or any of that) and installs it locally. Then he
     starts it as a Java standalone app, or Linux service, or something
@@ -33,7 +33,7 @@ UC1 where User (a user) hosts Repository (a repo):
     6. The user terminates the repo.
 UC1/UX must "be in English only".
 
-User is "a person identified in the system (logged in)".
+User is "a person who uses or wants to use hosting and is identified by the system (logged in)".
 
 User includes:
     repo-s? as Repository,
@@ -212,7 +212,7 @@ Key success factors are:
             <where>8</where>
          </mentioned>
          <info>
-            <informal>a an owner of a web server, who wants to
+            <informal>an owner of a web server who wants to
 install Thindeck locally and host containers himself</informal>
          </info>
       </type>
@@ -261,7 +261,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <where>184</where>
          </mentioned>
          <info>
-            <informal>a person identified in the system (logged in)</informal>
+            <informal>a person who uses or wants to use hosting and is identified by the system (logged in)</informal>
          </info>
          <slots>
             <slot>
@@ -662,7 +662,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       </type>
    </types>
    <methods>
-      <method seal="a3f775">
+      <method seal="b1e221">
          <id>UC8</id>
          <attributes>
             <attribute seal="">specified</attribute>
@@ -680,7 +680,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             </binding>
          </bindings>
          <object>_self</object>
-         <signature>install SuD</signature>
+         <signature>installs</signature>
          <info>
             <informal>he just downloads the app (either as a TGZ archive of RPM package
     or Chef cookbook, or any of that) and installs it locally. Then he
@@ -705,7 +705,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
          &lt;tr&gt;
             &lt;td&gt;Signature&lt;/td&gt;
             &lt;td&gt;
-               &lt;code&gt;_self&lt;/code&gt; install SuD&lt;/td&gt;
+               &lt;code&gt;_self&lt;/code&gt; installs&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Primary&lt;/td&gt;
@@ -734,7 +734,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;Hoster&lt;/td&gt;
-            &lt;td&gt;"a an owner of a web server, who wants to install Thindeck locally and host containers himself"&lt;/td&gt;
+            &lt;td&gt;"an owner of a web server who wants to install Thindeck locally and host containers himself"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -756,7 +756,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;tr&gt;
             &lt;td&gt;Signature&lt;/td&gt;
             &lt;td&gt;
-               &lt;code&gt;_self&lt;/code&gt; install SuD&lt;/td&gt;
+               &lt;code&gt;_self&lt;/code&gt; installs&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Primary&lt;/td&gt;
@@ -785,7 +785,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;Hoster&lt;/td&gt;
-            &lt;td&gt;"a an owner of a web server, who wants to install Thindeck locally and host containers himself"&lt;/td&gt;
+            &lt;td&gt;"an owner of a web server who wants to install Thindeck locally and host containers himself"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -962,7 +962,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -976,7 +976,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -1062,7 +1062,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -1076,7 +1076,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -1439,7 +1439,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -1510,7 +1510,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -1622,7 +1622,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -1693,7 +1693,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -1789,7 +1789,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -1803,7 +1803,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -1865,7 +1865,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -1879,7 +1879,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -1994,7 +1994,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -2055,7 +2055,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -2331,7 +2331,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -2408,7 +2408,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -2557,7 +2557,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -2571,7 +2571,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -2664,7 +2664,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -2678,7 +2678,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -2798,7 +2798,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -2875,7 +2875,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -2975,7 +2975,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
@@ -3036,7 +3036,7 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
-            &lt;td&gt;"a person identified in the system (logged in)"&lt;ul&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
                   &lt;li&gt;
                      &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
                   &lt;li&gt;
