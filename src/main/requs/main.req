@@ -52,6 +52,8 @@ UC9.3 where Anonymous (a anonymous) logs in using User(a user):
     1. The system "from now on treats the anonymous as a User".
 
 Repository is "a local copy of files and folders being pulled every 5 minutes from some remote source".
+Repository has:
+size as "the maximum allowed size that a repository is allowed to have. Repository size is the sum of sizes from all files contained in the repository. Maximum repository size is 100 megabytes", file-s.
 Repository needs:
     name as "a unique name of the repo in user's account",
     deployment-? as Deployment,
@@ -97,10 +99,8 @@ Deployment includes:
 
 Container is "a virtual operating system running a Repository".
 Container has:
-maxContainerSize as "maximum size of an individual container may not exceed 100 megabytes",
-maxRepoSize as "the maximum allowed size that a repository is allowed to have. Repository size is the sum of sizes from all files contained in the repository. Maximum repository size is 100 megabytes",
-maxFileSize as "the maximum allowed size of an individual file that a user may upload. Maximum file size is 100 megabytes",
-repositoryLimit as "one container corresponds to one repo".
+size as "maximum size may not exceed 100 megabytes, minimum size is 0 bytes", file-s;
+limit as "one container corresponds to one repo", repo-s.
 
 HourlyUsage is "an atomic track record of the usage of resources".
 HourlyUsage includes:
@@ -137,7 +137,7 @@ UC3 where Repository deploys itself:
     According to the information in the Manifest we should configure the
     container after its start. While the repository is used, we should
     track its CPU and traffic consumption, and assign to its owner".
-UC3/1 when "repo exceeds MaxRepoSize":
+UC3/1 when "repo exceeds size limitation":
     1. Fail since "repository exceeds allowed size limit".
 
 :UC4 is specified.
