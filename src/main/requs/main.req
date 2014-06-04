@@ -188,40 +188,32 @@ WebVisitor is "something sending http request to user's Application deployed in 
 :UC10.1 is specified.
 :UC10.1 is a must.
 UC10.1 where WebVisitor(a visitor) utilizes Application(an app):
-    1. The visitor creates HttpRequest(a request);
-    2. The visitor "sends the request to the app";
-    3. The system reads the request;
-    4. The system "finds out to which Thindeck user the request is related to";
-    5. The system reads User(a user);
-    6. The system "checks that user.balance is above zero";
-    7. The system "determines which Docker container will handle the request";
-    8. The system "redirects the request to the app instance in chosen container";
-    9. The app reads the request;
-    10. The app "processes the request";
-    11. The app creates HttpResponse(a response);
-    12. The app "replies to the visitor with the response";
-    13. The visitor reads the response;
-    14. The system "tracks resources usage by the app";
-    15. The system reads HourlyUsage(a usageRecord);
-    16. The system updates the usageRecord.
-UC10.1/3 when "the request is not valid, i.e., there is no active deployment whose Manifest would point to requested host:port":
-    1. Fail since "http error 404: none of deployed applications is binded to requested host:port".
-UC10.1/6 when "user.balance is below or equals to zero":
+    1. The visitor creates HttpRequest(a request) "and sends it to the system";
+    2. The system reads the request "to find out to which Thindeck user this request is related to";
+    3. The system reads User(a user) "to check user.balance";
+    4. The system notifies low balance to the user "if user.balance is below 5$";
+    5. The system reads Deployment(a deployment) "to choose its container which will handle the request";
+    6. The system reads Container(a container) "the container to handle the request. If all containers are overloaded, then another one is started to handle the request";
+    7. The system "redirects the request to the app instance in a chosen container";
+    8. The app reads the request "instance of app running in a chosen container";
+    9. The app "processes the request";
+    10. The app creates HttpResponse(a response);
+    11. The app "replies to the visitor with the response";
+    12. The visitor reads the response;
+    13. The system "tracks resources usage by the app";
+    14. The system creates HourlyUsage(a record) "and tracks utilized CPU time and traffic in this record. If a corresponding record already exists, then this record is updated instead of creating a new one".
+UC10.1/2 when "the request is not valid, i.e., there is no active deployment whose Manifest would contain the binding to the requested host:port":
+    1. Fail since "http error 404: none of deployed applications is binded to the requested host:port".
+UC10.1/3 when "user.balance is below or equals to zero":
     1. The system notifies zero balance to the user;
-    2. Fail since "error page pointing out that the user must top up his balance to utilize his application. The page should contain a link to another page where the user can pay. If the user is Anonymous, he must log in first".
-UC10.1/6 when "user.balance is below 5$":
-    1. The system notifies low balance to the user.
-UC10.1/7 when "all containers containing the app are overloaded":
-    1. The system "creates Container(a container). TODO: remove informal when requs bug is fixed".
-UC10.1/9 when "app is not listening to http port":
+    2. Fail since "error page pointing out that user must top up his balance to utilize his application. The page should also contain a link to another page where the user can pay. If the user is Anonymous, he must log in first".
+UC10.1/7 when "app is not listening to http port":
     1. Fail since "http error 404: the app is not listening to the host:port".
-UC10.1/10 when "an exception appears during the app execution":
+UC10.1/9 when "an exception appears during the app execution":
     1. Fail since "http error 404 OR some standard page with exception stack trace".
-UC10.1/15 when "The repository have not yet consumed any resources in that particular hour, therefore, there is no HourlyUsage record yet":
-    1. The system "creates HourlyUsage(a usageRecord). TODO: remove informal when requs bug is fixed".
 
 UC6.2 where System(a system) notifies low balance to User(a user):
-    "The system sends the user an email notification one time when his balance is dropped below $5. We can also implement notifications in user's admin panel".
+    "The system sends the user an email notification one time when his balance is dropped below $5. We can also implement UI notifications".
 
 UC6.3 where System(a system) notifies zero balance to User(a user):
-    "The system sends the user an email notification one time when his balance is dropped below $0. We can also implement notifications in user's admin panel".
+    "The system sends the user an email notification one time when his balance is dropped below $0. We can also implement UI notifications".
