@@ -23,7 +23,7 @@ User is "a person who uses or wants to use hosting and is identified by the syst
 User includes:
     repo-s? as Repository,
     URN as "a unique identifier of itself, for example urn:github:526301",
-    authTokens as "a list of auth tokens to each auth provider the user connected to, e.g., Goole, Facebook, etc.",
+    authTokens as "a list of auth tokens to each auth provider the user connected to, e.g., Google, Facebook, etc.",
     balance as "amount of money available, can be stored as integer number of cents".
 
 Anonymous is "a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in".
@@ -77,8 +77,8 @@ SvnRepository is Repository.
 SvnRepository is "connected to a remote subversion repository".
 SvnRepository includes:
     uri as "a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git",
-    username-? as "credentials used to read files from the repository",
-    passwors-? as "credentials used to read files from the repository".
+    userName-? as "credentials used to read files from the repository",
+    password-? as "credentials used to read files from the repository".
 
 FtpRepository is Repository.
 FtpRepository is "connected to a remote FTP server".
@@ -101,7 +101,7 @@ Deployment is "a summary statistics of Containers related to a Repository, with 
 
 Deployment includes:
     container-s as Container,
-    state as "one of: 'deployment in progress' and 'deployed'",
+    state as "one from the list: building, running",
     hourlyUsage-s? as HourlyUsage.
 
 Container is "a virtual operating system running a Repository".
@@ -156,10 +156,10 @@ UC4 where User reads deployment logs using Repository(a repo):
 :UC5 is specified.
 :UC5 is a must.
 UC5 where User(a user) reads usage stats using Repository(a repo):
-    1. The user "selects a time interval, like: last 7 days, current month, last month, custom (from date, to date)";
-    2. The system reads Deployment (a deployment) of the repo;
-    3. The system "shows to the user a table with values from HourlyUsage records corresponding to the deployment and the specified time interval by the following columns: Container (id), Inbound traffic (GB),
-    Outbound traffic (GB), CPU time (minutes), Cost ($). Each table row corresponds to a container.
+    1. The user "selects a time interval, like: last 7 days, last month, custom (from date, to date)";
+    2. The system "reads HourlyUsage records corresponding to the repo within specified time interval";
+    3. The system "shows the user a table with these columns: Container (id), Inbound traffic (Gb),
+    Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
     Last row contains totals by all containers. The values in the table are usage stats by container
     within specified time interval".
 
