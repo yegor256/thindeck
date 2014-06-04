@@ -1,16 +1,16 @@
-Hoster is "an owner of a web server who wants to
+Hoster is "an owner of a web server, who wants to
 install Thindeck locally and host containers himself".
 
 System is "System under Development (thindeck itself)".
 
 :UC8 is specified.
-:UC8 is a must.
-UC8 where Hoster installs System:
-    "he just downloads the app (either as a TGZ archive of RPM package
-    or Chef cookbook, or any of that) and installs it locally. Then he
-    starts it as a Java standalone app, or Linux service, or something
-    similar. And it works with a local collection of users and local
-    docker installation".
+:UC8 is a should.
+UC8 where Hoster(a hoster) creates standalone thindeck installation:
+    1. The hoster "downloads the Thindeck app (either as a TGZ archive of RPM package or as a Chef cookbook)";
+    2. The hoster "installs the app locally on his machine";
+    3. The hoster "starts the system as a Java standalone app, or a Linux service, or something similar";
+    4. The hoster creates System(a system);
+    5. The system "is now running as a standalone app on hoster's machine. It uses its local database and local Docker installation. That means that no object in the system will depend on any other Thindeck installation, including our own which we provide as a service. This applies to user profiles, repositories, Docker containers, etc.".
 UC8/PRICING must "Standalone Thindeck installation is completely free.
     Thindeck, as a software product, is open source. Anyone should be
     able to download and install it locally, on his own server(s)".
