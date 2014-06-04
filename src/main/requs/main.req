@@ -141,6 +141,9 @@ UC3 where Repository deploys itself:
     According to the information in the Manifest we should configure the
     container after its start. While the repository is used, we should
     track its CPU and traffic consumption, and assign to its owner".
+UC3/PERF must "each thindeck server should be able to host 4 actively working
+    containers inside it, altogether handling 3M hits and 200 Gb of traffic
+    per month, or 100K and 6.6 Gb per day".
 
 :UC4 is specified.
 :UC4 is a must.
