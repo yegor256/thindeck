@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="28973" time="2014-06-04T07:51:11">
-   <input>Hoster is "an owner of a web server who wants to
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="20512" time="2014-06-04T15:28:52">
+   <input>Hoster is "an owner of a web server, who wants to
 install Thindeck locally and host containers himself".
 
 System is "System under Development (thindeck itself)".
 
 :UC8 is specified.
-:UC8 is a must.
-UC8 where Hoster installs System:
-    "he just downloads the app (either as a TGZ archive of RPM package
-    or Chef cookbook, or any of that) and installs it locally. Then he
-    starts it as a Java standalone app, or Linux service, or something
-    similar. And it works with a local collection of users and local
-    docker installation".
+:UC8 is a should.
+UC8 where Hoster(a hoster) creates standalone thindeck installation:
+    1. The hoster "downloads the Thindeck app (either as a TGZ archive of RPM package or as a Chef cookbook)";
+    2. The hoster "installs the app locally on his machine";
+    3. The hoster "starts the system as a Java standalone app, or a Linux service, or something similar";
+    4. The hoster creates System(a system);
+    5. The system "is now running as a standalone app on hoster's machine. It uses its local database and local Docker installation. That means that no object in the system will depend on any other Thindeck installation, including our own which we provide as a service. This applies to user profiles, repositories, Docker containers, etc.".
 UC8/PRICING must "Standalone Thindeck installation is completely free.
     Thindeck, as a software product, is open source. Anyone should be
     able to download and install it locally, on his own server(s)".
@@ -219,7 +219,7 @@ Key success factors are:
             <where>8</where>
          </mentioned>
          <info>
-            <informal>an owner of a web server who wants to
+            <informal>an owner of a web server, who wants to
 install Thindeck locally and host containers himself</informal>
          </info>
       </type>
@@ -669,11 +669,11 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       </type>
    </types>
    <methods>
-      <method seal="2a521a">
+      <method seal="eb8562">
          <id>UC8</id>
          <attributes>
             <attribute seal="">specified</attribute>
-            <attribute seal="">must</attribute>
+            <attribute seal="">should</attribute>
          </attributes>
          <mentioned>
             <where>6</where>
@@ -686,16 +686,60 @@ MTTR is a measure of System reliability via service recovery and therefore the M
                <name>_self</name>
                <type>Hoster</type>
             </binding>
+            <binding>
+               <name>hoster</name>
+               <type>Hoster</type>
+            </binding>
+            <binding>
+               <name>system</name>
+               <type>System</type>
+            </binding>
          </bindings>
-         <object>_self</object>
-         <signature>installs</signature>
-         <info>
-            <informal>he just downloads the app (either as a TGZ archive of RPM package
-    or Chef cookbook, or any of that) and installs it locally. Then he
-    starts it as a Java standalone app, or Linux service, or something
-    similar. And it works with a local collection of users and local
-    docker installation</informal>
-         </info>
+         <object>hoster</object>
+         <signature>creates standalone thindeck installation</signature>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>9</where>
+               </mentioned>
+               <object>hoster</object>
+               <signature>"downloads the Thindeck app (either as a TGZ archive of RPM package or as a Chef cookbook)"</signature>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>10</where>
+               </mentioned>
+               <object>hoster</object>
+               <signature>"installs the app locally on his machine"</signature>
+            </step>
+            <step>
+               <number>3</number>
+               <mentioned>
+                  <where>11</where>
+               </mentioned>
+               <object>hoster</object>
+               <signature>"starts the system as a Java standalone app, or a Linux service, or something similar"</signature>
+            </step>
+            <step>
+               <number>4</number>
+               <mentioned>
+                  <where>12</where>
+               </mentioned>
+               <object>hoster</object>
+               <signature>creates</signature>
+               <result>system</result>
+            </step>
+            <step>
+               <number>5</number>
+               <mentioned>
+                  <where>13</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"is now running as a standalone app on hoster's machine. It uses its local database and local Docker installation. That means that no object in the system will depend on any other Thindeck installation, including our own which we provide as a service. This applies to user profiles, repositories, Docker containers, etc."</signature>
+            </step>
+         </steps>
          <nfrs>
             <nfr>
                <id>PRICING</id>
@@ -723,7 +767,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
          &lt;tr&gt;
             &lt;td&gt;Signature&lt;/td&gt;
             &lt;td&gt;
-               &lt;code&gt;_self&lt;/code&gt; installs&lt;/td&gt;
+               &lt;code&gt;hoster&lt;/code&gt; creates standalone thindeck installation&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Primary&lt;/td&gt;
@@ -731,11 +775,13 @@ MTTR is a measure of System reliability via service recovery and therefore the M
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Actors&lt;/td&gt;
-            &lt;td/&gt;
+            &lt;td&gt;
+               &lt;code&gt;hoster&lt;/code&gt; as Hoster; &lt;code&gt;system&lt;/code&gt; as System&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
-            &lt;td&gt;Brief&lt;/td&gt;
-            &lt;td&gt;"he just downloads the app (either as a TGZ archive of RPM package or Chef cookbook, or any of that) and installs it locally. Then he starts it as a Java standalone app, or Linux service, or something similar. And it works with a local collection of users and local docker installation"&lt;/td&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;hoster&lt;/code&gt; "downloads the Thindeck app (either as a TGZ archive of RPM package or as a Chef cookbook)"&lt;br/&gt;2. &lt;code&gt;hoster&lt;/code&gt; "installs the app locally on his machine"&lt;br/&gt;3. &lt;code&gt;hoster&lt;/code&gt; "starts the system as a Java standalone app, or a Linux service, or something similar"&lt;br/&gt;4. &lt;code&gt;hoster&lt;/code&gt; creates &lt;code&gt;system&lt;/code&gt;
+               &lt;br/&gt;5. &lt;code&gt;system&lt;/code&gt; "is now running as a standalone app on hoster's machine. It uses its local database and local Docker installation. That means that no object in the system will depend on any other Thindeck installation, including our own which we provide as a service. This applies to user profiles, repositories, Docker containers, etc."&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;NFRs&lt;/td&gt;
@@ -756,7 +802,15 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;Hoster&lt;/td&gt;
-            &lt;td&gt;"an owner of a web server who wants to install Thindeck locally and host containers himself"&lt;/td&gt;
+            &lt;td&gt;"an owner of a web server, who wants to install Thindeck locally and host containers himself"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Hoster&lt;/td&gt;
+            &lt;td&gt;"an owner of a web server, who wants to install Thindeck locally and host containers himself"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;System&lt;/td&gt;
+            &lt;td&gt;"System under Development (thindeck itself)"&lt;br/&gt;"a web hosting that deploys itself"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -778,7 +832,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;tr&gt;
             &lt;td&gt;Signature&lt;/td&gt;
             &lt;td&gt;
-               &lt;code&gt;_self&lt;/code&gt; installs&lt;/td&gt;
+               &lt;code&gt;hoster&lt;/code&gt; creates standalone thindeck installation&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Primary&lt;/td&gt;
@@ -786,11 +840,13 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Actors&lt;/td&gt;
-            &lt;td/&gt;
+            &lt;td&gt;
+               &lt;code&gt;hoster&lt;/code&gt; as Hoster; &lt;code&gt;system&lt;/code&gt; as System&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
-            &lt;td&gt;Brief&lt;/td&gt;
-            &lt;td&gt;"he just downloads the app (either as a TGZ archive of RPM package or Chef cookbook, or any of that) and installs it locally. Then he starts it as a Java standalone app, or Linux service, or something similar. And it works with a local collection of users and local docker installation"&lt;/td&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;hoster&lt;/code&gt; "downloads the Thindeck app (either as a TGZ archive of RPM package or as a Chef cookbook)"&lt;br/&gt;2. &lt;code&gt;hoster&lt;/code&gt; "installs the app locally on his machine"&lt;br/&gt;3. &lt;code&gt;hoster&lt;/code&gt; "starts the system as a Java standalone app, or a Linux service, or something similar"&lt;br/&gt;4. &lt;code&gt;hoster&lt;/code&gt; creates &lt;code&gt;system&lt;/code&gt;
+               &lt;br/&gt;5. &lt;code&gt;system&lt;/code&gt; "is now running as a standalone app on hoster's machine. It uses its local database and local Docker installation. That means that no object in the system will depend on any other Thindeck installation, including our own which we provide as a service. This applies to user profiles, repositories, Docker containers, etc."&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;NFRs&lt;/td&gt;
@@ -811,7 +867,15 @@ Actors taking participation in the Use Case have the following properties:
       &lt;tbody&gt;
          &lt;tr&gt;
             &lt;td&gt;Hoster&lt;/td&gt;
-            &lt;td&gt;"an owner of a web server who wants to install Thindeck locally and host containers himself"&lt;/td&gt;
+            &lt;td&gt;"an owner of a web server, who wants to install Thindeck locally and host containers himself"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Hoster&lt;/td&gt;
+            &lt;td&gt;"an owner of a web server, who wants to install Thindeck locally and host containers himself"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;System&lt;/td&gt;
+            &lt;td&gt;"System under Development (thindeck itself)"&lt;br/&gt;"a web hosting that deploys itself"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -3143,13 +3207,9 @@ Key success factors are:
    </pages>
    <errors/>
    <metrics>
-      <metric id="overall">0.9</metric>
+      <metric id="overall">0.88</metric>
    </metrics>
    <tbds>
-      <tbd id="TBD-c0bf5">
-         <subject>UC8</subject>
-         <description>Method UC8 has an informal description that increases its ambiguity and has to be eliminated</description>
-      </tbd>
       <tbd id="TBD-0ee38">
          <subject>UC3</subject>
          <description>Method UC3 has an informal description that increases its ambiguity and has to be eliminated</description>
@@ -3161,6 +3221,22 @@ Key success factors are:
       <tbd id="TBD-247ba">
          <subject>UC7</subject>
          <description>Method UC7 has an informal description that increases its ambiguity and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-c8698">
+         <subject>UC8</subject>
+         <description>Step #1 in method UC8 has an informal signature "downloads the Thindeck app (either as a TGZ archive of RPM package or as a Chef cookbook)" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-b8765">
+         <subject>UC8</subject>
+         <description>Step #2 in method UC8 has an informal signature "installs the app locally on his machine" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-664b6">
+         <subject>UC8</subject>
+         <description>Step #3 in method UC8 has an informal signature "starts the system as a Java standalone app, or a Linux service, or something similar" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-72bb9">
+         <subject>UC8</subject>
+         <description>Step #5 in method UC8 has an informal signature "is now running as a standalone app on hoster's machine. It uses its local database and local Docker installation. That means that no object in the system will depend on any other Thindeck installation, including our own which we provide as a service. This applies to user profiles, repositories, Docker containers, etc." that increases the ambiguity of the entire method and has to be eliminated</description>
       </tbd>
       <tbd id="TBD-c6056">
          <subject>UC9.1</subject>
