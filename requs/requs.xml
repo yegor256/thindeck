@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="21887" time="2014-06-03T21:41:52">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="21743" time="2014-06-04T07:09:52">
    <input>Hoster is "an owner of a web server who wants to
 install Thindeck locally and host containers himself".
 
@@ -160,11 +160,14 @@ UC3 where Repository deploys itself:
     According to the information in the Manifest we should configure the
     container after its start. While the repository is used, we should
     track its CPU and traffic consumption, and assign to its owner".
+UC3/PERF must "each thindeck server should be able to host 4 actively working
+    containers inside it, altogether handling 3M hits and 200 Gb of traffic
+    per month, or 100K and 6.6 Gb per day".
 
 :UC4 is specified.
 :UC4 is a must.
-UC4 where User reads deployment logs of Repository:
-    1. The user "requests a list of deployments for the Repository";
+UC4 where User reads deployment logs using Repository(a repo):
+    1. The system lists Deployment(a deployments) "all deployments of the repo";
     2. The system "displays a list of deployments that has already been executed";
     3. The user "chooses a deployment and initiates viewing its log";
     4. The system "displays a log for the chosen deployment".
@@ -259,10 +262,10 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <where>40</where>
             <where>77</where>
             <where>143</where>
-            <where>164</where>
-            <where>172</where>
-            <where>182</where>
-            <where>188</where>
+            <where>167</where>
+            <where>175</where>
+            <where>185</where>
+            <where>191</where>
          </mentioned>
          <info>
             <informal>a person who uses or wants to use hosting and is identified by the system (logged in)</informal>
@@ -2101,7 +2104,7 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="9da904">
+      <method seal="e3c2c8">
          <id>UC3</id>
          <attributes>
             <attribute seal="">specified</attribute>
@@ -2111,6 +2114,7 @@ Actors taking participation in the Use Case have the following properties:
             <where>150</where>
             <where>151</where>
             <where>152</where>
+            <where>163</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2130,6 +2134,16 @@ Actors taking participation in the Use Case have the following properties:
     container after its start. While the repository is used, we should
     track its CPU and traffic consumption, and assign to its owner</informal>
          </info>
+         <nfrs>
+            <nfr>
+               <id>PERF</id>
+               <info>
+                  <informal>each thindeck server should be able to host 4 actively working
+    containers inside it, altogether handling 3M hits and 200 Gb of traffic
+    per month, or 100K and 6.6 Gb per day</informal>
+               </info>
+            </nfr>
+         </nfrs>
          <markdown>The following table describes all technical details of Use Case `UC3`:
 
 &lt;table&gt;
@@ -2160,6 +2174,10 @@ Actors taking participation in the Use Case have the following properties:
          &lt;tr&gt;
             &lt;td&gt;Brief&lt;/td&gt;
             &lt;td&gt;"We fetch the repository every five minutes and check the difference between existing source code and the latest version. If there are any changes, we stop its Docker container, and start a new one with the latest version of the source code. Besides Dockerfile, which is used for the Docker container, we should look for a Manifest of the repository. According to the information in the Manifest we should configure the container after its start. While the repository is used, we should track its CPU and traffic consumption, and assign to its owner"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;NFRs&lt;/td&gt;
+            &lt;td&gt;PERF must  "each thindeck server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -2222,6 +2240,10 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;Brief&lt;/td&gt;
             &lt;td&gt;"We fetch the repository every five minutes and check the difference between existing source code and the latest version. If there are any changes, we stop its Docker container, and start a new one with the latest version of the source code. Besides Dockerfile, which is used for the Docker container, we should look for a Manifest of the repository. According to the information in the Manifest we should configure the container after its start. While the repository is used, we should track its CPU and traffic consumption, and assign to its owner"&lt;/td&gt;
          &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;NFRs&lt;/td&gt;
+            &lt;td&gt;PERF must  "each thindeck server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;/td&gt;
+         &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
 
@@ -2253,16 +2275,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="30cb34">
+      <method seal="5b0b85">
          <id>UC4</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>162</where>
-            <where>163</where>
-            <where>164</where>
+            <where>165</where>
+            <where>166</where>
+            <where>167</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2270,28 +2292,33 @@ Actors taking participation in the Use Case have the following properties:
                <type>User</type>
             </binding>
             <binding>
-               <name>_arg0</name>
+               <name>repo</name>
                <type>Repository</type>
+            </binding>
+            <binding>
+               <name>deployments</name>
+               <type>Deployment</type>
             </binding>
          </bindings>
          <object>_self</object>
          <signature>reads deployment logs</signature>
          <args>
-            <arg>_arg0</arg>
+            <arg>repo</arg>
          </args>
          <steps>
             <step>
                <number>1</number>
                <mentioned>
-                  <where>165</where>
+                  <where>168</where>
                </mentioned>
-               <object>user</object>
-               <signature>"requests a list of deployments for the Repository"</signature>
+               <object>system</object>
+               <signature>lists</signature>
+               <result>deployments</result>
             </step>
             <step>
                <number>2</number>
                <mentioned>
-                  <where>166</where>
+                  <where>169</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a list of deployments that has already been executed"</signature>
@@ -2299,7 +2326,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>167</where>
+                  <where>170</where>
                </mentioned>
                <object>user</object>
                <signature>"chooses a deployment and initiates viewing its log"</signature>
@@ -2307,7 +2334,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>168</where>
+                  <where>171</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a log for the chosen deployment"</signature>
@@ -2330,7 +2357,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;tr&gt;
             &lt;td&gt;Signature&lt;/td&gt;
             &lt;td&gt;
-               &lt;code&gt;_self&lt;/code&gt; reads deployment logs using &lt;code&gt;_arg0&lt;/code&gt;
+               &lt;code&gt;_self&lt;/code&gt; reads deployment logs using &lt;code&gt;repo&lt;/code&gt;
             &lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
@@ -2340,11 +2367,12 @@ Actors taking participation in the Use Case have the following properties:
          &lt;tr&gt;
             &lt;td&gt;Actors&lt;/td&gt;
             &lt;td&gt;
-               &lt;code&gt;_arg0&lt;/code&gt; as Repository&lt;/td&gt;
+               &lt;code&gt;repo&lt;/code&gt; as Repository; &lt;code&gt;deployments&lt;/code&gt; as Deployment&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Success Flow&lt;/td&gt;
-            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; "requests a list of deployments for the Repository"&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "displays a list of deployments that has already been executed"&lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; "chooses a deployment and initiates viewing its log"&lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "displays a log for the chosen deployment"&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;system&lt;/code&gt; lists &lt;code&gt;deployments&lt;/code&gt;
+               &lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "displays a list of deployments that has already been executed"&lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; "chooses a deployment and initiates viewing its log"&lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "displays a log for the chosen deployment"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -2387,6 +2415,18 @@ Actors taking participation in the Use Case have the following properties:
                &lt;/ul&gt;
             &lt;/td&gt;
          &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Deployment&lt;/td&gt;
+            &lt;td&gt;"a summary statistics of Containers related to a Repository, with their statuses and text logs"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;container&lt;/code&gt;: Container&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;state&lt;/code&gt;:  "one of: 'deployment in progress' and 'deployed'"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;hourlyUsage&lt;/code&gt;: HourlyUsage&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
 </markdown>
@@ -2407,7 +2447,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;tr&gt;
             &lt;td&gt;Signature&lt;/td&gt;
             &lt;td&gt;
-               &lt;code&gt;_self&lt;/code&gt; reads deployment logs using &lt;code&gt;_arg0&lt;/code&gt;
+               &lt;code&gt;_self&lt;/code&gt; reads deployment logs using &lt;code&gt;repo&lt;/code&gt;
             &lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
@@ -2417,11 +2457,12 @@ Actors taking participation in the Use Case have the following properties:
          &lt;tr&gt;
             &lt;td&gt;Actors&lt;/td&gt;
             &lt;td&gt;
-               &lt;code&gt;_arg0&lt;/code&gt; as Repository&lt;/td&gt;
+               &lt;code&gt;repo&lt;/code&gt; as Repository; &lt;code&gt;deployments&lt;/code&gt; as Deployment&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Success Flow&lt;/td&gt;
-            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; "requests a list of deployments for the Repository"&lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "displays a list of deployments that has already been executed"&lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; "chooses a deployment and initiates viewing its log"&lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "displays a log for the chosen deployment"&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;system&lt;/code&gt; lists &lt;code&gt;deployments&lt;/code&gt;
+               &lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; "displays a list of deployments that has already been executed"&lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; "chooses a deployment and initiates viewing its log"&lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "displays a log for the chosen deployment"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -2464,20 +2505,32 @@ Actors taking participation in the Use Case have the following properties:
                &lt;/ul&gt;
             &lt;/td&gt;
          &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Deployment&lt;/td&gt;
+            &lt;td&gt;"a summary statistics of Containers related to a Repository, with their statuses and text logs"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;container&lt;/code&gt;: Container&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;state&lt;/code&gt;:  "one of: 'deployment in progress' and 'deployed'"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;hourlyUsage&lt;/code&gt;: HourlyUsage&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="a5eb5a">
+      <method seal="453370">
          <id>UC5</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>170</where>
-            <where>171</where>
-            <where>172</where>
+            <where>173</where>
+            <where>174</where>
+            <where>175</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2506,7 +2559,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>173</where>
+                  <where>176</where>
                </mentioned>
                <object>user</object>
                <signature>"selects a time interval, like: last 7 days, current month, last month, custom (from date, to date)"</signature>
@@ -2514,7 +2567,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>174</where>
+                  <where>177</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -2526,7 +2579,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>175</where>
+                  <where>178</where>
                </mentioned>
                <object>system</object>
                <signature>"shows to the user a table with values from HourlyUsage records corresponding to the deployment and the specified time interval by the following columns: Container (id), Inbound traffic (GB),
@@ -2757,9 +2810,9 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>180</where>
-            <where>181</where>
-            <where>182</where>
+            <where>183</where>
+            <where>184</where>
+            <where>185</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2942,9 +2995,9 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>186</where>
-            <where>187</where>
-            <where>188</where>
+            <where>189</where>
+            <where>190</where>
+            <where>191</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3103,7 +3156,7 @@ Key success factors are:
 </informal>
          </info>
          <mentioned>
-            <where>206</where>
+            <where>209</where>
          </mentioned>
          <html xmlns:r="org.requs.facet.XsltFuncs">&lt;p&gt;Requirements providers are:&lt;/p&gt;
 
@@ -3124,7 +3177,7 @@ Key success factors are:
    </pages>
    <errors/>
    <metrics>
-      <metric id="overall">0.857142857142857143</metric>
+      <metric id="overall">0.85</metric>
    </metrics>
    <tbds>
       <tbd id="TBD-c0bf5">
@@ -3178,10 +3231,6 @@ Key success factors are:
       <tbd id="TBD-6abcf">
          <subject>UC2</subject>
          <description>Step #2 in method UC2 has an informal signature "adds the Repository and displays it in the list of other repositories in the user account" that increases the ambiguity of the entire method and has to be eliminated</description>
-      </tbd>
-      <tbd id="TBD-06e96">
-         <subject>UC4</subject>
-         <description>Step #1 in method UC4 has an informal signature "requests a list of deployments for the Repository" that increases the ambiguity of the entire method and has to be eliminated</description>
       </tbd>
       <tbd id="TBD-ed5ff">
          <subject>UC4</subject>
