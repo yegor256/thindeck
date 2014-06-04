@@ -105,6 +105,11 @@ Deployment includes:
     hourlyUsage-s? as HourlyUsage.
 
 Container is "a virtual operating system running a Repository".
+Container has:
+maxContainerSize as "maximum size of an individual container may not exceed 100 megabytes",
+maxRepoSize as "the maximum allowed size that a repository is allowed to have. Repository size is the sum of sizes from all files contained in the repository. Maximum repository size is 100 megabytes",
+maxFileSize as "the maximum allowed size of an individual file that a user may upload. Maximum file size is 100 megabytes",
+repositoryLimit as "one container corresponds to one repo".
 
 HourlyUsage is "an atomic track record of the usage of resources".
 HourlyUsage includes:
@@ -133,14 +138,16 @@ UC2/1 when "data is incorrect":
 :UC3 is specified.
 :UC3 is a must.
 UC3 where Repository deploys itself:
-    "We fetch the repository every five minutes and check the difference
+    1. The system "fetches the repository every five minutes and check the difference
     between existing source code and the latest version. If there are
     any changes, we stop its Docker container, and start a new one with
-    the latest version of the source code. Besides Dockerfile, which is used
-    for the Docker container, we should look for a Manifest of the repository.
+    the latest version of the source code. Note that MaxRepoSize condition must not exceed limit in order to deploy.
+    Besides Dockerfile, which is used for the Docker container, we should look for a Manifest of the repository.
     According to the information in the Manifest we should configure the
     container after its start. While the repository is used, we should
     track its CPU and traffic consumption, and assign to its owner".
+UC3/1 when "repo exceeds MaxRepoSize":
+    1. Fail since "repository exceeds allowed size limit".
 
 :UC4 is specified.
 :UC4 is a must.
