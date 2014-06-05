@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="20512" time="2014-06-04T15:28:52">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="21980" time="2014-06-05T06:40:08">
    <input>Hoster is "an owner of a web server, who wants to
 install Thindeck locally and host containers himself".
 
@@ -123,7 +123,10 @@ Deployment includes:
     state as "one from the list: building, running",
     hourlyUsage-s? as HourlyUsage.
 
-Container is "a virtual operating system running a Repository".
+Application is "a running instance of user's code built from his Repository".
+
+Container is "a virtual operating system running user's application build from Repository".
+Container includes: app as Application.
 
 HourlyUsage is "an atomic track record of the usage of resources".
 HourlyUsage includes:
@@ -192,8 +195,47 @@ UC6 where User compensates usage of Repository:
 :UC7 is a must.
 UC7 where User terminates Repository:
     "The user just removes the repository and we immediately terminate
-    the Docker container, close all ports and stop routing domain names.
+    the Docker container, close all ports, and stop routing domain names.
     This operation is irreversible".
+
+HttpRequest is "a request that client application (web browser, web service consumer, etc.) sends to a web server via http protocol".
+
+HttpResponse is "a response that a web server sends back after it receives HttpRequest".
+
+WebVisitor is "something sending http request to user's Application deployed in Thindeck".
+
+:UC10.1 is specified.
+:UC10.1 is a must.
+UC10.1 where WebVisitor(a visitor) utilizes Application(an app):
+    1. The visitor creates HttpRequest(a request) "and sends it to the system";
+    2. The system reads the request "to find out to which Thindeck user this request is related to";
+    3. The system reads User(a user) "to check user.balance";
+    4. The system notifies low balance to the user "if user.balance is below 5$";
+    5. The system reads Deployment(a deployment) "to choose its container which will handle the request";
+    6. The system reads Container(a container) "the container to handle the request. If all containers are overloaded, then another one is started to handle the request";
+    7. The system "redirects the request to the app instance in a chosen container";
+    8. The app reads the request "instance of app running in a chosen container";
+    9. The app "processes the request";
+    10. The app creates HttpResponse(a response);
+    11. The app "replies to the visitor with the response";
+    12. The visitor reads the response;
+    13. The system "tracks resources usage by the app";
+    14. The system creates HourlyUsage(a record) "and tracks utilized CPU time and traffic in this record. If a corresponding record already exists, then this record is updated instead of creating a new one".
+UC10.1/2 when "the request is not valid, i.e., there is no active deployment whose Manifest would contain the binding to the requested host:port":
+    1. Fail since "http error 404: none of deployed applications is binded to the requested host:port".
+UC10.1/3 when "user.balance is below or equals to zero":
+    1. The system notifies zero balance to the user;
+    2. Fail since "error page pointing out that user must top up his balance to utilize his application. The page should also contain a link to another page where the user can pay. If the user is Anonymous, he must log in first".
+UC10.1/7 when "app is not listening to http port":
+    1. Fail since "http error 404: the app is not listening to the host:port".
+UC10.1/9 when "an exception appears during the app execution":
+    1. Fail since "http error 404 OR some standard page with exception stack trace".
+
+UC6.2 where System(a system) notifies low balance to User(a user):
+    "The system sends the user an email notification one time when his balance is dropped below $5. We can also implement UI notifications".
+
+UC6.3 where System(a system) notifies zero balance to User(a user):
+    "The system sends the user an email notification one time when his balance is dropped below $0. We can also implement UI notifications".
 
 Vision: """
 
@@ -228,6 +270,8 @@ install Thindeck locally and host containers himself</informal>
          <mentioned>
             <where>4</where>
             <where>18</where>
+            <where>232</where>
+            <where>235</where>
          </mentioned>
          <info>
             <informal>System under Development (thindeck itself)</informal>
@@ -261,11 +305,11 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <where>38</where>
             <where>40</where>
             <where>77</where>
-            <where>143</where>
-            <where>167</where>
-            <where>175</where>
-            <where>185</where>
-            <where>191</where>
+            <where>146</where>
+            <where>170</where>
+            <where>178</where>
+            <where>188</where>
+            <where>194</where>
          </mentioned>
          <info>
             <informal>a person who uses or wants to use hosting and is identified by the system (logged in)</informal>
@@ -334,7 +378,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
          <mentioned>
             <where>80</where>
             <where>81</where>
-            <where>152</where>
+            <where>155</where>
          </mentioned>
          <info>
             <informal>a local copy of files and folders being pulled every 5 minutes from some remote source</informal>
@@ -593,19 +637,38 @@ MTTR is a measure of System reliability via service recovery and therefore the M
          </slots>
       </type>
       <type>
-         <name>Container</name>
+         <name>Application</name>
          <mentioned>
             <where>124</where>
          </mentioned>
          <info>
-            <informal>a virtual operating system running a Repository</informal>
+            <informal>a running instance of user's code built from his Repository</informal>
          </info>
+      </type>
+      <type>
+         <name>Container</name>
+         <mentioned>
+            <where>126</where>
+            <where>127</where>
+         </mentioned>
+         <info>
+            <informal>a virtual operating system running user's application build from Repository</informal>
+         </info>
+         <slots>
+            <slot>
+               <name>app</name>
+               <mentioned>
+                  <where>127</where>
+               </mentioned>
+               <type>Application</type>
+            </slot>
+         </slots>
       </type>
       <type>
          <name>HourlyUsage</name>
          <mentioned>
-            <where>126</where>
-            <where>127</where>
+            <where>129</where>
+            <where>130</where>
          </mentioned>
          <info>
             <informal>an atomic track record of the usage of resources</informal>
@@ -614,14 +677,14 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>128</where>
+                  <where>131</where>
                </mentioned>
                <type>Container</type>
             </slot>
             <slot>
                <name>hours</name>
                <mentioned>
-                  <where>129</where>
+                  <where>132</where>
                </mentioned>
                <info>
                   <informal>a calendar hour, for example: 2014-05-02T18</informal>
@@ -630,7 +693,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>cpuSeconds</name>
                <mentioned>
-                  <where>130</where>
+                  <where>133</where>
                </mentioned>
                <info>
                   <informal>how many seconds our CPU spent working with the container during this hour.
@@ -640,7 +703,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>bytesIn</name>
                <mentioned>
-                  <where>132</where>
+                  <where>135</where>
                </mentioned>
                <info>
                   <informal>an integer number of bytes came in the container</informal>
@@ -649,7 +712,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>bytesOut</name>
                <mentioned>
-                  <where>133</where>
+                  <where>136</where>
                </mentioned>
                <info>
                   <informal>an integer number of bytes came out of the container</informal>
@@ -660,11 +723,39 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>Manifest</name>
          <mentioned>
-            <where>135</where>
+            <where>138</where>
          </mentioned>
          <info>
             <informal>a YAML configuration file, stored in the repository, and
     includes a) list of domain names, b) list of open ports.</informal>
+         </info>
+      </type>
+      <type>
+         <name>HttpRequest</name>
+         <mentioned>
+            <where>199</where>
+         </mentioned>
+         <info>
+            <informal>a request that client application (web browser, web service consumer, etc.) sends to a web server via http protocol</informal>
+         </info>
+      </type>
+      <type>
+         <name>HttpResponse</name>
+         <mentioned>
+            <where>201</where>
+         </mentioned>
+         <info>
+            <informal>a response that a web server sends back after it receives HttpRequest</informal>
+         </info>
+      </type>
+      <type>
+         <name>WebVisitor</name>
+         <mentioned>
+            <where>203</where>
+            <where>207</where>
+         </mentioned>
+         <info>
+            <informal>something sending http request to user's Application deployed in Thindeck</informal>
          </info>
       </type>
    </types>
@@ -881,7 +972,7 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="6bb5a4">
+      <method seal="b72699">
          <id>UC1</id>
          <attributes>
             <attribute seal="">specified</attribute>
@@ -893,7 +984,7 @@ Actors taking participation in the Use Case have the following properties:
             <where>28</where>
             <where>35</where>
             <where>36</where>
-            <where>139</where>
+            <where>142</where>
          </mentioned>
          <bindings>
             <binding>
@@ -928,7 +1019,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>139</where>
+                              <where>142</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"a message that the repository exists already in his account"</signature>
@@ -1992,17 +2083,17 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="b6d321">
+      <method seal="ca541f">
          <id>UC2</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>141</where>
-            <where>142</where>
-            <where>143</where>
-            <where>148</where>
+            <where>144</where>
+            <where>145</where>
+            <where>146</where>
+            <where>151</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2016,7 +2107,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>144</where>
+                  <where>147</where>
                </mentioned>
                <object>user</object>
                <signature>"enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data"</signature>
@@ -2027,7 +2118,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>148</where>
+                              <where>151</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"repository cannot be registered"</signature>
@@ -2039,7 +2130,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>145</where>
+                  <where>148</where>
                </mentioned>
                <object>system</object>
                <signature>"adds the Repository and displays it in the list of other repositories in the user account"</signature>
@@ -2175,10 +2266,10 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>150</where>
-            <where>151</where>
-            <where>152</where>
-            <where>163</where>
+            <where>153</where>
+            <where>154</where>
+            <where>155</where>
+            <where>166</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2339,16 +2430,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="5b0b85">
+      <method seal="5babd0">
          <id>UC4</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>165</where>
-            <where>166</where>
-            <where>167</where>
+            <where>168</where>
+            <where>169</where>
+            <where>170</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2373,7 +2464,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>168</where>
+                  <where>171</where>
                </mentioned>
                <object>system</object>
                <signature>lists</signature>
@@ -2382,7 +2473,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>169</where>
+                  <where>172</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a list of deployments that has already been executed"</signature>
@@ -2390,7 +2481,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>170</where>
+                  <where>173</where>
                </mentioned>
                <object>user</object>
                <signature>"chooses a deployment and initiates viewing its log"</signature>
@@ -2398,7 +2489,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>171</where>
+                  <where>174</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a log for the chosen deployment"</signature>
@@ -2585,16 +2676,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="5419ac">
+      <method seal="4da51e">
          <id>UC5</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>173</where>
-            <where>174</where>
-            <where>175</where>
+            <where>176</where>
+            <where>177</where>
+            <where>178</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2619,7 +2710,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>176</where>
+                  <where>179</where>
                </mentioned>
                <object>user</object>
                <signature>"selects a time interval, like: last 7 days, last month, custom (from date, to date)"</signature>
@@ -2627,7 +2718,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>177</where>
+                  <where>180</where>
                </mentioned>
                <object>system</object>
                <signature>"reads HourlyUsage records corresponding to the repo within specified time interval"</signature>
@@ -2635,7 +2726,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>178</where>
+                  <where>181</where>
                </mentioned>
                <object>system</object>
                <signature>"shows the user a table with these columns: Container (id), Inbound traffic (Gb),
@@ -2840,9 +2931,9 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>183</where>
-            <where>184</where>
-            <where>185</where>
+            <where>186</where>
+            <where>187</where>
+            <where>188</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3018,16 +3109,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="c45bfd">
+      <method seal="842dd5">
          <id>UC7</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>189</where>
-            <where>190</where>
-            <where>191</where>
+            <where>192</where>
+            <where>193</where>
+            <where>194</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3039,7 +3130,7 @@ Actors taking participation in the Use Case have the following properties:
          <signature>terminates</signature>
          <info>
             <informal>The user just removes the repository and we immediately terminate
-    the Docker container, close all ports and stop routing domain names.
+    the Docker container, close all ports, and stop routing domain names.
     This operation is irreversible</informal>
          </info>
          <markdown>The following table describes all technical details of Use Case `UC7`:
@@ -3071,7 +3162,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Brief&lt;/td&gt;
-            &lt;td&gt;"The user just removes the repository and we immediately terminate the Docker container, close all ports and stop routing domain names. This operation is irreversible"&lt;/td&gt;
+            &lt;td&gt;"The user just removes the repository and we immediately terminate the Docker container, close all ports, and stop routing domain names. This operation is irreversible"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -3132,7 +3223,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Brief&lt;/td&gt;
-            &lt;td&gt;"The user just removes the repository and we immediately terminate the Docker container, close all ports and stop routing domain names. This operation is irreversible"&lt;/td&gt;
+            &lt;td&gt;"The user just removes the repository and we immediately terminate the Docker container, close all ports, and stop routing domain names. This operation is irreversible"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -3147,6 +3238,850 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Google, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+      <method seal="864659">
+         <id>UC10.1</id>
+         <attributes>
+            <attribute seal="">specified</attribute>
+            <attribute seal="">must</attribute>
+         </attributes>
+         <mentioned>
+            <where>205</where>
+            <where>206</where>
+            <where>207</where>
+            <where>223</where>
+            <where>225</where>
+            <where>228</where>
+            <where>230</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>WebVisitor</type>
+            </binding>
+            <binding>
+               <name>visitor</name>
+               <type>WebVisitor</type>
+            </binding>
+            <binding>
+               <name>app</name>
+               <type>Application</type>
+            </binding>
+            <binding>
+               <name>request</name>
+               <type>HttpRequest</type>
+            </binding>
+            <binding>
+               <name>user</name>
+               <type>User</type>
+            </binding>
+            <binding>
+               <name>deployment</name>
+               <type>Deployment</type>
+            </binding>
+            <binding>
+               <name>container</name>
+               <type>Container</type>
+            </binding>
+            <binding>
+               <name>response</name>
+               <type>HttpResponse</type>
+            </binding>
+            <binding>
+               <name>record</name>
+               <type>HourlyUsage</type>
+            </binding>
+         </bindings>
+         <object>visitor</object>
+         <signature>utilizes</signature>
+         <result>app</result>
+         <steps>
+            <step>
+               <number>1</number>
+               <mentioned>
+                  <where>208</where>
+               </mentioned>
+               <object>visitor</object>
+               <signature>creates</signature>
+               <result>request</result>
+            </step>
+            <step>
+               <number>2</number>
+               <mentioned>
+                  <where>209</where>
+               </mentioned>
+               <object>system</object>
+               <signature>reads</signature>
+               <result>request</result>
+               <exceptions>
+                  <exception>
+                     <when>the request is not valid, i.e., there is no active deployment whose Manifest would contain the binding to the requested host:port</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>223</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"http error 404: none of deployed applications is binded to the requested host:port"</signature>
+                        </step>
+                     </steps>
+                  </exception>
+               </exceptions>
+            </step>
+            <step>
+               <number>3</number>
+               <mentioned>
+                  <where>210</where>
+               </mentioned>
+               <object>system</object>
+               <signature>reads</signature>
+               <result>user</result>
+               <exceptions>
+                  <exception>
+                     <when>user.balance is below or equals to zero</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>225</where>
+                           </mentioned>
+                           <object>system</object>
+                           <signature>notifies zero balance to</signature>
+                           <result>user</result>
+                        </step>
+                        <step>
+                           <number>2</number>
+                           <mentioned>
+                              <where>226</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"error page pointing out that user must top up his balance to utilize his application. The page should also contain a link to another page where the user can pay. If the user is Anonymous, he must log in first"</signature>
+                        </step>
+                     </steps>
+                  </exception>
+               </exceptions>
+            </step>
+            <step>
+               <number>4</number>
+               <mentioned>
+                  <where>211</where>
+               </mentioned>
+               <object>system</object>
+               <signature>notifies low balance to</signature>
+               <result>user</result>
+            </step>
+            <step>
+               <number>5</number>
+               <mentioned>
+                  <where>212</where>
+               </mentioned>
+               <object>system</object>
+               <signature>reads</signature>
+               <result>deployment</result>
+            </step>
+            <step>
+               <number>6</number>
+               <mentioned>
+                  <where>213</where>
+               </mentioned>
+               <object>system</object>
+               <signature>reads</signature>
+               <result>container</result>
+            </step>
+            <step>
+               <number>7</number>
+               <mentioned>
+                  <where>214</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"redirects the request to the app instance in a chosen container"</signature>
+               <exceptions>
+                  <exception>
+                     <when>app is not listening to http port</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>228</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"http error 404: the app is not listening to the host:port"</signature>
+                        </step>
+                     </steps>
+                  </exception>
+               </exceptions>
+            </step>
+            <step>
+               <number>8</number>
+               <mentioned>
+                  <where>215</where>
+               </mentioned>
+               <object>app</object>
+               <signature>reads</signature>
+               <result>request</result>
+            </step>
+            <step>
+               <number>9</number>
+               <mentioned>
+                  <where>216</where>
+               </mentioned>
+               <object>app</object>
+               <signature>"processes the request"</signature>
+               <exceptions>
+                  <exception>
+                     <when>an exception appears during the app execution</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>230</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"http error 404 OR some standard page with exception stack trace"</signature>
+                        </step>
+                     </steps>
+                  </exception>
+               </exceptions>
+            </step>
+            <step>
+               <number>10</number>
+               <mentioned>
+                  <where>217</where>
+               </mentioned>
+               <object>app</object>
+               <signature>creates</signature>
+               <result>response</result>
+            </step>
+            <step>
+               <number>11</number>
+               <mentioned>
+                  <where>218</where>
+               </mentioned>
+               <object>app</object>
+               <signature>"replies to the visitor with the response"</signature>
+            </step>
+            <step>
+               <number>12</number>
+               <mentioned>
+                  <where>219</where>
+               </mentioned>
+               <object>visitor</object>
+               <signature>reads</signature>
+               <result>response</result>
+            </step>
+            <step>
+               <number>13</number>
+               <mentioned>
+                  <where>220</where>
+               </mentioned>
+               <object>system</object>
+               <signature>"tracks resources usage by the app"</signature>
+            </step>
+            <step>
+               <number>14</number>
+               <mentioned>
+                  <where>221</where>
+               </mentioned>
+               <object>system</object>
+               <signature>creates</signature>
+               <result>record</result>
+            </step>
+         </steps>
+         <markdown>The following table describes all technical details of Use Case `UC10.1`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC10.1&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;visitor&lt;/code&gt; utilizes &lt;code&gt;app&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;WebVisitor&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;visitor&lt;/code&gt; as WebVisitor; &lt;code&gt;app&lt;/code&gt; as Application; &lt;code&gt;request&lt;/code&gt; as HttpRequest; &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;deployment&lt;/code&gt; as Deployment; &lt;code&gt;container&lt;/code&gt; as Container; &lt;code&gt;response&lt;/code&gt; as HttpResponse; &lt;code&gt;record&lt;/code&gt; as HourlyUsage&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;visitor&lt;/code&gt; creates &lt;code&gt;request&lt;/code&gt;
+               &lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;request&lt;/code&gt;
+               &lt;br/&gt;3. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;user&lt;/code&gt;
+               &lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; notifies low balance to &lt;code&gt;user&lt;/code&gt;
+               &lt;br/&gt;5. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;deployment&lt;/code&gt;
+               &lt;br/&gt;6. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;container&lt;/code&gt;
+               &lt;br/&gt;7. &lt;code&gt;system&lt;/code&gt; "redirects the request to the app instance in a chosen container"&lt;br/&gt;8. &lt;code&gt;app&lt;/code&gt; reads &lt;code&gt;request&lt;/code&gt;
+               &lt;br/&gt;9. &lt;code&gt;app&lt;/code&gt; "processes the request"&lt;br/&gt;10. &lt;code&gt;app&lt;/code&gt; creates &lt;code&gt;response&lt;/code&gt;
+               &lt;br/&gt;11. &lt;code&gt;app&lt;/code&gt; "replies to the visitor with the response"&lt;br/&gt;12. &lt;code&gt;visitor&lt;/code&gt; reads &lt;code&gt;response&lt;/code&gt;
+               &lt;br/&gt;13. &lt;code&gt;system&lt;/code&gt; "tracks resources usage by the app"&lt;br/&gt;14. &lt;code&gt;system&lt;/code&gt; creates &lt;code&gt;record&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;WebVisitor&lt;/td&gt;
+            &lt;td&gt;"something sending http request to user's Application deployed in Thindeck"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;WebVisitor&lt;/td&gt;
+            &lt;td&gt;"something sending http request to user's Application deployed in Thindeck"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Application&lt;/td&gt;
+            &lt;td&gt;"a running instance of user's code built from his Repository"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;HttpRequest&lt;/td&gt;
+            &lt;td&gt;"a request that client application (web browser, web service consumer, etc.) sends to a web server via http protocol"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Google, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Deployment&lt;/td&gt;
+            &lt;td&gt;"a summary statistics of Containers related to a Repository, with their statuses and text logs"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;container&lt;/code&gt;: Container&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;state&lt;/code&gt;:  "one from the list: building, running"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;hourlyUsage&lt;/code&gt;: HourlyUsage&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Container&lt;/td&gt;
+            &lt;td&gt;"a virtual operating system running user's application build from Repository"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;app&lt;/code&gt;: Application&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;HttpResponse&lt;/td&gt;
+            &lt;td&gt;"a response that a web server sends back after it receives HttpRequest"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;HourlyUsage&lt;/td&gt;
+            &lt;td&gt;"an atomic track record of the usage of resources"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;container&lt;/code&gt;: Container&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;hours&lt;/code&gt;:  "a calendar hour, for example: 2014-05-02T18"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;cpuSeconds&lt;/code&gt;:  "how many seconds our CPU spent working with the container during this hour. Can easily be over 3600, since we may have multiple CPU's working with the container"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;bytesIn&lt;/code&gt;:  "an integer number of bytes came in the container"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;bytesOut&lt;/code&gt;:  "an integer number of bytes came out of the container"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC10.1&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC10.1&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;visitor&lt;/code&gt; utilizes &lt;code&gt;app&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;WebVisitor&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;visitor&lt;/code&gt; as WebVisitor; &lt;code&gt;app&lt;/code&gt; as Application; &lt;code&gt;request&lt;/code&gt; as HttpRequest; &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;deployment&lt;/code&gt; as Deployment; &lt;code&gt;container&lt;/code&gt; as Container; &lt;code&gt;response&lt;/code&gt; as HttpResponse; &lt;code&gt;record&lt;/code&gt; as HourlyUsage&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Success Flow&lt;/td&gt;
+            &lt;td&gt;1. &lt;code&gt;visitor&lt;/code&gt; creates &lt;code&gt;request&lt;/code&gt;
+               &lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;request&lt;/code&gt;
+               &lt;br/&gt;3. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;user&lt;/code&gt;
+               &lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; notifies low balance to &lt;code&gt;user&lt;/code&gt;
+               &lt;br/&gt;5. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;deployment&lt;/code&gt;
+               &lt;br/&gt;6. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;container&lt;/code&gt;
+               &lt;br/&gt;7. &lt;code&gt;system&lt;/code&gt; "redirects the request to the app instance in a chosen container"&lt;br/&gt;8. &lt;code&gt;app&lt;/code&gt; reads &lt;code&gt;request&lt;/code&gt;
+               &lt;br/&gt;9. &lt;code&gt;app&lt;/code&gt; "processes the request"&lt;br/&gt;10. &lt;code&gt;app&lt;/code&gt; creates &lt;code&gt;response&lt;/code&gt;
+               &lt;br/&gt;11. &lt;code&gt;app&lt;/code&gt; "replies to the visitor with the response"&lt;br/&gt;12. &lt;code&gt;visitor&lt;/code&gt; reads &lt;code&gt;response&lt;/code&gt;
+               &lt;br/&gt;13. &lt;code&gt;system&lt;/code&gt; "tracks resources usage by the app"&lt;br/&gt;14. &lt;code&gt;system&lt;/code&gt; creates &lt;code&gt;record&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;WebVisitor&lt;/td&gt;
+            &lt;td&gt;"something sending http request to user's Application deployed in Thindeck"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;WebVisitor&lt;/td&gt;
+            &lt;td&gt;"something sending http request to user's Application deployed in Thindeck"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Application&lt;/td&gt;
+            &lt;td&gt;"a running instance of user's code built from his Repository"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;HttpRequest&lt;/td&gt;
+            &lt;td&gt;"a request that client application (web browser, web service consumer, etc.) sends to a web server via http protocol"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Google, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Deployment&lt;/td&gt;
+            &lt;td&gt;"a summary statistics of Containers related to a Repository, with their statuses and text logs"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;container&lt;/code&gt;: Container&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;state&lt;/code&gt;:  "one from the list: building, running"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;hourlyUsage&lt;/code&gt;: HourlyUsage&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Container&lt;/td&gt;
+            &lt;td&gt;"a virtual operating system running user's application build from Repository"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;app&lt;/code&gt;: Application&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;HttpResponse&lt;/td&gt;
+            &lt;td&gt;"a response that a web server sends back after it receives HttpRequest"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;HourlyUsage&lt;/td&gt;
+            &lt;td&gt;"an atomic track record of the usage of resources"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;container&lt;/code&gt;: Container&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;hours&lt;/code&gt;:  "a calendar hour, for example: 2014-05-02T18"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;cpuSeconds&lt;/code&gt;:  "how many seconds our CPU spent working with the container during this hour. Can easily be over 3600, since we may have multiple CPU's working with the container"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;bytesIn&lt;/code&gt;:  "an integer number of bytes came in the container"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;bytesOut&lt;/code&gt;:  "an integer number of bytes came out of the container"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+      <method seal="5feacc">
+         <id>UC6.2</id>
+         <mentioned>
+            <where>232</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>System</type>
+            </binding>
+            <binding>
+               <name>system</name>
+               <type>System</type>
+            </binding>
+            <binding>
+               <name>user</name>
+               <type>User</type>
+            </binding>
+         </bindings>
+         <object>system</object>
+         <signature>notifies low balance to</signature>
+         <result>user</result>
+         <info>
+            <informal>The system sends the user an email notification one time when his balance is dropped below $5. We can also implement UI notifications</informal>
+         </info>
+         <markdown>The following table describes all technical details of Use Case `UC6.2`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC6.2&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;system&lt;/code&gt; notifies low balance to &lt;code&gt;user&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;System&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;system&lt;/code&gt; as System; &lt;code&gt;user&lt;/code&gt; as User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"The system sends the user an email notification one time when his balance is dropped below $5. We can also implement UI notifications"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;System&lt;/td&gt;
+            &lt;td&gt;"System under Development (thindeck itself)"&lt;br/&gt;"a web hosting that deploys itself"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;System&lt;/td&gt;
+            &lt;td&gt;"System under Development (thindeck itself)"&lt;br/&gt;"a web hosting that deploys itself"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Google, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC6.2&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC6.2&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;system&lt;/code&gt; notifies low balance to &lt;code&gt;user&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;System&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;system&lt;/code&gt; as System; &lt;code&gt;user&lt;/code&gt; as User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"The system sends the user an email notification one time when his balance is dropped below $5. We can also implement UI notifications"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;System&lt;/td&gt;
+            &lt;td&gt;"System under Development (thindeck itself)"&lt;br/&gt;"a web hosting that deploys itself"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;System&lt;/td&gt;
+            &lt;td&gt;"System under Development (thindeck itself)"&lt;br/&gt;"a web hosting that deploys itself"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Google, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</html>
+      </method>
+      <method seal="07789e">
+         <id>UC6.3</id>
+         <mentioned>
+            <where>235</where>
+         </mentioned>
+         <bindings>
+            <binding>
+               <name>_self</name>
+               <type>System</type>
+            </binding>
+            <binding>
+               <name>system</name>
+               <type>System</type>
+            </binding>
+            <binding>
+               <name>user</name>
+               <type>User</type>
+            </binding>
+         </bindings>
+         <object>system</object>
+         <signature>notifies zero balance to</signature>
+         <result>user</result>
+         <info>
+            <informal>The system sends the user an email notification one time when his balance is dropped below $0. We can also implement UI notifications</informal>
+         </info>
+         <markdown>The following table describes all technical details of Use Case `UC6.3`:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC6.3&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;system&lt;/code&gt; notifies zero balance to &lt;code&gt;user&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;System&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;system&lt;/code&gt; as System; &lt;code&gt;user&lt;/code&gt; as User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"The system sends the user an email notification one time when his balance is dropped below $0. We can also implement UI notifications"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+Actors taking participation in the Use Case have the following properties:
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;System&lt;/td&gt;
+            &lt;td&gt;"System under Development (thindeck itself)"&lt;br/&gt;"a web hosting that deploys itself"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;System&lt;/td&gt;
+            &lt;td&gt;"System under Development (thindeck itself)"&lt;br/&gt;"a web hosting that deploys itself"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;User&lt;/td&gt;
+            &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;repo&lt;/code&gt;: Repository&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;URN&lt;/code&gt;:  "a unique identifier of itself, for example urn:github:526301"&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;authTokens&lt;/code&gt;:  "a list of auth tokens to each auth provider the user connected to, e.g., Google, Facebook, etc."&lt;/li&gt;
+                  &lt;li&gt;
+                     &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
+               &lt;/ul&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+</markdown>
+         <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC6.3&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Property&lt;/th&gt;
+            &lt;th&gt;Details&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;ID&lt;/td&gt;
+            &lt;td&gt;UC6.3&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Signature&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;system&lt;/code&gt; notifies zero balance to &lt;code&gt;user&lt;/code&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Primary&lt;/td&gt;
+            &lt;td&gt;System&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Actors&lt;/td&gt;
+            &lt;td&gt;
+               &lt;code&gt;system&lt;/code&gt; as System; &lt;code&gt;user&lt;/code&gt; as User&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Brief&lt;/td&gt;
+            &lt;td&gt;"The system sends the user an email notification one time when his balance is dropped below $0. We can also implement UI notifications"&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/tbody&gt;
+   &lt;/table&gt;
+
+&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
+
+&lt;table&gt;
+      &lt;thead&gt;
+         &lt;tr&gt;
+            &lt;th&gt;Actor&lt;/th&gt;
+            &lt;th&gt;Properties&lt;/th&gt;
+         &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+         &lt;tr&gt;
+            &lt;td&gt;System&lt;/td&gt;
+            &lt;td&gt;"System under Development (thindeck itself)"&lt;br/&gt;"a web hosting that deploys itself"&lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;System&lt;/td&gt;
+            &lt;td&gt;"System under Development (thindeck itself)"&lt;br/&gt;"a web hosting that deploys itself"&lt;/td&gt;
+         &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;User&lt;/td&gt;
             &lt;td&gt;"a person who uses or wants to use hosting and is identified by the system (logged in)"&lt;ul&gt;
@@ -3186,7 +4121,7 @@ Key success factors are:
 </informal>
          </info>
          <mentioned>
-            <where>209</where>
+            <where>251</where>
          </mentioned>
          <html xmlns:r="org.requs.facet.XsltFuncs">&lt;p&gt;Requirements providers are:&lt;/p&gt;
 
@@ -3207,7 +4142,7 @@ Key success factors are:
    </pages>
    <errors/>
    <metrics>
-      <metric id="overall">0.88</metric>
+      <metric id="overall">0.714285714285714286</metric>
    </metrics>
    <tbds>
       <tbd id="TBD-0ee38">
@@ -3221,6 +4156,14 @@ Key success factors are:
       <tbd id="TBD-247ba">
          <subject>UC7</subject>
          <description>Method UC7 has an informal description that increases its ambiguity and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-49fea">
+         <subject>UC6.2</subject>
+         <description>Method UC6.2 has an informal description that increases its ambiguity and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-c69d5">
+         <subject>UC6.3</subject>
+         <description>Method UC6.3 has an informal description that increases its ambiguity and has to be eliminated</description>
       </tbd>
       <tbd id="TBD-c8698">
          <subject>UC8</subject>
@@ -3300,6 +4243,22 @@ Key success factors are:
     Outbound traffic (Gb), CPU time (min), Cost ($). Each table row corresponds to a container.
     Last row contains totals by all containers. The values in the table are usage stats by container
     within specified time interval" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-74444">
+         <subject>UC10.1</subject>
+         <description>Step #7 in method UC10.1 has an informal signature "redirects the request to the app instance in a chosen container" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-1bcf5">
+         <subject>UC10.1</subject>
+         <description>Step #9 in method UC10.1 has an informal signature "processes the request" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-a9c69">
+         <subject>UC10.1</subject>
+         <description>Step #11 in method UC10.1 has an informal signature "replies to the visitor with the response" that increases the ambiguity of the entire method and has to be eliminated</description>
+      </tbd>
+      <tbd id="TBD-a0cda">
+         <subject>UC10.1</subject>
+         <description>Step #13 in method UC10.1 has an informal signature "tracks resources usage by the app" that increases the ambiguity of the entire method and has to be eliminated</description>
       </tbd>
    </tbds>
    <requs>
