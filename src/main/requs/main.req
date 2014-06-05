@@ -149,7 +149,7 @@ UC3/PERF must "each thindeck server should be able to host 4 actively working
     containers inside it, altogether handling 3M hits and 200 Gb of traffic
     per month, or 100K and 6.6 Gb per day".
 UC3/1 when "repo exceeds maximum size":
-    1. Fail since "repository exceeds allowed maximum size". 
+    1. Fail since "repository exceeds allowed maximum size".
 
 :UC4 is specified.
 :UC4 is a must.
