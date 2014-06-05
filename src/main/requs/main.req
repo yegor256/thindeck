@@ -9,12 +9,15 @@ MTTR is a measure of System reliability via service recovery and therefore the M
 :UC1 is specified.
 :UC1 is a must.
 UC1 where User (a user) hosts Repository (a repo):
-    1. The user registers the repo;
-    2. The repo deploys itself;
-    3. The user reads deployment logs of the repo;
-    4. The user reads usage stats of the repo;
-    5. The user compensates usage of the repo;
-    6. The user terminates the repo.
+    1. The user configures virtual machine using the repo;
+    2. The user registers the repo;
+    3. The repo deploys itself;
+    4. The user reads deployment logs of the repo;
+    5. The user reads usage stats of the repo;
+    6. The user compensates usage of the repo;
+    7. The user terminates the repo.
+UC1/2 when "repo already exists":
+    1. Fail since "a message that the repository exists already in his account".
 UC1/UX must "be in English only".
 UC1/WEBDESIGN must "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site".
 
@@ -64,7 +67,7 @@ Repository is "a local copy of files and folders being pulled every 5 minutes fr
 Repository needs:
     name as "a unique name of the repo in user's account",
     deployment-? as Deployment,
-    dockerFile as "Docker file",
+    dockerFile as DockerFile,
     manifest as Manifest.
 
 GitRepository is Repository.
@@ -121,8 +124,7 @@ HourlyUsage includes:
 Manifest is "a YAML configuration file, stored in the repository, and
     includes a) list of domain names, b) list of open ports.".
 
-UC1/1 when "repo already exists":
-    1. Fail since "a message that the repository exists already in his account".
+DockerFile is "a configuration for building and starting Container-s".
 
 :UC2 is specified.
 :UC2 is a must.
@@ -132,6 +134,24 @@ UC2 where User registers Repository:
 
 UC2/1 when "data is incorrect":
     1. Fail since "repository cannot be registered".
+
+UC2.1 where User(a user) configures virtual machine using Repository(a repo):
+    1. The user creates DockerFile(a dockerFile) "in which he configures containers that will host his running
+    Application when the repository is deployed";
+    2. The user updates the repo "by putting the docker file to its root".
+UC2.1/ENVIRONMENT must "be Linux, because it is the most popular OS for running web projects in".
+UC2.1/LICENSING must "be open source or free, so that we avoid license costs".
+UC2.1/PRODUCTSTATE must "be mature product that is currently supported, because we need an up-to-date product that has
+    already proved to be reliable and usable".
+UC2.1/ISOLATION must "provide full file system and network isolation, so that user apps from different repositories will
+    know nothing about each other".
+UC2.1/COPYONWRITE must "be implemented, to provide an optimal resources utilization".
+UC2.1/MEMORYLIMITS must "be implemented, to avoid memory overflow by one of user apps".
+UC2.1/CPUQUOTAS must "be implemented, because we want to track and limit CPU time usage for billing purpose".
+UC2.1/EASYCHANGE must "be implemented, to avoid templating or manual configuration, so that changes to a container's file
+    system could be committed into a new image and re-used to create more containers".
+UC2.1/LOGGING must "provide real-time logging, to provide up-to-date logs to our users, who may need them to analyze
+    their testing app instances in real time".
 
 :UC3 is specified.
 :UC3 is a must.
