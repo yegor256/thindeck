@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="21980" time="2014-06-05T06:40:08">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="23843" time="2014-06-06T06:21:45">
    <input>Hoster is "an owner of a web server, who wants to
 install Thindeck locally and host containers himself".
 
@@ -36,6 +36,7 @@ UC1 where User (a user) hosts Repository (a repo):
     6. The user terminates the repo.
 UC1/UX must "be in English only".
 UC1/WEBDESIGN must "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site".
+UC1/STATELESS must "all user repositories must be 100% stateless. We should inform users that we will be constantly changing the number of running containers. We may terminate any container at any moment. This means that the software inside the container (repository) should NOT keep any data persistent. They should use other services for persistence, like Amazon DynamoDB, etc".
 
 User is "a person who uses or wants to use hosting and is identified by the system (logged in)".
 
@@ -270,8 +271,8 @@ install Thindeck locally and host containers himself</informal>
          <mentioned>
             <where>4</where>
             <where>18</where>
-            <where>232</where>
-            <where>235</where>
+            <where>233</where>
+            <where>236</where>
          </mentioned>
          <info>
             <informal>System under Development (thindeck itself)</informal>
@@ -302,14 +303,14 @@ MTTR is a measure of System reliability via service recovery and therefore the M
          <name>User</name>
          <mentioned>
             <where>28</where>
-            <where>38</where>
-            <where>40</where>
-            <where>77</where>
-            <where>146</where>
-            <where>170</where>
-            <where>178</where>
-            <where>188</where>
-            <where>194</where>
+            <where>39</where>
+            <where>41</where>
+            <where>78</where>
+            <where>147</where>
+            <where>171</where>
+            <where>179</where>
+            <where>189</where>
+            <where>195</where>
          </mentioned>
          <info>
             <informal>a person who uses or wants to use hosting and is identified by the system (logged in)</informal>
@@ -318,7 +319,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>repo</name>
                <mentioned>
-                  <where>41</where>
+                  <where>42</where>
                </mentioned>
                <arity>ANY</arity>
                <type>Repository</type>
@@ -326,7 +327,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>URN</name>
                <mentioned>
-                  <where>42</where>
+                  <where>43</where>
                </mentioned>
                <info>
                   <informal>a unique identifier of itself, for example urn:github:526301</informal>
@@ -335,7 +336,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>authTokens</name>
                <mentioned>
-                  <where>43</where>
+                  <where>44</where>
                </mentioned>
                <info>
                   <informal>a list of auth tokens to each auth provider the user connected to, e.g., Google, Facebook, etc.</informal>
@@ -344,7 +345,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>balance</name>
                <mentioned>
-                  <where>44</where>
+                  <where>45</where>
                </mentioned>
                <info>
                   <informal>amount of money available, can be stored as integer number of cents</informal>
@@ -355,10 +356,10 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>Anonymous</name>
          <mentioned>
-            <where>46</where>
-            <where>52</where>
-            <where>59</where>
-            <where>72</where>
+            <where>47</where>
+            <where>53</where>
+            <where>60</where>
+            <where>73</where>
          </mentioned>
          <info>
             <informal>a person who is not identified in the system (not logged in). He can actually have a User account in our System, but we can't tell it until he logs in</informal>
@@ -367,7 +368,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>FrontPage</name>
          <mentioned>
-            <where>48</where>
+            <where>49</where>
          </mentioned>
          <info>
             <informal>a front page of Thindeck for Anonymous which contains all the information about pricing, 'how it works', etc.</informal>
@@ -376,9 +377,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>Repository</name>
          <mentioned>
-            <where>80</where>
             <where>81</where>
-            <where>155</where>
+            <where>82</where>
+            <where>156</where>
          </mentioned>
          <info>
             <informal>a local copy of files and folders being pulled every 5 minutes from some remote source</informal>
@@ -387,7 +388,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>name</name>
                <mentioned>
-                  <where>82</where>
+                  <where>83</where>
                </mentioned>
                <info>
                   <informal>a unique name of the repo in user's account</informal>
@@ -396,7 +397,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>deployment</name>
                <mentioned>
-                  <where>83</where>
+                  <where>84</where>
                </mentioned>
                <arity>OPT</arity>
                <type>Deployment</type>
@@ -404,7 +405,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>dockerFile</name>
                <mentioned>
-                  <where>84</where>
+                  <where>85</where>
                </mentioned>
                <info>
                   <informal>Docker file</informal>
@@ -413,7 +414,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>manifest</name>
                <mentioned>
-                  <where>85</where>
+                  <where>86</where>
                </mentioned>
                <type>Manifest</type>
             </slot>
@@ -422,9 +423,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>GitRepository</name>
          <mentioned>
-            <where>87</where>
             <where>88</where>
             <where>89</where>
+            <where>90</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -436,7 +437,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>uri</name>
                <mentioned>
-                  <where>90</where>
+                  <where>91</where>
                </mentioned>
                <info>
                   <informal>a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git</informal>
@@ -445,7 +446,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>key</name>
                <mentioned>
-                  <where>91</where>
+                  <where>92</where>
                </mentioned>
                <arity>OPT</arity>
                <info>
@@ -457,9 +458,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>SvnRepository</name>
          <mentioned>
-            <where>93</where>
             <where>94</where>
             <where>95</where>
+            <where>96</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -471,7 +472,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>uri</name>
                <mentioned>
-                  <where>96</where>
+                  <where>97</where>
                </mentioned>
                <info>
                   <informal>a non-ambiguous descriptor of a repo, for example ssh://git@github:yegor256/thindeck.git</informal>
@@ -480,7 +481,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>userName</name>
                <mentioned>
-                  <where>97</where>
+                  <where>98</where>
                </mentioned>
                <arity>OPT</arity>
                <info>
@@ -490,7 +491,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>password</name>
                <mentioned>
-                  <where>98</where>
+                  <where>99</where>
                </mentioned>
                <arity>OPT</arity>
                <info>
@@ -502,9 +503,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>FtpRepository</name>
          <mentioned>
-            <where>100</where>
             <where>101</where>
             <where>102</where>
+            <where>103</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -516,7 +517,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>uri</name>
                <mentioned>
-                  <where>103</where>
+                  <where>104</where>
                </mentioned>
                <info>
                   <informal>a URL containing credentials valid to connect to FTP server, for example ftp://user:password@ftpserver/url-path</informal>
@@ -527,9 +528,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>DropboxRepository</name>
          <mentioned>
-            <where>105</where>
             <where>106</where>
             <where>107</where>
+            <where>108</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -541,7 +542,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>apiKey</name>
                <mentioned>
-                  <where>107</where>
+                  <where>108</where>
                </mentioned>
                <info>
                   <informal>Dropbox specific connection information</informal>
@@ -552,9 +553,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>AmazonSthreeRepository</name>
          <mentioned>
-            <where>109</where>
             <where>110</where>
             <where>111</where>
+            <where>112</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -566,7 +567,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>apiKey</name>
                <mentioned>
-                  <where>111</where>
+                  <where>112</where>
                </mentioned>
                <info>
                   <informal>Amazon S3 specific connection information</informal>
@@ -577,9 +578,9 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>GoogleDriveRepository</name>
          <mentioned>
-            <where>113</where>
             <where>114</where>
             <where>115</where>
+            <where>116</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -591,7 +592,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>apiKey</name>
                <mentioned>
-                  <where>115</where>
+                  <where>116</where>
                </mentioned>
                <info>
                   <informal>Google Drive specific connection information</informal>
@@ -602,8 +603,8 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>Deployment</name>
          <mentioned>
-            <where>117</where>
-            <where>119</where>
+            <where>118</where>
+            <where>120</where>
          </mentioned>
          <info>
             <informal>a summary statistics of Containers related to a Repository, with their statuses and text logs</informal>
@@ -612,7 +613,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>120</where>
+                  <where>121</where>
                </mentioned>
                <arity>MANY</arity>
                <type>Container</type>
@@ -620,7 +621,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>state</name>
                <mentioned>
-                  <where>121</where>
+                  <where>122</where>
                </mentioned>
                <info>
                   <informal>one from the list: building, running</informal>
@@ -629,7 +630,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>hourlyUsage</name>
                <mentioned>
-                  <where>122</where>
+                  <where>123</where>
                </mentioned>
                <arity>ANY</arity>
                <type>HourlyUsage</type>
@@ -639,7 +640,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>Application</name>
          <mentioned>
-            <where>124</where>
+            <where>125</where>
          </mentioned>
          <info>
             <informal>a running instance of user's code built from his Repository</informal>
@@ -648,8 +649,8 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>Container</name>
          <mentioned>
-            <where>126</where>
             <where>127</where>
+            <where>128</where>
          </mentioned>
          <info>
             <informal>a virtual operating system running user's application build from Repository</informal>
@@ -658,7 +659,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>app</name>
                <mentioned>
-                  <where>127</where>
+                  <where>128</where>
                </mentioned>
                <type>Application</type>
             </slot>
@@ -667,8 +668,8 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>HourlyUsage</name>
          <mentioned>
-            <where>129</where>
             <where>130</where>
+            <where>131</where>
          </mentioned>
          <info>
             <informal>an atomic track record of the usage of resources</informal>
@@ -677,14 +678,14 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>131</where>
+                  <where>132</where>
                </mentioned>
                <type>Container</type>
             </slot>
             <slot>
                <name>hours</name>
                <mentioned>
-                  <where>132</where>
+                  <where>133</where>
                </mentioned>
                <info>
                   <informal>a calendar hour, for example: 2014-05-02T18</informal>
@@ -693,7 +694,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>cpuSeconds</name>
                <mentioned>
-                  <where>133</where>
+                  <where>134</where>
                </mentioned>
                <info>
                   <informal>how many seconds our CPU spent working with the container during this hour.
@@ -703,7 +704,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>bytesIn</name>
                <mentioned>
-                  <where>135</where>
+                  <where>136</where>
                </mentioned>
                <info>
                   <informal>an integer number of bytes came in the container</informal>
@@ -712,7 +713,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
             <slot>
                <name>bytesOut</name>
                <mentioned>
-                  <where>136</where>
+                  <where>137</where>
                </mentioned>
                <info>
                   <informal>an integer number of bytes came out of the container</informal>
@@ -723,7 +724,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>Manifest</name>
          <mentioned>
-            <where>138</where>
+            <where>139</where>
          </mentioned>
          <info>
             <informal>a YAML configuration file, stored in the repository, and
@@ -733,7 +734,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>HttpRequest</name>
          <mentioned>
-            <where>199</where>
+            <where>200</where>
          </mentioned>
          <info>
             <informal>a request that client application (web browser, web service consumer, etc.) sends to a web server via http protocol</informal>
@@ -742,7 +743,7 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>HttpResponse</name>
          <mentioned>
-            <where>201</where>
+            <where>202</where>
          </mentioned>
          <info>
             <informal>a response that a web server sends back after it receives HttpRequest</informal>
@@ -751,8 +752,8 @@ MTTR is a measure of System reliability via service recovery and therefore the M
       <type>
          <name>WebVisitor</name>
          <mentioned>
-            <where>203</where>
-            <where>207</where>
+            <where>204</where>
+            <where>208</where>
          </mentioned>
          <info>
             <informal>something sending http request to user's Application deployed in Thindeck</informal>
@@ -972,7 +973,7 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="b72699">
+      <method seal="de563c">
          <id>UC1</id>
          <attributes>
             <attribute seal="">specified</attribute>
@@ -984,7 +985,8 @@ Actors taking participation in the Use Case have the following properties:
             <where>28</where>
             <where>35</where>
             <where>36</where>
-            <where>142</where>
+            <where>37</where>
+            <where>143</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1019,7 +1021,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>142</where>
+                              <where>143</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"a message that the repository exists already in his account"</signature>
@@ -1092,6 +1094,12 @@ Actors taking participation in the Use Case have the following properties:
                   <informal>be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site</informal>
                </info>
             </nfr>
+            <nfr>
+               <id>STATELESS</id>
+               <info>
+                  <informal>all user repositories must be 100% stateless. We should inform users that we will be constantly changing the number of running containers. We may terminate any container at any moment. This means that the software inside the container (repository) should NOT keep any data persistent. They should use other services for persistence, like Amazon DynamoDB, etc</informal>
+               </info>
+            </nfr>
          </nfrs>
          <markdown>The following table describes all technical details of Use Case `UC1`:
 
@@ -1133,7 +1141,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;NFRs&lt;/td&gt;
-            &lt;td&gt;UX must  "be in English only"&lt;br/&gt;WEBDESIGN must  "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site"&lt;/td&gt;
+            &lt;td&gt;UX must  "be in English only"&lt;br/&gt;WEBDESIGN must  "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site"&lt;br/&gt;STATELESS must  "all user repositories must be 100% stateless. We should inform users that we will be constantly changing the number of running containers. We may terminate any container at any moment. This means that the software inside the container (repository) should NOT keep any data persistent. They should use other services for persistence, like Amazon DynamoDB, etc"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -1233,7 +1241,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;NFRs&lt;/td&gt;
-            &lt;td&gt;UX must  "be in English only"&lt;br/&gt;WEBDESIGN must  "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site"&lt;/td&gt;
+            &lt;td&gt;UX must  "be in English only"&lt;br/&gt;WEBDESIGN must  "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site"&lt;br/&gt;STATELESS must  "all user repositories must be 100% stateless. We should inform users that we will be constantly changing the number of running containers. We may terminate any container at any moment. This means that the software inside the container (repository) should NOT keep any data persistent. They should use other services for persistence, like Amazon DynamoDB, etc"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -1294,16 +1302,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="d407f3">
+      <method seal="ed562b">
          <id>UC9.1</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">should</attribute>
          </attributes>
          <mentioned>
-            <where>50</where>
             <where>51</where>
             <where>52</where>
+            <where>53</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1325,7 +1333,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>53</where>
+                  <where>54</where>
                </mentioned>
                <object>anonymous</object>
                <signature>reads</signature>
@@ -1334,7 +1342,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>54</where>
+                  <where>55</where>
                </mentioned>
                <object>anonymous</object>
                <signature>"reads the stats page containing our runtime stats, similar to https://status.github.com/"</signature>
@@ -1342,7 +1350,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>55</where>
+                  <where>56</where>
                </mentioned>
                <object>anonymous</object>
                <signature>"reads our terms page including all the legal wordings"</signature>
@@ -1471,18 +1479,18 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="82c9cb">
+      <method seal="06a570">
          <id>UC9.2</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>57</where>
             <where>58</where>
             <where>59</where>
-            <where>66</where>
-            <where>68</where>
+            <where>60</where>
+            <where>67</where>
+            <where>69</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1504,7 +1512,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>60</where>
+                  <where>61</where>
                </mentioned>
                <object>anonymous</object>
                <signature>"initiates sign in via one of OAuth providers from this list: Google Plus, Facebook, Github, or Twitter."</signature>
@@ -1512,7 +1520,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>61</where>
+                  <where>62</where>
                </mentioned>
                <object>system</object>
                <signature>"requests permission from the OAuth provider chosen by the anonymous"</signature>
@@ -1523,7 +1531,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>66</where>
+                              <where>67</where>
                            </mentioned>
                            <object>anonymous</object>
                            <signature>logs in</signature>
@@ -1536,7 +1544,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>68</where>
+                              <where>69</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"Not authorized by chosen OAuth provider"</signature>
@@ -1548,7 +1556,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>62</where>
+                  <where>63</where>
                </mentioned>
                <object>system</object>
                <signature>creates</signature>
@@ -1557,7 +1565,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>63</where>
+                  <where>64</where>
                </mentioned>
                <object>system</object>
                <signature>"adds $5 to the user.balance"</signature>
@@ -1565,7 +1573,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>5</number>
                <mentioned>
-                  <where>64</where>
+                  <where>65</where>
                </mentioned>
                <object>anonymous</object>
                <signature>logs in</signature>
@@ -1714,16 +1722,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="b6d76b">
+      <method seal="a9ca2a">
          <id>UC9.3</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>70</where>
             <where>71</where>
             <where>72</where>
+            <where>73</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1748,7 +1756,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>73</where>
+                  <where>74</where>
                </mentioned>
                <object>system</object>
                <signature>"from now on treats the anonymous as a User"</signature>
@@ -1897,16 +1905,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="49580c">
+      <method seal="e371e3">
          <id>UC11</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>75</where>
             <where>76</where>
             <where>77</where>
+            <where>78</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1924,7 +1932,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>78</where>
+                  <where>79</where>
                </mentioned>
                <object>system</object>
                <signature>"from now on treats the user as anonymous and displays a public page"</signature>
@@ -2083,17 +2091,17 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="ca541f">
+      <method seal="909e3d">
          <id>UC2</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>144</where>
             <where>145</where>
             <where>146</where>
-            <where>151</where>
+            <where>147</where>
+            <where>152</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2107,7 +2115,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>147</where>
+                  <where>148</where>
                </mentioned>
                <object>user</object>
                <signature>"enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data"</signature>
@@ -2118,7 +2126,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>151</where>
+                              <where>152</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"repository cannot be registered"</signature>
@@ -2130,7 +2138,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>148</where>
+                  <where>149</where>
                </mentioned>
                <object>system</object>
                <signature>"adds the Repository and displays it in the list of other repositories in the user account"</signature>
@@ -2266,10 +2274,10 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>153</where>
             <where>154</where>
             <where>155</where>
-            <where>166</where>
+            <where>156</where>
+            <where>167</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2430,16 +2438,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="5babd0">
+      <method seal="51e8f7">
          <id>UC4</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>168</where>
             <where>169</where>
             <where>170</where>
+            <where>171</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2464,7 +2472,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>171</where>
+                  <where>172</where>
                </mentioned>
                <object>system</object>
                <signature>lists</signature>
@@ -2473,7 +2481,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>172</where>
+                  <where>173</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a list of deployments that has already been executed"</signature>
@@ -2481,7 +2489,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>173</where>
+                  <where>174</where>
                </mentioned>
                <object>user</object>
                <signature>"chooses a deployment and initiates viewing its log"</signature>
@@ -2489,7 +2497,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>174</where>
+                  <where>175</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a log for the chosen deployment"</signature>
@@ -2676,16 +2684,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="4da51e">
+      <method seal="10fa48">
          <id>UC5</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>176</where>
             <where>177</where>
             <where>178</where>
+            <where>179</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2710,7 +2718,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>179</where>
+                  <where>180</where>
                </mentioned>
                <object>user</object>
                <signature>"selects a time interval, like: last 7 days, last month, custom (from date, to date)"</signature>
@@ -2718,7 +2726,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>180</where>
+                  <where>181</where>
                </mentioned>
                <object>system</object>
                <signature>"reads HourlyUsage records corresponding to the repo within specified time interval"</signature>
@@ -2726,7 +2734,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>181</where>
+                  <where>182</where>
                </mentioned>
                <object>system</object>
                <signature>"shows the user a table with these columns: Container (id), Inbound traffic (Gb),
@@ -2931,9 +2939,9 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>186</where>
             <where>187</where>
             <where>188</where>
+            <where>189</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3116,9 +3124,9 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>192</where>
             <where>193</where>
             <where>194</where>
+            <where>195</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3256,20 +3264,20 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="864659">
+      <method seal="c65562">
          <id>UC10.1</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>205</where>
             <where>206</where>
             <where>207</where>
-            <where>223</where>
-            <where>225</where>
-            <where>228</where>
-            <where>230</where>
+            <where>208</where>
+            <where>224</where>
+            <where>226</where>
+            <where>229</where>
+            <where>231</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3316,7 +3324,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>208</where>
+                  <where>209</where>
                </mentioned>
                <object>visitor</object>
                <signature>creates</signature>
@@ -3325,7 +3333,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>209</where>
+                  <where>210</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -3337,7 +3345,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>223</where>
+                              <where>224</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"http error 404: none of deployed applications is binded to the requested host:port"</signature>
@@ -3349,7 +3357,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>210</where>
+                  <where>211</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -3361,7 +3369,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>225</where>
+                              <where>226</where>
                            </mentioned>
                            <object>system</object>
                            <signature>notifies zero balance to</signature>
@@ -3370,7 +3378,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>2</number>
                            <mentioned>
-                              <where>226</where>
+                              <where>227</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"error page pointing out that user must top up his balance to utilize his application. The page should also contain a link to another page where the user can pay. If the user is Anonymous, he must log in first"</signature>
@@ -3382,7 +3390,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>211</where>
+                  <where>212</where>
                </mentioned>
                <object>system</object>
                <signature>notifies low balance to</signature>
@@ -3391,7 +3399,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>5</number>
                <mentioned>
-                  <where>212</where>
+                  <where>213</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -3400,7 +3408,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>6</number>
                <mentioned>
-                  <where>213</where>
+                  <where>214</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -3409,7 +3417,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>7</number>
                <mentioned>
-                  <where>214</where>
+                  <where>215</where>
                </mentioned>
                <object>system</object>
                <signature>"redirects the request to the app instance in a chosen container"</signature>
@@ -3420,7 +3428,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>228</where>
+                              <where>229</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"http error 404: the app is not listening to the host:port"</signature>
@@ -3432,7 +3440,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>8</number>
                <mentioned>
-                  <where>215</where>
+                  <where>216</where>
                </mentioned>
                <object>app</object>
                <signature>reads</signature>
@@ -3441,7 +3449,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>9</number>
                <mentioned>
-                  <where>216</where>
+                  <where>217</where>
                </mentioned>
                <object>app</object>
                <signature>"processes the request"</signature>
@@ -3452,7 +3460,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>230</where>
+                              <where>231</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"http error 404 OR some standard page with exception stack trace"</signature>
@@ -3464,7 +3472,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>10</number>
                <mentioned>
-                  <where>217</where>
+                  <where>218</where>
                </mentioned>
                <object>app</object>
                <signature>creates</signature>
@@ -3473,7 +3481,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>11</number>
                <mentioned>
-                  <where>218</where>
+                  <where>219</where>
                </mentioned>
                <object>app</object>
                <signature>"replies to the visitor with the response"</signature>
@@ -3481,7 +3489,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>12</number>
                <mentioned>
-                  <where>219</where>
+                  <where>220</where>
                </mentioned>
                <object>visitor</object>
                <signature>reads</signature>
@@ -3490,7 +3498,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>13</number>
                <mentioned>
-                  <where>220</where>
+                  <where>221</where>
                </mentioned>
                <object>system</object>
                <signature>"tracks resources usage by the app"</signature>
@@ -3498,7 +3506,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>14</number>
                <mentioned>
-                  <where>221</where>
+                  <where>222</where>
                </mentioned>
                <object>system</object>
                <signature>creates</signature>
@@ -3767,7 +3775,7 @@ Actors taking participation in the Use Case have the following properties:
       <method seal="5feacc">
          <id>UC6.2</id>
          <mentioned>
-            <where>232</where>
+            <where>233</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3935,7 +3943,7 @@ Actors taking participation in the Use Case have the following properties:
       <method seal="07789e">
          <id>UC6.3</id>
          <mentioned>
-            <where>235</where>
+            <where>236</where>
          </mentioned>
          <bindings>
             <binding>
@@ -4121,7 +4129,7 @@ Key success factors are:
 </informal>
          </info>
          <mentioned>
-            <where>251</where>
+            <where>252</where>
          </mentioned>
          <html xmlns:r="org.requs.facet.XsltFuncs">&lt;p&gt;Requirements providers are:&lt;/p&gt;
 
