@@ -11,15 +11,13 @@ MTTR is a measure of System reliability via service recovery and therefore the M
 UC1 where User (a user) hosts Repository (a repo):
     1. The user configures virtual machine using the repo;
     2. The user registers the repo;
-    3. The repo deploys itself;
-    4. The user reads deployment logs of the repo;
-    5. The user reads usage stats of the repo;
-    6. The user compensates usage of the repo;
-    7. The user terminates the repo.
-UC1/2 when "repo already exists":
-    1. Fail since "a message that the repository exists already in his account".
+    3. The user reads deployment logs of the repo;
+    4. The user reads usage stats of the repo;
+    5. The user compensates usage of the repo;
+    6. The user terminates the repo.
 UC1/UX must "be in English only".
 UC1/WEBDESIGN must "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site".
+UC1/STATELESS must "all user repositories must be 100% stateless. We should inform users that we will be constantly changing the number of running containers. We may terminate any container at any moment. This means that the software inside the container (repository) should NOT keep any data persistent. They should use other services for persistence, like Amazon DynamoDB, etc".
 
 User is "a person who uses or wants to use hosting and is identified by the system (logged in)".
 
@@ -129,10 +127,14 @@ DockerFile is "a configuration for building and starting Container-s".
 :UC2 is specified.
 :UC2 is a must.
 UC2 where User registers Repository:
-    1. The user "enters a new unique name of the repository, its URI and an optional SSH key and confirms entered data";
-    2. The system "adds the Repository and displays it in the list of other repositories in the user account".
-
-UC2/1 when "data is incorrect":
+    1. The user "enters a new unique name of the repository, provides the data required for authorization,
+    depending on the type of chosen repository, and confirms entered data";
+    2. The system creates Repository(a repo);
+    3. The system "displays a repo in the list of other repositories in the user account";
+    4. The system deploys the repo;
+    5. The system reads the repo "periodically (every 5 minutes) pulling the changes from repository remote source";
+    6. The system redeploys the repo "If the system detected changes after last pull".
+UC2/1 when "data is incorrect or the user already has another repository with such name":
     1. Fail since "repository cannot be registered".
 
 UC2.1 where User(a user) configures virtual machine using Repository(a repo):
@@ -153,17 +155,18 @@ UC2.1/EASYCHANGE must "be implemented, to avoid templating or manual configurati
 UC2.1/LOGGING must "provide real-time logging, to provide up-to-date logs to our users, who may need them to analyze
     their testing app instances in real time".
 
+:UC2.1 is specified.
+:UC2.1 is a must.
+UC2.1 where System(a system) redeploys using Repository(a repo):
+    1. The system deletes Container(a containers) "terminates all Docker containers of the repo";
+    2. The system deploys the repo "using updated sources".
+
 :UC3 is specified.
 :UC3 is a must.
-UC3 where Repository deploys itself:
-    "We fetch the repository every five minutes and check the difference
-    between existing source code and the latest version. If there are
-    any changes, we stop its Docker container, and start a new one with
-    the latest version of the source code. Besides Dockerfile, which is used
-    for the Docker container, we should look for a Manifest of the repository.
-    According to the information in the Manifest we should configure the
-    container after its start. While the repository is used, we should
-    track its CPU and traffic consumption, and assign to its owner".
+UC3 where System(a system) deploys using Repository (a repo):
+    1. The system "starts a new Docker container with the latest version of the source code, configuring it as defined in Dockerfile";
+    2. The system "applies the configuration defined in Manifest file to the container after it is started";
+    3. The system "tracks the usage of CPU time and traffic by the container".
 UC3/PERF must "each thindeck server should be able to host 4 actively working
     containers inside it, altogether handling 3M hits and 200 Gb of traffic
     per month, or 100K and 6.6 Gb per day".
