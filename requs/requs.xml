@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="20098" time="2014-06-08T07:25:07">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="20966" time="2014-06-11T18:07:31">
    <input>Hoster is "an owner of a web server, who wants to
 install Thindeck locally and host containers himself".
 
@@ -233,6 +233,8 @@ UC10.1 where WebVisitor(a visitor) utilizes Application(an app):
     15. The system updates the user "decreasing user.balance according to the CPU time and traffic used by the app since previous HourlyUsage record update".
 UC10.1/2 when "the request is not valid, i.e., there is no active deployment whose Manifest would contain the binding to the requested host:port":
     1. Fail since "http error 404: none of deployed applications is binded to the requested host:port".
+UC10.1/2 when "a number of requests exceeds the System resources":
+    1. Fail since "http error 503: the System is currently unavailable".
 UC10.1/3 when "user.balance is below or equals to zero":
     1. The system notifies zero balance to the user;
     2. Fail since "error page pointing out that user must top up his balance to utilize his application. The page should also contain a link to another page where the user can pay. If the user is Anonymous, he must log in first".
@@ -282,8 +284,8 @@ install Thindeck locally and host containers himself</informal>
             <where>18</where>
             <where>163</where>
             <where>169</where>
-            <where>242</where>
-            <where>245</where>
+            <where>244</where>
+            <where>247</where>
          </mentioned>
          <info>
             <informal>System under Development (thindeck itself)</informal>
@@ -3684,7 +3686,7 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </html>
       </method>
-      <method seal="09783a">
+      <method seal="36b8ef">
          <id>UC10.1</id>
          <attributes>
             <attribute seal="">specified</attribute>
@@ -3696,8 +3698,9 @@ Actors taking participation in the Use Case have the following properties:
             <where>216</where>
             <where>233</where>
             <where>235</where>
-            <where>238</where>
+            <where>237</where>
             <where>240</where>
+            <where>242</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3772,6 +3775,19 @@ Actors taking participation in the Use Case have the following properties:
                         </step>
                      </steps>
                   </exception>
+                  <exception>
+                     <when>a number of requests exceeds the System resources</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>235</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"http error 503: the System is currently unavailable"</signature>
+                        </step>
+                     </steps>
+                  </exception>
                </exceptions>
             </step>
             <step>
@@ -3789,7 +3805,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>235</where>
+                              <where>237</where>
                            </mentioned>
                            <object>system</object>
                            <signature>notifies zero balance to</signature>
@@ -3798,7 +3814,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>2</number>
                            <mentioned>
-                              <where>236</where>
+                              <where>238</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"error page pointing out that user must top up his balance to utilize his application. The page should also contain a link to another page where the user can pay. If the user is Anonymous, he must log in first"</signature>
@@ -3848,7 +3864,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>238</where>
+                              <where>240</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"http error 404: the app is not listening to the host:port"</signature>
@@ -3880,7 +3896,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>240</where>
+                              <where>242</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>"http error 404 OR some standard page with exception stack trace"</signature>
@@ -4206,7 +4222,7 @@ Actors taking participation in the Use Case have the following properties:
       <method seal="5feacc">
          <id>UC6.2</id>
          <mentioned>
-            <where>242</where>
+            <where>244</where>
          </mentioned>
          <bindings>
             <binding>
@@ -4374,7 +4390,7 @@ Actors taking participation in the Use Case have the following properties:
       <method seal="07789e">
          <id>UC6.3</id>
          <mentioned>
-            <where>245</where>
+            <where>247</where>
          </mentioned>
          <bindings>
             <binding>
@@ -4560,7 +4576,7 @@ Key success factors are:
 </informal>
          </info>
          <mentioned>
-            <where>261</where>
+            <where>263</where>
          </mentioned>
          <html xmlns:r="org.requs.facet.XsltFuncs">&lt;p&gt;Requirements providers are:&lt;/p&gt;
 
@@ -4581,7 +4597,7 @@ Key success factors are:
    </pages>
    <errors/>
    <metrics>
-      <metric id="overall">0.66</metric>
+      <metric id="overall">0.666666666666666667</metric>
    </metrics>
    <tbds>
       <tbd id="TBD-d4161">
