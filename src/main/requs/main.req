@@ -214,6 +214,8 @@ UC10.1 where WebVisitor(a visitor) utilizes Application(an app):
     15. The system updates the user "decreasing user.balance according to the CPU time and traffic used by the app since previous HourlyUsage record update".
 UC10.1/2 when "the request is not valid, i.e., there is no active deployment whose Manifest would contain the binding to the requested host:port":
     1. Fail since "http error 404: none of deployed applications is binded to the requested host:port".
+UC10.1/2 when "a number of requests exceeds the System resources":
+    1. Fail since "http error 503: the System is currently unavailable".
 UC10.1/3 when "user.balance is below or equals to zero":
     1. The system notifies zero balance to the user;
     2. Fail since "error page pointing out that user must top up his balance to utilize his application. The page should also contain a link to another page where the user can pay. If the user is Anonymous, he must log in first".
