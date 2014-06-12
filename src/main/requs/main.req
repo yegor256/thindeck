@@ -160,9 +160,9 @@ UC2.1/EASYCHANGE must "be implemented, to avoid templating or manual configurati
 UC2.1/LOGGING must "provide real-time logging, to provide up-to-date logs to our users, who may need them to analyze
     their testing app instances in real time".
 
-:UC2.1 is specified.
-:UC2.1 is a must.
-UC2.1 where System(a system) redeploys using Repository(a repo):
+:UC2.2 is specified.
+:UC2.2 is a must.
+UC2.2 where System(a system) redeploys using Repository(a repo):
     1. The system deletes Container(a containers) "terminates all Docker containers of the repo";
     2. The system deploys the repo "using updated sources".
 
