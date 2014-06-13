@@ -14,13 +14,12 @@ MainPage is "a main thindeck page for (logged-in) User-s. @todo #142 I assumed t
 UC1 where User (a user) goes through repository life cycle:
     1. The user reads MainPage(a mainPage);
     2. The system lists Repository(a repoList) "of the current user";
-    3. The user registers Repository(a repo);
-    4. The user reads deployment logs of the repo;
-    5. The user reads usage stats of the repo;
-    6. The user compensates usage of the repo;
-    7. The user terminates the repo.
-UC1/3 when "repo already exists":
-    1. Fail since "a message that the repository already exists in his account".
+    3. The user configures virtual machine using the repo;
+    4. The user registers Repository(a repo);
+    5. The user reads deployment logs of the repo;
+    6. The user reads usage stats of the repo;
+    7. The user compensates usage of the repo;
+    8. The user terminates the repo.
 UC1/UX must "be in English only".
 UC1/WEBDESIGN must "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site".
 UC1/STATELESS must "all user repositories must be 100% stateless. We should inform users that we will be constantly changing the number of running containers. We may terminate any container at any moment. This means that the software inside the container (repository) should NOT keep any data persistent. They should use other services for persistence, like Amazon DynamoDB, etc".
@@ -71,7 +70,7 @@ Repository is "a local copy of files and folders being pulled every 5 minutes fr
 Repository needs:
     name as "a unique name of the repo in user's account",
     deployment-? as Deployment,
-    dockerFile as "Docker file",
+    dockerFile as DockerFile,
     manifest as Manifest.
 
 GitRepository is Repository.
@@ -128,6 +127,8 @@ HourlyUsage includes:
 Manifest is "a YAML configuration file, stored in the repository, and
     includes a) list of domain names, b) list of open ports.".
 
+DockerFile is "a configuration for building and starting Container-s".
+
 :UC2 is specified.
 :UC2 is a must.
 UC2 where User registers Repository:
@@ -137,13 +138,31 @@ UC2 where User registers Repository:
     3. The system "displays a repo in the list of other repositories in the user account";
     4. The system deploys the repo;
     5. The system reads the repo "periodically (every 5 minutes) pulling the changes from repository remote source";
-    6. The system redeploys the repo "if it has detected some changes after previous update".
-UC2/1 when "data is incorrect":
+    6. The system redeploys the repo "If the system detected changes after last pull".
+UC2/1 when "data is incorrect or the user already has another repository with such name":
     1. Fail since "repository cannot be registered".
 
-:UC2.1 is specified.
-:UC2.1 is a must.
-UC2.1 where System(a system) redeploys using Repository(a repo):
+UC2.1 where User(a user) configures virtual machine using Repository(a repo):
+    1. The user creates DockerFile(a dockerFile) "in which he configures containers that will host his running
+    Application when the repository is deployed";
+    2. The user updates the repo "by putting the docker file to its root".
+UC2.1/ENVIRONMENT must "be Linux, because it is the most popular OS for running web projects in".
+UC2.1/LICENSING must "be open source or free, so that we avoid license costs".
+UC2.1/PRODUCTSTATE must "be mature product that is currently supported, because we need an up-to-date product that has
+    already proved to be reliable and usable".
+UC2.1/ISOLATION must "provide full file system and network isolation, so that user apps from different repositories will
+    know nothing about each other".
+UC2.1/COPYONWRITE must "be implemented, to provide an optimal resources utilization".
+UC2.1/MEMORYLIMITS must "be implemented, to avoid memory overflow by one of user apps".
+UC2.1/CPUQUOTAS must "be implemented, because we want to track and limit CPU time usage for billing purpose".
+UC2.1/EASYCHANGE must "be implemented, to avoid templating or manual configuration, so that changes to a container's file
+    system could be committed into a new image and re-used to create more containers".
+UC2.1/LOGGING must "provide real-time logging, to provide up-to-date logs to our users, who may need them to analyze
+    their testing app instances in real time".
+
+:UC2.2 is specified.
+:UC2.2 is a must.
+UC2.2 where System(a system) redeploys using Repository(a repo):
     1. The system deletes Container(a containers) "terminates all Docker containers of the repo";
     2. The system deploys the repo "using updated sources".
 
