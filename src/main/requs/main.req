@@ -268,9 +268,11 @@ UC5 where User(a user) reads usage stats using Repository(a repo):
     The values in the table are usage stats by container
     within specified time interval".
 
-UserProfilePage is "a page where a user can view / update his profile and see / top up his balance. @todo #69 I've
-    assumed that we show user.balance in his profile only. However, we can show his balance on all user pages somewhere
-    on the top. Also, we should elaborate this definition by adding other profile parts".
+UserProfilePage is "a page where a user can view / update his profile and see /
+    top up his balance. @todo #69 I've assumed that we show user.balance in his
+    profile only. However, we can show his balance on all user pages somewhere
+    on the top. Also, we should elaborate this definition by adding other
+    profile parts".
 UserProfilePage includes: balance as "user.balance".
 
 :UC6 is specified.
@@ -279,11 +281,13 @@ UC6 where User(a user) checks his balance:
     1. The system reads the user;
     2. The system creates UserProfilePage(a profilePage);
     3. The user reads the profilePage;
-    4. The user tops up his balance "if he wants to, e.g., his balance is low or negative".
+    4. The user tops up his balance "if he wants to, e.g., his balance is low or
+    negative".
 
 :UC6.4 is specified.
 :UC6.4 is a must.
-UC6.4 where User(a user) tops up his balance: "@todo #69 Funds can be added through PayPal only".
+UC6.4 where User(a user) tops up his balance: "@todo #69 Funds can be added
+    through PayPal only".
 
 :UC7 is specified.
 :UC7 is a must.
