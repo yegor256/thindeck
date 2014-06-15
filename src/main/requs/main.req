@@ -76,8 +76,6 @@ UC9.2 where Anonymous (a anonymous) signs up:
     3. The system creates User(a user);
     4. The system "adds $5 to the user.balance";
     5. The anonymous logs in.
-UC9.2/2 when "a user is already signed up":
-    1. The anonymous logs in.
 UC9.2/2 when "an OAuth provider denied access":
     1. Fail since "Not authorized by chosen OAuth provider".
 
