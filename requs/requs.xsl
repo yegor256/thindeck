@@ -1,23 +1,20 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns="http://www.w3.org/1999/xhtml" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
+    xmlns="http://www.w3.org/1999/xhtml">
+    <xsl:output method="xml" omit-xml-declaration="yes"/>
     <xsl:template match="/">
         <html lang="en-US">
             <head>
                 <meta charset="UTF-8"/>
                 <meta name="keywords" content="software requirements specification"/>
-                <meta name="author" content="requs"/>
+                <meta name="author" content="requs.org"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link rel="stylesheet" type="text/css" href="requs.css"/>
-                <script src="//code.jquery.com/jquery-2.1.1-rc1.js">
+                <script src="//code.jquery.com/jquery-2.1.1-rc1.js" type="text/javascript">
                     <!-- nothing -->
                 </script>
-                <link rel="icon" type="image/png">
-                    <xsl:attribute name="href">
-                        <xsl:text>//img.requs.org/logo-128x128.png</xsl:text>
-                    </xsl:attribute>
-                </link>
-                <style>* {
+                <link rel="icon" type="image/png" href="//img.requs.org/logo-128x128.png"/>
+                <style type="text/css">* {
     padding: 0;
     margin: 0;
 }
@@ -76,11 +73,12 @@ li {
 .exception { margin-left: 1em; margin-top: 1em; margin-bottom: 1em; }
 .informal { color: #666; }
 .warning { color: #d9534f; }
-.crud { color: #5cb85c; }
+.crud, .fail { color: #5cb85c; }
 .label { margin-left: 0.5em; color: white; border-radius: .25em; font-size: 0.85em; padding: .1em .3em .15em; }
 .attribute { background-color: #999; }
 .sealed { background-color: #5cb85c; }
 .seal { background-color: #5bc0de; }
+.svg { margin-top: 0.5em; margin-bottom: 0.5em; }
 </style>
                 <title>SRS</title>
             </head>
@@ -148,22 +146,28 @@ li {
     </xsl:template>
     <xsl:template match="types/type">
         <div class="type">
-            <a>
-                <xsl:attribute name="name">
-                    <xsl:value-of select="name"/>
-                </xsl:attribute>
-            </a>
+            <a name="{name}"/>
             <strong><xsl:value-of select="name"/></strong>
             <xsl:text> is </xsl:text>
+            <xsl:if test="parents/type">
+                <xsl:for-each select="parents/type">
+                    <xsl:if test="position() &gt; 1">
+                        <xsl:text> and </xsl:text>
+                    </xsl:if>
+                    <a href="#{.}">
+                        <xsl:value-of select="."/>
+                    </a>
+                </xsl:for-each>
+            </xsl:if>
             <xsl:choose>
                 <xsl:when test="info/informal">
                     <xsl:apply-templates select="info/informal"/>
                 </xsl:when>
-                <xsl:otherwise>
+                <xsl:when test="not(parents/type)">
                     <span class="warning">
                         <xsl:text>an unknown creature</xsl:text>
                     </span>
-                </xsl:otherwise>
+                </xsl:when>
             </xsl:choose>
             <xsl:choose>
                 <xsl:when test="slots/slot">
@@ -197,11 +201,7 @@ li {
             </xsl:choose>
             <xsl:if test="type">
                 <xsl:text> as </xsl:text>
-                <a>
-                    <xsl:attribute name="href">
-                        <xsl:text>#</xsl:text>
-                        <xsl:value-of select="type"/>
-                    </xsl:attribute>
+                <a href="#{type}">
                     <xsl:value-of select="type"/>
                 </a>
             </xsl:if>
@@ -210,11 +210,7 @@ li {
     </xsl:template>
     <xsl:template match="method">
         <div class="method">
-            <a>
-                <xsl:attribute name="name">
-                    <xsl:value-of select="id"/>
-                </xsl:attribute>
-            </a>
+            <a name="{id}"/>
             <div>
                 <strong><xsl:value-of select="id"/></strong>
                 <xsl:text> where </xsl:text>
@@ -231,6 +227,7 @@ li {
                 </xsl:if>
                 <xsl:apply-templates select="attributes/attribute"/>
             </div>
+            <xsl:apply-templates select="svg"/>
             <div class="steps">
                 <xsl:apply-templates select="info/informal"/>
                 <xsl:apply-templates select="steps"/>
@@ -314,12 +311,13 @@ li {
                     <xsl:value-of select="$home/signature"/>
                 </span>
             </xsl:when>
+            <xsl:when test="$home/signature='fail'">
+                <span class="fail">
+                    <xsl:text>Fail since</xsl:text>
+                </span>
+            </xsl:when>
             <xsl:when test="$uc">
-                <a>
-                    <xsl:attribute name="href">
-                        <xsl:text>#</xsl:text>
-                        <xsl:value-of select="$uc"/>
-                    </xsl:attribute>
+                <a href="#{$uc}">
                     <xsl:value-of select="$home/signature"/>
                 </a>
             </xsl:when>
@@ -356,11 +354,7 @@ li {
         <xsl:param name="name" />
         <xsl:param name="typed" select="'false'"/>
         <xsl:variable name="type" select="$bindings/binding[name=$name]/type"/>
-        <a>
-            <xsl:attribute name="href">
-                <xsl:text>#</xsl:text>
-                <xsl:value-of select="$type"/>
-            </xsl:attribute>
+        <a href="#{$type}">
             <xsl:choose>
                 <xsl:when test="contains($name,'_')">
                     <xsl:value-of select="$type"/>
@@ -402,5 +396,14 @@ li {
             <td><xsl:value-of select="subject"/></td>
             <td><xsl:value-of select="description"/></td>
         </tr>
+    </xsl:template>
+    <xsl:template match="svg">
+        <!--
+        Doesn't work because of a bug in PlantUML integration,
+        see PlantTest.java for more details.
+        <div class="uml">
+            <xsl:value-of select="." disable-output-escaping="yes"/>
+        </div>
+        -->
     </xsl:template>
 </xsl:stylesheet>
