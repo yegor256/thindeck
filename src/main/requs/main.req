@@ -19,7 +19,7 @@ UC1 where User (a user) goes through repository life cycle:
     5. The system runs of Deployment(a deployment);
     6. The user reads deployment logs of the repo;
     7. The user reads usage stats of the repo;
-    8. The user compensates usage of the repo;
+    8. The user checks his balance;
     9. The user terminates the repo.
 UC1/UX must "be in English only".
 UC1/WEBDESIGN must "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site".
@@ -204,11 +204,22 @@ UC5 where User(a user) reads usage stats using Repository(a repo):
     Last row contains totals by all containers. The values in the table are usage stats by container
     within specified time interval".
 
+UserProfilePage is "a page where a user can view / update his profile and see / top up his balance. @todo #69 I've
+    assumed that we show user.balance in his profile only. However, we can show his balance on all user pages somewhere
+    on the top. Also, we should elaborate this definition by adding other profile parts".
+UserProfilePage includes: balance as "user.balance".
+
 :UC6 is specified.
 :UC6 is a must.
-UC6 where User compensates usage of Repository:
-    "The user adds funds to his account, when it goes to a negative value.
-    Funds can be added through PayPal only".
+UC6 where User(a user) checks his balance:
+    1. The system reads the user;
+    2. The system creates UserProfilePage(a profilePage);
+    3. The user reads the profilePage;
+    4. The user tops up his balance "if he wants to, e.g., his balance is low or negative".
+
+:UC6.4 is specified.
+:UC6.4 is a must.
+UC6.4 where User(a user) tops up his balance: "@todo #69 Funds can be added through PayPal only".
 
 :UC7 is specified.
 :UC7 is a must.
