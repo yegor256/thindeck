@@ -1,4 +1,7 @@
 System is "a web hosting that deploys itself".
+System includes:
+systemApi as "Application Programming Interface that is available to clients.
+All features available through UI should be available through RESTful API".
 
 MeanTimeBetweenFailures is "time that System spends in continuous
 up time between one failure and the next failure.
