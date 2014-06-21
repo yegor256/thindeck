@@ -22,7 +22,7 @@ UC1 where User (a user) goes through repository life cycle:
     1. The user reads MainPage(a mainPage);
     2. The system lists Repository(a repoList) "of the current user";
     3. The user configures virtual machine using the repo;
-    4. The user registers Repository(a repo);
+    4. The user registers repository;
     5. The system runs of Deployment(a deployment);
     6. The user reads deployment logs of the repo;
     7. The user reads usage stats of the repo;
@@ -96,43 +96,42 @@ Repository needs:
     name as "a unique name of the repo in user's account",
     deployment-? as Deployment,
     dockerFile as DockerFile,
-    manifest as Manifest.
+    manifest as Manifest,
+    remoteRepoProperties as RemoteRepoProperties.
 
-GitRepository is Repository.
-GitRepository is "connected to a remote git (github) repository".
-GitRepository includes:
+RemoteRepoProperties is "an abstract type representing connection properties
+    depending on the type of a remote repository".
+
+GitProperties is RemoteRepoProperties "a remote git (e.g., github) repository".
+GitProperties includes:
     uri as "a non-ambiguous descriptor of a repo,
     for example ssh://git@github:yegor256/thindeck.git",
     key-? as "a private SSH key,
     see http://en.wikipedia.org/wiki/Public-key_cryptography".
 
-SvnRepository is Repository.
-SvnRepository is "connected to a remote subversion repository".
-SvnRepository includes:
+SvnProperties is RemoteRepoProperties "a remote subversion repository".
+SvnProperties includes:
     uri as "a non-ambiguous descriptor of a repo,
     for example ssh://git@github:yegor256/thindeck.git",
     userName-? as "credentials used to read files from the repository",
     password-? as "credentials used to read files from the repository".
 
-FtpRepository is Repository.
-FtpRepository is "connected to a remote FTP server".
-FtpRepository includes:
+FtpProperties is RemoteRepoProperties "a remote FTP folder".
+FtpProperties includes:
     uri as "a URL containing credentials valid to connect to FTP server,
     for example ftp://user:password@ftpserver/url-path".
 
-DropboxRepository is Repository.
-DropboxRepository is "connected to a shared Dropbox folder".
-DropboxRepository includes: apiKey as "Dropbox specific connection information".
+DropboxProperties is RemoteRepoProperties "a Dropbox shared folder".
+DropboxProperties includes: apiKey as "Dropbox specific connection information.
+    @todo #172 Elaborate on the exact list of properties".
 
-AmazonSthreeRepository is Repository.
-AmazonSthreeRepository is "connected to an Amazon S3 file storage".
-AmazonSthreeRepository includes: apiKey as "Amazon S3 specific
-connection information".
+AmazonS3Properties is RemoteRepoProperties "an Amazon S3 shared folder".
+AmazonS3Properties includes: apiKey as "Amazon S3 specific connection
+    information. @todo #172 Elaborate on the exact list of properties".
 
-GoogleDriveRepository is Repository.
-GoogleDriveRepository is "connected to a Google Drive storage".
-GoogleDriveRepository includes: apiKey as "Google Drive specific
-connection information".
+GoogleDriveProperties is RemoteRepoProperties "a Google Drive shared folder".
+GoogleDriveProperties includes: apiKey as "Google Drive specific connection
+    information. @todo #172 Elaborate on the exact list of properties".
 
 Deployment is "a summary statistics of Containers related to a Repository,
 with their statuses and text logs".
@@ -164,23 +163,37 @@ Manifest is "a YAML configuration file, stored in the repository, and
 
 DockerFile is "a configuration for building and starting Container-s".
 
+CreateRepoPage is "a form the user fills it to create a new repository".
+CreateRepoPage contains:
+    repoName as "single line text input",
+    repoTypeSelector as "selector of repository type",
+    repoProperties as RemoteRepoProperties "set of controls (input fields, maybe
+        some kind of 'connect to' control), related to the selected repo type".
+
 :UC2 is specified.
 :UC2 is a must.
-UC2 where User registers Repository:
-    1. The user "enters a new unique name of the repository, provides
-    the data required for authorization,
-    depending on the type of chosen repository, and confirms entered data";
-    2. The system creates Repository(a repo);
-    3. The system "displays a repo in the list of other repositories
-    in the user account";
-    4. The system deploys the repo;
-    5. The system reads the repo "periodically (every 5 minutes) pulling
-    the changes from repository remote source";
-    6. The system redeploys the repo "If the system detected
-    changes after last pull".
-UC2/1 when "data is incorrect or the user already has another
-repository with such name":
-    1. Fail since "repository cannot be registered".
+UC2 where User(a user) registers repository:
+    1. The system creates CreateRepoPage(a page);
+    2. The user updates the page "entering a new unique name of the repository";
+    3. The system reads the page "validating repoName for uniqueness, etc.
+        @todo #172 Maybe we need more detailed validation of repository name
+        than just uniqueness check";
+    4. The user updates the page "selecting repository type with
+        repoTypeSelector";
+    5. The system updates the page "inserting the controls set corresponding to
+        the RemoteRepoProperties of the selected repository type";
+    6. The user updates the page "filling in RemoteRepoProperties";
+    7. The system creates RemoteRepoProperties(a repoProps) "and validates them
+        by making a test connection";
+    8. The system creates Repository(a repo);
+    9. The system deploys the repo;
+    10. The system updates the repo "periodically (every 5 minutes) pulling
+        the changes from the remote source";
+    11. The system redeploys the repo "if it was changed after last pull".
+UC2/3 when "repository name is not valid":
+    1. Fail since "must provide a valid name".
+UC2/6 when "cannot connect to the remote source":
+    1. Fail since "must provide valid connection properties".
 
 UC2.1 where User(a user) configures virtual machine using Repository(a repo):
     1. The user creates DockerFile(a dockerFile) "in which
