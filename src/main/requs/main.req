@@ -58,13 +58,16 @@ it until he logs in".
 FrontPage is "a front page of Thindeck for Anonymous which contains all
 the information about pricing, 'how it works', etc.".
 
+TermsPage is "a page of Thindeck for Anonymous which contains all legal
+    wordings".
+
 :UC9.1 is specified.
 :UC9.1 is a should.
 UC9.1 where Anonymous (a anonymous) explores thindeck:
     1. The anonymous reads FrontPage(a frontPage);
     2. The anonymous "reads the stats page containing our runtime stats,
     similar to https://status.github.com/";
-    3. The anonymous "reads our terms page including all the legal wordings".
+    3. The anonymous reads TermsPage(a termsPage).
 
 :UC9.2 is specified.
 :UC9.2 is a must.
