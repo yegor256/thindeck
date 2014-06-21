@@ -84,23 +84,23 @@ LoginPage is "a thindeck page where an anonymous user can sign up and log in".
 :UC9.3 is specified.
 :UC9.3 is a must.
 UC9.3 where Anonymous(an anonymous) logs in:
-    1. The anonymous reads LoginPage(a loginPage);
-    2. The anonymous updates the loginPage "by selecting an OAuth provider";
-    3. The loginPage reads OAuthProvider(a provider) "redirecting the anonymous
-        to OAuthProvider.authorisationPage with response_type = code";
-    4. The anonymous updates the provider "confirming on authorizationPage that
-        he allows thindeck to use his account at the provider";
-    5. The provider updates the loginPage "redirecting the anonymous back to
+    1. The anonymous updates the loginPage "by selecting an OAuth provider";
+    2. The loginPage updates OAuthProvider(a provider) "redirecting the
+        anonymous to OAuthProvider.authorisationPage with response_type = code";
+    3. The anonymous updates the provider "confirming on authorizationPage that
+        he allows thindeck to use his account on provider's side";
+    4. The provider updates the loginPage "redirecting the anonymous back to
         thindeck login page and sending an authorization code";
-    6. The system updates the provider "requesting if the authorization code is
+    5. The system reads the provider "requesting if the authorization code is
         valid";
-    7. The provider updates the system "confirming that the authorization code
-        is valid"
-    8. The system reads User(a user) "anonymous is now authorized as this user".
-UC9.3/4 when "the user haven't authorized thindeck at the provider side":
-    1. Fail since "the user must authorize thindeck at provider's side".
-UC9.3/7 when "the provider haven't confirmed an authorization code":
-    1. Fail since "the provider must confirm authorization code".
+    6. The provider updates the system "confirming that the authorization code
+        is valid";
+    7. The system reads User(a user) "anonymous is now authorized as the user".
+UC9.3/3 when "the user did not authorize thindeck on providers side.
+    @todo #217 add apostrophe to |providers| after requs bug is fixed":
+    1. Fail since "the user must authorize thindeck on provider's side".
+UC9.3/6 when "the provider did not confirm the authorization code":
+    1. Fail since "the provider must confirm the authorization code".
 
 :UC11 is specified.
 :UC11 is a must.
