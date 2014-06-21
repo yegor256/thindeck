@@ -68,21 +68,39 @@ UC9.1 where Anonymous (a anonymous) explores thindeck:
 
 :UC9.2 is specified.
 :UC9.2 is a must.
-UC9.2 where Anonymous (a anonymous) signs up:
-    1. The anonymous "initiates sign in via one of OAuth providers from
-    this list: Google Plus, Facebook, Github, or Twitter.";
-    2. The system "requests permission from the OAuth provider
-    chosen by the anonymous";
-    3. The system creates User(a user);
-    4. The system "adds $5 to the user.balance";
-    5. The anonymous logs in.
-UC9.2/2 when "an OAuth provider denied access":
-    1. Fail since "Not authorized by chosen OAuth provider".
+UC9.2 where Anonymous (an anonymous) signs up:
+    1. The anonymous logs in;
+    2. The system creates User(a user);
+    3. The system updates the user "adding $5 to user.balance".
+
+OAuthProvider is "an authorization provider that implemented OAuth 2 API.
+    Thindeck supports only Google Plus, Facebook, Github, and Twitter".
+OAuthProvider contains:
+    authorizationPage as "a web page where user confirms authorization using his
+        account on provider's side".
+
+LoginPage is "a thindeck page where an anonymous user can sign up and log in".
 
 :UC9.3 is specified.
 :UC9.3 is a must.
-UC9.3 where Anonymous (a anonymous) logs in using User(a user):
-    1. The system "from now on treats the anonymous as a User".
+UC9.3 where Anonymous(an anonymous) logs in:
+    1. The anonymous reads LoginPage(a loginPage);
+    2. The anonymous updates the loginPage "by selecting an OAuth provider";
+    3. The loginPage reads OAuthProvider(a provider) "redirecting the anonymous
+        to OAuthProvider.authorisationPage with response_type = code";
+    4. The anonymous updates the provider "confirming on authorizationPage that
+        he allows thindeck to use his account at the provider";
+    5. The provider updates the loginPage "redirecting the anonymous back to
+        thindeck login page and sending an authorization code";
+    6. The system updates the provider "requesting if the authorization code is
+        valid";
+    7. The provider updates the system "confirming that the authorization code
+        is valid"
+    8. The system reads User(a user) "anonymous is now authorized as this user".
+UC9.3/4 when "the user haven't authorized thindeck at the provider side":
+    1. Fail since "the user must authorize thindeck at provider's side".
+UC9.3/7 when "the provider haven't confirmed an authorization code":
+    1. Fail since "the provider must confirm authorization code".
 
 :UC11 is specified.
 :UC11 is a must.
