@@ -79,7 +79,7 @@
         </site>
     </distributionManagement>
     <properties>
-        <requs.version>1.11</requs.version>
+        <requs.version>1.12</requs.version>
     </properties>
     <build>
         <plugins>

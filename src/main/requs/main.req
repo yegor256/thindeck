@@ -19,15 +19,14 @@ my profile, my balance, etc.".
 :UC1 is specified.
 :UC1 is a must.
 UC1 where User (a user) goes through repository life cycle:
-    1. The user reads MainPage(a mainPage);
-    2. The system lists Repository(a repoList) "of the current user";
-    3. The user configures virtual machine using the repo;
-    4. The user registers Repository(a repo);
-    5. The system runs of Deployment(a deployment);
-    6. The user reads deployment logs of the repo;
-    7. The user reads usage stats of the repo;
-    8. The user compensates usage of the repo;
-    9. The user terminates the repo.
+    1. The system lists Repository(a repoList) "of the current user";
+    2. The user configures virtual machine using the repo;
+    3. The user registers Repository(a repo);
+    4. The system runs of Deployment(a deployment);
+    5. The user reads deployment logs of the repo;
+    6. The user reads usage stats of the repo;
+    7. The user compensates usage of the repo;
+    8. The user terminates the repo.
 UC1/UX must "be in English only".
 UC1/WEBDESIGN must "be 'responsive', see
 http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck
@@ -76,8 +75,6 @@ UC9.2 where Anonymous (a anonymous) signs up:
     3. The system creates User(a user);
     4. The system "adds $5 to the user.balance";
     5. The anonymous logs in.
-UC9.2/2 when "an OAuth provider denied access":
-    1. Fail since "Not authorized by chosen OAuth provider".
 
 :UC9.3 is specified.
 :UC9.3 is a must.
@@ -183,9 +180,6 @@ UC2 where User registers Repository:
     the changes from repository remote source";
     6. The system redeploys the repo "If the system detected
     changes after last pull".
-UC2/1 when "data is incorrect or the user already has another
-repository with such name":
-    1. Fail since "repository cannot be registered".
 
 UC2.1 where User(a user) configures virtual machine using Repository(a repo):
     1. The user creates DockerFile(a dockerFile) "in which
@@ -305,44 +299,22 @@ UC10.1 where WebVisitor(a visitor) utilizes Application(an app):
     3. The system reads User(a user) "to check user.balance";
     4. The system notifies low balance to the user
     "if user.balance is below 5$";
-    5. The system reads Deployment(a deployment)
-    "to choose its container which will handle the request";
-    6. The system reads Container(a container)
+    5. The system reads Container(a container)
     "the container to handle the request. If all containers are overloaded,
     then another one is started to handle the request";
-    7. The system
-    "redirects the request to the app instance in a chosen container";
-    8. The app reads the request
+    6. The app reads the request
     "instance of app running in a chosen container";
-    9. The app "processes the request";
-    10. The app creates HttpResponse(a response);
-    11. The app "replies to the visitor with the response";
-    12. The visitor reads the response;
-    13. The system "tracks resources usage by the app";
-    14. The system creates HourlyUsage(a record)
+    7. The app creates HttpResponse(a response);
+    8. The system creates HourlyUsage(a record)
     "and tracks utilized CPU time and traffic in this record.
     If a corresponding record already exists, then this record
-    is updated instead of creating a new one";
-    15. The system updates the user "decreasing user.balance
-    according to the CPU time and traffic used by the app
-    since previous HourlyUsage record update".
-UC10.1/2 when "the request is not valid, i.e., there is no active
-deployment whose Manifest would contain the binding to the requested host:port":
-    1. Fail since "http error 404: none of deployed
-    applications is binded to the requested host:port".
-UC10.1/2 when "a number of requests exceeds the System resources":
-    1. Fail since "http error 503: the System is currently unavailable".
+    is updated instead of creating a new one".
 UC10.1/3 when "user.balance is below or equals to zero":
     1. The system notifies zero balance to the user;
     2. Fail since "error page pointing out that user must top up
     his balance to utilize his application. The page should also contain
     a link to another page where the user can pay.
     If the user is Anonymous, he must log in first".
-UC10.1/7 when "app is not listening to http port":
-    1. Fail since "http error 404: the app is not listening to the host:port".
-UC10.1/9 when "an exception appears during the app execution":
-    1. Fail since "http error 404 OR some standard
-    page with exception stack trace".
 
 UC6.2 where System(a system) notifies low balance to User(a user):
     "The system sends the user an email notification one time
