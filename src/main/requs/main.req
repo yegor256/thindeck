@@ -159,8 +159,13 @@ HourlyUsage includes:
     bytesIn as "an integer number of bytes came in the container",
     bytesOut as "an integer number of bytes came out of the container".
 
-Manifest is "a YAML configuration file, stored in the repository, and
-    includes a) list of domain names, b) list of open ports.".
+Manifest is "a YAML configuration file stored in the repository".
+Manifest includes:
+    domain-s? as "a unique name that identifies a website and
+        may not exceed a total length of 253 ASCII characters
+        in its textual representation",
+    port-s? as "a 16-bit number that identifies a network port
+        for the establishment of host-to-host connectivity".
 
 DockerFile is "a configuration for building and starting Container-s".
 
