@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
     xmlns="http://www.w3.org/1999/xhtml">
     <xsl:output method="xml" omit-xml-declaration="yes"/>
     <xsl:template match="/">
@@ -9,7 +9,6 @@
                 <meta name="keywords" content="software requirements specification"/>
                 <meta name="author" content="requs.org"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <link rel="stylesheet" type="text/css" href="requs.css"/>
                 <script src="//code.jquery.com/jquery-2.1.1-rc1.js" type="text/javascript">
                     <!-- nothing -->
                 </script>
@@ -22,6 +21,7 @@ body {
     margin: 2em;
     font-family: 'Ubuntu', 'Arial', serif;
     font-size: 16px;
+    color: #4e4e4e;
 }
 a {
     color: #428bca;

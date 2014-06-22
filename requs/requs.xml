@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="34026" time="2014-06-22T18:31:29">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="32773" time="2014-06-22T20:48:05">
    <files>
       <file id="0" line="1">/home/ubuntu/code/src/main/requs/app.req</file>
       <file id="1" line="24">/home/ubuntu/code/src/main/requs/main.req</file>
-      <file id="2" line="379">/home/ubuntu/code/src/main/requs/vision.req</file>
+      <file id="2" line="351">/home/ubuntu/code/src/main/requs/vision.req</file>
    </files>
    <input>Hoster is "an owner of a web server, who wants to
 install Thindeck locally and host containers himself".
@@ -49,15 +49,14 @@ my profile, my balance, etc.".
 :UC1 is specified.
 :UC1 is a must.
 UC1 where User (a user) goes through repository life cycle:
-    1. The user reads MainPage(a mainPage);
-    2. The system lists Repository(a repoList) "of the current user";
-    3. The user configures virtual machine using the repo;
-    4. The user registers Repository(a repo);
-    5. The system runs of Deployment(a deployment);
-    6. The user reads deployment logs of the repo;
-    7. The user reads usage stats of the repo;
-    8. The user compensates usage of the repo;
-    9. The user terminates the repo.
+    1. The system lists Repository(a repoList) "of the current user";
+    2. The user configures virtual machine using the repo;
+    3. The user registers Repository(a repo);
+    4. The system runs of Deployment(a deployment);
+    5. The user reads deployment logs of the repo;
+    6. The user reads usage stats of the repo;
+    7. The user compensates usage of the repo;
+    8. The user terminates the repo.
 UC1/UX must "be in English only".
 UC1/WEBDESIGN must "be 'responsive', see
 http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck
@@ -106,8 +105,6 @@ UC9.2 where Anonymous (a anonymous) signs up:
     3. The system creates User(a user);
     4. The system "adds $5 to the user.balance";
     5. The anonymous logs in.
-UC9.2/2 when "an OAuth provider denied access":
-    1. Fail since "Not authorized by chosen OAuth provider".
 
 :UC9.3 is specified.
 :UC9.3 is a must.
@@ -213,9 +210,6 @@ UC2 where User registers Repository:
     the changes from repository remote source";
     6. The system redeploys the repo "If the system detected
     changes after last pull".
-UC2/1 when "data is incorrect or the user already has another
-repository with such name":
-    1. Fail since "repository cannot be registered".
 
 UC2.1 where User(a user) configures virtual machine using Repository(a repo):
     1. The user creates DockerFile(a dockerFile) "in which
@@ -335,44 +329,22 @@ UC10.1 where WebVisitor(a visitor) utilizes Application(an app):
     3. The system reads User(a user) "to check user.balance";
     4. The system notifies low balance to the user
     "if user.balance is below 5$";
-    5. The system reads Deployment(a deployment)
-    "to choose its container which will handle the request";
-    6. The system reads Container(a container)
+    5. The system reads Container(a container)
     "the container to handle the request. If all containers are overloaded,
     then another one is started to handle the request";
-    7. The system
-    "redirects the request to the app instance in a chosen container";
-    8. The app reads the request
+    6. The app reads the request
     "instance of app running in a chosen container";
-    9. The app "processes the request";
-    10. The app creates HttpResponse(a response);
-    11. The app "replies to the visitor with the response";
-    12. The visitor reads the response;
-    13. The system "tracks resources usage by the app";
-    14. The system creates HourlyUsage(a record)
+    7. The app creates HttpResponse(a response);
+    8. The system creates HourlyUsage(a record)
     "and tracks utilized CPU time and traffic in this record.
     If a corresponding record already exists, then this record
-    is updated instead of creating a new one";
-    15. The system updates the user "decreasing user.balance
-    according to the CPU time and traffic used by the app
-    since previous HourlyUsage record update".
-UC10.1/2 when "the request is not valid, i.e., there is no active
-deployment whose Manifest would contain the binding to the requested host:port":
-    1. Fail since "http error 404: none of deployed
-    applications is binded to the requested host:port".
-UC10.1/2 when "a number of requests exceeds the System resources":
-    1. Fail since "http error 503: the System is currently unavailable".
+    is updated instead of creating a new one".
 UC10.1/3 when "user.balance is below or equals to zero":
     1. The system notifies zero balance to the user;
     2. Fail since "error page pointing out that user must top up
     his balance to utilize his application. The page should also contain
     a link to another page where the user can pay.
     If the user is Anonymous, he must log in first".
-UC10.1/7 when "app is not listening to http port":
-    1. Fail since "http error 404: the app is not listening to the host:port".
-UC10.1/9 when "an exception appears during the app execution":
-    1. Fail since "http error 404 OR some standard
-    page with exception stack trace".
 
 UC6.2 where System(a system) notifies low balance to User(a user):
     "The system sends the user an email notification one time
@@ -416,11 +388,11 @@ install Thindeck locally and host containers himself</informal>
          <mentioned>
             <where>0:4</where>
             <where>1:1</where>
-            <where>1:220</where>
-            <where>1:227</where>
-            <where>1:240</where>
-            <where>1:347</where>
-            <where>1:352</where>
+            <where>1:214</where>
+            <where>1:221</where>
+            <where>1:234</where>
+            <where>1:319</where>
+            <where>1:324</where>
          </mentioned>
          <info>
             <informal>System under Development (thindeck itself)</informal>
@@ -468,15 +440,15 @@ my profile, my balance, etc.</informal>
          <name>User</name>
          <mentioned>
             <where>1:21</where>
-            <where>1:43</where>
-            <where>1:46</where>
-            <where>1:89</where>
-            <where>1:174</where>
-            <where>1:190</where>
-            <where>1:253</where>
-            <where>1:263</where>
+            <where>1:42</where>
+            <where>1:45</where>
+            <where>1:86</where>
+            <where>1:171</where>
+            <where>1:184</where>
+            <where>1:247</where>
+            <where>1:257</where>
+            <where>1:272</where>
             <where>1:278</where>
-            <where>1:284</where>
          </mentioned>
          <info>
             <informal>a person who uses or wants to use hosting and is identified
@@ -486,7 +458,7 @@ by the system (logged in)</informal>
             <slot>
                <name>repo</name>
                <mentioned>
-                  <where>1:47</where>
+                  <where>1:46</where>
                </mentioned>
                <arity>ANY</arity>
                <type>Repository</type>
@@ -494,7 +466,7 @@ by the system (logged in)</informal>
             <slot>
                <name>URN</name>
                <mentioned>
-                  <where>1:48</where>
+                  <where>1:47</where>
                </mentioned>
                <info>
                   <informal>a unique identifier of itself, for example urn:github:526301</informal>
@@ -503,7 +475,7 @@ by the system (logged in)</informal>
             <slot>
                <name>authTokens</name>
                <mentioned>
-                  <where>1:49</where>
+                  <where>1:48</where>
                </mentioned>
                <info>
                   <informal>a list of auth tokens to each auth provider the
@@ -513,7 +485,7 @@ by the system (logged in)</informal>
             <slot>
                <name>balance</name>
                <mentioned>
-                  <where>1:51</where>
+                  <where>1:50</where>
                </mentioned>
                <info>
                   <informal>amount of money available, can be stored as
@@ -525,10 +497,10 @@ by the system (logged in)</informal>
       <type>
          <name>Anonymous</name>
          <mentioned>
-            <where>1:54</where>
-            <where>1:63</where>
-            <where>1:71</where>
-            <where>1:84</where>
+            <where>1:53</where>
+            <where>1:62</where>
+            <where>1:70</where>
+            <where>1:81</where>
          </mentioned>
          <info>
             <informal>a person who is not identified in the system (not logged in).
@@ -539,7 +511,7 @@ it until he logs in</informal>
       <type>
          <name>FrontPage</name>
          <mentioned>
-            <where>1:58</where>
+            <where>1:57</where>
          </mentioned>
          <info>
             <informal>a front page of Thindeck for Anonymous which contains all
@@ -549,8 +521,8 @@ the information about pricing, 'how it works', etc.</informal>
       <type>
          <name>Repository</name>
          <mentioned>
-            <where>1:93</where>
-            <where>1:95</where>
+            <where>1:90</where>
+            <where>1:92</where>
          </mentioned>
          <info>
             <informal>a local copy of files and folders being pulled every
@@ -560,7 +532,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>name</name>
                <mentioned>
-                  <where>1:96</where>
+                  <where>1:93</where>
                </mentioned>
                <info>
                   <informal>a unique name of the repo in user's account</informal>
@@ -569,7 +541,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>deployment</name>
                <mentioned>
-                  <where>1:97</where>
+                  <where>1:94</where>
                </mentioned>
                <arity>OPT</arity>
                <type>Deployment</type>
@@ -577,14 +549,14 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>dockerFile</name>
                <mentioned>
-                  <where>1:98</where>
+                  <where>1:95</where>
                </mentioned>
                <type>DockerFile</type>
             </slot>
             <slot>
                <name>manifest</name>
                <mentioned>
-                  <where>1:99</where>
+                  <where>1:96</where>
                </mentioned>
                <type>Manifest</type>
             </slot>
@@ -593,9 +565,9 @@ the information about pricing, 'how it works', etc.</informal>
       <type>
          <name>GitRepository</name>
          <mentioned>
-            <where>1:101</where>
-            <where>1:102</where>
-            <where>1:103</where>
+            <where>1:98</where>
+            <where>1:99</where>
+            <where>1:100</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -607,7 +579,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>uri</name>
                <mentioned>
-                  <where>1:104</where>
+                  <where>1:101</where>
                </mentioned>
                <info>
                   <informal>a non-ambiguous descriptor of a repo,
@@ -617,7 +589,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>key</name>
                <mentioned>
-                  <where>1:106</where>
+                  <where>1:103</where>
                </mentioned>
                <arity>OPT</arity>
                <info>
@@ -630,9 +602,9 @@ the information about pricing, 'how it works', etc.</informal>
       <type>
          <name>SvnRepository</name>
          <mentioned>
-            <where>1:109</where>
-            <where>1:110</where>
-            <where>1:111</where>
+            <where>1:106</where>
+            <where>1:107</where>
+            <where>1:108</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -644,7 +616,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>uri</name>
                <mentioned>
-                  <where>1:112</where>
+                  <where>1:109</where>
                </mentioned>
                <info>
                   <informal>a non-ambiguous descriptor of a repo,
@@ -654,7 +626,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>userName</name>
                <mentioned>
-                  <where>1:114</where>
+                  <where>1:111</where>
                </mentioned>
                <arity>OPT</arity>
                <info>
@@ -664,7 +636,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>password</name>
                <mentioned>
-                  <where>1:115</where>
+                  <where>1:112</where>
                </mentioned>
                <arity>OPT</arity>
                <info>
@@ -676,9 +648,9 @@ the information about pricing, 'how it works', etc.</informal>
       <type>
          <name>FtpRepository</name>
          <mentioned>
-            <where>1:117</where>
-            <where>1:118</where>
-            <where>1:119</where>
+            <where>1:114</where>
+            <where>1:115</where>
+            <where>1:116</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -690,7 +662,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>uri</name>
                <mentioned>
-                  <where>1:120</where>
+                  <where>1:117</where>
                </mentioned>
                <info>
                   <informal>a URL containing credentials valid to connect to FTP server,
@@ -702,9 +674,9 @@ the information about pricing, 'how it works', etc.</informal>
       <type>
          <name>DropboxRepository</name>
          <mentioned>
-            <where>1:123</where>
-            <where>1:124</where>
-            <where>1:125</where>
+            <where>1:120</where>
+            <where>1:121</where>
+            <where>1:122</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -716,7 +688,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>apiKey</name>
                <mentioned>
-                  <where>1:125</where>
+                  <where>1:122</where>
                </mentioned>
                <info>
                   <informal>Dropbox specific connection information</informal>
@@ -727,9 +699,9 @@ the information about pricing, 'how it works', etc.</informal>
       <type>
          <name>AmazonSthreeRepository</name>
          <mentioned>
-            <where>1:127</where>
-            <where>1:128</where>
-            <where>1:129</where>
+            <where>1:124</where>
+            <where>1:125</where>
+            <where>1:126</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -741,7 +713,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>apiKey</name>
                <mentioned>
-                  <where>1:129</where>
+                  <where>1:126</where>
                </mentioned>
                <info>
                   <informal>Amazon S3 specific
@@ -753,9 +725,9 @@ connection information</informal>
       <type>
          <name>GoogleDriveRepository</name>
          <mentioned>
-            <where>1:132</where>
-            <where>1:133</where>
-            <where>1:134</where>
+            <where>1:129</where>
+            <where>1:130</where>
+            <where>1:131</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -767,7 +739,7 @@ connection information</informal>
             <slot>
                <name>apiKey</name>
                <mentioned>
-                  <where>1:134</where>
+                  <where>1:131</where>
                </mentioned>
                <info>
                   <informal>Google Drive specific
@@ -779,8 +751,8 @@ connection information</informal>
       <type>
          <name>Deployment</name>
          <mentioned>
+            <where>1:134</where>
             <where>1:137</where>
-            <where>1:140</where>
          </mentioned>
          <info>
             <informal>a summary statistics of Containers related to a Repository,
@@ -790,7 +762,7 @@ with their statuses and text logs</informal>
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>1:141</where>
+                  <where>1:138</where>
                </mentioned>
                <arity>MANY</arity>
                <type>Container</type>
@@ -798,7 +770,7 @@ with their statuses and text logs</informal>
             <slot>
                <name>state</name>
                <mentioned>
-                  <where>1:142</where>
+                  <where>1:139</where>
                </mentioned>
                <info>
                   <informal>one from the list: building, running</informal>
@@ -807,7 +779,7 @@ with their statuses and text logs</informal>
             <slot>
                <name>hourlyUsage</name>
                <mentioned>
-                  <where>1:143</where>
+                  <where>1:140</where>
                </mentioned>
                <arity>ANY</arity>
                <type>HourlyUsage</type>
@@ -817,7 +789,7 @@ with their statuses and text logs</informal>
       <type>
          <name>Application</name>
          <mentioned>
-            <where>1:145</where>
+            <where>1:142</where>
          </mentioned>
          <info>
             <informal>a running instance of user's code built from his Repository</informal>
@@ -826,8 +798,8 @@ with their statuses and text logs</informal>
       <type>
          <name>Container</name>
          <mentioned>
-            <where>1:147</where>
-            <where>1:149</where>
+            <where>1:144</where>
+            <where>1:146</where>
          </mentioned>
          <info>
             <informal>a virtual operating system running user's
@@ -837,7 +809,7 @@ application build from Repository</informal>
             <slot>
                <name>app</name>
                <mentioned>
-                  <where>1:149</where>
+                  <where>1:146</where>
                </mentioned>
                <type>Application</type>
             </slot>
@@ -846,8 +818,8 @@ application build from Repository</informal>
       <type>
          <name>HourlyUsage</name>
          <mentioned>
-            <where>1:151</where>
-            <where>1:152</where>
+            <where>1:148</where>
+            <where>1:149</where>
          </mentioned>
          <info>
             <informal>an atomic track record of the usage of resources</informal>
@@ -856,14 +828,14 @@ application build from Repository</informal>
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>1:153</where>
+                  <where>1:150</where>
                </mentioned>
                <type>Container</type>
             </slot>
             <slot>
                <name>hours</name>
                <mentioned>
-                  <where>1:154</where>
+                  <where>1:151</where>
                </mentioned>
                <info>
                   <informal>a calendar hour, for example: 2014-05-02T18</informal>
@@ -872,7 +844,7 @@ application build from Repository</informal>
             <slot>
                <name>cpuSeconds</name>
                <mentioned>
-                  <where>1:155</where>
+                  <where>1:152</where>
                </mentioned>
                <info>
                   <informal>how many seconds our CPU spent working with
@@ -884,7 +856,7 @@ application build from Repository</informal>
             <slot>
                <name>bytesIn</name>
                <mentioned>
-                  <where>1:159</where>
+                  <where>1:156</where>
                </mentioned>
                <info>
                   <informal>an integer number of bytes came in the container</informal>
@@ -893,7 +865,7 @@ application build from Repository</informal>
             <slot>
                <name>bytesOut</name>
                <mentioned>
-                  <where>1:160</where>
+                  <where>1:157</where>
                </mentioned>
                <info>
                   <informal>an integer number of bytes came out of the container</informal>
@@ -904,8 +876,8 @@ application build from Repository</informal>
       <type>
          <name>Manifest</name>
          <mentioned>
-            <where>1:162</where>
-            <where>1:163</where>
+            <where>1:159</where>
+            <where>1:160</where>
          </mentioned>
          <info>
             <informal>a YAML configuration file stored in the repository</informal>
@@ -914,7 +886,7 @@ application build from Repository</informal>
             <slot>
                <name>domain</name>
                <mentioned>
-                  <where>1:164</where>
+                  <where>1:161</where>
                </mentioned>
                <arity>ANY</arity>
                <info>
@@ -926,7 +898,7 @@ application build from Repository</informal>
             <slot>
                <name>port</name>
                <mentioned>
-                  <where>1:167</where>
+                  <where>1:164</where>
                </mentioned>
                <arity>ANY</arity>
                <info>
@@ -939,7 +911,7 @@ application build from Repository</informal>
       <type>
          <name>DockerFile</name>
          <mentioned>
-            <where>1:170</where>
+            <where>1:167</where>
          </mentioned>
          <info>
             <informal>a configuration for building and starting Container-s</informal>
@@ -948,7 +920,7 @@ application build from Repository</informal>
       <type>
          <name>HttpRequest</name>
          <mentioned>
-            <where>1:289</where>
+            <where>1:283</where>
          </mentioned>
          <info>
             <informal>a request that client application
@@ -959,7 +931,7 @@ to a web server via http protocol</informal>
       <type>
          <name>HttpResponse</name>
          <mentioned>
-            <where>1:293</where>
+            <where>1:287</where>
          </mentioned>
          <info>
             <informal>a response that a web server sends back
@@ -969,8 +941,8 @@ after it receives HttpRequest</informal>
       <type>
          <name>WebVisitor</name>
          <mentioned>
-            <where>1:296</where>
-            <where>1:301</where>
+            <where>1:290</where>
+            <where>1:295</where>
          </mentioned>
          <info>
             <informal>something sending http request to user's
@@ -1138,7 +1110,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC8&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -1181,10 +1152,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;PRICING must  "Standalone Thindeck installation is completely free. Thindeck, as a software product, is open source. Anyone should be able to download and install it locally, on his own server(s)"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -1206,8 +1174,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;"System under Development (thindeck itself)"&lt;br/&gt;"a web hosting that deploys itself"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -1284,7 +1251,7 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="8e0337">
+      <method seal="8e8e7b">
          <id>UC1</id>
          <attributes>
             <attribute seal="">specified</attribute>
@@ -1294,9 +1261,9 @@ Actors taking participation in the Use Case have the following properties:
             <where>1:19</where>
             <where>1:20</where>
             <where>1:21</where>
-            <where>1:31</where>
-            <where>1:35</where>
-            <where>1:41</where>
+            <where>1:30</where>
+            <where>1:34</where>
+            <where>1:40</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1306,10 +1273,6 @@ Actors taking participation in the Use Case have the following properties:
             <binding>
                <name>user</name>
                <type>User</type>
-            </binding>
-            <binding>
-               <name>mainPage</name>
-               <type>MainPage</type>
             </binding>
             <binding>
                <name>repoList</name>
@@ -1332,15 +1295,6 @@ Actors taking participation in the Use Case have the following properties:
                <mentioned>
                   <where>1:22</where>
                </mentioned>
-               <object>user</object>
-               <signature>reads</signature>
-               <result>mainPage</result>
-            </step>
-            <step>
-               <number>2</number>
-               <mentioned>
-                  <where>1:23</where>
-               </mentioned>
                <object>system</object>
                <signature>lists</signature>
                <result>repoList</result>
@@ -1349,9 +1303,9 @@ Actors taking participation in the Use Case have the following properties:
                </info>
             </step>
             <step>
-               <number>3</number>
+               <number>2</number>
                <mentioned>
-                  <where>1:24</where>
+                  <where>1:23</where>
                </mentioned>
                <object>user</object>
                <signature>configures virtual machine</signature>
@@ -1360,18 +1314,18 @@ Actors taking participation in the Use Case have the following properties:
                </args>
             </step>
             <step>
-               <number>4</number>
+               <number>3</number>
                <mentioned>
-                  <where>1:25</where>
+                  <where>1:24</where>
                </mentioned>
                <object>user</object>
                <signature>registers</signature>
                <result>repo</result>
             </step>
             <step>
-               <number>5</number>
+               <number>4</number>
                <mentioned>
-                  <where>1:26</where>
+                  <where>1:25</where>
                </mentioned>
                <object>system</object>
                <signature>runs</signature>
@@ -1380,12 +1334,23 @@ Actors taking participation in the Use Case have the following properties:
                </args>
             </step>
             <step>
+               <number>5</number>
+               <mentioned>
+                  <where>1:26</where>
+               </mentioned>
+               <object>user</object>
+               <signature>reads deployment logs</signature>
+               <args>
+                  <arg>repo</arg>
+               </args>
+            </step>
+            <step>
                <number>6</number>
                <mentioned>
                   <where>1:27</where>
                </mentioned>
                <object>user</object>
-               <signature>reads deployment logs</signature>
+               <signature>reads usage stats</signature>
                <args>
                   <arg>repo</arg>
                </args>
@@ -1396,7 +1361,7 @@ Actors taking participation in the Use Case have the following properties:
                   <where>1:28</where>
                </mentioned>
                <object>user</object>
-               <signature>reads usage stats</signature>
+               <signature>compensates usage</signature>
                <args>
                   <arg>repo</arg>
                </args>
@@ -1405,17 +1370,6 @@ Actors taking participation in the Use Case have the following properties:
                <number>8</number>
                <mentioned>
                   <where>1:29</where>
-               </mentioned>
-               <object>user</object>
-               <signature>compensates usage</signature>
-               <args>
-                  <arg>repo</arg>
-               </args>
-            </step>
-            <step>
-               <number>9</number>
-               <mentioned>
-                  <where>1:30</where>
                </mentioned>
                <object>user</object>
                <signature>terminates</signature>
@@ -1476,19 +1430,18 @@ persistence, like Amazon DynamoDB, etc</informal>
          &lt;tr&gt;
             &lt;td&gt;Actors&lt;/td&gt;
             &lt;td&gt;
-               &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;mainPage&lt;/code&gt; as MainPage; &lt;code&gt;repoList&lt;/code&gt; as Repository; &lt;code&gt;repo&lt;/code&gt; as Repository; &lt;code&gt;deployment&lt;/code&gt; as Deployment&lt;/td&gt;
+               &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;repoList&lt;/code&gt; as Repository; &lt;code&gt;repo&lt;/code&gt; as Repository; &lt;code&gt;deployment&lt;/code&gt; as Deployment&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Success Flow&lt;/td&gt;
-            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; reads &lt;code&gt;mainPage&lt;/code&gt;
-               &lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; lists &lt;code&gt;repoList&lt;/code&gt;
-               &lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; configures virtual machine using &lt;code&gt;repo&lt;/code&gt;
-               &lt;br/&gt;4. &lt;code&gt;user&lt;/code&gt; registers &lt;code&gt;repo&lt;/code&gt;
-               &lt;br/&gt;5. &lt;code&gt;system&lt;/code&gt; runs using &lt;code&gt;deployment&lt;/code&gt;
-               &lt;br/&gt;6. &lt;code&gt;user&lt;/code&gt; reads deployment logs using &lt;code&gt;repo&lt;/code&gt;
-               &lt;br/&gt;7. &lt;code&gt;user&lt;/code&gt; reads usage stats using &lt;code&gt;repo&lt;/code&gt;
-               &lt;br/&gt;8. &lt;code&gt;user&lt;/code&gt; compensates usage using &lt;code&gt;repo&lt;/code&gt;
-               &lt;br/&gt;9. &lt;code&gt;user&lt;/code&gt; terminates &lt;code&gt;repo&lt;/code&gt;
+            &lt;td&gt;1. &lt;code&gt;system&lt;/code&gt; lists &lt;code&gt;repoList&lt;/code&gt;
+               &lt;br/&gt;2. &lt;code&gt;user&lt;/code&gt; configures virtual machine using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; registers &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; runs using &lt;code&gt;deployment&lt;/code&gt;
+               &lt;br/&gt;5. &lt;code&gt;user&lt;/code&gt; reads deployment logs using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;6. &lt;code&gt;user&lt;/code&gt; reads usage stats using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;7. &lt;code&gt;user&lt;/code&gt; compensates usage using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;8. &lt;code&gt;user&lt;/code&gt; terminates &lt;code&gt;repo&lt;/code&gt;
             &lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
@@ -1537,10 +1490,6 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
-            &lt;td&gt;MainPage&lt;/td&gt;
-            &lt;td&gt;"a main thindeck page for (logged-in) User-s. @todo #142 I assumed there will be a main page. We should define what functional blocks will this page contain, e.g., my repositories, my profile, my balance, etc."&lt;/td&gt;
-         &lt;/tr&gt;
-         &lt;tr&gt;
             &lt;td&gt;Repository&lt;/td&gt;
             &lt;td&gt;"a local copy of files and folders being pulled every 5 minutes from some remote source"&lt;ul&gt;
                   &lt;li&gt;
@@ -1584,7 +1533,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC1&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -1609,19 +1557,18 @@ Actors taking participation in the Use Case have the following properties:
          &lt;tr&gt;
             &lt;td&gt;Actors&lt;/td&gt;
             &lt;td&gt;
-               &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;mainPage&lt;/code&gt; as MainPage; &lt;code&gt;repoList&lt;/code&gt; as Repository; &lt;code&gt;repo&lt;/code&gt; as Repository; &lt;code&gt;deployment&lt;/code&gt; as Deployment&lt;/td&gt;
+               &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;repoList&lt;/code&gt; as Repository; &lt;code&gt;repo&lt;/code&gt; as Repository; &lt;code&gt;deployment&lt;/code&gt; as Deployment&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Success Flow&lt;/td&gt;
-            &lt;td&gt;1. &lt;code&gt;user&lt;/code&gt; reads &lt;code&gt;mainPage&lt;/code&gt;
-               &lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; lists &lt;code&gt;repoList&lt;/code&gt;
-               &lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; configures virtual machine using &lt;code&gt;repo&lt;/code&gt;
-               &lt;br/&gt;4. &lt;code&gt;user&lt;/code&gt; registers &lt;code&gt;repo&lt;/code&gt;
-               &lt;br/&gt;5. &lt;code&gt;system&lt;/code&gt; runs using &lt;code&gt;deployment&lt;/code&gt;
-               &lt;br/&gt;6. &lt;code&gt;user&lt;/code&gt; reads deployment logs using &lt;code&gt;repo&lt;/code&gt;
-               &lt;br/&gt;7. &lt;code&gt;user&lt;/code&gt; reads usage stats using &lt;code&gt;repo&lt;/code&gt;
-               &lt;br/&gt;8. &lt;code&gt;user&lt;/code&gt; compensates usage using &lt;code&gt;repo&lt;/code&gt;
-               &lt;br/&gt;9. &lt;code&gt;user&lt;/code&gt; terminates &lt;code&gt;repo&lt;/code&gt;
+            &lt;td&gt;1. &lt;code&gt;system&lt;/code&gt; lists &lt;code&gt;repoList&lt;/code&gt;
+               &lt;br/&gt;2. &lt;code&gt;user&lt;/code&gt; configures virtual machine using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; registers &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; runs using &lt;code&gt;deployment&lt;/code&gt;
+               &lt;br/&gt;5. &lt;code&gt;user&lt;/code&gt; reads deployment logs using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;6. &lt;code&gt;user&lt;/code&gt; reads usage stats using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;7. &lt;code&gt;user&lt;/code&gt; compensates usage using &lt;code&gt;repo&lt;/code&gt;
+               &lt;br/&gt;8. &lt;code&gt;user&lt;/code&gt; terminates &lt;code&gt;repo&lt;/code&gt;
             &lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
@@ -1629,10 +1576,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;UX must  "be in English only"&lt;br/&gt;WEBDESIGN must  "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site"&lt;br/&gt;STATELESS must  "all user repositories must be 100% stateless. We should inform users that we will be constantly changing the number of running containers. We may terminate any container at any moment. This means that the software inside the container (repository) should NOT keep any data persistent. They should use other services for persistence, like Amazon DynamoDB, etc"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -1668,10 +1612,6 @@ Actors taking participation in the Use Case have the following properties:
                      &lt;code&gt;balance&lt;/code&gt;:  "amount of money available, can be stored as integer number of cents"&lt;/li&gt;
                &lt;/ul&gt;
             &lt;/td&gt;
-         &lt;/tr&gt;
-         &lt;tr&gt;
-            &lt;td&gt;MainPage&lt;/td&gt;
-            &lt;td&gt;"a main thindeck page for (logged-in) User-s. @todo #142 I assumed there will be a main page. We should define what functional blocks will this page contain, e.g., my repositories, my profile, my balance, etc."&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Repository&lt;/td&gt;
@@ -1714,8 +1654,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -1792,16 +1731,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="14d952">
+      <method seal="7552ac">
          <id>UC9.1</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">should</attribute>
          </attributes>
          <mentioned>
+            <where>1:60</where>
             <where>1:61</where>
             <where>1:62</where>
-            <where>1:63</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1823,7 +1762,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:64</where>
+                  <where>1:63</where>
                </mentioned>
                <object>anonymous</object>
                <signature>reads</signature>
@@ -1832,7 +1771,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:65</where>
+                  <where>1:64</where>
                </mentioned>
                <object>anonymous</object>
                <signature>"reads the stats page containing our runtime stats,
@@ -1841,7 +1780,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:67</where>
+                  <where>1:66</where>
                </mentioned>
                <object>anonymous</object>
                <signature>"reads our terms page including all the legal wordings"</signature>
@@ -1910,7 +1849,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC9.1&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -1944,10 +1882,7 @@ Actors taking participation in the Use Case have the following properties:
     similar to https://status.github.com/"&lt;br/&gt;3. &lt;code&gt;anonymous&lt;/code&gt; "reads our terms page including all the legal wordings"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -1969,8 +1904,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;"a front page of Thindeck for Anonymous which contains all the information about pricing, 'how it works', etc."&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -2047,17 +1981,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="e77cb9">
+      <method seal="6016ed">
          <id>UC9.2</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
+            <where>1:68</where>
             <where>1:69</where>
             <where>1:70</where>
-            <where>1:71</where>
-            <where>1:80</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2079,7 +2012,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:72</where>
+                  <where>1:71</where>
                </mentioned>
                <object>anonymous</object>
                <signature>"initiates sign in via one of OAuth providers from
@@ -2088,34 +2021,16 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:74</where>
+                  <where>1:73</where>
                </mentioned>
                <object>system</object>
                <signature>"requests permission from the OAuth provider
     chosen by the anonymous"</signature>
-               <exceptions>
-                  <exception>
-                     <when>an OAuth provider denied access</when>
-                     <steps>
-                        <step>
-                           <number>1</number>
-                           <mentioned>
-                              <where>1:80</where>
-                           </mentioned>
-                           <object>_self</object>
-                           <signature>fail</signature>
-                           <info>
-                              <informal>Not authorized by chosen OAuth provider</informal>
-                           </info>
-                        </step>
-                     </steps>
-                  </exception>
-               </exceptions>
             </step>
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:76</where>
+                  <where>1:75</where>
                </mentioned>
                <object>system</object>
                <signature>creates</signature>
@@ -2124,7 +2039,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>1:77</where>
+                  <where>1:76</where>
                </mentioned>
                <object>system</object>
                <signature>"adds $5 to the user.balance"</signature>
@@ -2132,7 +2047,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>5</number>
                <mentioned>
-                  <where>1:78</where>
+                  <where>1:77</where>
                </mentioned>
                <object>anonymous</object>
                <signature>logs in</signature>
@@ -2212,7 +2127,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC9.2&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -2247,10 +2161,7 @@ Actors taking participation in the Use Case have the following properties:
                &lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "adds $5 to the user.balance"&lt;br/&gt;5. &lt;code&gt;anonymous&lt;/code&gt; logs in&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -2282,8 +2193,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -2360,16 +2270,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="51295a">
+      <method seal="6c5f35">
          <id>UC9.3</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:82</where>
-            <where>1:83</where>
-            <where>1:84</where>
+            <where>1:79</where>
+            <where>1:80</where>
+            <where>1:81</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2394,7 +2304,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:85</where>
+                  <where>1:82</where>
                </mentioned>
                <object>system</object>
                <signature>"from now on treats the anonymous as a User"</signature>
@@ -2472,7 +2382,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC9.3&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -2505,10 +2414,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;1. &lt;code&gt;system&lt;/code&gt; "from now on treats the anonymous as a User"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -2540,8 +2446,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -2618,16 +2523,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="eb2c3a">
+      <method seal="8c6438">
          <id>UC11</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:87</where>
-            <where>1:88</where>
-            <where>1:89</where>
+            <where>1:84</where>
+            <where>1:85</where>
+            <where>1:86</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2645,7 +2550,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:90</where>
+                  <where>1:87</where>
                </mentioned>
                <object>system</object>
                <signature>"from now on treats the user as anonymous and
@@ -2730,7 +2635,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC11&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -2763,10 +2667,7 @@ Actors taking participation in the Use Case have the following properties:
     displays a public page"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -2804,8 +2705,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -2882,17 +2782,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="a27b6e">
+      <method seal="428907">
          <id>UC2</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:172</where>
-            <where>1:173</where>
-            <where>1:174</where>
-            <where>1:188</where>
+            <where>1:169</where>
+            <where>1:170</where>
+            <where>1:171</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2910,36 +2809,17 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:175</where>
+                  <where>1:172</where>
                </mentioned>
                <object>user</object>
                <signature>"enters a new unique name of the repository, provides
     the data required for authorization,
     depending on the type of chosen repository, and confirms entered data"</signature>
-               <exceptions>
-                  <exception>
-                     <when>data is incorrect or the user already has another
-repository with such name</when>
-                     <steps>
-                        <step>
-                           <number>1</number>
-                           <mentioned>
-                              <where>1:188</where>
-                           </mentioned>
-                           <object>_self</object>
-                           <signature>fail</signature>
-                           <info>
-                              <informal>repository cannot be registered</informal>
-                           </info>
-                        </step>
-                     </steps>
-                  </exception>
-               </exceptions>
             </step>
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:178</where>
+                  <where>1:175</where>
                </mentioned>
                <object>system</object>
                <signature>creates</signature>
@@ -2948,7 +2828,7 @@ repository with such name</when>
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:179</where>
+                  <where>1:176</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a repo in the list of other repositories
@@ -2957,7 +2837,7 @@ repository with such name</when>
             <step>
                <number>4</number>
                <mentioned>
-                  <where>1:181</where>
+                  <where>1:178</where>
                </mentioned>
                <object>system</object>
                <signature>deploys</signature>
@@ -2966,7 +2846,7 @@ repository with such name</when>
             <step>
                <number>5</number>
                <mentioned>
-                  <where>1:182</where>
+                  <where>1:179</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -2979,7 +2859,7 @@ repository with such name</when>
             <step>
                <number>6</number>
                <mentioned>
-                  <where>1:184</where>
+                  <where>1:181</where>
                </mentioned>
                <object>system</object>
                <signature>redeploys</signature>
@@ -3074,7 +2954,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC2&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -3113,10 +2992,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -3154,8 +3030,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -3232,19 +3107,19 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="ceb1a0">
+      <method seal="8013f4">
          <id>UC2.1</id>
          <mentioned>
+            <where>1:184</where>
             <where>1:190</where>
-            <where>1:196</where>
+            <where>1:191</where>
+            <where>1:194</where>
             <where>1:197</where>
-            <where>1:200</where>
+            <where>1:199</where>
+            <where>1:201</where>
             <where>1:203</where>
-            <where>1:205</where>
             <where>1:207</where>
-            <where>1:209</where>
-            <where>1:213</where>
-            <where>1:216</where>
+            <where>1:210</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3273,7 +3148,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:191</where>
+                  <where>1:185</where>
                </mentioned>
                <object>user</object>
                <signature>creates</signature>
@@ -3287,7 +3162,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:194</where>
+                  <where>1:188</where>
                </mentioned>
                <object>user</object>
                <signature>updates</signature>
@@ -3468,7 +3343,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC2.1&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -3507,10 +3381,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;ENVIRONMENT must  "be Linux, because it is the most popular OS for running web projects in"&lt;br/&gt;LICENSING must  "be open source or free, so that we avoid license costs"&lt;br/&gt;PRODUCTSTATE must  "be mature product that is currently supported, because we need an up-to-date product that has already proved to be reliable and usable"&lt;br/&gt;ISOLATION must  "provide full file system and network isolation, so that user apps from different repositories will know nothing about each other"&lt;br/&gt;COPYONWRITE must  "be implemented, to provide an optimal resources utilization"&lt;br/&gt;MEMORYLIMITS must  "be implemented, to avoid memory overflow by one of user apps"&lt;br/&gt;CPUQUOTAS must  "be implemented, because we want to track and limit CPU time usage for billing purpose"&lt;br/&gt;EASYCHANGE must  "be implemented, to avoid templating or manual configuration, so that changes to a container's file system could be committed into a new image and re-used to create more containers"&lt;br/&gt;LOGGING must  "provide real-time logging, to provide up-to-date logs to our users, who may need them to analyze their testing app instances in real time"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -3566,8 +3437,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;"a configuration for building and starting Container-s"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -3644,16 +3514,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="426215">
+      <method seal="07e7bb">
          <id>UC2.2</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:218</where>
-            <where>1:219</where>
-            <where>1:220</where>
+            <where>1:212</where>
+            <where>1:213</where>
+            <where>1:214</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3682,7 +3552,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:221</where>
+                  <where>1:215</where>
                </mentioned>
                <object>system</object>
                <signature>deletes</signature>
@@ -3694,7 +3564,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:223</where>
+                  <where>1:217</where>
                </mentioned>
                <object>system</object>
                <signature>deploys</signature>
@@ -3786,7 +3656,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC2.2&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -3821,10 +3690,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -3864,8 +3730,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -3942,16 +3807,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="2abf68">
+      <method seal="cef037">
          <id>UC2.3</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:225</where>
-            <where>1:226</where>
-            <where>1:227</where>
+            <where>1:219</where>
+            <where>1:220</where>
+            <where>1:221</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3988,7 +3853,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:230</where>
+                  <where>1:224</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -4001,7 +3866,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:233</where>
+                  <where>1:227</where>
                </mentioned>
                <object>system</object>
                <signature>creates</signature>
@@ -4013,7 +3878,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:235</where>
+                  <where>1:229</where>
                </mentioned>
                <object>system</object>
                <signature>deletes</signature>
@@ -4120,7 +3985,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC2.3&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -4156,10 +4020,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -4213,8 +4074,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -4291,17 +4151,17 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="1fbaf8">
+      <method seal="e1bc9e">
          <id>UC3</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:238</where>
-            <where>1:239</where>
-            <where>1:240</where>
-            <where>1:249</where>
+            <where>1:232</where>
+            <where>1:233</where>
+            <where>1:234</where>
+            <where>1:243</where>
          </mentioned>
          <bindings>
             <binding>
@@ -4326,7 +4186,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:241</where>
+                  <where>1:235</where>
                </mentioned>
                <object>system</object>
                <signature>"starts a new Docker container with
@@ -4336,7 +4196,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:244</where>
+                  <where>1:238</where>
                </mentioned>
                <object>system</object>
                <signature>"applies the configuration defined
@@ -4345,7 +4205,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:246</where>
+                  <where>1:240</where>
                </mentioned>
                <object>system</object>
                <signature>"tracks the usage of CPU time and traffic by the container"</signature>
@@ -4440,7 +4300,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC3&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -4480,10 +4339,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;PERF must  "each thindeck server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -4515,8 +4371,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -4593,16 +4448,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="024e68">
+      <method seal="f4e195">
          <id>UC4</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:251</where>
-            <where>1:252</where>
-            <where>1:253</where>
+            <where>1:245</where>
+            <where>1:246</where>
+            <where>1:247</where>
          </mentioned>
          <bindings>
             <binding>
@@ -4627,7 +4482,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:254</where>
+                  <where>1:248</where>
                </mentioned>
                <object>system</object>
                <signature>lists</signature>
@@ -4639,7 +4494,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:256</where>
+                  <where>1:250</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a list of deployments
@@ -4648,7 +4503,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:258</where>
+                  <where>1:252</where>
                </mentioned>
                <object>user</object>
                <signature>"chooses a deployment and initiates viewing its log"</signature>
@@ -4656,7 +4511,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>1:259</where>
+                  <where>1:253</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a log for the chosen deployment"</signature>
@@ -4754,7 +4609,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC4&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -4789,10 +4643,7 @@ Actors taking participation in the Use Case have the following properties:
     that has already been executed"&lt;br/&gt;3. &lt;code&gt;user&lt;/code&gt; "chooses a deployment and initiates viewing its log"&lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; "displays a log for the chosen deployment"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -4842,8 +4693,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -4920,16 +4770,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="0c2ea7">
+      <method seal="d3bec1">
          <id>UC5</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:261</where>
-            <where>1:262</where>
-            <where>1:263</where>
+            <where>1:255</where>
+            <where>1:256</where>
+            <where>1:257</where>
          </mentioned>
          <bindings>
             <binding>
@@ -4954,7 +4804,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:264</where>
+                  <where>1:258</where>
                </mentioned>
                <object>user</object>
                <signature>"selects a time interval, like:
@@ -4963,7 +4813,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:266</where>
+                  <where>1:260</where>
                </mentioned>
                <object>system</object>
                <signature>"reads HourlyUsage records corresponding
@@ -4972,7 +4822,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:268</where>
+                  <where>1:262</where>
                </mentioned>
                <object>system</object>
                <signature>"shows the user a table with these columns:
@@ -5084,7 +4934,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC5&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -5125,10 +4974,7 @@ Actors taking participation in the Use Case have the following properties:
     within specified time interval"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -5180,8 +5026,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -5265,9 +5110,9 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:276</where>
-            <where>1:277</where>
-            <where>1:278</where>
+            <where>1:270</where>
+            <where>1:271</where>
+            <where>1:272</where>
          </mentioned>
          <bindings>
             <binding>
@@ -5366,7 +5211,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC6&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -5399,10 +5243,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;"The user adds funds to his account, when it goes to a negative value. Funds can be added through PayPal only"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -5440,8 +5281,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -5525,9 +5365,9 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:282</where>
-            <where>1:283</where>
-            <where>1:284</where>
+            <where>1:276</where>
+            <where>1:277</where>
+            <where>1:278</where>
          </mentioned>
          <bindings>
             <binding>
@@ -5604,7 +5444,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC7&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -5635,10 +5474,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;"The user just removes the repository and we immediately terminate the Docker container, close all ports, and stop routing domain names. This operation is irreversible"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -5662,8 +5498,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -5740,21 +5575,17 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="7ab893">
+      <method seal="9bdf35">
          <id>UC10.1</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:299</where>
-            <where>1:300</where>
-            <where>1:301</where>
-            <where>1:331</where>
-            <where>1:334</where>
-            <where>1:336</where>
-            <where>1:342</where>
-            <where>1:344</where>
+            <where>1:293</where>
+            <where>1:294</where>
+            <where>1:295</where>
+            <where>1:313</where>
          </mentioned>
          <bindings>
             <binding>
@@ -5778,10 +5609,6 @@ Actors taking participation in the Use Case have the following properties:
                <type>User</type>
             </binding>
             <binding>
-               <name>deployment</name>
-               <type>Deployment</type>
-            </binding>
-            <binding>
                <name>container</name>
                <type>Container</type>
             </binding>
@@ -5801,7 +5628,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:302</where>
+                  <where>1:296</where>
                </mentioned>
                <object>visitor</object>
                <signature>creates</signature>
@@ -5813,7 +5640,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:303</where>
+                  <where>1:297</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -5821,47 +5648,11 @@ Actors taking participation in the Use Case have the following properties:
                <info>
                   <informal>to find out to which Thindeck user this request is related to</informal>
                </info>
-               <exceptions>
-                  <exception>
-                     <when>the request is not valid, i.e., there is no active
-deployment whose Manifest would contain the binding to the requested host:port</when>
-                     <steps>
-                        <step>
-                           <number>1</number>
-                           <mentioned>
-                              <where>1:331</where>
-                           </mentioned>
-                           <object>_self</object>
-                           <signature>fail</signature>
-                           <info>
-                              <informal>http error 404: none of deployed
-    applications is binded to the requested host:port</informal>
-                           </info>
-                        </step>
-                     </steps>
-                  </exception>
-                  <exception>
-                     <when>a number of requests exceeds the System resources</when>
-                     <steps>
-                        <step>
-                           <number>1</number>
-                           <mentioned>
-                              <where>1:334</where>
-                           </mentioned>
-                           <object>_self</object>
-                           <signature>fail</signature>
-                           <info>
-                              <informal>http error 503: the System is currently unavailable</informal>
-                           </info>
-                        </step>
-                     </steps>
-                  </exception>
-               </exceptions>
             </step>
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:305</where>
+                  <where>1:299</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -5876,7 +5667,7 @@ deployment whose Manifest would contain the binding to the requested host:port</
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>1:336</where>
+                              <where>1:313</where>
                            </mentioned>
                            <object>system</object>
                            <signature>notifies zero balance to</signature>
@@ -5885,7 +5676,7 @@ deployment whose Manifest would contain the binding to the requested host:port</
                         <step>
                            <number>2</number>
                            <mentioned>
-                              <where>1:337</where>
+                              <where>1:314</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>fail</signature>
@@ -5903,7 +5694,7 @@ deployment whose Manifest would contain the binding to the requested host:port</
             <step>
                <number>4</number>
                <mentioned>
-                  <where>1:306</where>
+                  <where>1:300</where>
                </mentioned>
                <object>system</object>
                <signature>notifies low balance to</signature>
@@ -5915,19 +5706,7 @@ deployment whose Manifest would contain the binding to the requested host:port</
             <step>
                <number>5</number>
                <mentioned>
-                  <where>1:308</where>
-               </mentioned>
-               <object>system</object>
-               <signature>reads</signature>
-               <result>deployment</result>
-               <info>
-                  <informal>to choose its container which will handle the request</informal>
-               </info>
-            </step>
-            <step>
-               <number>6</number>
-               <mentioned>
-                  <where>1:310</where>
+                  <where>1:302</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -5938,35 +5717,9 @@ deployment whose Manifest would contain the binding to the requested host:port</
                </info>
             </step>
             <step>
-               <number>7</number>
+               <number>6</number>
                <mentioned>
-                  <where>1:313</where>
-               </mentioned>
-               <object>system</object>
-               <signature>"redirects the request to the app instance in a chosen container"</signature>
-               <exceptions>
-                  <exception>
-                     <when>app is not listening to http port</when>
-                     <steps>
-                        <step>
-                           <number>1</number>
-                           <mentioned>
-                              <where>1:342</where>
-                           </mentioned>
-                           <object>_self</object>
-                           <signature>fail</signature>
-                           <info>
-                              <informal>http error 404: the app is not listening to the host:port</informal>
-                           </info>
-                        </step>
-                     </steps>
-                  </exception>
-               </exceptions>
-            </step>
-            <step>
-               <number>8</number>
-               <mentioned>
-                  <where>1:315</where>
+                  <where>1:305</where>
                </mentioned>
                <object>app</object>
                <signature>reads</signature>
@@ -5976,70 +5729,18 @@ deployment whose Manifest would contain the binding to the requested host:port</
                </info>
             </step>
             <step>
-               <number>9</number>
+               <number>7</number>
                <mentioned>
-                  <where>1:317</where>
-               </mentioned>
-               <object>app</object>
-               <signature>"processes the request"</signature>
-               <exceptions>
-                  <exception>
-                     <when>an exception appears during the app execution</when>
-                     <steps>
-                        <step>
-                           <number>1</number>
-                           <mentioned>
-                              <where>1:344</where>
-                           </mentioned>
-                           <object>_self</object>
-                           <signature>fail</signature>
-                           <info>
-                              <informal>http error 404 OR some standard
-    page with exception stack trace</informal>
-                           </info>
-                        </step>
-                     </steps>
-                  </exception>
-               </exceptions>
-            </step>
-            <step>
-               <number>10</number>
-               <mentioned>
-                  <where>1:318</where>
+                  <where>1:307</where>
                </mentioned>
                <object>app</object>
                <signature>creates</signature>
                <result>response</result>
             </step>
             <step>
-               <number>11</number>
+               <number>8</number>
                <mentioned>
-                  <where>1:319</where>
-               </mentioned>
-               <object>app</object>
-               <signature>"replies to the visitor with the response"</signature>
-            </step>
-            <step>
-               <number>12</number>
-               <mentioned>
-                  <where>1:320</where>
-               </mentioned>
-               <object>visitor</object>
-               <signature>reads</signature>
-               <result>response</result>
-            </step>
-            <step>
-               <number>13</number>
-               <mentioned>
-                  <where>1:321</where>
-               </mentioned>
-               <object>system</object>
-               <signature>"tracks resources usage by the app"</signature>
-            </step>
-            <step>
-               <number>14</number>
-               <mentioned>
-                  <where>1:322</where>
+                  <where>1:308</where>
                </mentioned>
                <object>system</object>
                <signature>creates</signature>
@@ -6048,20 +5749,6 @@ deployment whose Manifest would contain the binding to the requested host:port</
                   <informal>and tracks utilized CPU time and traffic in this record.
     If a corresponding record already exists, then this record
     is updated instead of creating a new one</informal>
-               </info>
-            </step>
-            <step>
-               <number>15</number>
-               <mentioned>
-                  <where>1:326</where>
-               </mentioned>
-               <object>system</object>
-               <signature>updates</signature>
-               <result>user</result>
-               <info>
-                  <informal>decreasing user.balance
-    according to the CPU time and traffic used by the app
-    since previous HourlyUsage record update</informal>
                </info>
             </step>
          </steps>
@@ -6092,7 +5779,7 @@ deployment whose Manifest would contain the binding to the requested host:port</
          &lt;tr&gt;
             &lt;td&gt;Actors&lt;/td&gt;
             &lt;td&gt;
-               &lt;code&gt;visitor&lt;/code&gt; as WebVisitor; &lt;code&gt;app&lt;/code&gt; as Application; &lt;code&gt;request&lt;/code&gt; as HttpRequest; &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;deployment&lt;/code&gt; as Deployment; &lt;code&gt;container&lt;/code&gt; as Container; &lt;code&gt;response&lt;/code&gt; as HttpResponse; &lt;code&gt;record&lt;/code&gt; as HourlyUsage&lt;/td&gt;
+               &lt;code&gt;visitor&lt;/code&gt; as WebVisitor; &lt;code&gt;app&lt;/code&gt; as Application; &lt;code&gt;request&lt;/code&gt; as HttpRequest; &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;container&lt;/code&gt; as Container; &lt;code&gt;response&lt;/code&gt; as HttpResponse; &lt;code&gt;record&lt;/code&gt; as HourlyUsage&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Success Flow&lt;/td&gt;
@@ -6100,13 +5787,10 @@ deployment whose Manifest would contain the binding to the requested host:port</
                &lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;request&lt;/code&gt;
                &lt;br/&gt;3. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;user&lt;/code&gt;
                &lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; notifies low balance to &lt;code&gt;user&lt;/code&gt;
-               &lt;br/&gt;5. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;deployment&lt;/code&gt;
-               &lt;br/&gt;6. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;container&lt;/code&gt;
-               &lt;br/&gt;7. &lt;code&gt;system&lt;/code&gt; "redirects the request to the app instance in a chosen container"&lt;br/&gt;8. &lt;code&gt;app&lt;/code&gt; reads &lt;code&gt;request&lt;/code&gt;
-               &lt;br/&gt;9. &lt;code&gt;app&lt;/code&gt; "processes the request"&lt;br/&gt;10. &lt;code&gt;app&lt;/code&gt; creates &lt;code&gt;response&lt;/code&gt;
-               &lt;br/&gt;11. &lt;code&gt;app&lt;/code&gt; "replies to the visitor with the response"&lt;br/&gt;12. &lt;code&gt;visitor&lt;/code&gt; reads &lt;code&gt;response&lt;/code&gt;
-               &lt;br/&gt;13. &lt;code&gt;system&lt;/code&gt; "tracks resources usage by the app"&lt;br/&gt;14. &lt;code&gt;system&lt;/code&gt; creates &lt;code&gt;record&lt;/code&gt;
-               &lt;br/&gt;15. &lt;code&gt;system&lt;/code&gt; updates &lt;code&gt;user&lt;/code&gt;
+               &lt;br/&gt;5. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;container&lt;/code&gt;
+               &lt;br/&gt;6. &lt;code&gt;app&lt;/code&gt; reads &lt;code&gt;request&lt;/code&gt;
+               &lt;br/&gt;7. &lt;code&gt;app&lt;/code&gt; creates &lt;code&gt;response&lt;/code&gt;
+               &lt;br/&gt;8. &lt;code&gt;system&lt;/code&gt; creates &lt;code&gt;record&lt;/code&gt;
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
@@ -6153,18 +5837,6 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
-            &lt;td&gt;Deployment&lt;/td&gt;
-            &lt;td&gt;"a summary statistics of Containers related to a Repository, with their statuses and text logs"&lt;ul&gt;
-                  &lt;li&gt;
-                     &lt;code&gt;container&lt;/code&gt;: Container&lt;/li&gt;
-                  &lt;li&gt;
-                     &lt;code&gt;state&lt;/code&gt;:  "one from the list: building, running"&lt;/li&gt;
-                  &lt;li&gt;
-                     &lt;code&gt;hourlyUsage&lt;/code&gt;: HourlyUsage&lt;/li&gt;
-               &lt;/ul&gt;
-            &lt;/td&gt;
-         &lt;/tr&gt;
-         &lt;tr&gt;
             &lt;td&gt;Container&lt;/td&gt;
             &lt;td&gt;"a virtual operating system running user's application build from Repository"&lt;ul&gt;
                   &lt;li&gt;
@@ -6196,7 +5868,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC10.1&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -6222,7 +5893,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;tr&gt;
             &lt;td&gt;Actors&lt;/td&gt;
             &lt;td&gt;
-               &lt;code&gt;visitor&lt;/code&gt; as WebVisitor; &lt;code&gt;app&lt;/code&gt; as Application; &lt;code&gt;request&lt;/code&gt; as HttpRequest; &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;deployment&lt;/code&gt; as Deployment; &lt;code&gt;container&lt;/code&gt; as Container; &lt;code&gt;response&lt;/code&gt; as HttpResponse; &lt;code&gt;record&lt;/code&gt; as HourlyUsage&lt;/td&gt;
+               &lt;code&gt;visitor&lt;/code&gt; as WebVisitor; &lt;code&gt;app&lt;/code&gt; as Application; &lt;code&gt;request&lt;/code&gt; as HttpRequest; &lt;code&gt;user&lt;/code&gt; as User; &lt;code&gt;container&lt;/code&gt; as Container; &lt;code&gt;response&lt;/code&gt; as HttpResponse; &lt;code&gt;record&lt;/code&gt; as HourlyUsage&lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;Success Flow&lt;/td&gt;
@@ -6230,20 +5901,14 @@ Actors taking participation in the Use Case have the following properties:
                &lt;br/&gt;2. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;request&lt;/code&gt;
                &lt;br/&gt;3. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;user&lt;/code&gt;
                &lt;br/&gt;4. &lt;code&gt;system&lt;/code&gt; notifies low balance to &lt;code&gt;user&lt;/code&gt;
-               &lt;br/&gt;5. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;deployment&lt;/code&gt;
-               &lt;br/&gt;6. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;container&lt;/code&gt;
-               &lt;br/&gt;7. &lt;code&gt;system&lt;/code&gt; "redirects the request to the app instance in a chosen container"&lt;br/&gt;8. &lt;code&gt;app&lt;/code&gt; reads &lt;code&gt;request&lt;/code&gt;
-               &lt;br/&gt;9. &lt;code&gt;app&lt;/code&gt; "processes the request"&lt;br/&gt;10. &lt;code&gt;app&lt;/code&gt; creates &lt;code&gt;response&lt;/code&gt;
-               &lt;br/&gt;11. &lt;code&gt;app&lt;/code&gt; "replies to the visitor with the response"&lt;br/&gt;12. &lt;code&gt;visitor&lt;/code&gt; reads &lt;code&gt;response&lt;/code&gt;
-               &lt;br/&gt;13. &lt;code&gt;system&lt;/code&gt; "tracks resources usage by the app"&lt;br/&gt;14. &lt;code&gt;system&lt;/code&gt; creates &lt;code&gt;record&lt;/code&gt;
-               &lt;br/&gt;15. &lt;code&gt;system&lt;/code&gt; updates &lt;code&gt;user&lt;/code&gt;
+               &lt;br/&gt;5. &lt;code&gt;system&lt;/code&gt; reads &lt;code&gt;container&lt;/code&gt;
+               &lt;br/&gt;6. &lt;code&gt;app&lt;/code&gt; reads &lt;code&gt;request&lt;/code&gt;
+               &lt;br/&gt;7. &lt;code&gt;app&lt;/code&gt; creates &lt;code&gt;response&lt;/code&gt;
+               &lt;br/&gt;8. &lt;code&gt;system&lt;/code&gt; creates &lt;code&gt;record&lt;/code&gt;
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -6283,18 +5948,6 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
          &lt;tr&gt;
-            &lt;td&gt;Deployment&lt;/td&gt;
-            &lt;td&gt;"a summary statistics of Containers related to a Repository, with their statuses and text logs"&lt;ul&gt;
-                  &lt;li&gt;
-                     &lt;code&gt;container&lt;/code&gt;: Container&lt;/li&gt;
-                  &lt;li&gt;
-                     &lt;code&gt;state&lt;/code&gt;:  "one from the list: building, running"&lt;/li&gt;
-                  &lt;li&gt;
-                     &lt;code&gt;hourlyUsage&lt;/code&gt;: HourlyUsage&lt;/li&gt;
-               &lt;/ul&gt;
-            &lt;/td&gt;
-         &lt;/tr&gt;
-         &lt;tr&gt;
             &lt;td&gt;Container&lt;/td&gt;
             &lt;td&gt;"a virtual operating system running user's application build from Repository"&lt;ul&gt;
                   &lt;li&gt;
@@ -6323,8 +5976,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -6404,7 +6056,7 @@ Actors taking participation in the Use Case have the following properties:
       <method seal="5feacc">
          <id>UC6.2</id>
          <mentioned>
-            <where>1:347</where>
+            <where>1:319</where>
          </mentioned>
          <bindings>
             <binding>
@@ -6500,7 +6152,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC6.2&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -6533,10 +6184,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;"The system sends the user an email notification one time when his balance is dropped below $5. We can also implement UI notifications"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -6568,8 +6216,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -6649,7 +6296,7 @@ Actors taking participation in the Use Case have the following properties:
       <method seal="07789e">
          <id>UC6.3</id>
          <mentioned>
-            <where>1:352</where>
+            <where>1:324</where>
          </mentioned>
          <bindings>
             <binding>
@@ -6744,7 +6391,6 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/table&gt;
 </markdown>
          <html>&lt;p&gt;The following table describes all technical details of Use Case &lt;code&gt;UC6.3&lt;/code&gt;:&lt;/p&gt;
-
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -6777,10 +6423,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;td&gt;"The system sends the user an email notification one time when his balance is dropped below $0. We can also implement UI notifications"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-
-&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
-
+   &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
 &lt;table&gt;
       &lt;thead&gt;
          &lt;tr&gt;
@@ -6812,8 +6455,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
-   &lt;/table&gt;
-</html>
+   &lt;/table&gt;</html>
          <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="122pt"
      style="width:116px;height:122px;"
@@ -6914,25 +6556,20 @@ Key success factors are:
             <where>2:14</where>
          </mentioned>
          <html>&lt;p&gt;Requirements providers are:&lt;/p&gt;
-
 &lt;ul&gt;
-&lt;li&gt;Yegor Bugayenko&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Key success factors are:&lt;/p&gt;
-
+  &lt;li&gt;Yegor Bugayenko&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;Key success factors are:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;High availability - much higher than anyone else can offer.&lt;/li&gt;
-&lt;li&gt;Low cost - lower than anyone.&lt;/li&gt;
-&lt;li&gt;Easy (re)deployment - a unique 'pull' deployment mechanism.&lt;/li&gt;
-&lt;li&gt;Simple control panel - one form and your site is ready in 5 minutes.".&lt;/li&gt;
-&lt;/ul&gt;
-</html>
+  &lt;li&gt;High availability - much higher than anyone else can offer.&lt;/li&gt;
+  &lt;li&gt;Low cost - lower than anyone.&lt;/li&gt;
+  &lt;li&gt;Easy (re)deployment - a unique 'pull' deployment mechanism.&lt;/li&gt;
+  &lt;li&gt;Simple control panel - one form and your site is ready in 5 minutes.".&lt;/li&gt;
+&lt;/ul&gt;</html>
       </page>
    </pages>
    <errors/>
    <metrics>
-      <metric id="ambiguity.total">0.456</metric>
+      <metric id="ambiguity.total">0.512</metric>
    </metrics>
    <tbds>
       <tbd id="TBD-d4161">
@@ -7064,26 +6701,10 @@ Key success factors are:
     The values in the table are usage stats by container
     within specified time interval" that increases the ambiguity of the entire method and has to be eliminated</description>
       </tbd>
-      <tbd id="TBD-74444">
-         <subject>UC10.1</subject>
-         <description>Step #7 in method UC10.1 has an informal signature "redirects the request to the app instance in a chosen container" that increases the ambiguity of the entire method and has to be eliminated</description>
-      </tbd>
-      <tbd id="TBD-1bcf5">
-         <subject>UC10.1</subject>
-         <description>Step #9 in method UC10.1 has an informal signature "processes the request" that increases the ambiguity of the entire method and has to be eliminated</description>
-      </tbd>
-      <tbd id="TBD-a9c69">
-         <subject>UC10.1</subject>
-         <description>Step #11 in method UC10.1 has an informal signature "replies to the visitor with the response" that increases the ambiguity of the entire method and has to be eliminated</description>
-      </tbd>
-      <tbd id="TBD-a0cda">
-         <subject>UC10.1</subject>
-         <description>Step #13 in method UC10.1 has an informal signature "tracks resources usage by the app" that increases the ambiguity of the entire method and has to be eliminated</description>
-      </tbd>
    </tbds>
    <requs>
-      <version>1.11</version>
-      <revision>8d785fd</revision>
-      <date>2014-06-15 10:48</date>
+      <version>1.12</version>
+      <revision>46ffe1c</revision>
+      <date>2014-06-22 22:11</date>
    </requs>
 </spec>
