@@ -271,7 +271,9 @@ UC5 where User(a user) reads usage stats using Repository(a repo):
 :UC6 is a must.
 UC6 where User compensates usage of Repository:
     "The user adds funds to his account, when it goes to a negative value.
-    Funds can be added through PayPal only".
+    Funds can be added through selected payment system Stripe".
+UC6/UX Payment system must "be in order of importance: 1) instant, 2) world-wide acceptable,
+    3) supporting VISA and MasterCard, 4) secure".
 
 :UC7 is specified.
 :UC7 is a must.
