@@ -46,18 +46,18 @@ Architecture
 
   To be continued...
 
-~~ @todo #1 The specification is still rather vague for now. I haven't written
+~~ @todo #1/DES The specification is still rather vague for now. I haven't written
 ~~  any assumptions here just yet. Let's write them down here as they come up.
 
 * 3. Class diagrams
 
   To be continued...
 
-~~ @todo #1 We should have a class diagram here. Ideally, we should have a tool
+~~ @todo #1/DES We should have a class diagram here. Ideally, we should have a tool
 ~~  that autogenerates the diagrams at deploy time from text data. However, we
 ~~  haven't decided yet on what this tool should be. Once that's been agreed
 ~~  upon, include the class diagrams right here.
-~~ @todo #1 Let's define the packaging structure of Thindeck. Describe the
+~~ @todo #1/DES Let's define the packaging structure of Thindeck. Describe the
 ~~  purposes of each package, the classes and resources that they contain, etc.
 ~~  Include a diagram showing how they are all related.
 
@@ -65,7 +65,7 @@ Architecture
 
   To be continued...
 
-~~ @todo #1 So far we don't know what components we're going to use. Let's find
+~~ @todo #1/DES So far we don't know what components we're going to use. Let's find
 ~~  out, and document those decisions here. Think about what we're going to need
 ~~  here - APIs for services that we're going to use, code libraries,
 ~~  web framework, etc.
@@ -74,7 +74,7 @@ Architecture
 
   To be continued...
 
-~~ @todo #1 We don't know what the system looks like when it's been deployed.
+~~ @todo #1/DES We don't know what the system looks like when it's been deployed.
 ~~  Let's document that here. Stuff that we might need to think about:
 ~~  1) Web hosting, 2) Code repository (Github, most likely), 3) Data hosting
 
@@ -82,21 +82,21 @@ Architecture
 
   To be continued...
 
-~~ @todo #1 Requs should automatically generate the use case sequence diagrams.
+~~ @todo #1/DES Requs should automatically generate the use case sequence diagrams.
 ~~  It doesn't support it yet, but when it does, let's include that here.
 
 * 7. Technical Risks
 
   To be continued...
 
-~~ @todo #1 We need to identify the risks associated with this project. Let's
+~~ @todo #1/DES We need to identify the risks associated with this project. Let's
 ~~  document those risks in this section.
 
 * 8. Decisions Made
 
   To be continued...
 
-~~ @todo #1 Let's document the architectural and design decisions in this
+~~ @todo #1/DES Let's document the architectural and design decisions in this
 ~~  section.
 
 * 9. References
