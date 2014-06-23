@@ -65,6 +65,7 @@ UC9.1 where Anonymous (a anonymous) explores thindeck:
     2. The anonymous "reads the stats page containing our runtime stats,
     similar to https://status.github.com/";
     3. The anonymous "reads our terms page including all the legal wordings".
+UC9.1/MTBF must "be 30 days".
 
 :UC9.2 is specified.
 :UC9.2 is a must.
@@ -78,11 +79,13 @@ UC9.2 where Anonymous (a anonymous) signs up:
     5. The anonymous logs in.
 UC9.2/2 when "an OAuth provider denied access":
     1. Fail since "Not authorized by chosen OAuth provider".
+UC9.2/MTBF must "be 30 days in cases caused by other reasons than in UC9.2/2".
 
 :UC9.3 is specified.
 :UC9.3 is a must.
 UC9.3 where Anonymous (a anonymous) logs in using User(a user):
     1. The system "from now on treats the anonymous as a User".
+UC9.3/MTBF must "be 30 days".
 
 :UC11 is specified.
 :UC11 is a must.
@@ -181,6 +184,7 @@ UC2 where User registers Repository:
 UC2/1 when "data is incorrect or the user already has another
 repository with such name":
     1. Fail since "repository cannot be registered".
+UC2/MTBF must "be 30 days in cases caused by other reasons than in UC2/1".
 
 UC2.1 where User(a user) configures virtual machine using Repository(a repo):
     1. The user creates DockerFile(a dockerFile) "in which
@@ -338,6 +342,12 @@ UC10.1/7 when "app is not listening to http port":
 UC10.1/9 when "an exception appears during the app execution":
     1. Fail since "http error 404 OR some standard
     page with exception stack trace".
+UC10.1/MTBF must "be 30 days in case a container is not responding to
+an expected port".
+UC10.1/MTBF must "be 30 days in case a container is responding to a visitor's
+request in more than 30 seconds".
+UC10.1/MTBF must "be 30 days in case an application which worked correctly at
+another server returns an internal server error after deployment in the system".
 
 UC6.2 where System(a system) notifies low balance to User(a user):
     "The system sends the user an email notification one time
