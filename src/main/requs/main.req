@@ -39,7 +39,8 @@ of running containers. We may terminate any container at any moment.
 This means that the software inside the container (repository) should
 NOT keep any data persistent. They should use other services for
 persistence, like Amazon DynamoDB, etc".
-UC1/API must "ensure that all features available through UI are available through RESTful API".
+UC1/API must "ensure that all features available through UI are 
+available through RESTful API".
 
 User is "a person who uses or wants to use hosting and is identified
 by the system (logged in)".
