@@ -1,7 +1,4 @@
 System is "a web hosting that deploys itself".
-System includes:
-systemApi as "Application Programming Interface that is available to clients.
-All features available through UI should be available through RESTful API".
 
 MeanTimeBetweenFailures is "time that System spends in continuous
 up time between one failure and the next failure.
@@ -42,6 +39,7 @@ of running containers. We may terminate any container at any moment.
 This means that the software inside the container (repository) should
 NOT keep any data persistent. They should use other services for
 persistence, like Amazon DynamoDB, etc".
+UC1/API must "ensure that all features available through UI are available through RESTful API".
 
 User is "a person who uses or wants to use hosting and is identified
 by the system (logged in)".
