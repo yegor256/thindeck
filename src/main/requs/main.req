@@ -11,10 +11,7 @@ time until recovery as a result of failure.
 MTTR is a measure of System reliability via service recovery and therefore
 the MTTR target should be set at the lowest achievable number".
 
-MainPage is "a main thindeck page for (logged-in) User-s. @todo #142
-I assumed there will be a main page. We should
-define what functional blocks will this page contain, e.g., my repositories,
-my profile, my balance, etc.".
+MainPage is "a main thindeck page for (logged-in) User-s.".
 
 :UC1 is specified.
 :UC1 is a must.
@@ -218,9 +215,7 @@ UC2.2 where System(a system) redeploys using Repository(a repo):
 
 :UC2.3 is specified.
 :UC2.3 is a must.
-UC2.3 where System(a system) runs of Deployment(a deployment)
-    "@todo #199 - move resource utilization tracking and
-    charging of a user here":
+UC2.3 where System(a system) runs of Deployment(a deployment):
     1. The system reads Container(a deployedContainers)
     "tracking load = [the amount of CPU seconds consumed per hour]
     by each deployment.container";
