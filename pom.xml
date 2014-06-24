@@ -115,32 +115,27 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.github.jeluard</groupId>
-                <artifactId>plantuml-maven-plugin</artifactId>
-                <version>1.0</version>
-                <configuration>
-                    <format>svg</format>
-                    <sourceFiles>
-                        <directory>${basedir}/src/main/plantuml/</directory>
-                        <includes>
-                            <include>**/*.uml</include>
-                        </includes>
-                    </sourceFiles>
-                    <outputDirectory>${project.build.directory}/site/plantuml</outputDirectory>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.sourceforge.plantuml</groupId>
-                        <artifactId>plantuml</artifactId>
-                        <version>7976</version>
-                    </dependency>
-                </dependencies>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.3</version>
+                <inherited>false</inherited>
                 <executions>
                     <execution>
-                        <phase>site</phase>
+                        <id>jekyll-build</id>
+                        <phase>post-site</phase>
                         <goals>
-                            <goal>generate</goal>
+                            <goal>exec</goal>
                         </goals>
+                        <configuration>
+                            <executable>jekyll</executable>
+                            <arguments>
+                                <argument>build</argument>
+                                <argument>--source</argument>
+                                <argument>${basedir}/src/jekyll</argument>
+                                <argument>--destination</argument>
+                                <argument>${project.build.directory}/site</argument>
+                            </arguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
