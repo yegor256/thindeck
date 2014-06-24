@@ -1,0 +1,7 @@
+@startuml
+
+[Cockpit]
+[Meter]
+[]
+
+@enduml

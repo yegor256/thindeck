@@ -1,9 +1,9 @@
  ------
- Hosting That Deploys Itself
+ Component View
  ------
  Yegor Bugayenko
  ------
- 2014-03-21
+ 2014-06-24
  ------
 
 ~~ Copyright (c) 2014, thindeck.com
@@ -25,7 +25,22 @@
 ~~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 ~~ OF THE POSSIBILITY OF SUCH DAMAGE.
 
-Hosting That Deploys Itself
+Component View
 
-  More details are comming...
+  In order to achieve high scalability and at the same
+  time stability of the system, we decentralize its functionality
+  among a number of independent components. In order to make
+  the system even more scalable and cloud-ready we make components
+  stateless and connect them <<asychronously>>.
 
+  Asynchronous connection between components means that none
+  of them assume online availability of the other. They simply never connect
+  to each other. They all communicate through stateful resources available
+  in cloud, like, for example, Amazon Web Services.
+
+  The diagram shows all highest level components and their
+  interfaces:
+
+[plantuml/component-view-overview.svg]
+
+  Meter

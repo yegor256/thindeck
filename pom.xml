@@ -119,15 +119,14 @@
                 <artifactId>plantuml-maven-plugin</artifactId>
                 <version>1.0</version>
                 <configuration>
+                    <format>svg</format>
                     <sourceFiles>
                         <directory>${basedir}/src/main/plantuml/</directory>
                         <includes>
                             <include>**/*.uml</include>
                         </includes>
                     </sourceFiles>
-                    <outputDirectory>
-                        ${project.build.directory}/site/plantuml
-                    </outputDirectory>
+                    <outputDirectory>${project.build.directory}/site/plantuml</outputDirectory>
                 </configuration>
                 <dependencies>
                     <dependency>
