@@ -6,8 +6,10 @@ System is "System under Development (thindeck itself)".
 :UC8 is specified.
 :UC8 is a should.
 UC8 where Hoster(a hoster) creates standalone thindeck installation:
-    1. The hoster "downloads the Thindeck app
-    (either as a TGZ archive of RPM package or as a Chef cookbook)";
+    1. The hoster "downloads the Thindeck app using one of the following
+    distribution options:
+    a. A TGZ archive of the RPM package.
+    b. A self-installing package.";
     2. The hoster "installs the app locally on his machine";
     3. The hoster "starts the system as a Java standalone app,
     or a Linux service, or something similar";
