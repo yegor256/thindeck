@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="32592" time="2014-06-23T17:06:36">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="33633" time="2014-06-24T16:10:12">
    <files>
       <file id="0" line="1">/home/ubuntu/code/src/main/requs/app.req</file>
       <file id="1" line="24">/home/ubuntu/code/src/main/requs/main.req</file>
-      <file id="2" line="346">/home/ubuntu/code/src/main/requs/vision.req</file>
+      <file id="2" line="348">/home/ubuntu/code/src/main/requs/vision.req</file>
    </files>
    <input>Hoster is "an owner of a web server, who wants to
 install Thindeck locally and host containers himself".
@@ -65,6 +65,8 @@ of running containers. We may terminate any container at any moment.
 This means that the software inside the container (repository) should
 NOT keep any data persistent. They should use other services for
 persistence, like Amazon DynamoDB, etc".
+UC1/API must "ensure that all features available through UI are
+available through RESTful API".
 
 User is "a person who uses or wants to use hosting and is identified
 by the system (logged in)".
@@ -383,11 +385,11 @@ install Thindeck locally and host containers himself</informal>
          <mentioned>
             <where>0:4</where>
             <where>1:1</where>
-            <where>1:211</where>
-            <where>1:218</where>
-            <where>1:229</where>
-            <where>1:314</where>
-            <where>1:319</where>
+            <where>1:213</where>
+            <where>1:220</where>
+            <where>1:231</where>
+            <where>1:316</where>
+            <where>1:321</where>
          </mentioned>
          <info>
             <informal>System under Development (thindeck itself)</informal>
@@ -432,15 +434,15 @@ the MTTR target should be set at the lowest achievable number</informal>
          <name>User</name>
          <mentioned>
             <where>1:18</where>
-            <where>1:39</where>
-            <where>1:42</where>
-            <where>1:83</where>
-            <where>1:168</where>
-            <where>1:181</where>
-            <where>1:242</where>
-            <where>1:252</where>
-            <where>1:267</where>
-            <where>1:273</where>
+            <where>1:41</where>
+            <where>1:44</where>
+            <where>1:85</where>
+            <where>1:170</where>
+            <where>1:183</where>
+            <where>1:244</where>
+            <where>1:254</where>
+            <where>1:269</where>
+            <where>1:275</where>
          </mentioned>
          <info>
             <informal>a person who uses or wants to use hosting and is identified
@@ -450,7 +452,7 @@ by the system (logged in)</informal>
             <slot>
                <name>repo</name>
                <mentioned>
-                  <where>1:43</where>
+                  <where>1:45</where>
                </mentioned>
                <arity>ANY</arity>
                <type>Repository</type>
@@ -458,7 +460,7 @@ by the system (logged in)</informal>
             <slot>
                <name>URN</name>
                <mentioned>
-                  <where>1:44</where>
+                  <where>1:46</where>
                </mentioned>
                <info>
                   <informal>a unique identifier of itself, for example urn:github:526301</informal>
@@ -467,7 +469,7 @@ by the system (logged in)</informal>
             <slot>
                <name>authTokens</name>
                <mentioned>
-                  <where>1:45</where>
+                  <where>1:47</where>
                </mentioned>
                <info>
                   <informal>a list of auth tokens to each auth provider the
@@ -477,7 +479,7 @@ by the system (logged in)</informal>
             <slot>
                <name>balance</name>
                <mentioned>
-                  <where>1:47</where>
+                  <where>1:49</where>
                </mentioned>
                <info>
                   <informal>amount of money available, can be stored as
@@ -489,10 +491,10 @@ by the system (logged in)</informal>
       <type>
          <name>Anonymous</name>
          <mentioned>
-            <where>1:50</where>
-            <where>1:59</where>
-            <where>1:67</where>
-            <where>1:78</where>
+            <where>1:52</where>
+            <where>1:61</where>
+            <where>1:69</where>
+            <where>1:80</where>
          </mentioned>
          <info>
             <informal>a person who is not identified in the system (not logged in).
@@ -503,7 +505,7 @@ it until he logs in</informal>
       <type>
          <name>FrontPage</name>
          <mentioned>
-            <where>1:54</where>
+            <where>1:56</where>
          </mentioned>
          <info>
             <informal>a front page of Thindeck for Anonymous which contains all
@@ -513,8 +515,8 @@ the information about pricing, 'how it works', etc.</informal>
       <type>
          <name>Repository</name>
          <mentioned>
-            <where>1:87</where>
             <where>1:89</where>
+            <where>1:91</where>
          </mentioned>
          <info>
             <informal>a local copy of files and folders being pulled every
@@ -524,7 +526,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>name</name>
                <mentioned>
-                  <where>1:90</where>
+                  <where>1:92</where>
                </mentioned>
                <info>
                   <informal>a unique name of the repo in user's account</informal>
@@ -533,7 +535,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>deployment</name>
                <mentioned>
-                  <where>1:91</where>
+                  <where>1:93</where>
                </mentioned>
                <arity>OPT</arity>
                <type>Deployment</type>
@@ -541,14 +543,14 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>dockerFile</name>
                <mentioned>
-                  <where>1:92</where>
+                  <where>1:94</where>
                </mentioned>
                <type>DockerFile</type>
             </slot>
             <slot>
                <name>manifest</name>
                <mentioned>
-                  <where>1:93</where>
+                  <where>1:95</where>
                </mentioned>
                <type>Manifest</type>
             </slot>
@@ -557,9 +559,9 @@ the information about pricing, 'how it works', etc.</informal>
       <type>
          <name>GitRepository</name>
          <mentioned>
-            <where>1:95</where>
-            <where>1:96</where>
             <where>1:97</where>
+            <where>1:98</where>
+            <where>1:99</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -571,7 +573,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>uri</name>
                <mentioned>
-                  <where>1:98</where>
+                  <where>1:100</where>
                </mentioned>
                <info>
                   <informal>a non-ambiguous descriptor of a repo,
@@ -581,7 +583,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>key</name>
                <mentioned>
-                  <where>1:100</where>
+                  <where>1:102</where>
                </mentioned>
                <arity>OPT</arity>
                <info>
@@ -594,9 +596,9 @@ the information about pricing, 'how it works', etc.</informal>
       <type>
          <name>SvnRepository</name>
          <mentioned>
-            <where>1:103</where>
-            <where>1:104</where>
             <where>1:105</where>
+            <where>1:106</where>
+            <where>1:107</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -608,7 +610,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>uri</name>
                <mentioned>
-                  <where>1:106</where>
+                  <where>1:108</where>
                </mentioned>
                <info>
                   <informal>a non-ambiguous descriptor of a repo,
@@ -618,7 +620,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>userName</name>
                <mentioned>
-                  <where>1:108</where>
+                  <where>1:110</where>
                </mentioned>
                <arity>OPT</arity>
                <info>
@@ -628,7 +630,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>password</name>
                <mentioned>
-                  <where>1:109</where>
+                  <where>1:111</where>
                </mentioned>
                <arity>OPT</arity>
                <info>
@@ -640,9 +642,9 @@ the information about pricing, 'how it works', etc.</informal>
       <type>
          <name>FtpRepository</name>
          <mentioned>
-            <where>1:111</where>
-            <where>1:112</where>
             <where>1:113</where>
+            <where>1:114</where>
+            <where>1:115</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -654,7 +656,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>uri</name>
                <mentioned>
-                  <where>1:114</where>
+                  <where>1:116</where>
                </mentioned>
                <info>
                   <informal>a URL containing credentials valid to connect to FTP server,
@@ -666,9 +668,9 @@ the information about pricing, 'how it works', etc.</informal>
       <type>
          <name>DropboxRepository</name>
          <mentioned>
-            <where>1:117</where>
-            <where>1:118</where>
             <where>1:119</where>
+            <where>1:120</where>
+            <where>1:121</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -680,7 +682,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>apiKey</name>
                <mentioned>
-                  <where>1:119</where>
+                  <where>1:121</where>
                </mentioned>
                <info>
                   <informal>Dropbox specific connection information</informal>
@@ -691,9 +693,9 @@ the information about pricing, 'how it works', etc.</informal>
       <type>
          <name>AmazonSthreeRepository</name>
          <mentioned>
-            <where>1:121</where>
-            <where>1:122</where>
             <where>1:123</where>
+            <where>1:124</where>
+            <where>1:125</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -705,7 +707,7 @@ the information about pricing, 'how it works', etc.</informal>
             <slot>
                <name>apiKey</name>
                <mentioned>
-                  <where>1:123</where>
+                  <where>1:125</where>
                </mentioned>
                <info>
                   <informal>Amazon S3 specific
@@ -717,9 +719,9 @@ connection information</informal>
       <type>
          <name>GoogleDriveRepository</name>
          <mentioned>
-            <where>1:126</where>
-            <where>1:127</where>
             <where>1:128</where>
+            <where>1:129</where>
+            <where>1:130</where>
          </mentioned>
          <parents>
             <type>Repository</type>
@@ -731,7 +733,7 @@ connection information</informal>
             <slot>
                <name>apiKey</name>
                <mentioned>
-                  <where>1:128</where>
+                  <where>1:130</where>
                </mentioned>
                <info>
                   <informal>Google Drive specific
@@ -743,8 +745,8 @@ connection information</informal>
       <type>
          <name>Deployment</name>
          <mentioned>
-            <where>1:131</where>
-            <where>1:134</where>
+            <where>1:133</where>
+            <where>1:136</where>
          </mentioned>
          <info>
             <informal>a summary statistics of Containers related to a Repository,
@@ -754,7 +756,7 @@ with their statuses and text logs</informal>
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>1:135</where>
+                  <where>1:137</where>
                </mentioned>
                <arity>MANY</arity>
                <type>Container</type>
@@ -762,7 +764,7 @@ with their statuses and text logs</informal>
             <slot>
                <name>state</name>
                <mentioned>
-                  <where>1:136</where>
+                  <where>1:138</where>
                </mentioned>
                <info>
                   <informal>one from the list: building, running</informal>
@@ -771,7 +773,7 @@ with their statuses and text logs</informal>
             <slot>
                <name>hourlyUsage</name>
                <mentioned>
-                  <where>1:137</where>
+                  <where>1:139</where>
                </mentioned>
                <arity>ANY</arity>
                <type>HourlyUsage</type>
@@ -781,7 +783,7 @@ with their statuses and text logs</informal>
       <type>
          <name>Application</name>
          <mentioned>
-            <where>1:139</where>
+            <where>1:141</where>
          </mentioned>
          <info>
             <informal>a running instance of user's code built from his Repository</informal>
@@ -790,8 +792,8 @@ with their statuses and text logs</informal>
       <type>
          <name>Container</name>
          <mentioned>
-            <where>1:141</where>
             <where>1:143</where>
+            <where>1:145</where>
          </mentioned>
          <info>
             <informal>a virtual operating system running user's
@@ -801,7 +803,7 @@ application build from Repository</informal>
             <slot>
                <name>app</name>
                <mentioned>
-                  <where>1:143</where>
+                  <where>1:145</where>
                </mentioned>
                <type>Application</type>
             </slot>
@@ -810,8 +812,8 @@ application build from Repository</informal>
       <type>
          <name>HourlyUsage</name>
          <mentioned>
-            <where>1:145</where>
-            <where>1:146</where>
+            <where>1:147</where>
+            <where>1:148</where>
          </mentioned>
          <info>
             <informal>an atomic track record of the usage of resources</informal>
@@ -820,14 +822,14 @@ application build from Repository</informal>
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>1:147</where>
+                  <where>1:149</where>
                </mentioned>
                <type>Container</type>
             </slot>
             <slot>
                <name>hours</name>
                <mentioned>
-                  <where>1:148</where>
+                  <where>1:150</where>
                </mentioned>
                <info>
                   <informal>a calendar hour, for example: 2014-05-02T18</informal>
@@ -836,7 +838,7 @@ application build from Repository</informal>
             <slot>
                <name>cpuSeconds</name>
                <mentioned>
-                  <where>1:149</where>
+                  <where>1:151</where>
                </mentioned>
                <info>
                   <informal>how many seconds our CPU spent working with
@@ -848,7 +850,7 @@ application build from Repository</informal>
             <slot>
                <name>bytesIn</name>
                <mentioned>
-                  <where>1:153</where>
+                  <where>1:155</where>
                </mentioned>
                <info>
                   <informal>an integer number of bytes came in the container</informal>
@@ -857,7 +859,7 @@ application build from Repository</informal>
             <slot>
                <name>bytesOut</name>
                <mentioned>
-                  <where>1:154</where>
+                  <where>1:156</where>
                </mentioned>
                <info>
                   <informal>an integer number of bytes came out of the container</informal>
@@ -868,8 +870,8 @@ application build from Repository</informal>
       <type>
          <name>Manifest</name>
          <mentioned>
-            <where>1:156</where>
-            <where>1:157</where>
+            <where>1:158</where>
+            <where>1:159</where>
          </mentioned>
          <info>
             <informal>a YAML configuration file stored in the repository</informal>
@@ -878,7 +880,7 @@ application build from Repository</informal>
             <slot>
                <name>domain</name>
                <mentioned>
-                  <where>1:158</where>
+                  <where>1:160</where>
                </mentioned>
                <arity>ANY</arity>
                <info>
@@ -890,7 +892,7 @@ application build from Repository</informal>
             <slot>
                <name>port</name>
                <mentioned>
-                  <where>1:161</where>
+                  <where>1:163</where>
                </mentioned>
                <arity>ANY</arity>
                <info>
@@ -903,7 +905,7 @@ application build from Repository</informal>
       <type>
          <name>DockerFile</name>
          <mentioned>
-            <where>1:164</where>
+            <where>1:166</where>
          </mentioned>
          <info>
             <informal>a configuration for building and starting Container-s</informal>
@@ -912,7 +914,7 @@ application build from Repository</informal>
       <type>
          <name>HttpRequest</name>
          <mentioned>
-            <where>1:278</where>
+            <where>1:280</where>
          </mentioned>
          <info>
             <informal>a request that client application
@@ -923,7 +925,7 @@ to a web server via http protocol</informal>
       <type>
          <name>HttpResponse</name>
          <mentioned>
-            <where>1:282</where>
+            <where>1:284</where>
          </mentioned>
          <info>
             <informal>a response that a web server sends back
@@ -933,8 +935,8 @@ after it receives HttpRequest</informal>
       <type>
          <name>WebVisitor</name>
          <mentioned>
-            <where>1:285</where>
-            <where>1:290</where>
+            <where>1:287</where>
+            <where>1:292</where>
          </mentioned>
          <info>
             <informal>something sending http request to user's
@@ -1243,7 +1245,7 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="5654d6">
+      <method seal="618065">
          <id>UC1</id>
          <attributes>
             <attribute seal="">specified</attribute>
@@ -1256,6 +1258,7 @@ Actors taking participation in the Use Case have the following properties:
             <where>1:27</where>
             <where>1:31</where>
             <where>1:37</where>
+            <where>1:39</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1395,6 +1398,13 @@ NOT keep any data persistent. They should use other services for
 persistence, like Amazon DynamoDB, etc</informal>
                </info>
             </nfr>
+            <nfr>
+               <id>API</id>
+               <info>
+                  <informal>ensure that all features available through UI are
+available through RESTful API</informal>
+               </info>
+            </nfr>
          </nfrs>
          <markdown>The following table describes all technical details of Use Case `UC1`:
 
@@ -1438,7 +1448,7 @@ persistence, like Amazon DynamoDB, etc</informal>
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;NFRs&lt;/td&gt;
-            &lt;td&gt;UX must  "be in English only"&lt;br/&gt;WEBDESIGN must  "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site"&lt;br/&gt;STATELESS must  "all user repositories must be 100% stateless. We should inform users that we will be constantly changing the number of running containers. We may terminate any container at any moment. This means that the software inside the container (repository) should NOT keep any data persistent. They should use other services for persistence, like Amazon DynamoDB, etc"&lt;/td&gt;
+            &lt;td&gt;UX must  "be in English only"&lt;br/&gt;WEBDESIGN must  "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site"&lt;br/&gt;STATELESS must  "all user repositories must be 100% stateless. We should inform users that we will be constantly changing the number of running containers. We may terminate any container at any moment. This means that the software inside the container (repository) should NOT keep any data persistent. They should use other services for persistence, like Amazon DynamoDB, etc"&lt;br/&gt;API must  "ensure that all features available through UI are available through RESTful API"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;
@@ -1565,7 +1575,7 @@ Actors taking participation in the Use Case have the following properties:
          &lt;/tr&gt;
          &lt;tr&gt;
             &lt;td&gt;NFRs&lt;/td&gt;
-            &lt;td&gt;UX must  "be in English only"&lt;br/&gt;WEBDESIGN must  "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site"&lt;br/&gt;STATELESS must  "all user repositories must be 100% stateless. We should inform users that we will be constantly changing the number of running containers. We may terminate any container at any moment. This means that the software inside the container (repository) should NOT keep any data persistent. They should use other services for persistence, like Amazon DynamoDB, etc"&lt;/td&gt;
+            &lt;td&gt;UX must  "be in English only"&lt;br/&gt;WEBDESIGN must  "be 'responsive', see http://en.wikipedia.org/wiki/Responsive_web_design . Since all thindeck site pages will look good on every device, we won't need a separate mobile version of the site"&lt;br/&gt;STATELESS must  "all user repositories must be 100% stateless. We should inform users that we will be constantly changing the number of running containers. We may terminate any container at any moment. This means that the software inside the container (repository) should NOT keep any data persistent. They should use other services for persistence, like Amazon DynamoDB, etc"&lt;br/&gt;API must  "ensure that all features available through UI are available through RESTful API"&lt;/td&gt;
          &lt;/tr&gt;
       &lt;/tbody&gt;
    &lt;/table&gt;&lt;p&gt;Actors taking participation in the Use Case have the following properties:&lt;/p&gt;
@@ -1723,16 +1733,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="707a29">
+      <method seal="89115c">
          <id>UC9.1</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">should</attribute>
          </attributes>
          <mentioned>
-            <where>1:57</where>
-            <where>1:58</where>
             <where>1:59</where>
+            <where>1:60</where>
+            <where>1:61</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1754,7 +1764,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:60</where>
+                  <where>1:62</where>
                </mentioned>
                <object>anonymous</object>
                <signature>reads</signature>
@@ -1763,7 +1773,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:61</where>
+                  <where>1:63</where>
                </mentioned>
                <object>anonymous</object>
                <signature>"reads the stats page containing our runtime stats,
@@ -1772,7 +1782,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:63</where>
+                  <where>1:65</where>
                </mentioned>
                <object>anonymous</object>
                <signature>"reads our terms page including all the legal wordings"</signature>
@@ -1973,16 +1983,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="cec1ae">
+      <method seal="d9feda">
          <id>UC9.2</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:65</where>
-            <where>1:66</where>
             <where>1:67</where>
+            <where>1:68</where>
+            <where>1:69</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2004,7 +2014,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:68</where>
+                  <where>1:70</where>
                </mentioned>
                <object>anonymous</object>
                <signature>"initiates sign in via one of OAuth providers from
@@ -2013,7 +2023,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:70</where>
+                  <where>1:72</where>
                </mentioned>
                <object>system</object>
                <signature>"requests permission from the OAuth provider
@@ -2022,7 +2032,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:72</where>
+                  <where>1:74</where>
                </mentioned>
                <object>system</object>
                <signature>creates</signature>
@@ -2031,7 +2041,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>1:73</where>
+                  <where>1:75</where>
                </mentioned>
                <object>system</object>
                <signature>"adds $5 to the user.balance"</signature>
@@ -2039,7 +2049,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>5</number>
                <mentioned>
-                  <where>1:74</where>
+                  <where>1:76</where>
                </mentioned>
                <object>anonymous</object>
                <signature>logs in</signature>
@@ -2262,16 +2272,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="6f75a5">
+      <method seal="2eb9b5">
          <id>UC9.3</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:76</where>
-            <where>1:77</where>
             <where>1:78</where>
+            <where>1:79</where>
+            <where>1:80</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2296,7 +2306,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:79</where>
+                  <where>1:81</where>
                </mentioned>
                <object>system</object>
                <signature>"from now on treats the anonymous as a User"</signature>
@@ -2515,16 +2525,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="1c6dbc">
+      <method seal="deafc3">
          <id>UC11</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:81</where>
-            <where>1:82</where>
             <where>1:83</where>
+            <where>1:84</where>
+            <where>1:85</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2542,7 +2552,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:84</where>
+                  <where>1:86</where>
                </mentioned>
                <object>system</object>
                <signature>"from now on treats the user as anonymous and
@@ -2774,16 +2784,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="2bb4d1">
+      <method seal="c05e8d">
          <id>UC2</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:166</where>
-            <where>1:167</where>
             <where>1:168</where>
+            <where>1:169</where>
+            <where>1:170</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2801,7 +2811,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:169</where>
+                  <where>1:171</where>
                </mentioned>
                <object>user</object>
                <signature>"enters a new unique name of the repository, provides
@@ -2811,7 +2821,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:172</where>
+                  <where>1:174</where>
                </mentioned>
                <object>system</object>
                <signature>creates</signature>
@@ -2820,7 +2830,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:173</where>
+                  <where>1:175</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a repo in the list of other repositories
@@ -2829,7 +2839,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>1:175</where>
+                  <where>1:177</where>
                </mentioned>
                <object>system</object>
                <signature>deploys</signature>
@@ -2838,7 +2848,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>5</number>
                <mentioned>
-                  <where>1:176</where>
+                  <where>1:178</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -2851,7 +2861,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>6</number>
                <mentioned>
-                  <where>1:178</where>
+                  <where>1:180</where>
                </mentioned>
                <object>system</object>
                <signature>redeploys</signature>
@@ -3099,19 +3109,19 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="3cebd9">
+      <method seal="6139df">
          <id>UC2.1</id>
          <mentioned>
-            <where>1:181</where>
-            <where>1:187</where>
-            <where>1:188</where>
-            <where>1:191</where>
-            <where>1:194</where>
+            <where>1:183</where>
+            <where>1:189</where>
+            <where>1:190</where>
+            <where>1:193</where>
             <where>1:196</where>
             <where>1:198</where>
             <where>1:200</where>
-            <where>1:204</where>
-            <where>1:207</where>
+            <where>1:202</where>
+            <where>1:206</where>
+            <where>1:209</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3140,7 +3150,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:182</where>
+                  <where>1:184</where>
                </mentioned>
                <object>user</object>
                <signature>creates</signature>
@@ -3154,7 +3164,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:185</where>
+                  <where>1:187</where>
                </mentioned>
                <object>user</object>
                <signature>updates</signature>
@@ -3506,16 +3516,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="d30683">
+      <method seal="c2673c">
          <id>UC2.2</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:209</where>
-            <where>1:210</where>
             <where>1:211</where>
+            <where>1:212</where>
+            <where>1:213</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3544,7 +3554,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:212</where>
+                  <where>1:214</where>
                </mentioned>
                <object>system</object>
                <signature>deletes</signature>
@@ -3556,7 +3566,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:214</where>
+                  <where>1:216</where>
                </mentioned>
                <object>system</object>
                <signature>deploys</signature>
@@ -3799,16 +3809,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="e3e480">
+      <method seal="b36553">
          <id>UC2.3</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:216</where>
-            <where>1:217</where>
             <where>1:218</where>
+            <where>1:219</where>
+            <where>1:220</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3845,7 +3855,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:219</where>
+                  <where>1:221</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -3858,7 +3868,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:222</where>
+                  <where>1:224</where>
                </mentioned>
                <object>system</object>
                <signature>creates</signature>
@@ -3870,7 +3880,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:224</where>
+                  <where>1:226</where>
                </mentioned>
                <object>system</object>
                <signature>deletes</signature>
@@ -4143,17 +4153,17 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="fff51b">
+      <method seal="e13894">
          <id>UC3</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:227</where>
-            <where>1:228</where>
             <where>1:229</where>
-            <where>1:238</where>
+            <where>1:230</where>
+            <where>1:231</where>
+            <where>1:240</where>
          </mentioned>
          <bindings>
             <binding>
@@ -4178,7 +4188,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:230</where>
+                  <where>1:232</where>
                </mentioned>
                <object>system</object>
                <signature>"starts a new Docker container with
@@ -4188,7 +4198,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:233</where>
+                  <where>1:235</where>
                </mentioned>
                <object>system</object>
                <signature>"applies the configuration defined
@@ -4197,7 +4207,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:235</where>
+                  <where>1:237</where>
                </mentioned>
                <object>system</object>
                <signature>"tracks the usage of CPU time and traffic by the container"</signature>
@@ -4440,16 +4450,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="87e359">
+      <method seal="1f73f5">
          <id>UC4</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:240</where>
-            <where>1:241</where>
             <where>1:242</where>
+            <where>1:243</where>
+            <where>1:244</where>
          </mentioned>
          <bindings>
             <binding>
@@ -4474,7 +4484,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:243</where>
+                  <where>1:245</where>
                </mentioned>
                <object>system</object>
                <signature>lists</signature>
@@ -4486,7 +4496,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:245</where>
+                  <where>1:247</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a list of deployments
@@ -4495,7 +4505,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:247</where>
+                  <where>1:249</where>
                </mentioned>
                <object>user</object>
                <signature>"chooses a deployment and initiates viewing its log"</signature>
@@ -4503,7 +4513,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>1:248</where>
+                  <where>1:250</where>
                </mentioned>
                <object>system</object>
                <signature>"displays a log for the chosen deployment"</signature>
@@ -4762,16 +4772,16 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="3b5f63">
+      <method seal="2675c8">
          <id>UC5</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:250</where>
-            <where>1:251</where>
             <where>1:252</where>
+            <where>1:253</where>
+            <where>1:254</where>
          </mentioned>
          <bindings>
             <binding>
@@ -4796,7 +4806,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:253</where>
+                  <where>1:255</where>
                </mentioned>
                <object>user</object>
                <signature>"selects a time interval, like:
@@ -4805,7 +4815,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:255</where>
+                  <where>1:257</where>
                </mentioned>
                <object>system</object>
                <signature>"reads HourlyUsage records corresponding
@@ -4814,7 +4824,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:257</where>
+                  <where>1:259</where>
                </mentioned>
                <object>system</object>
                <signature>"shows the user a table with these columns:
@@ -5102,9 +5112,9 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:265</where>
-            <where>1:266</where>
             <where>1:267</where>
+            <where>1:268</where>
+            <where>1:269</where>
          </mentioned>
          <bindings>
             <binding>
@@ -5357,9 +5367,9 @@ Actors taking participation in the Use Case have the following properties:
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:271</where>
-            <where>1:272</where>
             <where>1:273</where>
+            <where>1:274</where>
+            <where>1:275</where>
          </mentioned>
          <bindings>
             <binding>
@@ -5567,17 +5577,17 @@ Actors taking participation in the Use Case have the following properties:
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
       </method>
-      <method seal="e004e6">
+      <method seal="154c84">
          <id>UC10.1</id>
          <attributes>
             <attribute seal="">specified</attribute>
             <attribute seal="">must</attribute>
          </attributes>
          <mentioned>
-            <where>1:288</where>
-            <where>1:289</where>
             <where>1:290</where>
-            <where>1:308</where>
+            <where>1:291</where>
+            <where>1:292</where>
+            <where>1:310</where>
          </mentioned>
          <bindings>
             <binding>
@@ -5620,7 +5630,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:291</where>
+                  <where>1:293</where>
                </mentioned>
                <object>visitor</object>
                <signature>creates</signature>
@@ -5632,7 +5642,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:292</where>
+                  <where>1:294</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -5644,7 +5654,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>3</number>
                <mentioned>
-                  <where>1:294</where>
+                  <where>1:296</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -5659,7 +5669,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>1</number>
                            <mentioned>
-                              <where>1:308</where>
+                              <where>1:310</where>
                            </mentioned>
                            <object>system</object>
                            <signature>notifies zero balance to</signature>
@@ -5668,7 +5678,7 @@ Actors taking participation in the Use Case have the following properties:
                         <step>
                            <number>2</number>
                            <mentioned>
-                              <where>1:309</where>
+                              <where>1:311</where>
                            </mentioned>
                            <object>_self</object>
                            <signature>fail</signature>
@@ -5686,7 +5696,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>4</number>
                <mentioned>
-                  <where>1:295</where>
+                  <where>1:297</where>
                </mentioned>
                <object>system</object>
                <signature>notifies low balance to</signature>
@@ -5698,7 +5708,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>5</number>
                <mentioned>
-                  <where>1:297</where>
+                  <where>1:299</where>
                </mentioned>
                <object>system</object>
                <signature>reads</signature>
@@ -5711,7 +5721,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>6</number>
                <mentioned>
-                  <where>1:300</where>
+                  <where>1:302</where>
                </mentioned>
                <object>app</object>
                <signature>reads</signature>
@@ -5723,7 +5733,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>7</number>
                <mentioned>
-                  <where>1:302</where>
+                  <where>1:304</where>
                </mentioned>
                <object>app</object>
                <signature>creates</signature>
@@ -5732,7 +5742,7 @@ Actors taking participation in the Use Case have the following properties:
             <step>
                <number>8</number>
                <mentioned>
-                  <where>1:303</where>
+                  <where>1:305</where>
                </mentioned>
                <object>system</object>
                <signature>creates</signature>
@@ -6048,7 +6058,7 @@ Actors taking participation in the Use Case have the following properties:
       <method seal="5feacc">
          <id>UC6.2</id>
          <mentioned>
-            <where>1:314</where>
+            <where>1:316</where>
          </mentioned>
          <bindings>
             <binding>
@@ -6288,7 +6298,7 @@ Actors taking participation in the Use Case have the following properties:
       <method seal="07789e">
          <id>UC6.3</id>
          <mentioned>
-            <where>1:319</where>
+            <where>1:321</where>
          </mentioned>
          <bindings>
             <binding>
