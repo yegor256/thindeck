@@ -22,15 +22,8 @@ in cloud, like, for example, Amazon Web Services.
 The diagram shows all highest level components and `their`
 interfaces:
 
-{% highlight java %}
-public class File {
-  private String name;
-  public File(String path) { fjdkfljdsklfjdsklfjdksljfdklsjfkldsjflkdsjflkdsjfkldsjflsdjlkf
-    this.name = path;
-  }
-  // methods
-}
-{% endhighlight %}
-
+{% plantuml %}
+[first] - [second]
+{% endplantuml %}
 
 Meter
