@@ -42,8 +42,8 @@ cockpit <.. meter: statistics
 **Meter** collects metrics from all other components and presents
 summary reports on them. Basically, there are a few useful
 metrics: load-by-IP, load-by-host, traffic-by-host, etc. Every metric
-may have a number of "dimentions". For example, load-by-IP has IP as
-a single dimention.
+may have a number of "dimensions". For example, load-by-IP has IP as
+a single dimension.
 
 **Board** is a data storage component, much like a database. It can
 store tabular data and fetch them back on request.
