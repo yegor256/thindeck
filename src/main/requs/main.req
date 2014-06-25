@@ -56,6 +56,15 @@ it until he logs in".
 FrontPage is "a front page of Thindeck for Anonymous which contains all
 the information about pricing, 'how it works', etc.".
 
+:UC9 is specified.
+:UC9 is a must.
+UC9 where Anonymous(an anonymous) goes through typical user life cycle:
+    1. The anonymous explores thindeck;
+    2. The anonymous signs up;
+    3. The anonymous logs in;
+    4. The user goes through repository life cycle;
+    5. The user removes his account.
+
 :UC9.1 is specified.
 :UC9.1 is a should.
 UC9.1 where Anonymous (a anonymous) explores thindeck:
@@ -80,11 +89,27 @@ UC9.2 where Anonymous (a anonymous) signs up:
 UC9.3 where Anonymous (a anonymous) logs in using User(a user):
     1. The system "from now on treats the anonymous as a User".
 
-:UC11 is specified.
-:UC11 is a must.
-UC11 where User (a user) logs out:
+:UC9.4 is specified.
+:UC9.4 is a must.
+UC9.4 where User (a user) logs out:
     1. The system "from now on treats the user as anonymous and
     displays a public page".
+
+:UC9.5 is specified.
+:UC9.5 is a should.
+UC9.5 where User(a user) removes his account:
+    1. The user "chooses to remove his account from thindeck";
+    2. The system "asks the user to confirm the removal. @todo #75 Maybe we need
+    to think of a good removal confirmation here, for example, a user should
+    type his password";
+    3. The user "confirms the removal";
+    4. The user logs out;
+    5. The system deletes the user "and all his containers, repositories, usage
+    stats, etc. @todo #75 I assumed that we don't need any user data after he
+    removes his profile from thindeck. However, we can still need to keep
+    something, for example, his transaction history".
+UC9.5/3 when "the user did not confirm the removal of his account":
+    1. Fail since "did not confirm".
 
 Repository is "a local copy of files and folders being pulled every
 5 minutes from some remote source".
