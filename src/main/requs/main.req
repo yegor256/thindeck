@@ -248,7 +248,7 @@ UC4 where User reads deployment logs using Repository(a repo):
     that has already been executed";
     3. The user "selects a deployment";
     4. The system "displays a log for the deployment selected";
-    5. The user reads deployment log.
+    5. The user "reads the deployment log".
 
 :UC5 is specified.
 :UC5 is a must.
