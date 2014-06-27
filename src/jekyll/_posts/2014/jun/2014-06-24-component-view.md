@@ -3,7 +3,7 @@ layout: default
 title: "Component View"
 date: 2014-06-24
 description:
-  Architecture document
+  Component view of the architecture
 authors:
   - "Yegor Bugayenko"
 ---
@@ -46,12 +46,12 @@ may have a number of "dimensions". For example, load-by-IP has IP as
 a single dimension.
 
 **Board** is a data storage component, much like a database. It can
-store tabular data and fetch them back on request.
+store tabular data and fetch them back on request. We are using
 
 Meter and Board are outside of scope of our solution. They are provided
-by third party companies, for example
-[AWS CloudWatch](http://aws.amazon.com/cloudwatch/) and
-[AWS DynamoDB](http://aws.amazon.com/dynamodb/).
+by third party companies. At the moment, it is
+[AWS CloudWatch](http://aws.amazon.com/cloudwatch/) for Meter and
+[AWS DynamoDB](http://aws.amazon.com/dynamodb/) for Board.
 
 Thus, there are three components inside the technical scope of the system:
 

@@ -47,11 +47,7 @@ There is a dedicated article for [Component View]({% post_url 2014/jun/2014-06-2
 
 ## 5. Deployment View
 
-To be continued...
-
-> @todo #1/DES We don't know what the system looks like when it's been deployed.
->  Let's document that here. Stuff that we might need to think about:
->  1) Web hosting, 2) Code repository (Github, most likely), 3) Data hosting
+There is a dedicated article for [Deployment View]({% post_url 2014/jun/2014-06-27-deployment-view %}).
 
 ## 6. Use Cases, Sequence Diagrams
 

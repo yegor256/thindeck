@@ -21,6 +21,12 @@
             <img src="//img.thindeck.com/logo-384x128.png" class="logo" alt="logo"/>
           </a>
         </p>
+        <p>
+          Last update on {{ page.date | date: "%-d %B %Y" }}
+        </p>
+        <p>
+          Author(s): {{ page.authors | join:', ' }}
+        </p>
       </header>
       <h1>{{ page.title }}</h1>
       {{ content }}

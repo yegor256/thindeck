@@ -2,6 +2,9 @@
 layout: default
 title: "Technical Documentation"
 date: 2014-06-22
+authors:
+  - "Yegor Bugayenko"
+  - "Carlos Miranda"
 description:
   Thinkdeck is a hosting that deploys itself
 ---
