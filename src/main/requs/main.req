@@ -254,8 +254,8 @@ UC4 where User reads deployment logs using Repository(a repo):
 UC5 where User(a user) reads usage stats using Repository(a repo):
     1. The user "selects a time interval, like:
     last 7 days, last month, custom (from date, to date)";
-    2. The system "reads HourlyUsage records corresponding
-    to the repo within specified time interval";
+    2. The system "reads repo's HourlyUsage record for the time interval
+    selected during the previous step";
     3. The system "shows the user a table with these columns:
     Container (id), Inbound traffic (Gb),
     Outbound traffic (Gb), CPU time (min), Cost ($).
