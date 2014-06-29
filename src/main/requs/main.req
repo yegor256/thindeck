@@ -56,12 +56,37 @@ it until he logs in".
 FrontPage is "a front page of Thindeck for Anonymous which contains all
 the information about pricing, 'how it works', etc.".
 
+SystemStats is "a statistics of system performance and availability.
+    @todo https://github.com/teamed/requs/issues/86 define simple types".
+SystemStats includes:
+    availability as "a percentage of time when the system was available",
+    meanResponseTime as "a mean time between request received and response sent
+    measured in milliseconds",
+    98thPercentileResponseRime as "a 98th percentile of response times. @todo
+    #216 I assumed that 98th percentile is enough for us at the moment, however,
+    we may need other percentiles, for example, 50th (median), 99th, etc.
+    Check this article: http://goo.gl/ISXZBf",
+    meanHookDeliveryTime as "a mean time of hook delivery in milliseconds",
+    exceptionPercentage as "a percentage of requests that were not processed
+    successfully",
+    pagesBuildsFailureRate as "a percentage of pages built with errors".
+
+RuntimeStatsPage is "a page containing our runtime stats, similar to
+    https://status.github.com. @todo #216 I assumed that we want the same page
+    as github has, however, we may need to change something or even design
+    something completely different".
+RuntimeStatsPage includes:
+    status as "one of: operating, failure",
+    statusDescription as "a comment to the status",
+    pastDayStats as SystemStats,
+    pastWeekStats as SystemStats,
+    pastMonthStats as SystemStats.
+
 :UC9.1 is specified.
 :UC9.1 is a should.
 UC9.1 where Anonymous (a anonymous) explores thindeck:
     1. The anonymous reads FrontPage(a frontPage);
-    2. The anonymous "reads the stats page containing our runtime stats,
-    similar to https://status.github.com/";
+    2. The anonymous reads RuntimeStatsPage(a statsPage);
     3. The anonymous "reads our terms page including all the legal wordings".
 
 :UC9.2 is specified.
