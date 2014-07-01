@@ -1,0 +1,31 @@
+UC1/SEC must "uniquely identify users and enable their
+  login and logout operations, through secure HTTPS protocol".
+
+UC1/UX must "expose user interface in English only".
+
+UC1/WD must "be designed in 'responsive' manner, see
+  http://en.wikipedia.org/wiki/Responsive_web_design . Since all Thindeck
+  site pages will look good on every device, we won't need a separate
+  mobile version of the site".
+
+UC1/STL must "require all user repositories to be 100% stateless.
+  We should inform users that we will be constantly changing the number
+  of running containers. We may terminate any container at any moment.
+  This means that the software inside the container (repository) should
+  NOT keep any data persistent. They should use other services for
+  persistence, like Amazon DynamoDB, etc".
+
+UC1/API must "expose all features, which are available through UI,
+  through RESTful API".
+
+UC1/FIN must "present total summary of consumed resources to the
+  user in a table with these columns: Container (id), Inbound traffic (Gb),
+  Outbound traffic (Gb), CPU time (min), Cost ($).
+  Each table row corresponds to a container. Last row contains
+  totals by all containers. The values in the table are usage stats by container
+  within specified time interval".
+
+UC2/PERF must "each physical server should be able to host 4 actively working
+    containers inside it, altogether handling 3M hits and 200 Gb of traffic
+    per month, or 100K and 6.6 Gb per day".
+
