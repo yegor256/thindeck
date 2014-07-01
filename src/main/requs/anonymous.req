@@ -10,16 +10,5 @@ RuntimeStatistics is "a graphical and textual information about
   similar to https://status.github.com/".
 
 UC9.1 where Anonymous (an anonymous) explores thindeck:
-    1. The anonymous reads PublicData;
-    2. The anonymous reads RuntimeStatistics.
-
-:UC9.2 is specified.
-:UC9.2 is a must.
-UC9.2 where Anonymous (a anonymous) signs up:
-    1. The anonymous "initiates sign in via one of OAuth providers from
-    this list: Google Plus, Facebook, Github, or Twitter.";
-    2. The system "requests permission from the OAuth provider
-    chosen by the anonymous";
-    3. The system creates User(a user);
-    4. The system "adds $5 to the user.balance";
-    5. The anonymous logs in.
+  1. The anonymous reads PublicData (a data);
+  2. The anonymous reads RuntimeStatistics (a stats).
