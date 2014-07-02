@@ -63,7 +63,8 @@ AnonymousPages: """
 These pages are available to any Anonymous user:
 
 - **Front**. Pricing, "how it works", etc.
-- **Stats**. Our runtime stats, similar to [github ones](https://status.github.com).
+- **Stats**. Our runtime stats, similar to
+[github ones](https://status.github.com).
 - **Terms**. All legal wordings.
 """.
 
