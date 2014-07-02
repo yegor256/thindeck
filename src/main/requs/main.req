@@ -53,19 +53,19 @@ Anonymous is "a person who is not identified in the system (not logged in).
 He can actually have a User account in our System, but we can't tell
 it until he logs in".
 
-FrontPage is "a front page of Thindeck for Anonymous which contains all
-the information about pricing, 'how it works', etc.".
-
-TermsPage is "a page of Thindeck for Anonymous which contains all legal
-    wordings".
-
 :UC9.1 is specified.
 :UC9.1 is a should.
 UC9.1 where Anonymous (a anonymous) explores thindeck:
-    1. The anonymous reads FrontPage(a frontPage);
-    2. The anonymous "reads the stats page containing our runtime stats,
-    similar to https://status.github.com/";
-    3. The anonymous reads TermsPage(a termsPage).
+    1. The anonymous reads the system.
+UC9.1/UI must "comply to AnonymousPages".
+
+AnonymousPages: """
+These pages are available to any Anonymous user:
+
+- **Front**. Pricing, "how it works", etc.
+- **Stats**. Our runtime stats, similar to [github ones](https://status.github.com).
+- **Terms**. All legal wordings.
+""".
 
 :UC9.2 is specified.
 :UC9.2 is a must.
