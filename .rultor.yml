@@ -3,6 +3,16 @@ assets:
   pubring.gpg: "yegor256/home#assets/pubring.gpg"
   secring.gpg: "yegor256/home#assets/secring.gpg"
 
+deploy:
+  env:
+    MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
+  script:
+    - "sudo apt-get install -y openjdk-6-jre"
+    - "wget --retry-connrefused http://yar.fruct.org/attachments/download/362/plantuml_7707-1_all.deb"
+    - "sudo dpkg -i plantuml_7707-1_all.deb"
+    - "sudo bundle"
+    - "mvn clean deploy site-deploy -Pqulice --errors --settings ../settings.xml"
+
 merge:
   env:
     MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
@@ -13,11 +23,6 @@ release:
   env:
     MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
   script:
-    - "sudo apt-get install -y openjdk-6-jre"
-    - "wget --retry-connrefused http://yar.fruct.org/attachments/download/362/plantuml_7707-1_all.deb"
-    - "sudo dpkg -i plantuml_7707-1_all.deb"
-    - "sudo bundle"
     - "mvn versions:set \"-DnewVersion=${tag}\""
     - "git commit -am \"${tag}\""
     - "mvn clean deploy -Pqulice -Psonatype -Pthindeck --errors --settings ../settings.xml"
-    - "mvn clean test site-deploy -Psite -Prempl --errors --settings ../settings.xml"
