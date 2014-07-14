@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="description" content="Component view of the architecture" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/png" href="//img.thindeck.com/logo-128x128.png">
+    <link rel="shortcut icon" href="//img.thindeck.com/logo-128x128.png" />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="http://doc.thindeck.com/rss.xml"/>
+    <link rel="author" href="//plus.google.com/u/0/114792568016408327418?rel=author" />
+    <link rel="stylesheet" href="/css/layout.css?"/>
+    <link rel="canonical" href="//doc.thindeck.com/component-view.html" />
+    <title>Component View</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <p>
+          <a href="/">
+            <img src="//img.thindeck.com/logo-384x128.png" class="logo" alt="logo"/>
+          </a>
+        </p>
+        <p>
+          Last update on 24 June 2014
+        </p>
+        <p>
+          Author(s): Yegor Bugayenko
+        </p>
+      </header>
+      <h1>Component View</h1>
+      <p>In order to achieve high scalability and at the same
+time stability of the system, we decentralize its functionality
+among a number of independent components. In order to make
+the system even more scalable and cloud-ready we make components
+stateless and connect them <strong>asychronously</strong>.</p>
+
+<p>Asynchronous connection between components means that none
+of them assume online availability of the other. They simply never connect
+to each other. They all communicate through stateful resources available
+in cloud, like, for example, <a href="http://aws.amazon.com/">Amazon Web Services</a>.</p>
+
+<p>The diagram shows all highest level components and their
+interfaces:</p>
+
+<p><img src='/uml/1665d464109d1a4a3c4ca71c9c856c4f.svg' alt='UML' style='width:100%;'/></p>
+
+<p><strong>Meter</strong> collects metrics from all other components and presents
+summary reports on them. Basically, there are a few useful
+metrics: load-by-IP, load-by-host, traffic-by-host, etc. Every metric
+may have a number of &quot;dimensions&quot;. For example, load-by-IP has IP as
+a single dimension.</p>
+
+<p><strong>Board</strong> is a data storage component, much like a database. It can
+store tabular data and fetch them back on request. We are using</p>
+
+<p>Meter and Board are outside of scope of our solution. They are provided
+by third party companies. At the moment, it is
+<a href="http://aws.amazon.com/cloudwatch/">AWS CloudWatch</a> for Meter and
+<a href="http://aws.amazon.com/dynamodb/">AWS DynamoDB</a> for Board.</p>
+
+<p>Thus, there are three components inside the technical scope of the system:</p>
+
+<ol>
+<li><p><strong>Load Balancer</strong> accepts incoming HTTP/S requests and dispatches
+them to open TCP ports of containers in Tanks.</p></li>
+<li><p><strong>Cockpit</strong> is a web panel accessible by users through web browsers.
+It presents all the data from the Meter and the Board and saves necessary
+changes to the Board.</p></li>
+<li><p><strong>Tank</strong> is a holder of Docker containers. It regularly checks
+what&#39;s published on the Board and starts/stops containers, making
+their TCP ports exposable to Internet.</p></li>
+</ol>
+
+<h2 id="traffic-dispatching">Traffic Dispatching</h2>
+
+<p>Incoming web traffic reaches Load Balancer, which accepts all
+requests at its open ports 80 (HTTP) and 443 (HTTPS). It acts as
+a simple HTTP proxy, reading <code>Host</code> HTTP header in order
+to understand which host the client is looking for.</p>
+
+<p>According to
+1) the information obtained from the HTTP 1.1 request,
+2) routing map retrieved from the Board, and
+3) recent load average of every Tank,
+Load Balancer makes a decision which IP address should
+process the request.</p>
+
+<p><img src='/uml/68eeb97bb6fbe2ef9a2023611648c75d.svg' alt='UML' style='width:100%;'/></p>
+
+<p>The diagram explains what steps an HTTP request passes from a
+web visitor open an HTML page of a web site hosted by Thindeck.</p>
+
+<h2 id="key-maps-in-the-board">Key Maps in the Board</h2>
+
+<p>The Board should contain the following key mappings
+(aka tables or relations):</p>
+
+<ul>
+<li><p><strong><code>users</code></strong>: <code>user</code> to <code>repository</code>, one-to-many</p></li>
+<li><p><strong><code>hosts</code></strong>: <code>repository</code> to <code>hostname</code>, one-to-many</p></li>
+<li><p><strong><code>alive</code></strong>: <code>hostname</code> to <code>IP:port</code>, one-to-many</p></li>
+</ul>
+
+<p><code>users</code> mapping contains a list of all registered users and
+their repositories. Repository is just a URI, where source
+can be found, for example <code>ftp://me:secret@ftp.example.com/</code>.
+This mapping is updated only by the Cockpit.</p>
+
+<p><code>hosts</code> contains all seen repositories and hostnames detected
+inside them. This mapping is updated by Tanks. Once a Tank sees
+that some repository exists in <code>users</code> but doesn&#39;t exist in
+<code>hosts</code>, it tries to checks it out, parse, and update <code>hosts</code> mapping.</p>
+
+<p><code>alive</code> mapping is updated by Tanks, when they deploy new
+containers. Also this mapping is updated by a Tank, when
+he sees that another Tank doesn&#39;t reply to a regular status request (ping).
+In that case, the Tank removes certain records from the mapping.</p>
+
+<p>Every Tank is making its own decision where to host a repository
+or not, using the information from the Meter.</p>
+
+<h2 id="key-metrics-in-the-meter">Key Metrics in the Meter</h2>
+
+<p>The Meter should contain the following key metrics:</p>
+
+<ul>
+<li><p>load average by <code>IP</code></p></li>
+<li><p>traffic in Gb per minute by <code>IP:port</code></p></li>
+<li><p>CPU usage per minute by <code>IP:port</code></p></li>
+</ul>
+
+<h2 id="routine-update">Routine Update</h2>
+
+<p>Every Tank does the following operations on its regular routine
+update (every five minutes):</p>
+
+<ol>
+<li><p>Gets a full list of other Tanks&#39; IP addresses from <code>alive</code>.
+Pings them all. If some of them doesn&#39;t reply within
+a very tight timeout, removes that records from <code>alive</code>.</p></li>
+<li><p>Gets a list of all repositories from <code>users</code>.
+Check out those that don&#39;t have any records in <code>hosts</code>,
+and update mapping <code>hosts</code> according to the information in
+repository manifests.</p></li>
+<li><p>Goes through <code>alive</code> list of hostnames and makes a decision
+which <code>hostname</code> needs more running containers.</p></li>
+</ol>
+
+<blockquote>
+<p>@todo #239 How should we decide which hostname needs more containers?
+   I&#39;m not sure how to do it. Should be a combination of factors,
+   including data from Meter. It&#39;s important to have at least three
+   running containers for any repository.</p>
+</blockquote>
+
+<ol>
+<li>Makes a decision about currently running Tanks. If we need more
+Tanks, their number should be increased by requesting more
+instances from hosting provider. If we need less, random Tanks
+should be terminated.</li>
+</ol>
+
+<blockquote>
+<p>@todo #239 How we decide when to start/stop Tanks? I&#39;m not
+   sure how to make such a decision. Should be a combination
+   of factors.</p>
+</blockquote>
+
+      <footer class="footer">
+        <p>
+          &copy; <span itemprop="author">thindeck.com</span>, 2014
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

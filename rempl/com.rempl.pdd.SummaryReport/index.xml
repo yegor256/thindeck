@@ -2,66 +2,66 @@
 <?xml-stylesheet type='text/xsl' href='puzzles.xsl'?><puzzles>
 <puzzle>
 <ticket>1</ticket>
-<file>src/site/apt/architecture.apt.vm</file>
+<file>src/jekyll/_posts/2014/apr/2014-04-01-architecture.md</file>
 <body>The specification is still rather vague for now. I haven't written any assumptions here just yet. Let's write them down here as they come up.</body>
 <role>DES</role>
 <estimate>0</estimate>
-<lines>49-50</lines>
+<lines>29-30</lines>
 </puzzle>
 <puzzle>
 <ticket>1</ticket>
-<file>src/site/apt/architecture.apt.vm</file>
+<file>src/jekyll/_posts/2014/apr/2014-04-01-architecture.md</file>
 <body>We should have a class diagram here. Ideally, we should have a tool that autogenerates the diagrams at deploy time from text data. However, we haven't decided yet on what this tool should be. Once that's been agreed upon, include the class diagrams right here.</body>
 <role>DES</role>
 <estimate>0</estimate>
-<lines>56-59</lines>
+<lines>36-39</lines>
 </puzzle>
 <puzzle>
 <ticket>1</ticket>
-<file>src/site/apt/architecture.apt.vm</file>
+<file>src/jekyll/_posts/2014/apr/2014-04-01-architecture.md</file>
 <body>Let's define the packaging structure of Thindeck. Describe the purposes of each package, the classes and resources that they contain, etc. Include a diagram showing how they are all related.</body>
 <role>DES</role>
 <estimate>0</estimate>
-<lines>60-62</lines>
+<lines>40-42</lines>
 </puzzle>
 <puzzle>
 <ticket>1</ticket>
-<file>src/site/apt/architecture.apt.vm</file>
-<body>So far we don't know what components we're going to use. Let's find out, and document those decisions here. Think about what we're going to need here - APIs for services that we're going to use, code libraries, web framework, etc.</body>
-<role>DES</role>
-<estimate>0</estimate>
-<lines>68-71</lines>
-</puzzle>
-<puzzle>
-<ticket>1</ticket>
-<file>src/site/apt/architecture.apt.vm</file>
-<body>We don't know what the system looks like when it's been deployed. Let's document that here. Stuff that we might need to think about: 1) Web hosting, 2) Code repository (Github, most likely), 3) Data hosting</body>
-<role>DES</role>
-<estimate>0</estimate>
-<lines>77-79</lines>
-</puzzle>
-<puzzle>
-<ticket>1</ticket>
-<file>src/site/apt/architecture.apt.vm</file>
+<file>src/jekyll/_posts/2014/apr/2014-04-01-architecture.md</file>
 <body>Requs should automatically generate the use case sequence diagrams. It doesn't support it yet, but when it does, let's include that here.</body>
 <role>DES</role>
 <estimate>0</estimate>
-<lines>85-86</lines>
+<lines>56-57</lines>
 </puzzle>
 <puzzle>
 <ticket>1</ticket>
-<file>src/site/apt/architecture.apt.vm</file>
+<file>src/jekyll/_posts/2014/apr/2014-04-01-architecture.md</file>
 <body>We need to identify the risks associated with this project. Let's document those risks in this section.</body>
 <role>DES</role>
 <estimate>0</estimate>
-<lines>92-93</lines>
+<lines>63-64</lines>
 </puzzle>
 <puzzle>
 <ticket>1</ticket>
-<file>src/site/apt/architecture.apt.vm</file>
+<file>src/jekyll/_posts/2014/apr/2014-04-01-architecture.md</file>
 <body>Let's document the architectural and design decisions in this section.</body>
 <role>DES</role>
 <estimate>0</estimate>
-<lines>99-100</lines>
+<lines>70-71</lines>
+</puzzle>
+<puzzle>
+<ticket>239</ticket>
+<file>src/jekyll/_posts/2014/jun/2014-06-24-component-view.md</file>
+<body>How should we decide which hostname needs more containers? I'm not sure how to do it. Should be a combination of factors, including data from Meter. It's important to have at least three running containers for any repository.</body>
+<role>IMP</role>
+<estimate>0</estimate>
+<lines>162-165</lines>
+</puzzle>
+<puzzle>
+<ticket>239</ticket>
+<file>src/jekyll/_posts/2014/jun/2014-06-24-component-view.md</file>
+<body>How we decide when to start/stop Tanks? I'm not sure how to make such a decision. Should be a combination of factors.</body>
+<role>IMP</role>
+<estimate>0</estimate>
+<lines>172-174</lines>
 </puzzle>
 </puzzles>

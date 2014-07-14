@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="description" content="Deployment view of the architecture" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/png" href="//img.thindeck.com/logo-128x128.png">
+    <link rel="shortcut icon" href="//img.thindeck.com/logo-128x128.png" />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="http://doc.thindeck.com/rss.xml"/>
+    <link rel="author" href="//plus.google.com/u/0/114792568016408327418?rel=author" />
+    <link rel="stylesheet" href="/css/layout.css?"/>
+    <link rel="canonical" href="//doc.thindeck.com/deployment-view.html" />
+    <title>Deployment View</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <p>
+          <a href="/">
+            <img src="//img.thindeck.com/logo-384x128.png" class="logo" alt="logo"/>
+          </a>
+        </p>
+        <p>
+          Last update on 27 June 2014
+        </p>
+        <p>
+          Author(s): Yegor Bugayenko
+        </p>
+      </header>
+      <h1>Deployment View</h1>
+      <p>As <a href="/component-view.html">Component View</a>
+explains, the system consists of three components:
+Load Balancer, Cockpit and Tank.</p>
+
+<p><strong>Load Balancer</strong> is deployed to a cluster of AWS EC2
+<a href="http://aws.amazon.com/ec2/instance-types/">t1.micro</a>
+instances.</p>
+
+<p><strong>Cockpit</strong> is deployed to CloudBees as a WAR package.</p>
+
+<p><strong>Tank</strong> is deployed to a cluster of AWS EC2
+<a href="http://aws.amazon.com/ec2/instance-types/">c3.large</a>
+instances.</p>
+
+<h2 id="build-automation">Build Automation</h2>
+
+<p>The system is built as a multi-module
+<a href="http://maven.apache.org/">Maven</a> project.</p>
+
+<p>Static analysis of the source code is done by
+<a href="http://www.qulice.com">Qulice</a>.</p>
+
+<h2 id="merge-pipeline">Merge Pipeline</h2>
+
+<p>Source code of all components is kept in
+<a href="https://github.com/yegor256/thindeck">Github repository</a>.</p>
+
+<p>Every new feature or a bug fix is developed in its own Git branch,
+and submitted for review in a pull request by its author.</p>
+
+<p>Every pull request has to pass a mandatory code review by a randomly
+selected developer from the development team.</p>
+
+<p>When changes satisfy code reviewer, he posts a message for
+<a href="http://www.rultor.com">rultor.com</a>, which monitors all our pull requests and
+picks up those that have <a href="http://doc.rultor.com/commands.html">Rultor commands</a>.
+Rultor merges pull request into <code>master</code> branch and attempts to build it (using build automation
+tool explained above). In case of merge conflict or build failure
+pull request gets a notification and its author continues to fix the branch.
+This procedure may be repeated many times, until merged or rejected
+by code reviewer.</p>
+
+<p>In case of success, Rultor commits and pushes requested changes
+into <code>master</code> branch, then closing the pull request.</p>
+
+<p>Rultor reports progress via comments of a pull request, in Github.</p>
+
+<h2 id="continuous-integration">Continuous Integration</h2>
+
+<p>CI is done by <a href="http://www.travis-ci.org">Travis</a>.
+On every commit and in every branch Travis attempts to build the entire
+system (using build automation mechanism explained above).</p>
+
+<p>In case of failure, it notifies commit authors via Github markers
+in their pull requests. This information has no effect on
+our formal merge or deployment process, but helps team members
+to fix bugs before sending code through formal merge or
+deployment pipelines.</p>
+
+<p>Travis reports its progress <a href="https://travis-ci.org/yegor256/thindeck">here</a>.</p>
+
+<h2 id="deployment-pipeline">Deployment Pipeline</h2>
+
+<p>When a new version is ready to be deployed to production
+platform, one of architects gives a &quot;release&quot; command to Rultor,
+via a new comment in a Github issue. If it is a bug fix, we&#39;re using
+the same Github issue where the bug was fixed.</p>
+
+<p>If it is a major release, we create a new Github issue, where explain
+all the changes being released, and analyze an impact of them
+for a running production environment.</p>
+
+<p>We use <a href="http://www.semver.org">SemVer</a> notation for product versioning.</p>
+
+<p>Rultor picks up &quot;release&quot; command, builds the entire package and deploys
+all JAR artifacts to Maven Central (Load Balancer and Tank). Then,
+it deploys Cockpit to CloudBees. Then it builds and deploys
+documentation website (the one you&#39;re looking at now) to Github Pages.</p>
+
+<p>What site deployment is done, Rultor reports success into Github issue.</p>
+
+<p>Rultor also tags deployed version in Github.</p>
+
+<p>Load Balancer and Tank regularly check version number of Cockpit (via HTTP
+requests) and compare it with their own. If versions differ, they attempt
+to update themselves, getting the required version from Maven Central.</p>
+
+      <footer class="footer">
+        <p>
+          &copy; <span itemprop="author">thindeck.com</span>, 2014
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,85 +1,16 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-    xmlns="http://www.w3.org/1999/xhtml">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns="http://www.w3.org/1999/xhtml">
     <xsl:output method="xml" omit-xml-declaration="yes"/>
     <xsl:template match="/">
+        <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
         <html lang="en-US">
             <head>
                 <meta charset="UTF-8"/>
                 <meta name="keywords" content="software requirements specification"/>
                 <meta name="author" content="requs.org"/>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <script src="//code.jquery.com/jquery-2.1.1-rc1.js" type="text/javascript">
-                    <!-- nothing -->
-                </script>
-                <link rel="icon" type="image/png" href="//img.requs.org/logo-128x128.png"/>
-                <style type="text/css">* {
-    padding: 0;
-    margin: 0;
-}
-body {
-    margin: 2em;
-    font-family: 'Ubuntu', 'Arial', serif;
-    font-size: 16px;
-    color: #4e4e4e;
-}
-a {
-    color: #428bca;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}
-code, pre {
-    font-family: 'Monaco', 'Courier New', monospace;
-    background-color: #ccc;
-}
-code {
-    padding: 0 .4em;
-}
-p, ul, ol {
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-td, th {
-    padding: .3em;
-    border-bottom: 1px solid #ccc;
-}
-th {
-    text-align: left;
-    background-color: #ddd;
-    border-bottom: 1px solid #444;
-    font-weight: 500;
-}
-h1 {
-    margin-top: 2em;
-    font-size: 1.4em;
-}
-h2 {
-    margin-top: 2em;
-    font-size: 1.2em;
-}
-li {
-    margin-left: 2em;
-}
-.intro { font-size: 0.9em; color: #999; }
-.type { margin-top: 3em; }
-.slots { margin-left: 1em; margin-top: 1em; }
-.method { margin-top: 1em; margin-left: 1em; }
-.steps { margin-top: 1em; margin-left: 1em }
-.step { margin-top: 0.25em; }
-.nfrs { margin-top: 1em; margin-left: 1em }
-.nfr { margin-top: 0.25em; }
-.exception { margin-left: 1em; margin-top: 1em; margin-bottom: 1em; }
-.informal { color: #666; }
-.warning { color: #d9534f; }
-.crud, .fail { color: #5cb85c; }
-.label { margin-left: 0.5em; color: white; border-radius: .25em; font-size: 0.85em; padding: .1em .3em .15em; }
-.attribute { background-color: #999; }
-.sealed { background-color: #5cb85c; }
-.seal { background-color: #5bc0de; }
-.svg { margin-top: 0.5em; margin-bottom: 0.5em; }
-</style>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <link rel="icon" type="image/png" href="//img.requs.org/ico-64x64.png"/>
+                <style type="text/css">*{padding:0;margin:0}body{margin:2em;font-family:'Ubuntu','Arial',serif;font-size:16px;color:#4e4e4e}a{color:#428bca;text-decoration:none}a:hover{text-decoration:underline}code,pre{font-family:'Monaco','Courier New',monospace;background-color:#ccc}code{padding:0 .4em}p,ul,ol{margin-top:1em;margin-bottom:1em}td,th{padding:.3em;border-bottom:1px solid #ccc}th{text-align:left;background-color:#ddd;border-bottom:1px solid #444;font-weight:500}h1{margin-top:2em;font-size:1.4em}h2{margin-top:2em;font-size:1.2em}li{margin-left:2em}.intro{font-size:.9em;color:#999}.type{margin-top:3em}.slots{margin-left:1em;margin-top:1em}.method{margin-top:1em;margin-left:1em}.steps{margin-top:1em;margin-left:1em}.step{margin-top:.25em}.nfrs{margin-top:1em;margin-left:1em}.nfr{margin-top:.25em}.exception{margin-left:1em;margin-top:1em;margin-bottom:1em}.informal{color:#666}.warning{color:#d9534f}.crud,.fail{color:#5cb85c}.label{margin-left:.5em;color:white;border-radius:.25em;font-size:.85em;padding:.1em .3em .15em}.attribute{background-color:#999}.sealed{background-color:#5cb85c}.seal{background-color:#5bc0de}.uml{display:inline-block;margin-top:.5em;margin-bottom:.5em;border:1px solid gray;padding:1em}</style>
                 <title>SRS</title>
             </head>
             <body>
@@ -106,31 +37,79 @@ li {
             <xsl:text>.</xsl:text>
         </p>
         <xsl:if test="errors[error]">
-            <h1><xsl:text>Errors</xsl:text></h1>
+            <h1>
+                <xsl:text>Errors</xsl:text>
+            </h1>
             <xsl:apply-templates select="errors/error"/>
         </xsl:if>
-        <xsl:if test="metrics[metric]">
-            <h1><xsl:text>Metrics</xsl:text></h1>
-            <xsl:apply-templates select="metrics/metric"/>
+        <h1>
+            <xsl:text>Scope Definition</xsl:text>
+        </h1>
+        <xsl:apply-templates select="." mode="scope"/>
+        <xsl:if test="acronyms[acronym]">
+            <h1>
+                <xsl:text>Definitions/Acronyms</xsl:text>
+            </h1>
+            <xsl:apply-templates select="acronyms/acronym"/>
         </xsl:if>
-        <h1><xsl:text>Types and Methods</xsl:text></h1>
+        <h1>
+            <xsl:text>Types and Methods</xsl:text>
+        </h1>
         <xsl:apply-templates select="types/type"/>
         <xsl:if test="pages[page]">
-            <h1><xsl:text>Markdown Pages</xsl:text></h1>
+            <h1>
+                <xsl:text>Markdown Pages</xsl:text>
+            </h1>
             <xsl:apply-templates select="pages/page"/>
         </xsl:if>
         <xsl:if test="tbds[tbd]">
             <xsl:apply-templates select="tbds"/>
         </xsl:if>
+        <xsl:if test="metrics[metric]">
+            <h1>
+                <xsl:text>Metrics</xsl:text>
+            </h1>
+            <xsl:apply-templates select="metrics/metric"/>
+        </xsl:if>
     </xsl:template>
-    <xsl:template match="metric">
+    <xsl:template match="spec" mode="scope">
+        <p>
+            <xsl:value-of select="count(types/type)"/>
+            <xsl:text> type(s): </xsl:text>
+            <xsl:for-each select="types/type">
+                <xsl:if test="position() &gt; 1">
+                    <xsl:text>, </xsl:text>
+                </xsl:if>
+                <a href="#{name}"><xsl:value-of select="name"/></a>
+            </xsl:for-each>
+        </p>
+        <p>
+            <xsl:value-of select="count(methods/method)"/>
+            <xsl:text> Use Case(s): </xsl:text>
+            <xsl:for-each select="methods/method">
+                <xsl:if test="position() &gt; 1">
+                    <xsl:text>, </xsl:text>
+                </xsl:if>
+                <a href="#{id}"><xsl:value-of select="id"/></a>
+            </xsl:for-each>
+        </p>
+        <p>
+            <xsl:value-of select="count(//step[signature='creates' or signature='reads' or signature='updates' or signature='deletes'])"/>
+            <xsl:text> CRUD operator(s)</xsl:text>
+        </p>
+        <p>
+            <xsl:value-of select="count(//slot)"/>
+            <xsl:text> slot(s)</xsl:text>
+        </p>
+    </xsl:template>
+    <xsl:template match="metrics/metric">
         <p>
             <xsl:value-of select="@id"/>
             <xsl:text> = </xsl:text>
             <xsl:value-of select="."/>
         </p>
     </xsl:template>
-    <xsl:template match="error">
+    <xsl:template match="errors/error">
         <p>
             <xsl:text>[</xsl:text>
             <xsl:value-of select="@line"/>
@@ -140,14 +119,32 @@ li {
             <xsl:value-of select="."/>
         </p>
     </xsl:template>
+    <xsl:template match="acronyms/acronym">
+        <p>
+            <strong>
+                <xsl:value-of select="name"/>
+            </strong>
+            <xsl:text> means </xsl:text>
+            <xsl:apply-templates select="info/informal"/>
+        </p>
+    </xsl:template>
     <xsl:template match="page">
-        <h2><xsl:value-of select="title"/></h2>
+        <h2>
+            <xsl:value-of select="title"/>
+        </h2>
         <xsl:value-of select="html" disable-output-escaping="yes"/>
     </xsl:template>
     <xsl:template match="types/type">
-        <div class="type">
-            <a name="{name}"/>
-            <strong><xsl:value-of select="name"/></strong>
+        <div class="type" id="{name}">
+            <xsl:if test="actor='true'">
+                <strong>
+                    <xsl:value-of select="name"/>
+                </strong>
+                <xsl:text> is an actor. </xsl:text>
+            </xsl:if>
+            <strong>
+                <xsl:value-of select="name"/>
+            </strong>
             <xsl:text> is </xsl:text>
             <xsl:if test="parents/type">
                 <xsl:for-each select="parents/type">
@@ -177,6 +174,7 @@ li {
                             <xsl:apply-templates select="slots/slot"/>
                         </ul>
                     </div>
+                    <xsl:apply-templates select="diagrams/diagram"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:text>.</xsl:text>
@@ -189,14 +187,11 @@ li {
         <li>
             <xsl:value-of select="name"/>
             <xsl:choose>
-                <xsl:when test="arity = 'ANY'">
+                <xsl:when test="arity = '0..*'">
                     <xsl:text>-s?</xsl:text>
                 </xsl:when>
-                <xsl:when test="arity = 'MANY'">
+                <xsl:when test="arity = '1..*'">
                     <xsl:text>-s</xsl:text>
-                </xsl:when>
-                <xsl:when test="arity = 'OPT'">
-                    <xsl:text>-?</xsl:text>
                 </xsl:when>
             </xsl:choose>
             <xsl:if test="type">
@@ -204,15 +199,19 @@ li {
                 <a href="#{type}">
                     <xsl:value-of select="type"/>
                 </a>
+                <xsl:if test="composition='true'">
+                    <xsl:text>!</xsl:text>
+                </xsl:if>
             </xsl:if>
             <xsl:apply-templates select="info/informal"/>
         </li>
     </xsl:template>
     <xsl:template match="method">
         <div class="method">
-            <a name="{id}"/>
-            <div>
-                <strong><xsl:value-of select="id"/></strong>
+            <div id="{id}">
+                <strong>
+                    <xsl:value-of select="id"/>
+                </strong>
                 <xsl:text> where </xsl:text>
                 <xsl:call-template name="signature">
                     <xsl:with-param name="bindings" select="bindings"/>
@@ -227,7 +226,6 @@ li {
                 </xsl:if>
                 <xsl:apply-templates select="attributes/attribute"/>
             </div>
-            <xsl:apply-templates select="svg"/>
             <div class="steps">
                 <xsl:apply-templates select="info/informal"/>
                 <xsl:apply-templates select="steps"/>
@@ -235,6 +233,9 @@ li {
             <div class="nfrs">
                 <xsl:apply-templates select="nfrs/nfr"/>
             </div>
+            <xsl:if test="steps/step">
+                <xsl:apply-templates select="diagrams/diagram"/>
+            </xsl:if>
         </div>
     </xsl:template>
     <xsl:template match="attribute">
@@ -295,9 +296,9 @@ li {
         <xsl:text> </xsl:text>
     </xsl:template>
     <xsl:template name="signature">
-        <xsl:param name="bindings" />
-        <xsl:param name="home" />
-        <xsl:param name="typed" select="'false'" />
+        <xsl:param name="bindings"/>
+        <xsl:param name="home"/>
+        <xsl:param name="typed" select="'false'"/>
         <xsl:call-template name="ref">
             <xsl:with-param name="bindings" select="$bindings"/>
             <xsl:with-param name="name" select="$home/object"/>
@@ -306,14 +307,14 @@ li {
         <xsl:text> </xsl:text>
         <xsl:variable name="uc" select="/spec/methods/method[signature=$home/signature]/id"/>
         <xsl:choose>
-            <xsl:when test="$home/signature='creates' or $home/signature='reads' or $home/signature='updates' or $home/signature='deletes' or $home/signature='lists'">
+            <xsl:when test="$home/signature='creates' or $home/signature='reads' or $home/signature='updates' or $home/signature='deletes'">
                 <span class="crud">
                     <xsl:value-of select="$home/signature"/>
                 </span>
             </xsl:when>
             <xsl:when test="$home/signature='fail'">
                 <span class="fail">
-                    <xsl:text>Fail since</xsl:text>
+                    <xsl:text>Fail as</xsl:text>
                 </span>
             </xsl:when>
             <xsl:when test="$uc">
@@ -338,7 +339,7 @@ li {
         <xsl:if test="$home/args/arg">
             <xsl:text> using </xsl:text>
             <xsl:for-each select="$home/args/arg">
-                <xsl:if test="position() > 1">
+                <xsl:if test="position()> 1">
                     <xsl:text> and </xsl:text>
                 </xsl:if>
                 <xsl:call-template name="ref">
@@ -350,8 +351,8 @@ li {
         </xsl:if>
     </xsl:template>
     <xsl:template name="ref">
-        <xsl:param name="bindings" />
-        <xsl:param name="name" />
+        <xsl:param name="bindings"/>
+        <xsl:param name="name"/>
         <xsl:param name="typed" select="'false'"/>
         <xsl:variable name="type" select="$bindings/binding[name=$name]/type"/>
         <a href="#{$type}">
@@ -363,7 +364,11 @@ li {
                     <xsl:choose>
                         <xsl:when test="$typed = 'true'">
                             <xsl:value-of select="$type"/>
-                            <xsl:text> (a </xsl:text>
+                            <xsl:text> (a</xsl:text>
+                            <xsl:if test="substring($name, 1, 1) = 'a' or substring($name, 1, 1) = 'i'">
+                                <xsl:text>n</xsl:text>
+                            </xsl:if>
+                            <xsl:text> </xsl:text>
                             <xsl:value-of select="$name"/>
                             <xsl:text>)</xsl:text>
                         </xsl:when>
@@ -376,7 +381,9 @@ li {
         </a>
     </xsl:template>
     <xsl:template match="tbds">
-        <h1><xsl:text>TBDs</xsl:text></h1>
+        <h1>
+            <xsl:text>TBDs</xsl:text>
+        </h1>
         <table>
             <thead>
                 <tr>
@@ -392,18 +399,22 @@ li {
     </xsl:template>
     <xsl:template match="tbd">
         <tr>
-            <td><xsl:value-of select="@id"/></td>
-            <td><xsl:value-of select="subject"/></td>
-            <td><xsl:value-of select="description"/></td>
+            <td>
+                <xsl:value-of select="@id"/>
+            </td>
+            <td>
+                <xsl:value-of select="subject"/>
+            </td>
+            <td>
+                <xsl:value-of select="description"/>
+            </td>
         </tr>
     </xsl:template>
-    <xsl:template match="svg">
-        <!--
-        Doesn't work because of a bug in PlantUML integration,
-        see PlantTest.java for more details.
-        <div class="uml">
-            <xsl:value-of select="." disable-output-escaping="yes"/>
+    <xsl:template match="diagram">
+        <div>
+            <div class="uml">
+                <xsl:value-of select="svg" disable-output-escaping="yes"/>
+            </div>
         </div>
-        -->
     </xsl:template>
 </xsl:stylesheet>
