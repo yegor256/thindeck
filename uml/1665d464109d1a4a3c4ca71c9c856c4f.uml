@@ -1,0 +1,18 @@
+@startuml
+
+skinparam component {
+  BackgroundColor<<provided>> White
+}
+component "Meter" as meter
+component "Board" as board
+component "Load Balancer" as lb
+component "Cockpit" as cockpit
+component "Tank" as tank
+lb ..> meter: traffic
+lb <.. board: routing map
+tank ..> meter: CPU/traffic usage
+tank <.. board: hosting map
+cockpit ..> board: updates
+cockpit <.. meter: statistics
+
+@enduml

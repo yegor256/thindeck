@@ -1,0 +1,21 @@
+@startuml
+
+skinparam component {
+  BackgroundColor<<provided>> White
+}
+interface "HTTP/S" as http
+component "Load Balancer" as lb
+actor :Visitor: as visitor
+component "Tank 1" as tank1
+component "Tank 2" as tank2
+component "Meter" as meter
+component "Board" as board
+http - lb
+visitor ..> http: HTTP request
+lb ..> tank1: HTTP request
+lb ..> tank2: HTTP request
+lb <.. tank2: HTTP response
+lb ..> meter: traffic usage
+lb <.. board: routing map
+
+@enduml
