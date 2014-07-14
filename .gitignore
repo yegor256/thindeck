@@ -2,3 +2,4 @@ target/
 _site/
 .sass-cache
 Gemfile.lock
+src/jekyll/uml/
