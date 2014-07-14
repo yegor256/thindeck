@@ -20,4 +20,4 @@ release:
     - "mvn versions:set \"-DnewVersion=${tag}\""
     - "git commit -am \"${tag}\""
     - "mvn clean deploy -Pqulice -Psonatype -Pthindeck --errors --settings ../settings.xml"
-    - "mvn clean site-deploy -Psite -Prempl --errors --settings ../settings.xml"
+    - "mvn clean test site-deploy -Psite -Prempl --errors --settings ../settings.xml"
