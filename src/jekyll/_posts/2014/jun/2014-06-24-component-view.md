@@ -26,8 +26,8 @@ interfaces:
 skinparam component {
   BackgroundColor<<provided>> White
 }
-component "Meter" <<provided>> as meter
-component "Board" <<provided>> as board
+component "Meter" as meter
+component "Board" as board
 component "Load Balancer" as lb
 component "Cockpit" as cockpit
 component "Tank" as tank
@@ -89,8 +89,8 @@ component "Load Balancer" as lb
 actor :Visitor: as visitor
 component "Tank 1" as tank1
 component "Tank 2" as tank2
-component "Meter" <<provided>> as meter
-component "Board" <<provided>> as board
+component "Meter" as meter
+component "Board" as board
 http - lb
 visitor ..> http: HTTP request
 lb ..> tank1: HTTP request
