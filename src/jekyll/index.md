@@ -18,3 +18,5 @@ in joining our development team, send an email to
 Check our [Architecture]({% post_url 2014/apr/2014-04-01-architecture %}).
 
 See also [Software Requirements Specification](/requs/requs.xml).
+
+REMPL list of [PDD puzzles](/rempl/com.rempl.pdd.SummaryReport/index.xml).
