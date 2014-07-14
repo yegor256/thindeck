@@ -72,7 +72,7 @@ Travis reports its progress [here](https://travis-ci.org/yegor256/thindeck).
 ## Deployment Pipeline
 
 When a new version is ready to be deployed to production
-platform, one of architects gives a "deploy" command to Rultor,
+platform, one of architects gives a "release" command to Rultor,
 via a new comment in a Github issue. If it is a bug fix, we're using
 the same Github issue where the bug was fixed.
 
@@ -82,12 +82,14 @@ for a running production environment.
 
 We use [SemVer](http://www.semver.org) notation for product versioning.
 
-Rultor picks up "deploy" command, builds the entire package and deploys
+Rultor picks up "release" command, builds the entire package and deploys
 all JAR artifacts to Maven Central (Load Balancer and Tank). Then,
 it deploys Cockpit to CloudBees. Then it builds and deploys
 documentation website (the one you're looking at now) to Github Pages.
 
 What site deployment is done, Rultor reports success into Github issue.
+
+Rultor also tags deployed version in Github.
 
 Load Balancer and Tank regularly check version number of Cockpit (via HTTP
 requests) and compare it with their own. If versions differ, they attempt
