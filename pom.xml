@@ -69,8 +69,8 @@
         <url>https://github.com/yegor256/thindeck</url>
     </scm>
     <ciManagement>
-        <system>rultor</system>
-        <url>http://www.rultor.com/s/thindeck</url>
+        <system>travis</system>
+        <url>https://travis-ci.org/yegor256/thindeck</url>
     </ciManagement>
     <distributionManagement>
         <site>
