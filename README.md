@@ -1,6 +1,7 @@
 <img src="http://img.thindeck.com/logo-384x128.png" width="192px" height="64px" />
 
 [![Build Status](https://travis-ci.org/yegor256/thindeck.svg?branch=master)](https://travis-ci.org/yegor256/thindeck)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.thindeck/thideck/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.thindeck/thindeck)
 
 [Thindeck.com](http://www.thindeck.com) is a web hosting that deploys itself.
 
