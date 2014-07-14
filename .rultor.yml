@@ -10,6 +10,8 @@ deploy:
     - "sudo apt-get install -y openjdk-6-jre"
     - "wget --retry-connrefused http://yar.fruct.org/attachments/download/362/plantuml_7707-1_all.deb"
     - "sudo dpkg -i plantuml_7707-1_all.deb"
+    - "wget --retry-connrefused https://oss.sonatype.org/content/repositories/releases/net/sourceforge/plantuml/plantuml/8000/plantuml-8000.jar"
+    - "mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar"
     - "sudo bundle"
     - "mvn clean deploy site-deploy -Pqulice --errors --settings ../settings.xml"
 
