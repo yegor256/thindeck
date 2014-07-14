@@ -13,6 +13,8 @@ release:
   env:
     MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
   script:
+    - "wget --retry-connrefused http://yar.fruct.org/attachments/download/362/plantuml_7707-1_all.deb"
+    - "sudo dpkg -i plantuml_7707-1_all.deb"
     - "sudo bundle"
     - "mvn versions:set \"-DnewVersion=${tag}\""
     - "git commit -am \"${tag}\""
