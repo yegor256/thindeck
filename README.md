@@ -13,7 +13,7 @@ How it works:
  4. Every five minutes we pull your repo and restart a container on changes
  5. You pay for our CPU usage (per load!) and traffic (per Gb)
 
-Look at [Software Requirements Specification (SRS)](http://doc.thindeck.com/requs/main.xml).
+Look at [Software Requirements Specification (SRS)](http://doc.thindeck.com/requs/requs.xml).
 
 Technical documentation is [here](http://doc.thindeck.com/).
 
