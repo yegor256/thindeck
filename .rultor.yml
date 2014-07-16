@@ -13,8 +13,8 @@ deploy:
     - "wget --retry-connrefused https://oss.sonatype.org/content/repositories/releases/net/sourceforge/plantuml/plantuml/8000/plantuml-8000.jar"
     - "mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar"
     - "sudo bundle"
-    - "mvn clean test deploy -Ppdd -Pqulice --errors --settings ../settings.xml"
-    - "mvn clean site-deploy -Psite -Prempl --errors --settings ../settings.xml"
+    - "mvn clean deploy -Ppdd -Pqulice --errors --settings ../settings.xml"
+    - "mvn clean test site-deploy -Psite -Prempl --errors --settings ../settings.xml"
 
 merge:
   env:
