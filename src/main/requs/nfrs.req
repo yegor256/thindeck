@@ -22,8 +22,8 @@ UC1/FIN must "present total summary of consumed resources to the
   user in a table with these columns: Container (id), Inbound traffic (Gb),
   Outbound traffic (Gb), CPU time (min), Cost ($).
   Each table row corresponds to a container. Last row contains
-  totals by all containers. The values in the table are usage stats by container
-  within specified time interval".
+  totals by all containers. The values in the table are usage stats
+  by container within specified time interval".
 
 UC2/PERF must "each physical server should be able to host 4 actively working
   containers inside it, altogether handling 3M hits and 200 Gb of traffic
@@ -40,7 +40,8 @@ UC10.1/MTBF must "be 30 days in case a container is responding to a visitor's
   request in more than 30 seconds".
 
 UC10.1/MTBF must "be 30 days in case an application which worked correctly at
-  another server returns an internal server error after deployment in the system".
+  another server returns an internal server error after deployment
+  in the system".
 
 
 
