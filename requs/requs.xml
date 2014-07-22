@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="7498" time="2014-07-21T09:54:08">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="6293" time="2014-07-22T10:23:53">
    <files>
       <file id="0" line="1">/main/repo/src/main/requs/acronyms.req</file>
       <file id="1" line="16">/main/repo/src/main/requs/anonymous.req</file>
       <file id="2" line="31">/main/repo/src/main/requs/main.req</file>
       <file id="3" line="135">/main/repo/src/main/requs/nfrs.req</file>
-      <file id="4" line="181">/main/repo/src/main/requs/vision.req</file>
+      <file id="4" line="192">/main/repo/src/main/requs/vision.req</file>
    </files>
    <input>MTBF means "Mean Time Between Failures,
 which is time that System spends in continuous
@@ -165,15 +165,26 @@ UC1/FIN must "present total summary of consumed resources to the
   user in a table with these columns: Container (id), Inbound traffic (Gb),
   Outbound traffic (Gb), CPU time (min), Cost ($).
   Each table row corresponds to a container. Last row contains
-  totals by all containers. The values in the table are usage stats by container
-  within specified time interval".
+  totals by all containers. The values in the table are usage stats
+  by container within specified time interval".
 
 UC2/PERF must "each physical server should be able to host 4 actively working
   containers inside it, altogether handling 3M hits and 200 Gb of traffic
   per month, or 100K and 6.6 Gb per day".
 
+UC2/MTBF must "be 30 days".
 
+UC9.1/MTBF must "be 30 days".
 
+UC10.1/MTBF must "be 30 days in case a container is not responding to
+  an expected port".
+
+UC10.1/MTBF must "be 30 days in case a container is responding to a visitor's
+  request in more than 30 seconds".
+
+UC10.1/MTBF must "be 30 days in case an application which worked correctly at
+  another server returns an internal server error after deployment
+  in the system".
 
 
 
@@ -1624,10 +1635,11 @@ class Application {
       </type>
    </types>
    <methods>
-      <method seal="769861">
+      <method seal="209d96">
          <id>UC9.1</id>
          <mentioned>
             <where>1:12</where>
+            <where>3:34</where>
          </mentioned>
          <bindings>
             <binding>
@@ -1669,6 +1681,14 @@ class Application {
                <result>stats</result>
             </step>
          </steps>
+         <nfrs>
+            <nfr>
+               <id>MTBF</id>
+               <info>
+                  <informal>be 30 days</informal>
+               </info>
+            </nfr>
+         </nfrs>
          <markdown>The following table describes all technical details of Use Case `UC9.1`:
 
 &lt;div&gt;
@@ -1703,6 +1723,10 @@ class Application {
                &lt;td&gt;1. &lt;code&gt;anonymous&lt;/code&gt; reads &lt;code&gt;data&lt;/code&gt;
                   &lt;br/&gt;2. &lt;code&gt;anonymous&lt;/code&gt; reads &lt;code&gt;stats&lt;/code&gt;
                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+               &lt;td&gt;NFRs&lt;/td&gt;
+               &lt;td&gt;MTBF must  "be 30 days"&lt;/td&gt;
             &lt;/tr&gt;
          &lt;/tbody&gt;
       &lt;/table&gt;
@@ -1768,6 +1792,10 @@ Actors taking participation in the Use Case have the following properties:
                &lt;td&gt;1. &lt;code&gt;anonymous&lt;/code&gt; reads &lt;code&gt;data&lt;/code&gt;
                   &lt;br/&gt;2. &lt;code&gt;anonymous&lt;/code&gt; reads &lt;code&gt;stats&lt;/code&gt;
                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+               &lt;td&gt;NFRs&lt;/td&gt;
+               &lt;td&gt;MTBF must  "be 30 days"&lt;/td&gt;
             &lt;/tr&gt;
          &lt;/tbody&gt;
       &lt;/table&gt;
@@ -2090,8 +2118,8 @@ primary -&gt; main
   user in a table with these columns: Container (id), Inbound traffic (Gb),
   Outbound traffic (Gb), CPU time (min), Cost ($).
   Each table row corresponds to a container. Last row contains
-  totals by all containers. The values in the table are usage stats by container
-  within specified time interval</informal>
+  totals by all containers. The values in the table are usage stats
+  by container within specified time interval</informal>
                </info>
             </nfr>
          </nfrs>
@@ -2530,11 +2558,12 @@ main ---&gt; UC6
             </diagram>
          </diagrams>
       </method>
-      <method seal="cd046f">
+      <method seal="11733c">
          <id>UC2</id>
          <mentioned>
             <where>2:9</where>
             <where>3:30</where>
+            <where>3:32</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2598,6 +2627,12 @@ main ---&gt; UC6
   per month, or 100K and 6.6 Gb per day</informal>
                </info>
             </nfr>
+            <nfr>
+               <id>MTBF</id>
+               <info>
+                  <informal>be 30 days</informal>
+               </info>
+            </nfr>
          </nfrs>
          <markdown>The following table describes all technical details of Use Case `UC2`:
 
@@ -2638,7 +2673,7 @@ main ---&gt; UC6
             &lt;/tr&gt;
             &lt;tr&gt;
                &lt;td&gt;NFRs&lt;/td&gt;
-               &lt;td&gt;PERF must  "each physical server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;/td&gt;
+               &lt;td&gt;PERF must  "each physical server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;br/&gt;MTBF must  "be 30 days"&lt;/td&gt;
             &lt;/tr&gt;
          &lt;/tbody&gt;
       &lt;/table&gt;
@@ -2727,7 +2762,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/tr&gt;
             &lt;tr&gt;
                &lt;td&gt;NFRs&lt;/td&gt;
-               &lt;td&gt;PERF must  "each physical server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;/td&gt;
+               &lt;td&gt;PERF must  "each physical server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;br/&gt;MTBF must  "be 30 days"&lt;/td&gt;
             &lt;/tr&gt;
          &lt;/tbody&gt;
       &lt;/table&gt;
@@ -3964,10 +3999,13 @@ primary -&gt; main
             </diagram>
          </diagrams>
       </method>
-      <method seal="0f4b31">
+      <method seal="b1ac73">
          <id>UC10.1</id>
          <mentioned>
             <where>2:32</where>
+            <where>3:37</where>
+            <where>3:40</where>
+            <where>3:44</where>
          </mentioned>
          <bindings>
             <binding>
@@ -4034,6 +4072,20 @@ primary -&gt; main
                </info>
             </step>
          </steps>
+         <nfrs>
+            <nfr>
+               <id>MTBF</id>
+               <info>
+                  <informal>be 30 days in case a container is not responding to
+  an expected port</informal>
+                  <informal>be 30 days in case a container is responding to a visitor's
+  request in more than 30 seconds</informal>
+                  <informal>be 30 days in case an application which worked correctly at
+  another server returns an internal server error after deployment
+  in the system</informal>
+               </info>
+            </nfr>
+         </nfrs>
          <markdown>The following table describes all technical details of Use Case `UC10.1`:
 
 &lt;div&gt;
@@ -4070,6 +4122,10 @@ primary -&gt; main
                   &lt;br/&gt;2. &lt;code&gt;_self&lt;/code&gt; fail&lt;br/&gt;3. &lt;code&gt;visitor&lt;/code&gt; creates &lt;code&gt;invoice&lt;/code&gt;
                   &lt;br/&gt;4. &lt;code&gt;visitor&lt;/code&gt; updates &lt;code&gt;invoice&lt;/code&gt;
                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+               &lt;td&gt;NFRs&lt;/td&gt;
+               &lt;td&gt;MTBF must  "be 30 days in case a container is not responding to an expected port" and "be 30 days in case a container is responding to a visitor's request in more than 30 seconds" and "be 30 days in case an application which worked correctly at another server returns an internal server error after deployment in the system"&lt;/td&gt;
             &lt;/tr&gt;
          &lt;/tbody&gt;
       &lt;/table&gt;
@@ -4149,6 +4205,10 @@ Actors taking participation in the Use Case have the following properties:
                   &lt;br/&gt;2. &lt;code&gt;_self&lt;/code&gt; fail&lt;br/&gt;3. &lt;code&gt;visitor&lt;/code&gt; creates &lt;code&gt;invoice&lt;/code&gt;
                   &lt;br/&gt;4. &lt;code&gt;visitor&lt;/code&gt; updates &lt;code&gt;invoice&lt;/code&gt;
                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+               &lt;td&gt;NFRs&lt;/td&gt;
+               &lt;td&gt;MTBF must  "be 30 days in case a container is not responding to an expected port" and "be 30 days in case a container is responding to a visitor's request in more than 30 seconds" and "be 30 days in case an application which worked correctly at another server returns an internal server error after deployment in the system"&lt;/td&gt;
             &lt;/tr&gt;
          &lt;/tbody&gt;
       &lt;/table&gt;
