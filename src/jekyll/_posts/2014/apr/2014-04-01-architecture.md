@@ -51,10 +51,8 @@ There is a dedicated article for [Deployment View]({% post_url 2014/jun/2014-06-
 
 ## 6. Use Cases, Sequence Diagrams
 
-To be continued...
-
-> @todo #1/DES Requs should automatically generate the use case sequence diagrams.
->  It doesn't support it yet, but when it does, let's include that here.
+Use Cases and their associated Sequence Diagrams can be found in the
+[Software Requirements Specification](/requs/requs.xml).
 
 ## 7. Technical Risks
 
