@@ -27,18 +27,10 @@
 <puzzle>
 <ticket>1</ticket>
 <file>src/jekyll/_posts/2014/apr/2014-04-01-architecture.md</file>
-<body>Requs should automatically generate the use case sequence diagrams. It doesn't support it yet, but when it does, let's include that here.</body>
-<role>DES</role>
-<estimate>0</estimate>
-<lines>56-57</lines>
-</puzzle>
-<puzzle>
-<ticket>1</ticket>
-<file>src/jekyll/_posts/2014/apr/2014-04-01-architecture.md</file>
 <body>We need to identify the risks associated with this project. Let's document those risks in this section.</body>
 <role>DES</role>
 <estimate>0</estimate>
-<lines>63-64</lines>
+<lines>61-62</lines>
 </puzzle>
 <puzzle>
 <ticket>1</ticket>
@@ -46,7 +38,7 @@
 <body>Let's document the architectural and design decisions in this section.</body>
 <role>DES</role>
 <estimate>0</estimate>
-<lines>70-71</lines>
+<lines>68-69</lines>
 </puzzle>
 <puzzle>
 <ticket>239</ticket>
