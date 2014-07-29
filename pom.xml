@@ -30,6 +30,9 @@
     <artifactId>thindeck</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <modules>
+        <module>thindeck-cockpit</module>
+    </modules>
     <name>thindeck</name>
     <description>Thindeck.com, Web Hosting That Deploys Itself</description>
     <url>http://www.thindeck.com</url>
@@ -80,10 +83,14 @@
     </distributionManagement>
     <properties>
         <requs.version>1.14</requs.version>
+        <jersey.version>1.18.1</jersey.version>
     </properties>
     <build>
         <plugins>
-            <plugin>
+            <!-- @todo #136 Enable plugin after it will support excludes.
+                see https://github.com/teamed/requs/issues/95 for details
+            -->
+<!--            <plugin>
                 <groupId>org.requs</groupId>
                 <artifactId>requs-maven-plugin</artifactId>
                 <version>${requs.version}</version>
@@ -94,7 +101,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
                 <configuration>
@@ -226,6 +233,26 @@
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>qulice</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.qulice</groupId>
+                        <artifactId>qulice-maven-plugin</artifactId>
+                        <configuration>
+                            <excludes combine.children="append">
+                                <exclude>checkstyle:/src/jekyll/*.*</exclude>
+                                <exclude>xml:/src/main/webapp/xsl/.*</exclude>
+                                <exclude>xml:/src/main/webapp/WEB-INF/.*</exclude>
+                                <exclude>findbugs:.*</exclude>
+                                <exclude>duplicatefinder:.*</exclude>
+                            </excludes>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
