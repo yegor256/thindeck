@@ -39,7 +39,7 @@
     <description>thindeck.com r${buildNumber}</description>
     <context-param>
         <param-name>Webmaster</param-name>
-        <param-value>yegor@netbout.com</param-value>
+        <param-value>webmaster@thindeck.com</param-value>
     </context-param>
     <servlet-mapping>
         <servlet-name>default</servlet-name>
@@ -56,10 +56,6 @@
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/js/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>/lang/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>default</servlet-name>
