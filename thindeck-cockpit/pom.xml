@@ -85,7 +85,7 @@
                 <artifactId>requs-maven-plugin</artifactId>
                 <version>${requs.version}</version>
                 <configuration>
-                    <skip>true</skip>
+                    <version>1.9.2</version>
                 </configuration>
             </plugin>
         </plugins>

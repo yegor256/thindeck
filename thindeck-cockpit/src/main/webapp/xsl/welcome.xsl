@@ -62,5 +62,8 @@
             It should be
         -->
         <p>Coming soon ...</p>
+        <a title="stats" href="{links/link[@rel='stats']/@href}">
+            Stats
+        </a>
     </xsl:template>
 </xsl:stylesheet>

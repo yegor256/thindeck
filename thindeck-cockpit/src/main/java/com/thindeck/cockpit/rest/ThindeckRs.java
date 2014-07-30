@@ -29,7 +29,7 @@
  */
 package com.thindeck.cockpit.rest;
 
-import com.rexsl.page.JaxbBundle;
+import com.rexsl.page.Link;
 import com.rexsl.page.PageBuilder;
 import java.io.IOException;
 import javax.ws.rs.GET;
@@ -56,7 +56,24 @@ public final class ThindeckRs extends BaseRs {
             .stylesheet("/xsl/welcome.xsl")
             .build(CpPage.class)
             .init(this)
-            .append(new JaxbBundle("score", "123"))
+            .link(new Link("stats", "./stats"))
+            .render()
+            .build();
+    }
+
+    /**
+     * Get cockpit runtime stats page.
+     * @return The JAX-RS response
+     * @throws IOException If fails
+     */
+    @GET
+    @Path("/stats")
+    public Response stats() throws IOException {
+        return new PageBuilder()
+            .stylesheet("/xsl/stats.xsl")
+            .build(CpPage.class)
+            .init(this)
+            .link(new Link("welcome", "./"))
             .render()
             .build();
     }
