@@ -50,7 +50,6 @@ public final class ThindeckRs extends BaseRs {
      * @throws IOException If fails
      */
     @GET
-    @Path("/")
     public Response front() throws IOException {
         return new PageBuilder()
             .stylesheet("/xsl/welcome.xsl")

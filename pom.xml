@@ -247,6 +247,7 @@
                         <configuration>
                             <excludes combine.children="append">
                                 <exclude>checkstyle:/src/jekyll/*.*</exclude>
+                                <exclude>checkstyle:/src/test/casperjs/*.*</exclude>
                                 <exclude>xml:/src/main/webapp/xsl/.*</exclude>
                                 <exclude>xml:/src/main/webapp/WEB-INF/.*</exclude>
                                 <exclude>findbugs:.*</exclude>
