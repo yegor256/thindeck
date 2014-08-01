@@ -157,12 +157,16 @@ update (every five minutes):
   repository manifests.
 
   3. Goes through `alive` list of hostnames and makes a decision
-  which `hostname` needs more running containers.
-
->   @todo #239 How should we decide which hostname needs more containers?
->    I'm not sure how to do it. Should be a combination of factors,
->    including data from Meter. It's important to have at least three
->    running containers for any repository.
+  which `hostname` needs more running containers. The Tank should try to keep a
+  balance between good resource utilization and high performance. To achieve
+  this goal, we should target a load percentage of 50 to 75%:
+    * At the minimum, there should be at least three running containers for any
+    repository.
+    * If the five minute load average of a given `hostname` exceeds 75%,
+    Tank should start a new container for it.
+    * If the five minute load average of a given `hostname` falls below 50%,
+    Tank should shut down one of the containers (picked randomly) that are
+    allocated for it.
 
   4. Makes a decision about currently running Tanks. If we need more
   Tanks, their number should be increased by requesting more
