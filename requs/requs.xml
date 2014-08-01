@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="6600" time="2014-07-29T13:08:46">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="6582" time="2014-08-01T09:44:57">
    <files>
       <file id="0" line="1">/main/repo/src/main/requs/acronyms.req</file>
       <file id="1" line="16">/main/repo/src/main/requs/anonymous.req</file>
       <file id="2" line="31">/main/repo/src/main/requs/main.req</file>
       <file id="3" line="135">/main/repo/src/main/requs/nfrs.req</file>
-      <file id="4" line="192">/main/repo/src/main/requs/vision.req</file>
+      <file id="4" line="195">/main/repo/src/main/requs/vision.req</file>
    </files>
    <input>MTBF means "Mean Time Between Failures,
 which is time that System spends in continuous
@@ -173,6 +173,9 @@ UC2/PERF must "each physical server should be able to host 4 actively working
   per month, or 100K and 6.6 Gb per day".
 
 UC2/MTBF must "be 30 days".
+
+UC2/LOG must "be kept for 180 days since creation.
+  Log is deleted once the 180 day mark is reached".
 
 UC9.1/MTBF must "be 30 days".
 
@@ -1639,7 +1642,7 @@ class Application {
          <id>UC9.1</id>
          <mentioned>
             <where>1:12</where>
-            <where>3:34</where>
+            <where>3:37</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2558,12 +2561,13 @@ main ---&gt; UC6
             </diagram>
          </diagrams>
       </method>
-      <method seal="11733c">
+      <method seal="b32f3a">
          <id>UC2</id>
          <mentioned>
             <where>2:9</where>
             <where>3:30</where>
             <where>3:32</where>
+            <where>3:35</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2633,6 +2637,13 @@ main ---&gt; UC6
                   <informal>be 30 days</informal>
                </info>
             </nfr>
+            <nfr>
+               <id>LOG</id>
+               <info>
+                  <informal>be kept for 180 days since creation.
+  Log is deleted once the 180 day mark is reached</informal>
+               </info>
+            </nfr>
          </nfrs>
          <markdown>The following table describes all technical details of Use Case `UC2`:
 
@@ -2673,7 +2684,7 @@ main ---&gt; UC6
             &lt;/tr&gt;
             &lt;tr&gt;
                &lt;td&gt;NFRs&lt;/td&gt;
-               &lt;td&gt;PERF must  "each physical server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;br/&gt;MTBF must  "be 30 days"&lt;/td&gt;
+               &lt;td&gt;PERF must  "each physical server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;br/&gt;MTBF must  "be 30 days"&lt;br/&gt;LOG must  "be kept for 180 days since creation. Log is deleted once the 180 day mark is reached"&lt;/td&gt;
             &lt;/tr&gt;
          &lt;/tbody&gt;
       &lt;/table&gt;
@@ -2762,7 +2773,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/tr&gt;
             &lt;tr&gt;
                &lt;td&gt;NFRs&lt;/td&gt;
-               &lt;td&gt;PERF must  "each physical server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;br/&gt;MTBF must  "be 30 days"&lt;/td&gt;
+               &lt;td&gt;PERF must  "each physical server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;br/&gt;MTBF must  "be 30 days"&lt;br/&gt;LOG must  "be kept for 180 days since creation. Log is deleted once the 180 day mark is reached"&lt;/td&gt;
             &lt;/tr&gt;
          &lt;/tbody&gt;
       &lt;/table&gt;
@@ -4003,9 +4014,9 @@ primary -&gt; main
          <id>UC10.1</id>
          <mentioned>
             <where>2:32</where>
-            <where>3:37</where>
             <where>3:40</where>
-            <where>3:44</where>
+            <where>3:43</where>
+            <where>3:47</where>
          </mentioned>
          <bindings>
             <binding>
