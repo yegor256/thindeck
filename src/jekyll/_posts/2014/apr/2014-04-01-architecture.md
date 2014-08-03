@@ -40,9 +40,8 @@ To be continued...
 >  included in the SRS. But, we also need to show the classes and interfaces
 >  that involve the other parts of the system, e.g. API infrastructure,
 >  UI classes, data persistence classes, etc.
-> @todo #1/DES Let's define the packaging structure of Thindeck. Describe the
->  purposes of each package, the classes and resources that they contain, etc.
->  Include a diagram showing how they are all related.
+
+There is a dedicated article for [Packaging]({% post_url 2014/aug/2014-08-03-packaging %}).
 
 ## 4. Component View
 
