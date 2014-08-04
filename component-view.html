@@ -144,21 +144,23 @@ Check out those that don&#39;t have any records in <code>hosts</code>,
 and update mapping <code>hosts</code> according to the information in
 repository manifests.</p></li>
 <li><p>Goes through <code>alive</code> list of hostnames and makes a decision
-which <code>hostname</code> needs more running containers.</p></li>
-</ol>
+which <code>hostname</code> needs more running containers. The Tank should try to keep a
+balance between good resource utilization and high performance. To achieve
+this goal, we should target a load percentage of 50 to 75%:</p>
 
-<blockquote>
-<p>@todo #239 How should we decide which hostname needs more containers?
-   I&#39;m not sure how to do it. Should be a combination of factors,
-   including data from Meter. It&#39;s important to have at least three
-   running containers for any repository.</p>
-</blockquote>
-
-<ol>
-<li>Makes a decision about currently running Tanks. If we need more
+<ul>
+<li>At the minimum, there should be at least three running containers for any
+repository.</li>
+<li>If the five minute load average of a given <code>hostname</code> exceeds 75%,
+Tank should start a new container for it.</li>
+<li>If the five minute load average of a given <code>hostname</code> falls below 50%,
+Tank should shut down one of the containers (picked randomly) that are
+allocated for it.</li>
+</ul></li>
+<li><p>Makes a decision about currently running Tanks. If we need more
 Tanks, their number should be increased by requesting more
 instances from hosting provider. If we need less, random Tanks
-should be terminated.</li>
+should be terminated.</p></li>
 </ol>
 
 <blockquote>
