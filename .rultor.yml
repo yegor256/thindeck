@@ -16,7 +16,6 @@ deploy:
     - "sudo bundle"
     - "mvn clean deploy -Pqulice --errors --settings ../settings.xml"
     - "mvn clean test site-deploy -Pgh-pages -Psite --errors --settings ../settings.xml"
-    - "sudo gem install pdd"
     - "pdd --source=$(pwd) --verbose --file=thindeck.xml"
     - "s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml > /dev/null"
 
@@ -26,7 +25,6 @@ merge:
   script:
     - "mvn clean install -Pqulice --errors --settings ../settings.xml"
     - "mvn clean site -Psite --errors --settings ../settings.xml"
-    - "sudo gem install pdd"
     - "pdd --source=$(pwd) --verbose --file=/dev/null"
 
 release:
