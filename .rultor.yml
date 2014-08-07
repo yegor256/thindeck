@@ -15,7 +15,7 @@ deploy:
     - "mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar"
     - "sudo bundle"
     - "mvn clean deploy -Pqulice --errors --settings ../settings.xml"
-    - "mvn clean test site-deploy -Psite -Prempl --errors --settings ../settings.xml"
+    - "mvn clean test site-deploy -Pgh-pages -Psite -Prempl --errors --settings ../settings.xml"
     - "sudo gem install pdd"
     - "pdd --source=$(pwd) --verbose --file=thindeck.xml"
     - "s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml > /dev/null"
