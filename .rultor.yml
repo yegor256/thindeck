@@ -18,7 +18,7 @@ deploy:
     - "mvn clean test site-deploy -Psite -Prempl --errors --settings ../settings.xml"
     - "sudo gem install pdd"
     - "pdd --source=$(pwd) --verbose --file=thindeck.xml"
-    - "s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.jcabi.com/thindeck.xml > /dev/null"
+    - "s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml > /dev/null"
 
 merge:
   env:
