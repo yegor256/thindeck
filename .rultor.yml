@@ -25,6 +25,9 @@ merge:
     MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
   script:
     - "mvn clean install -Pqulice --errors --settings ../settings.xml"
+    - "mvn clean site -Psite --errors --settings ../settings.xml"
+    - "sudo gem install pdd"
+    - "pdd --source=$(pwd) --verbose --file=/dev/null"
 
 release:
   env:
@@ -33,5 +36,3 @@ release:
     - "mvn versions:set \"-DnewVersion=${tag}\""
     - "git commit -am \"${tag}\""
     - "mvn clean deploy -Pqulice -Psonatype -Pthindeck --errors --settings ../settings.xml"
-    - "sudo gem install pdd"
-    - "pdd --source=$(pwd) --verbose --file=/dev/null"
