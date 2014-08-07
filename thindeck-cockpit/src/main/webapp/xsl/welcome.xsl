@@ -52,14 +52,14 @@
             Pricing
         </h3>
         <!-- @todo #136 Fill the text of 'Terms of service' part.
-            It might need to create separate page for that
+              It might need to create separate page for that
         -->
         <p>Coming soon ...</p>
         <h3>
             Terms of service
         </h3>
         <!-- @todo #136 Fill the text of 'Terms of service' part.
-            It should be
+              It should be here.
         -->
         <p>Coming soon ...</p>
         <a title="stats" href="{links/link[@rel='stats']/@href}">
