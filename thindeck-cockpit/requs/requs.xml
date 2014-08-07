@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="394" time="2014-08-07T20:35:15">
+   <files>
+      <file id="0" line="1">/main/repo/thindeck-cockpit/src/main/requs/empty.req</file>
+   </files>
+   <input/>
+   <errors/>
+   <metrics>
+      <metric id="ambiguity.total">0</metric>
+   </metrics>
+   <tbds/>
+   <requs>
+      <version>1.14</version>
+      <revision>e99914e</revision>
+      <date>2014-07-02 10:18</date>
+   </requs>
+</spec>
