@@ -81,6 +81,12 @@
     <build>
         <plugins>
             <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>com.github.github</groupId>
                 <artifactId>site-maven-plugin</artifactId>
                 <configuration>
@@ -210,4 +216,42 @@
 
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>cloudbees</id>
+            <activation>
+                <property><name>bees.appId</name></property>
+            </activation>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>cloudbees-public-release</id>
+                    <url>http://repository-cloudbees.forge.cloudbees.com/public-release</url>
+                </pluginRepository>
+            </pluginRepositories>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.cloudbees</groupId>
+                        <artifactId>bees-maven-plugin</artifactId>
+                        <version>1.3.2</version>
+                        <configuration>
+                            <appid>${bees.appId}</appid>
+                            <apikey>${bees.apikey}</apikey>
+                            <secret>${bees.secret}</secret>
+                            <message>${buildNumber}</message>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>deploy-to-production</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
