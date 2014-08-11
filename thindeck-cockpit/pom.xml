@@ -39,12 +39,12 @@
     <parent>
         <groupId>com.thindeck</groupId>
         <artifactId>thindeck</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.0.2</version>
     </parent>
 
     <artifactId>thindeck-cockpit</artifactId>
     <name>thindeck-cockpit</name>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.2</version>
 
     <packaging>war</packaging>
 
