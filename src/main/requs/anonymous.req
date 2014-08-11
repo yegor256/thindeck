@@ -12,3 +12,13 @@ RuntimeStatistics is "a graphical and textual information about
 UC9.1 where Anonymous (an anonymous) explores thindeck:
   1. The anonymous reads PublicData (a data);
   2. The anonymous reads RuntimeStatistics (a stats).
+UC9.1/UI must "comply to AnonymousPages".
+
+AnonymousPages: """
+These pages are available to any Anonymous user:
+
+- **Front**. Pricing, "how it works", etc.
+- **Stats**. Our runtime stats, similar to
+[github ones](https://status.github.com).
+- **Terms**. All legal wordings.
+""".
