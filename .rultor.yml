@@ -14,8 +14,7 @@ deploy:
     - "wget --retry-connrefused https://oss.sonatype.org/content/repositories/releases/net/sourceforge/plantuml/plantuml/8000/plantuml-8000.jar"
     - "mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar"
     - "sudo bundle"
-    - "mvn clean deploy -Pqulice --errors --settings ../settings.xml"
-    - "mvn clean test site-deploy -Pgh-pages -Psite --errors --settings ../settings.xml"
+    - "mvn clean test install site-deploy -Pgh-pages -Psite -Pqulice --errors --settings ../settings.xml"
     - "pdd --source=$(pwd) --verbose --file=thindeck.xml"
     - "s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml > /dev/null"
 
@@ -23,8 +22,7 @@ merge:
   env:
     MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
   script:
-    - "mvn clean install -Pqulice --errors --settings ../settings.xml"
-    - "mvn clean site -Psite --errors --settings ../settings.xml"
+    - "mvn clean install site -Pqulice -Psite --errors --settings ../settings.xml"
     - "pdd --source=$(pwd) --verbose --file=/dev/null"
 
 release:
