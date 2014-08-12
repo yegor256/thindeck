@@ -2,6 +2,7 @@ assets:
   settings.xml: "yegor256/home#assets/thindeck/settings.xml"
   pubring.gpg: "yegor256/home#assets/pubring.gpg"
   secring.gpg: "yegor256/home#assets/secring.gpg"
+  s3cfg: "yegor256/home#assets/s3cfg"
 
 deploy:
   env:
@@ -12,15 +13,23 @@ deploy:
     - "sudo dpkg -i plantuml_7707-1_all.deb"
     - "wget --retry-connrefused https://oss.sonatype.org/content/repositories/releases/net/sourceforge/plantuml/plantuml/8000/plantuml-8000.jar"
     - "mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar"
-    - "sudo bundle"
-    - "mvn clean deploy -Ppdd -Pqulice --errors --settings ../settings.xml"
-    - "mvn clean test site-deploy -Psite -Prempl --errors --settings ../settings.xml"
+    - "sudo bundle install"
+    - "mvn clean test install site-deploy -Pgh-pages -Psite -Pqulice --errors --settings ../settings.xml"
+    - "pdd --source=$(pwd) --verbose --file=thindeck.xml"
+    - "s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml > /dev/null"
 
 merge:
   env:
     MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
   script:
-    - "mvn clean install -Pqulice --errors --settings ../settings.xml"
+    - "sudo apt-get install -y openjdk-6-jre"
+    - "wget --retry-connrefused http://yar.fruct.org/attachments/download/362/plantuml_7707-1_all.deb"
+    - "sudo dpkg -i plantuml_7707-1_all.deb"
+    - "wget --retry-connrefused https://oss.sonatype.org/content/repositories/releases/net/sourceforge/plantuml/plantuml/8000/plantuml-8000.jar"
+    - "mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar"
+    - "sudo bundle install"
+    - "mvn clean install site -Pqulice -Psite --errors --settings ../settings.xml"
+    - "pdd --source=$(pwd) --verbose --file=/dev/null"
 
 release:
   env:
