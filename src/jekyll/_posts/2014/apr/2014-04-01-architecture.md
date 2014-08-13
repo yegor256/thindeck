@@ -7,6 +7,7 @@ description:
 authors:
   - "Carlos Miranda"
   - "Yegor Bugayenko"
+  - "Krzysztof Krason"
 ---
 
 This document specifies architecture and design decisions made in relation to
@@ -101,10 +102,11 @@ Use Cases and their associated Sequence Diagrams can be found in the
 
 ## 7. Technical Risks
 
-To be continued...
-
-> @todo #1/DES We need to identify the risks associated with this project. Let's
->  document those risks in this section.
+Following risks have been identified:
+* implementing own load balancer might be a performance bottleneck 
+* without a good filter at/before load balancer attacker might cause high cpu usage, and as a result unnecessary number of containers being deployed resulting in high cost for the user
+* relaying on AWS could cause problems if a migration would be desirable (e.g. when a better platform is found)
+* UI responsive design might be to heavy for mobile devices
 
 ## 8. Decisions Made
 
