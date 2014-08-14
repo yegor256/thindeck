@@ -168,11 +168,13 @@ update (every five minutes):
     Tank should shut down one of the containers (picked randomly) that are
     allocated for it.
 
-  4. Makes a decision about currently running Tanks. If we need more
-  Tanks, their number should be increased by requesting more
-  instances from hosting provider. If we need less, random Tanks
-  should be terminated.
-
->   @todo #239 How we decide when to start/stop Tanks? I'm not
->    sure how to make such a decision. Should be a combination
->    of factors.
+  4. Makes a decision about currently running Tanks. We should keep a balance
+  between efficient usage of available Tanks and high performance. If we need
+  more Tanks, their number should be increased by requesting more instances from
+  hosting provider. If we need less, random Tanks should be terminated. We will
+  target a load average across all Tanks of 50 to 75%
+    * At the minimum, there should be at least one running Tank available.
+    * If the five minute load average all running Tanks exceeds 75%, we should
+    request a new instance from the hosting provider.
+    * If the five minute load average all running tanks falls below 50%, one
+    Tank will be terminated at random.
