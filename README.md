@@ -1,5 +1,7 @@
 <img src="http://img.thindeck.com/logo-384x128.png" width="192px" height="64px" />
 
+[![Made By Teamed.io](http://img.teamed.io/btn.svg)](http://www.teamed.io)
+
 [![Build Status](https://travis-ci.org/yegor256/thindeck.svg?branch=master)](https://travis-ci.org/yegor256/thindeck)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.thindeck/thideck/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.thindeck/thindeck)
 

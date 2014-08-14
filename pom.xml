@@ -30,6 +30,9 @@
     <artifactId>thindeck</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <modules>
+        <module>thindeck-cockpit</module>
+    </modules>
     <name>thindeck</name>
     <description>Thindeck.com, Web Hosting That Deploys Itself</description>
     <url>http://www.thindeck.com</url>
@@ -80,6 +83,7 @@
     </distributionManagement>
     <properties>
         <requs.version>1.14</requs.version>
+        <jersey.version>1.18.1</jersey.version>
     </properties>
     <build>
         <plugins>
@@ -87,6 +91,7 @@
                 <groupId>org.requs</groupId>
                 <artifactId>requs-maven-plugin</artifactId>
                 <version>${requs.version}</version>
+                <inherited>false</inherited>
                 <executions>
                     <execution>
                         <goals>
@@ -143,89 +148,22 @@
     </build>
     <profiles>
         <profile>
-            <id>pdd</id>
+            <id>qulice</id>
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>com.rempl.plugins</groupId>
-                        <artifactId>rempl-maven-plugin</artifactId>
-                        <version>1.4</version>
-                        <executions>
-                            <execution>
-                                <phase>generate-resources</phase>
-                                <goals>
-                                    <goal>read</goal>
-                                </goals>
-                                <configuration>
-                                    <profiles>
-                                        <profile>
-                                            <type>com.rempl.pdd.PDDProfile</type>
-                                            <arguments>
-                                                <argument>${basedir}</argument>
-                                                <argument>**</argument>
-                                                <argument>target/**,**/target,.git/**</argument>
-                                            </arguments>
-                                        </profile>
-                                    </profiles>
-                                </configuration>
-                            </execution>
-                        </executions>
-                        <dependencies>
-                            <dependency>
-                                <groupId>com.rempl.profiles</groupId>
-                                <artifactId>rempl-pdd-profile</artifactId>
-                                <version>1.7</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-site-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>pdd-site</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>site</goal>
-                                </goals>
-                                <configuration>
-                                    <generateProjectInfo>false</generateProjectInfo>
-                                    <reportPlugins combine.self="override">
-                                        <plugin>
-                                            <groupId>com.rempl.plugins</groupId>
-                                            <artifactId>rempl-maven-plugin</artifactId>
-                                            <configuration>
-                                                <reports>
-                                                    <report>
-                                                        <type>com.rempl.pdd.SummaryReport</type>
-                                                    </report>
-                                                </reports>
-                                            </configuration>
-                                        </plugin>
-                                    </reportPlugins>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>com.bazaarvoice.maven.plugins</groupId>
-                        <artifactId>s3-upload-maven-plugin</artifactId>
-                        <version>1.2</version>
-                        <executions>
-                            <execution>
-                                <id>pdd-deploy</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>s3-upload</goal>
-                                </goals>
-                                <configuration>
-                                    <bucketName>${pdd.s3.bucket}</bucketName>
-                                    <accessKey>${pdd.s3.key}</accessKey>
-                                    <secretKey>${pdd.s3.secret}</secretKey>
-                                    <source>${project.build.directory}/site/rempl/com.rempl.pdd.SummaryReport/index.xml</source>
-                                    <destination>${project.artifactId}.xml</destination>
-                                </configuration>
-                            </execution>
-                        </executions>
+                        <groupId>com.qulice</groupId>
+                        <artifactId>qulice-maven-plugin</artifactId>
+                        <configuration>
+                            <excludes combine.children="append">
+                                <exclude>checkstyle:/src/jekyll/*.*</exclude>
+                                <exclude>checkstyle:/src/test/casperjs/*.*</exclude>
+                                <exclude>xml:/src/main/webapp/xsl/.*</exclude>
+                                <exclude>xml:/src/main/webapp/WEB-INF/.*</exclude>
+                                <exclude>findbugs:.*</exclude>
+                                <exclude>duplicatefinder:.*</exclude>
+                            </excludes>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

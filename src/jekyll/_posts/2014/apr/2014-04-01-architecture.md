@@ -7,6 +7,7 @@ description:
 authors:
   - "Carlos Miranda"
   - "Yegor Bugayenko"
+  - "Krzysztof Krason"
 ---
 
 This document specifies architecture and design decisions made in relation to
@@ -24,10 +25,52 @@ decisions made during architecture and design.
 
 ## 2. Assumptions
 
-To be continued...
-
-> @todo #1/DES The specification is still rather vague for now. I haven't written
->  any assumptions here just yet. Let's write them down here as they come up.
+<table>
+  <thead>
+    <tr>
+      <th>Assumption</th>
+      <th>Details</th>
+      <th>Motivation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        Hosted websites are treated as being stateless
+      </td>
+      <td>
+        All websites that are hosted by Thindeck will be stateless, or at least
+        they are assumed to be. Since Thindeck is actually a hosting platform
+        that runs sites in their own containers, there isn't actually have any
+        way to know if an application is truly stateless. Thus, any internal
+        state of hosted applications will be ignored and may be lost.
+      </td>
+      <td>
+        The SRS requires that the hosted sites be stateless. This allows
+        Thindeck to be extremely flexible and scalable. Containers can be
+        started or stopped at  any time, depending on the server load, without
+        having to update or synchronize resources pertaining to state.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Thindeck's hosting providers have better performance and reliability
+      </td>
+      <td>
+        Thindeck's hosting providers (e.g. AWS, CloudBees) should have better
+        performance and reliability compared to what the SRS defines for
+        Thindeck itself.
+      </td>
+      <td>
+        Thindeck is a hosting provider for simple web sites, Thindeck itself is
+        hosted on other services. Its own reliability and performance, at best,
+        is reliant on that of its hosting. For it to provide the required
+        reliability and performance, its hosting providers should be even better
+        in the same regard.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ## 3. Class diagrams
 
@@ -59,10 +102,11 @@ Use Cases and their associated Sequence Diagrams can be found in the
 
 ## 7. Technical Risks
 
-To be continued...
-
-> @todo #1/DES We need to identify the risks associated with this project. Let's
->  document those risks in this section.
+Following risks have been identified:
+* implementing own load balancer might be a performance bottleneck 
+* without a good filter at/before load balancer attacker might cause high cpu usage, and as a result unnecessary number of containers being deployed resulting in high cost for the user
+* relaying on AWS could cause problems if a migration would be desirable (e.g. when a better platform is found)
+* UI responsive design might be to heavy for mobile devices
 
 ## 8. Decisions Made
 
