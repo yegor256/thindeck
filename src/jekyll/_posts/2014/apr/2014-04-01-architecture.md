@@ -83,9 +83,8 @@ To be continued...
 >  included in the SRS. But, we also need to show the classes and interfaces
 >  that involve the other parts of the system, e.g. API infrastructure,
 >  UI classes, data persistence classes, etc.
-> @todo #1/DES Let's define the packaging structure of Thindeck. Describe the
->  purposes of each package, the classes and resources that they contain, etc.
->  Include a diagram showing how they are all related.
+
+There is a dedicated article for [Packaging]({% post_url 2014/aug/2014-08-03-packaging %}).
 
 ## 4. Component View
 
@@ -110,10 +109,21 @@ Following risks have been identified:
 
 ## 8. Decisions Made
 
-To be continued...
+As documented in [Component View]({% post_url 2014/jun/2014-06-24-component-view %})
+there will be five major components of the application, which will communicate asynchronously.
+Two of the components **Meter** and **Board** will be a third party applications
+provided by AWS.
 
-> @todo #1/DES Let's document the architectural and design decisions in this
->  section.
+* all UI activities should be available through RESTful API
+* UI will use responsive design to simultaneously support desktop and mobile devices
+* payment processing will be done by PayPal
+* following source repositories will be supported: ...
+* containers will use ... operating system
+* containers will be created using ... virtualization technology
+* SMTP communication will be handled by ...
+
+> @todo #256 Let's document next set of decisions made, by removing ellipsis,
+>  from the above list.
 
 ## 9. References
 
