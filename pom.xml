@@ -31,6 +31,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>thindeck-spi</module>
         <module>thindeck-cockpit</module>
     </modules>
     <name>thindeck</name>
