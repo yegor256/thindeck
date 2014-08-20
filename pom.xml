@@ -24,7 +24,7 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>parent</artifactId>
-        <version>0.26</version>
+        <version>0.27.1</version>
     </parent>
     <groupId>com.thindeck</groupId>
     <artifactId>thindeck</artifactId>
@@ -158,6 +158,7 @@
                             <excludes combine.children="append">
                                 <exclude>checkstyle:/src/jekyll/*.*</exclude>
                                 <exclude>checkstyle:/src/test/casperjs/*.*</exclude>
+                                <exclude>checkstyle:/src/jekyll/uml/.*</exclude>
                                 <exclude>xml:/src/main/webapp/xsl/.*</exclude>
                                 <exclude>xml:/src/main/webapp/WEB-INF/.*</exclude>
                                 <exclude>findbugs:.*</exclude>
