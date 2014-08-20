@@ -46,7 +46,7 @@ may have a number of "dimensions". For example, load-by-IP has IP as
 a single dimension.
 
 **Board** is a data storage component, much like a database. It can
-store tabular data and fetch them back on request. We are using
+store tabular data and fetch them back on request.
 
 Meter and Board are outside of scope of our solution. They are provided
 by third party companies. At the moment, it is
