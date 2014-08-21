@@ -29,7 +29,6 @@ UC6 where User (a user) pays for Repository (a repo):
   3. The repo updates the user
     "via email when his balance is below $5".
 
-:UC10.1 is implemented
 UC10.1 where Visitor (a visitor) utilizes Application (an app):
   1. The visitor reads the app;
   2. Fail as "low balance" when "user balance is below $5";

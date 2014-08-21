@@ -9,6 +9,7 @@ RuntimeStatistics is "a graphical and textual information about
   running servers, containers and deployments, available for the public,
   similar to https://status.github.com/".
 
+:UC9.1 is implemented
 UC9.1 where Anonymous (an anonymous) explores thindeck:
   1. The anonymous reads PublicData (a data);
   2. The anonymous reads RuntimeStatistics (a stats).
