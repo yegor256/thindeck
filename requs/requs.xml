@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="7052" time="2014-08-15T12:47:32">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="9842" time="2014-08-21T08:19:21">
    <files>
-      <file id="0" line="1">/main/repo/src/main/requs/acronyms.req</file>
-      <file id="1" line="16">/main/repo/src/main/requs/anonymous.req</file>
-      <file id="2" line="31">/main/repo/src/main/requs/main.req</file>
-      <file id="3" line="135">/main/repo/src/main/requs/nfrs.req</file>
-      <file id="4" line="195">/main/repo/src/main/requs/vision.req</file>
+      <file id="0" line="1">/home/r/repo/src/main/requs/acronyms.req</file>
+      <file id="1" line="16">/home/r/repo/src/main/requs/anonymous.req</file>
+      <file id="2" line="32">/home/r/repo/src/main/requs/main.req</file>
+      <file id="3" line="136">/home/r/repo/src/main/requs/nfrs.req</file>
+      <file id="4" line="196">/home/r/repo/src/main/requs/vision.req</file>
    </files>
    <input>MTBF means "Mean Time Between Failures,
 which is time that System spends in continuous
@@ -33,6 +33,7 @@ RuntimeStatistics is "a graphical and textual information about
   running servers, containers and deployments, available for the public,
   similar to https://status.github.com/".
 
+:UC9.1 is implemented.
 UC9.1 where Anonymous (an anonymous) explores thindeck:
   1. The anonymous reads PublicData (a data);
   2. The anonymous reads RuntimeStatistics (a stats).
@@ -261,7 +262,7 @@ the MTTR target should be set at the lowest achievable number</informal>
          <mentioned>
             <where>1:1</where>
             <where>1:3</where>
-            <where>1:12</where>
+            <where>1:13</where>
          </mentioned>
          <info>
             <informal>a person who is not identified in the system (not logged in).
@@ -1638,10 +1639,14 @@ class Application {
       </type>
    </types>
    <methods>
-      <method seal="209d96">
+      <method seal="e8196a">
          <id>UC9.1</id>
+         <attributes>
+            <attribute seal="">implemented</attribute>
+         </attributes>
          <mentioned>
             <where>1:12</where>
+            <where>1:13</where>
             <where>3:37</where>
          </mentioned>
          <bindings>
@@ -1668,7 +1673,7 @@ class Application {
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:13</where>
+                  <where>1:14</where>
                </mentioned>
                <object>anonymous</object>
                <signature>reads</signature>
@@ -1677,7 +1682,7 @@ class Application {
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:14</where>
+                  <where>1:15</where>
                </mentioned>
                <object>anonymous</object>
                <signature>reads</signature>
@@ -1985,7 +1990,7 @@ primary -&gt; main
             </diagram>
          </diagrams>
       </method>
-      <method seal="199486">
+      <method seal="004224">
          <id>UC1</id>
          <mentioned>
             <where>2:1</where>
@@ -2561,7 +2566,7 @@ main ---&gt; UC6
             </diagram>
          </diagrams>
       </method>
-      <method seal="b32f3a">
+      <method seal="a767be">
          <id>UC2</id>
          <mentioned>
             <where>2:9</where>
@@ -3009,7 +3014,7 @@ main ---&gt; UC2.3
             </diagram>
          </diagrams>
       </method>
-      <method seal="51476b">
+      <method seal="311a44">
          <id>UC2.3</id>
          <mentioned>
             <where>2:15</where>
@@ -3587,7 +3592,7 @@ main ---&gt; UC10.1
             </diagram>
          </diagrams>
       </method>
-      <method seal="5d2395">
+      <method seal="61c0f3">
          <id>UC6</id>
          <mentioned>
             <where>2:23</where>
@@ -4010,7 +4015,7 @@ primary -&gt; main
             </diagram>
          </diagrams>
       </method>
-      <method seal="b1ac73">
+      <method seal="7331f3">
          <id>UC10.1</id>
          <mentioned>
             <where>2:32</where>
