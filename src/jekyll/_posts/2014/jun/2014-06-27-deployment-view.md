@@ -41,7 +41,7 @@ and submitted for review in a pull request by its author.
 Every pull request has to pass a mandatory code review by a randomly
 selected developer from the development team.
 
-When changes satisfy code reviewer, he posts a message for
+When changes satisfy the code reviewer, he posts a message for
 [rultor.com](http://www.rultor.com), which monitors all our pull requests and
 picks up those that have [Rultor commands](http://doc.rultor.com/commands.html).
 Rultor merges pull request into `master` branch and attempts to build it (using build automation
@@ -76,7 +76,7 @@ platform, one of architects gives a "release" command to Rultor,
 via a new comment in a Github issue. If it is a bug fix, we're using
 the same Github issue where the bug was fixed.
 
-If it is a major release, we create a new Github issue, where explain
+If it is a major release, we create a new Github issue, where we explain
 all the changes being released, and analyze an impact of them
 for a running production environment.
 
@@ -89,7 +89,7 @@ documentation website (the one you're looking at now) to Github Pages.
 
 What site deployment is done, Rultor reports success into Github issue.
 
-Rultor also tags deployed version in Github.
+Rultor also tags deployed version in Github and creates a Github "release".
 
 Load Balancer and Tank regularly check version number of Cockpit (via HTTP
 requests) and compare it with their own. If versions differ, they attempt
