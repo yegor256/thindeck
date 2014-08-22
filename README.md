@@ -1,6 +1,7 @@
-<img src="http://img.thindeck.com/logo-384x128.png" width="192px" height="64px" />
+<img src="http://img.thindeck.com/logo.svg" width="192px" height="64px" />
 
 [![Made By Teamed.io](http://img.teamed.io/btn.svg)](http://www.teamed.io)
+[![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/thindeck)](http://www.rultor.com/p/yegor256/thindeck)
 
 [![Build Status](https://travis-ci.org/yegor256/thindeck.svg?branch=master)](https://travis-ci.org/yegor256/thindeck)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.thindeck/thideck/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.thindeck/thindeck)
@@ -15,19 +16,19 @@ How it works:
  4. Every five minutes we pull your repo and restart a container on changes
  5. You pay for our CPU usage (per load!) and traffic (per Gb)
 
-Look at [Software Requirements Specification (SRS)](http://doc.thindeck.com/requs/requs.xml).
+Look at [Software Requirements Specification (SRS)](http://doc.thindeck.com/requs/requs.xml)
 
-Technical documentation is [here](http://doc.thindeck.com/).
+Technical documentation is here: [doc.thindeck.com](http://doc.thindeck.com/)
 
 We're aware of their existence (you also should be):
 
  * [elastic beanstalk](http://aws.typepad.com/aws/2014/04/aws-elastic-beanstalk-for-docker.html)
- * heroku.com
- * cloudbees.com
- * quay.io
- * stackdock.com
- * digitalocean.com
- * orchardup.com
+ * [heroku.com](http://www.heroku.com)
+ * [cloudbees.com](http://www.cloudbees.com)
+ * [quay.io](http://www.quay.io)
+ * [stackdock.com](http://www.stackdock.com)
+ * [digitalocean.com](http://www.digitalocean.com)
+ * [orchardup.com](http://www.orchardup.com)
 
 Our advantages are:
 
