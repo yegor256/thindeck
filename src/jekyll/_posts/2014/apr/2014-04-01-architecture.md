@@ -102,10 +102,11 @@ Use Cases and their associated Sequence Diagrams can be found in the
 ## 7. Technical Risks
 
 Following risks have been identified:
-* implementing own load balancer might be a performance bottleneck 
-* without a good filter at/before load balancer attacker might cause high cpu usage, and as a result unnecessary number of containers being deployed resulting in high cost for the user
-* relaying on AWS could cause problems if a migration would be desirable (e.g. when a better platform is found)
-* UI responsive design might be to heavy for mobile devices
+
+  * implementing own load balancer might be a performance bottleneck
+  * without a good filter at/before load balancer attacker might cause high cpu usage, and as a result unnecessary number of containers being deployed resulting in high cost for the user
+  * relaying on AWS could cause problems if a migration would be desirable (e.g. when a better platform is found)
+  * UI responsive design might be to heavy for mobile devices
 
 ## 8. Decisions Made
 
@@ -114,13 +115,13 @@ there will be five major components of the application, which will communicate a
 Two of the components **Meter** and **Board** will be a third party applications
 provided by AWS.
 
-* all UI activities should be available through RESTful API
-* UI will use responsive design to simultaneously support desktop and mobile devices
-* payment processing will be done by PayPal
-* following source repositories will be supported: ...
-* containers will use ... operating system
-* containers will be created using ... virtualization technology
-* SMTP communication will be handled by ...
+  * all UI activities should be available through RESTful API
+  * UI will use responsive design to simultaneously support desktop and mobile devices
+  * payment processing will be done by PayPal
+  * following source repositories will be supported: ...
+  * containers will use ... operating system
+  * containers will be created using ... virtualization technology
+  * SMTP communication will be handled by ...
 
 > @todo #256 Let's document next set of decisions made, by removing ellipsis,
 >  from the above list.
