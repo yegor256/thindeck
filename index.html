@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+@-webkit-keyframes spin {
+     from {  -webkit-transform: rotate(0deg); }
+     to {  -webkit-transform: rotate(360deg); }
+}
+.spin {
+    -webkit-animation: spin 1s infinite linear;
+}
+</style>
+</head>
+<body>
+<img src="http://img.thindeck.com/logo-384x128.png" style="width:96px;"/>
+<p>yegor256/rultor</p>
+<input size="50"/>
+<ul>
+    <li>
+        <span>deploy git.branch=1.9.16</span>
+        <ul>
+            <li>recommend-scale</li>
+            <li>find-tanks</li>
+            <li>
+                <span>run</span>
+                <ul>
+                    <li>docker-run tank=ec2-45-87-33.amazonaws.com <span class="spin">A</span></li>
+                    <li>docker-run tank=ec2-45-125-21.amazonaws.com</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+</body>
+</html>

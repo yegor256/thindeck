@@ -16,7 +16,7 @@ Load Balancer, Cockpit and Tank.
 [t1.micro](http://aws.amazon.com/ec2/instance-types/)
 instances.
 
-**Cockpit** is deployed to CloudBees as a WAR package.
+**Cockpit** is deployed to Heroku as a WAR package.
 
 **Tank** is deployed to a cluster of AWS EC2
 [c3.large](http://aws.amazon.com/ec2/instance-types/)
@@ -84,7 +84,7 @@ We use [SemVer](http://www.semver.org) notation for product versioning.
 
 Rultor picks up "release" command, builds the entire package and deploys
 all JAR artifacts to Maven Central (Load Balancer and Tank). Then,
-it deploys Cockpit to CloudBees. Then it builds and deploys
+it deploys Cockpit to Heroku. Then it builds and deploys
 documentation website (the one you're looking at now) to Github Pages.
 
 What site deployment is done, Rultor reports success into Github issue.

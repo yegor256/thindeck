@@ -1,0 +1,163 @@
+/**
+ * Copyright (c) 2014, Thindeck.com
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met: 1) Redistributions of source code must retain the above
+ * copyright notice, this list of conditions and the following
+ * disclaimer. 2) Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following
+ * disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3) Neither the name of the thindeck.com nor
+ * the names of its contributors may be used to endorse or promote
+ * products derived from this software without specific prior written
+ * permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+ * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+ * THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package com.thindeck;
+
+import com.jcabi.aspects.Immutable;
+import com.jcabi.urn.URN;
+import com.thindeck.api.Base;
+import com.thindeck.api.Drain;
+import com.thindeck.api.Memo;
+import com.thindeck.api.Progress;
+import com.thindeck.api.Repo;
+import com.thindeck.api.Repos;
+import com.thindeck.api.Scenario;
+import com.thindeck.api.Task;
+import com.thindeck.api.Tasks;
+import com.thindeck.api.Usage;
+import com.thindeck.api.User;
+import com.thindeck.api.mock.MkMemo;
+import com.thindeck.api.mock.MkProgress;
+import com.thindeck.scenarios.OnDeploy;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Map;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+/**
+ * Main implementation of the {@link Base}.
+ *
+ * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @version $Id$
+ * @since 0.1
+ */
+@Immutable
+@ToString
+@EqualsAndHashCode
+public final class MnBase implements Base {
+
+    @Override
+    public User user(final URN urn) {
+        return new User() {
+            @Override
+            public URN urn() {
+                throw new UnsupportedOperationException("#urn()");
+            }
+            @Override
+            public Repos repos() {
+                throw new UnsupportedOperationException("#repos()");
+            }
+            @Override
+            public Usage usage() {
+                throw new UnsupportedOperationException("#usage()");
+            }
+        };
+    }
+
+    @Override
+    public Iterable<Repo> repos() {
+        return Collections.<Repo>singleton(
+            new MnBase.FakeRepo()
+        );
+    }
+
+    @Override
+    public Drain drain(final Task task) {
+        return null;
+    }
+
+    /**
+     * Fake repo.
+     */
+    @Immutable
+    static final class FakeRepo implements Repo {
+        @Override
+        public String name() {
+            return "fake-repo";
+        }
+        @Override
+        public Tasks tasks() {
+            return new MnBase.FakeTasks();
+        }
+        @Override
+        public Memo memo() throws IOException {
+            return new MkMemo();
+        }
+    }
+
+    /**
+     * Fake tasks.
+     */
+    @Immutable
+    static final class FakeTasks implements Tasks {
+        @Override
+        public Task get(final long number) {
+            return new MnBase.FakeTask();
+        }
+        @Override
+        public Iterable<Task> open() {
+            return this.all();
+        }
+        @Override
+        public Iterable<Task> all() {
+            return Collections.<Task>singleton(
+                new MnBase.FakeTask()
+            );
+        }
+        @Override
+        public Task add(final String command, final Map<String, String> args) {
+            throw new UnsupportedOperationException("#add()");
+        }
+    }
+
+    /**
+     * Fake task.
+     */
+    @Immutable
+    static final class FakeTask implements Task {
+        @Override
+        public long number() {
+            return 1L;
+        }
+        @Override
+        public String command() {
+            return "deploy";
+        }
+        @Override
+        public Scenario scenario() {
+            return new OnDeploy();
+        }
+        @Override
+        public Progress progress() {
+            return new MkProgress();
+        }
+    }
+
+}

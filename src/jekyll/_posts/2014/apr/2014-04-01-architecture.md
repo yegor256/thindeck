@@ -57,7 +57,7 @@ decisions made during architecture and design.
         Thindeck's hosting providers have better performance and reliability
       </td>
       <td>
-        Thindeck's hosting providers (e.g. AWS, CloudBees) should have better
+        Thindeck's hosting providers (e.g. AWS, Heroku) should have better
         performance and reliability compared to what the SRS defines for
         Thindeck itself.
       </td>
