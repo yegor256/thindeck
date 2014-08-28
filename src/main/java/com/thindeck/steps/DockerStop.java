@@ -92,6 +92,7 @@ public final class DockerStop implements Step {
             Joiner.on(" && ").join(
                 String.format("dir=%s", SSH.escape(dir)),
                 String.format("sudo docker stop %s", SSH.escape(cid)),
+                String.format("sudo docker rm %s", SSH.escape(cid)),
                 "rm -rf \"${dir}\""
             )
         );
