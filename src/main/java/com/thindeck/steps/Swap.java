@@ -65,12 +65,12 @@ public final class Swap implements Step {
         final Directives dirs = new Directives();
         for (final String cid : green) {
             dirs.xpath(
-                String.format("/mnemo/containers/container[cid='%s']", cid)
+                String.format("/memo/containers/container[cid='%s']", cid)
             ).attr("type", "blue");
         }
         for (final String cid : blue) {
             dirs.xpath(
-                String.format("/mnemo/containers/container[cid='%s']", cid)
+                String.format("/memo/containers/container[cid='%s']", cid)
             ).attr("type", "green");
         }
         ctx.memo().update(dirs);
