@@ -32,6 +32,7 @@ package com.thindeck.scenarios;
 import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Context;
 import com.thindeck.api.Step;
+import java.io.IOException;
 import java.util.logging.Level;
 import org.xembly.Directives;
 
@@ -51,7 +52,7 @@ public final class FindTanks implements Step {
     }
 
     @Override
-    public void exec(final Context ctx) {
+    public void exec(final Context ctx) throws IOException {
         ctx.memo().update(
             new Directives().xpath("/memo").addIf("tanks")
                 .xpath("tank").remove()

@@ -30,6 +30,7 @@
 package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
+import java.io.IOException;
 import java.util.logging.Level;
 
 /**
@@ -46,7 +47,7 @@ public interface Context {
      * Memo.
      * @return Memo
      */
-    Memo memo();
+    Memo memo() throws IOException;
 
     /**
      * Add log line.

@@ -33,6 +33,8 @@ import com.jcabi.aspects.Loggable;
 import com.thindeck.MnBase;
 import com.thindeck.api.Base;
 import java.io.Closeable;
+import java.util.Collection;
+import java.util.LinkedList;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import lombok.EqualsAndHashCode;
@@ -52,19 +54,22 @@ import org.apache.commons.io.IOUtils;
 public final class Lifecycle implements ServletContextListener {
 
     /**
-     * Agents running.
+     * Daemons.
      */
-    private transient Closeable agents;
+    private final transient Collection<Closeable> daemons =
+        new LinkedList<Closeable>();
 
     @Override
     public void contextInitialized(final ServletContextEvent event) {
         final Base base = new MnBase();
-        this.agents = new Agents(base);
+        this.daemons.add(new RoutineTxns(base));
     }
 
     @Override
     public void contextDestroyed(final ServletContextEvent event) {
-        IOUtils.closeQuietly(this.agents);
+        for (final Closeable daemon : this.daemons) {
+            IOUtils.closeQuietly(daemon);
+        }
     }
 
 }

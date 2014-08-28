@@ -50,24 +50,20 @@ public interface Step {
 
     /**
      * Exec.
+     * @param ctx Execution context
      */
     void exec(Context ctx) throws IOException;
 
     /**
      * Commit.
+     * @param ctx Execution context
      */
     void commit(Context ctx);
 
     /**
      * Rollback.
+     * @param ctx Execution context
      */
     void rollback(Context ctx);
-
-    /**
-     * Rerun is required.
-     */
-    final class ReRunException extends RuntimeException {
-        private static final long serialVersionUID = -3803527180577906995L;
-    }
 
 }

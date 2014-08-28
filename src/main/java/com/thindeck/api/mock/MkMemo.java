@@ -64,7 +64,7 @@ public final class MkMemo implements Memo {
      * @throws IOException If fails
      */
     public MkMemo() throws IOException {
-        final File file = File.createTempFile("thindeck", ".xml");
+        final File file = File.createTempFile("thindeck-", ".xml");
         FileUtils.forceDeleteOnExit(file);
         this.path = file.getAbsolutePath();
     }

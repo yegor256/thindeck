@@ -30,7 +30,6 @@
 package com.thindeck.scenarios.docker;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.xml.XML;
 import com.thindeck.api.Context;
 import com.thindeck.api.Step;
 import java.util.logging.Level;
@@ -52,8 +51,7 @@ public final class DockerStop implements Step {
 
     @Override
     public void exec(final Context ctx) {
-        final XML xml = ctx.memo().read();
-
+        ctx.log(Level.INFO, "not implemented yet");
     }
 
     @Override

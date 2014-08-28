@@ -49,6 +49,7 @@ public final class IndexRs extends BaseRs {
      * @return The JAX-RS response
      */
     @GET
+    @Path("/")
     public Response front() {
         return new PageBuilder()
             .stylesheet("/xsl/index.xsl")

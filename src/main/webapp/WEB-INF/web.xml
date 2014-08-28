@@ -76,9 +76,7 @@
         <servlet-class>com.rexsl.core.RestfulServlet</servlet-class>
         <init-param>
             <param-name>com.rexsl.PACKAGES</param-name>
-            <param-value>
-                com.thindeck.cockpit.rest
-            </param-value>
+            <param-value>com.thindeck.cockpit</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

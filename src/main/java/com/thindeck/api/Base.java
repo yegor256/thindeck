@@ -55,10 +55,10 @@ public interface Base {
     Iterable<Repo> repos();
 
     /**
-     * Get drain for the particular task.
+     * Get transaction for the particular task.
      * @param task The task
-     * @return Drain
+     * @return Transaction
      */
-    Drain drain(Task task);
+    Txn txn(Task task);
 
 }

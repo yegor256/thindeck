@@ -30,31 +30,50 @@
 package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
-import java.util.Map;
-import java.util.logging.Level;
+import java.io.IOException;
 
 /**
- * Drain with log messages.
+ * Transaction of a task.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
  */
 @Immutable
-public interface Drain {
+public interface Txn {
 
     /**
-     * Fetch all lines.
-     * @return Lines, by steps
+     * Is if finished?
+     * @return TRUE if finished already
+     * @throws IOException If fails
      */
-    Map<String, Iterable<String>> fetch();
+    boolean finished() throws IOException;
+
+    /**
+     * Make one step forward.
+     * @throws IOException If fails
+     */
+    void increment() throws IOException;
 
     /**
      * Add log line.
-     * @param step Step that adds a line
-     * @param level Level
-     * @param text Text to log
+     * @param text Text of log
+     * @throws IOException If fails
      */
-    void add(Step step, Level level, String text);
+    void log(String text) throws IOException;
+
+    /**
+     * Get full log.
+     * @return Log lines
+     * @throws IOException If fails
+     */
+    Iterable<String> log() throws IOException;
+
+    /**
+     * Rerun is required.
+     */
+    final class ReRunException extends RuntimeException {
+        private static final long serialVersionUID = -3803527180577906995L;
+    }
 
 }

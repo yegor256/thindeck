@@ -57,10 +57,4 @@ public interface Task {
      */
     Scenario scenario();
 
-    /**
-     * Progress.
-     * @return Progress of the task
-     */
-    Progress progress();
-
 }

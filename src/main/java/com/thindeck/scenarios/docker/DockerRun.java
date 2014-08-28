@@ -31,6 +31,7 @@ package com.thindeck.scenarios.docker;
 
 import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
+import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Context;
@@ -84,10 +85,13 @@ public final class DockerRun implements Step {
     private String run(final String host, final String git) throws IOException {
         return new Shell.Plain(new Remote().shell(host)).exec(
             Joiner.on(" && ").join(
-                "cd /tmp/test",
-                "sudo docker run -i -t --rm yegor256/thindeck 2>&1 >stdout &"
+                "dir=$(mktemp -d -t thindeck-XXXX)",
+                "cd \"${dir}\"",
+                String.format("git clone %s", SSH.escape(git)),
+                "sudo docker run -i -t -p 80:80 --cidfile=cid -v $(pwd):/var/www --rm yegor256/thindeck 2>&1 >stdout &",
+                "cat cid"
             )
-        );
+        ).trim();
     }
 
 }

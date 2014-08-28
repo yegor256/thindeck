@@ -27,55 +27,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api;
+package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.log.Logger;
+import com.thindeck.api.Context;
+import com.thindeck.api.Memo;
+import java.io.IOException;
+import java.util.logging.Level;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Progress of a task.
+ * Mock of {@link Context}.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
  */
 @Immutable
-public interface Progress {
+@ToString
+@EqualsAndHashCode
+public final class MkContext implements Context {
 
-    /**
-     * Set task status.
-     */
-    void status(Progress.Status status);
-
-    /**
-     * Get task status.
-     */
-    Progress.Status status();
-
-    /**
-     * Get status of the step.
-     * @param step The step
-     * @return Its current status
-     */
-    Progress.Status status(Step step);
-
-    /**
-     * Set status of the step.
-     * @param step The step
-     * @param status The status to set
-     */
-    void status(Step step, Progress.Status status);
-
-    /**
-     * Step status.
-     */
-    enum Status {
-        FAILED,
-        EXECUTING,
-        EXECUTED,
-        COMMITTING,
-        COMMITTED,
-        REVERSING,
-        REVERSED
+    @Override
+    public Memo memo() throws IOException {
+        return new MkMemo();
     }
 
+    @Override
+    public void log(final Level level, final String txt, final Object... args) {
+        Logger.log(level, this, txt, args);
+    }
 }

@@ -30,9 +30,9 @@
 package com.thindeck.cockpit;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Iterables;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Task;
+import java.io.IOException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -74,17 +74,16 @@ public final class TaskRs extends BaseRs {
     }
 
     /**
-     * Get front page.
+     * Get log.
      * @return The JAX-RS response
+     * @throws IOException If fails
      */
     @GET
     @Path("/")
-    public String drain() {
+    public String log() throws IOException {
         final Repo repo = this.user().repos().get(this.name);
         final Task task = repo.tasks().get(this.number);
-        return Joiner.on('\n').join(
-            Iterables.concat(this.base().drain(task).fetch().values())
-        );
+        return Joiner.on('\n').join(this.base().txn(task).log());
     }
 
 }

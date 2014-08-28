@@ -96,15 +96,6 @@ final class JxTask {
     }
 
     /**
-     * Its status.
-     * @return Name
-     */
-    @XmlElement(name = "status")
-    public String getStatus() {
-        return this.task.progress().status().name();
-    }
-
-    /**
      * Its links.
      * @return Links
      */

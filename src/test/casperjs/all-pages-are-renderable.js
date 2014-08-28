@@ -1,7 +1,8 @@
 /*globals casper:false */
 [
-    '/stats',
-    '/'
+    '/',
+    '/xsl/layout.xsl',
+    '/robots.txt'
 ].forEach(
     function (page) {
         casper.test.begin(

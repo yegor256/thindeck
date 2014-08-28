@@ -30,13 +30,18 @@
 package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Progress;
+import com.jcabi.log.Logger;
+import com.thindeck.api.Context;
 import com.thindeck.api.Step;
+import com.thindeck.api.Task;
+import com.thindeck.api.Txn;
+import java.io.IOException;
+import java.util.Collections;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Mock of {@link Progress}.
+ * Mock of {@link Txn}.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -45,25 +50,41 @@ import lombok.ToString;
 @Immutable
 @ToString
 @EqualsAndHashCode
-public final class MkProgress implements Progress {
+public final class MkTxn implements Txn {
 
-    @Override
-    public void status(final Progress.Status status) {
-        // nothing
+    /**
+     * Task.
+     */
+    private final transient Task task;
+
+    /**
+     * Ctor.
+     * @param tsk Task to work with
+     */
+    public MkTxn(final Task tsk) {
+        this.task = tsk;
     }
 
     @Override
-    public Progress.Status status() {
-        return Progress.Status.EXECUTING;
+    public boolean finished() {
+        return false;
     }
 
     @Override
-    public Progress.Status status(final Step step) {
-        return Progress.Status.EXECUTING;
+    public void increment() throws IOException {
+        final Context ctx = new MkContext();
+        for (final Step step : this.task.scenario().steps()) {
+            step.exec(ctx);
+        }
     }
 
     @Override
-    public void status(final Step step, final Progress.Status status) {
-        // nothing
+    public void log(final String text) {
+        Logger.info(this, text);
+    }
+
+    @Override
+    public Iterable<String> log() {
+        return Collections.emptyList();
     }
 }

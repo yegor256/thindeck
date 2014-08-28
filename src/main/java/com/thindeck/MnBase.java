@@ -32,18 +32,17 @@ package com.thindeck;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.urn.URN;
 import com.thindeck.api.Base;
-import com.thindeck.api.Drain;
 import com.thindeck.api.Memo;
-import com.thindeck.api.Progress;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Repos;
 import com.thindeck.api.Scenario;
 import com.thindeck.api.Task;
 import com.thindeck.api.Tasks;
+import com.thindeck.api.Txn;
 import com.thindeck.api.Usage;
 import com.thindeck.api.User;
 import com.thindeck.api.mock.MkMemo;
-import com.thindeck.api.mock.MkProgress;
+import com.thindeck.api.mock.MkTxn;
 import com.thindeck.scenarios.OnDeploy;
 import java.io.IOException;
 import java.util.Collections;
@@ -89,8 +88,8 @@ public final class MnBase implements Base {
     }
 
     @Override
-    public Drain drain(final Task task) {
-        return null;
+    public Txn txn(final Task task) {
+        return new MkTxn(task);
     }
 
     /**
@@ -153,10 +152,6 @@ public final class MnBase implements Base {
         @Override
         public Scenario scenario() {
             return new OnDeploy();
-        }
-        @Override
-        public Progress progress() {
-            return new MkProgress();
         }
     }
 

@@ -29,16 +29,13 @@
  */
 package com.thindeck.life;
 
+import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.ScheduleWithFixedDelay;
 import com.thindeck.api.Base;
-import com.thindeck.api.Context;
-import com.thindeck.api.Drain;
-import com.thindeck.api.Progress;
 import com.thindeck.api.Repo;
-import com.thindeck.api.Step;
 import com.thindeck.api.Task;
 import java.io.Closeable;
-import java.util.logging.Level;
+import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -52,7 +49,8 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @ScheduleWithFixedDelay
-final class Agents implements Runnable, Closeable {
+@Loggable(Loggable.INFO)
+final class RoutineTxns implements Runnable, Closeable {
 
     /**
      * Base.
@@ -63,7 +61,7 @@ final class Agents implements Runnable, Closeable {
      * Execute them all.
      * @param bse Base
      */
-    Agents(final Base bse) {
+    RoutineTxns(final Base bse) {
         this.base = bse;
     }
 
@@ -71,7 +69,11 @@ final class Agents implements Runnable, Closeable {
     public void run() {
         for (final Repo repo : this.base.repos()) {
             for (final Task task : repo.tasks().open()) {
-                this.process(task, this.base.drain(task));
+                try {
+                    this.base.txn(task).increment();
+                } catch (final IOException ex) {
+                    throw new IllegalStateException(ex);
+                }
             }
         }
     }
@@ -79,45 +81,6 @@ final class Agents implements Runnable, Closeable {
     @Override
     public void close() {
         // nothing to do
-    }
-
-    /**
-     * Process one task.
-     */
-    private void process(final Task task, final Drain drain) {
-        final Progress progress = task.progress();
-        final Context ctx = null;
-        for (final Step step : task.steps()) {
-            try {
-                this.process(step, ctx, progress);
-            } catch (final Throwable ex) {
-                ctx.log(Level.SEVERE, ex.getLocalizedMessage());
-                final Progress.Status status = progress.status(step);
-                if (status == Progress.Status.COMMITTING) {
-                    progress.status(step, Progress.Status.REVERSING);
-                } else {
-                    progress.status(step, Progress.Status.FAILED);
-                }
-            }
-        }
-    }
-
-    /**
-     * Process one step.
-     */
-    private void process(final Step step, final Context ctx,
-        final Progress progress) {
-        final Progress.Status status = progress.status(step);
-        if (status == Progress.Status.EXECUTING) {
-            step.exec(ctx);
-            progress.status(step, Progress.Status.EXECUTED);
-        } else if (status == Progress.Status.COMMITTING) {
-            step.commit(ctx);
-            progress.status(step, Progress.Status.COMMITTED);
-        } else if (status == Progress.Status.REVERSING) {
-            step.rollback(ctx);
-            progress.status(step, Progress.Status.REVERSED);
-        }
     }
 
 }

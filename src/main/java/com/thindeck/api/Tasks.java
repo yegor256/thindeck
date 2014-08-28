@@ -61,6 +61,9 @@ public interface Tasks {
 
     /**
      * Add a new task.
+     * @param command Command of the task
+     * @param args Arguments
+     * @return Task just added
      */
     Task add(String command, Map<String, String> args);
 
