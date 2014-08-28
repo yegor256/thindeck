@@ -39,6 +39,7 @@ import com.thindeck.api.Step;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.logging.Level;
+import org.apache.commons.lang3.StringUtils;
 import org.xembly.Directives;
 
 /**
@@ -93,18 +94,26 @@ public final class DockerRun implements Step {
             Joiner.on(" && ").join(
                 String.format("dir=%s", SSH.escape(dir)),
                 "cd \"${dir}\"",
-                String.format("git clone %s", SSH.escape(git)),
-                "sudo docker run -d -p 8081:80 \"--cidfile=$(pwd)/cid\" -v \"$(pwd):/var/www\" yegor256/thindeck"
+                String.format("git clone %s repo", SSH.escape(git)),
+                "sudo docker run -d -p ::80 \"--cidfile=$(pwd)/cid\" -v \"$(pwd)/repo:/var/www\" yegor256/thindeck"
             )
         );
         final String cid = shell.exec(
             String.format("dir=%s; cat \"${dir}/cid\"", SSH.escape(dir))
+        ).trim();
+        final int port = Integer.parseInt(
+            StringUtils.substringAfterLast(
+                shell.exec(
+                    String.format("sudo docker port %s 80", SSH.escape(cid))
+                ).trim(),
+                ":"
+            )
         );
         ctx.memo().update(
             new Directives().xpath("/memo").addIf("containers")
                 .add("container").attr("type", "blue")
                 .add("cid").set(cid).up()
-                .add("port").set("8081").up()
+                .add("port").set(Integer.toString(port)).up()
                 .add("dir").set(dir).up()
                 .add("tank").set(host).up()
         );

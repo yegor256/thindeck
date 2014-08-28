@@ -86,6 +86,8 @@ public final class MkTxn implements Txn {
 
     @Override
     public Iterable<String> log() {
-        return Collections.emptyList();
+        return Collections.singleton(
+            "there is nothing to say here..."
+        );
     }
 }
