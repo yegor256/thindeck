@@ -67,11 +67,11 @@ public final class MnBase implements Base {
         return new User() {
             @Override
             public URN urn() {
-                throw new UnsupportedOperationException("#urn()");
+                return URN.create("urn:test:1");
             }
             @Override
             public Repos repos() {
-                throw new UnsupportedOperationException("#repos()");
+                return new MnBase.FakeRepos();
             }
             @Override
             public Usage usage() {
@@ -108,6 +108,25 @@ public final class MnBase implements Base {
         @Override
         public Memo memo() throws IOException {
             return new MkMemo();
+        }
+    }
+
+    /**
+     * Fake repos.
+     */
+    @Immutable
+    static final class FakeRepos implements Repos {
+        @Override
+        public Repo get(final String name) {
+            return new MnBase.FakeRepo();
+        }
+        @Override
+        public Repo add(final String name) {
+            return new MnBase.FakeRepo();
+        }
+        @Override
+        public Iterable<Repo> iterate() {
+            return Collections.<Repo>singleton(new MnBase.FakeRepo());
         }
     }
 

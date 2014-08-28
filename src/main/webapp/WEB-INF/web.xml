@@ -61,6 +61,9 @@
         <servlet-name>default</servlet-name>
         <url-pattern>/xml/*</url-pattern>
     </servlet-mapping>
+    <listener>
+        <listener-class>com.thindeck.life.Lifecycle</listener-class>
+    </listener>
     <filter>
         <filter-name>XsltFilter</filter-name>
         <filter-class>com.rexsl.core.XsltFilter</filter-class>

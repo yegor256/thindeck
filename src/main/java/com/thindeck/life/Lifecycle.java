@@ -30,9 +30,11 @@
 package com.thindeck.life;
 
 import com.jcabi.aspects.Loggable;
+import com.jcabi.manifests.Manifests;
 import com.thindeck.MnBase;
 import com.thindeck.api.Base;
 import java.io.Closeable;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 import javax.servlet.ServletContextEvent;
@@ -61,7 +63,13 @@ public final class Lifecycle implements ServletContextListener {
 
     @Override
     public void contextInitialized(final ServletContextEvent event) {
+        try {
+            Manifests.append(event.getServletContext());
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
         final Base base = new MnBase();
+        event.getServletContext().setAttribute(Base.class.getName(), base);
         this.daemons.add(new RoutineTxns(base));
     }
 

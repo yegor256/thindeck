@@ -2,7 +2,8 @@
 [
     '/',
     '/xsl/layout.xsl',
-    '/robots.txt'
+    '/robots.txt',
+    '/repos'
 ].forEach(
     function (page) {
         casper.test.begin(
