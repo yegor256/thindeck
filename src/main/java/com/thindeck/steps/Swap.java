@@ -30,11 +30,9 @@
 package com.thindeck.steps;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.xml.XML;
 import com.thindeck.api.Context;
 import com.thindeck.api.Step;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.logging.Level;
 import org.xembly.Directives;
 
@@ -55,29 +53,17 @@ public final class Swap implements Step {
 
     @Override
     public void exec(final Context ctx) throws IOException {
-        final XML xml = ctx.memo().read();
-        final Collection<String> green = xml.xpath(
-            "/memo/containers/container[@type='green']/cid/text()"
+        ctx.memo().update(
+            new Directives()
+                .xpath("/memo/containers/container[@type='green']")
+                .push()
+                .xpath("/memo/containers/container[@type='blue']")
+                // @checkstyle MultipleStringLiteralsCheck (1 line)
+                .attr("type", "green")
+                .pop()
+                .attr("type", "blue")
         );
-        final Collection<String> blue = xml.xpath(
-            "/memo/containers/container[@type='blue']/cid/text()"
-        );
-        final Directives dirs = new Directives();
-        for (final String cid : green) {
-            dirs.xpath(
-                String.format("/memo/containers/container[cid='%s']", cid)
-            ).attr("type", "blue");
-        }
-        for (final String cid : blue) {
-            dirs.xpath(
-                String.format("/memo/containers/container[cid='%s']", cid)
-            ).attr("type", "green");
-        }
-        ctx.memo().update(dirs);
-        ctx.log(
-            Level.INFO, "swap, %d blue vs %d green containers",
-            blue.size(), green.size()
-        );
+        ctx.log(Level.INFO, "swapped blue vs green containers");
     }
 
     @Override
@@ -89,4 +75,5 @@ public final class Swap implements Step {
     public void rollback(final Context ctx) {
         // nothing to rollback
     }
+
 }

@@ -73,6 +73,9 @@ public interface Txn {
      * Rerun is required.
      */
     final class ReRunException extends RuntimeException {
+        /**
+         * Serialization marker.
+         */
         private static final long serialVersionUID = -3803527180577906995L;
     }
 

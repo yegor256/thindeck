@@ -44,6 +44,8 @@ public interface Tasks {
 
     /**
      * Get task by its number.
+     * @param number Task number
+     * @return Task found
      */
     Task get(long number);
 

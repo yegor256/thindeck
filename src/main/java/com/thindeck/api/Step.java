@@ -51,19 +51,22 @@ public interface Step {
     /**
      * Exec.
      * @param ctx Execution context
+     * @throws IOException If fails
      */
     void exec(Context ctx) throws IOException;
 
     /**
      * Commit.
      * @param ctx Execution context
+     * @throws IOException If fails
      */
-    void commit(Context ctx);
+    void commit(Context ctx) throws IOException;
 
     /**
      * Rollback.
      * @param ctx Execution context
+     * @throws IOException If fails
      */
-    void rollback(Context ctx);
+    void rollback(Context ctx) throws IOException;
 
 }

@@ -65,6 +65,7 @@ public final class RepoRs extends BaseRs {
 
     /**
      * Set name.
+     * @param repo Repo name
      */
     @PathParam("name")
     public void setName(final String repo) {

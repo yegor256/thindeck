@@ -44,6 +44,7 @@ public interface Base {
 
     /**
      * Get user by URN.
+     * @param urn His URN
      * @return User
      */
     User user(URN urn);

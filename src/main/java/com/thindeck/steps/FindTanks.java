@@ -54,9 +54,9 @@ public final class FindTanks implements Step {
     @Override
     public void exec(final Context ctx) throws IOException {
         ctx.memo().update(
-            new Directives().xpath("/memo").addIf("tanks")
-                .xpath("tank").remove()
-                .xpath("/memo/tanks")
+            new Directives()
+                .xpath("/memo/tanks/tank").remove()
+                .xpath("/memo").addIf("tanks")
                 .add("tank").set("t1.thindeck.com")
         );
         ctx.log(Level.INFO, "one tank t1.thindeck.com found");

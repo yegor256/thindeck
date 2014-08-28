@@ -43,11 +43,13 @@ public interface Task {
 
     /**
      * Its unique number.
+     * @return Number
      */
     long number();
 
     /**
      * Command it is running.
+     * @return Command
      */
     String command();
 

@@ -59,6 +59,7 @@ public final class TaskRs extends BaseRs {
 
     /**
      * Set name.
+     * @param repo Repo name
      */
     @PathParam("name")
     public void setName(final String repo) {
@@ -67,6 +68,7 @@ public final class TaskRs extends BaseRs {
 
     /**
      * Set number.
+     * @param num Task number
      */
     @PathParam("number")
     public void setNumber(final Long num) {

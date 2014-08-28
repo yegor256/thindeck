@@ -47,12 +47,14 @@ public interface Memo {
     /**
      * Read XML.
      * @return XML
+     * @throws IOException If fails
      */
     XML read() throws IOException;
 
     /**
      * Update.
      * @param dirs Directives
+     * @throws IOException If fails
      */
     void update(Iterable<Directive> dirs) throws IOException;
 

@@ -85,6 +85,7 @@ public final class DockerRun implements Step {
      * @param ctx Context
      * @param host Host name of the tank
      * @param git Git URL to fetch
+     * @throws IOException If fails
      */
     private void run(final Context ctx, final String host,
         final String git) throws IOException {
@@ -95,7 +96,12 @@ public final class DockerRun implements Step {
                 String.format("dir=%s", SSH.escape(dir)),
                 "cd \"${dir}\"",
                 String.format("git clone %s repo", SSH.escape(git)),
-                "sudo docker run -d -p ::80 \"--cidfile=$(pwd)/cid\" -v \"$(pwd)/repo:/var/www\" yegor256/thindeck"
+                Joiner.on(' ').join(
+                    "sudo docker run -d -p ::80",
+                    "\"--cidfile=$(pwd)/cid\"",
+                    "-v \"$(pwd)/repo:/var/www\"",
+                    "yegor256/thindeck"
+                )
             )
         );
         final String cid = shell.exec(

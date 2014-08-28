@@ -113,6 +113,7 @@ final class JxTask {
         final Collection<Link> links = new LinkedList<Link>();
         links.add(
             new Link(
+                // @checkstyle MultipleStringLiteralsCheck (1 line)
                 "log",
                 this.base.uriInfo().getBaseUriBuilder().clone()
                     .path(TaskRs.class)

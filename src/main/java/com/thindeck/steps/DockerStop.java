@@ -82,6 +82,7 @@ public final class DockerStop implements Step {
      * Stop docker container.
      * @param ctx Context
      * @param xml XML with container info
+     * @throws IOException If fails
      */
     private void stop(final Context ctx, final XML xml) throws IOException {
         final String host = xml.xpath("tank/text()").get(0);

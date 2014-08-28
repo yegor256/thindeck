@@ -55,6 +55,7 @@ public final class Remote {
         return new Shell.Verbose(
             new Shell.Safe(
                 new SSH(
+                    // @checkstyle MagicNumber (1 line)
                     host, 22, "thindeck",
                     IOUtils.toString(
                         this.getClass().getResourceAsStream("thindeck.key")

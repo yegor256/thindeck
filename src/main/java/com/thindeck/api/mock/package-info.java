@@ -27,71 +27,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.cockpit;
-
-import com.jcabi.urn.URN;
-import com.rexsl.page.BasePage;
-import com.rexsl.page.BaseResource;
-import com.rexsl.page.Inset;
-import com.rexsl.page.Resource;
-import com.rexsl.page.inset.FlashInset;
-import com.rexsl.page.inset.LinksInset;
-import com.thindeck.api.Base;
-import com.thindeck.api.User;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 /**
- * Base RESTful resource.
+ * Mock classes.
  *
- * @author Paul Polishchuk (ppol@ua.fm)
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @since 0.1
  */
-@Resource.Forwarded
-@Inset.Default(LinksInset.class)
-public class BaseRs extends BaseResource {
-
-    /**
-     * Supplementary inset.
-     * @return The inset
-     */
-    @Inset.Runtime
-    public final Inset insetSupplementary() {
-        return new Inset() {
-            @Override
-            public void render(final BasePage<?, ?> page,
-                final Response.ResponseBuilder builder) {
-                builder.type(MediaType.TEXT_XML);
-            }
-        };
-    }
-
-    /**
-     * Flash.
-     * @return The inset with flash
-     */
-    @Inset.Runtime
-    public final FlashInset flash() {
-        return new FlashInset(this);
-    }
-
-    /**
-     * Get current user.
-     * @return User
-     */
-    protected final User user() {
-        return this.base().user(URN.create("urn:test:1"));
-    }
-
-    /**
-     * Get base.
-     * @return Base
-     */
-    protected final Base base() {
-        return Base.class.cast(
-            this.servletContext().getAttribute(Base.class.getName())
-        );
-    }
-
-}
+package com.thindeck.api.mock;

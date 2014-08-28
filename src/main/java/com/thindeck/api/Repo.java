@@ -57,6 +57,7 @@ public interface Repo {
     /**
      * Memo.
      * @return Memo
+     * @throws IOException If fails
      */
     Memo memo() throws IOException;
 

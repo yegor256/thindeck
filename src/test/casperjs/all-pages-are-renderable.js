@@ -4,7 +4,7 @@
     '/xsl/layout.xsl',
     '/robots.txt',
     '/repos',
-    '/r/fake-repo'
+    '/r/fake-repo',
     '/t/fake-repo/1/log'
 ].forEach(
     function (page) {

@@ -70,6 +70,7 @@ public interface Usage {
      * @param type Type to summarize
      * @param dims Dimensions
      * @return Sum
+     * @checkstyle ParameterNumberCheck (4 lines)
      */
     double sum(Date start, Date end, Usage.Type type, Map<String, String> dims);
 
@@ -77,8 +78,17 @@ public interface Usage {
      * Type of resource.
      */
     enum Type {
+        /**
+         * Money, in USD.
+         */
         MONEY,
+        /**
+         * CPU usage in seconds.
+         */
         CPU,
+        /**
+         * Traffic in bytes.
+         */
         TRAFFIC
     }
 
@@ -88,18 +98,22 @@ public interface Usage {
     interface Value {
         /**
          * Type of resource.
+         * @return Type
          */
         Usage.Type type();
         /**
          * Numeric value.
+         * @return Amount
          */
         double amount();
         /**
          * When did it happen.
+         * @return Date
          */
         Date date();
         /**
          * Dimensions.
+         * @return Dims
          */
         Map<String, String> dims();
     }
