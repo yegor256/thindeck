@@ -31,8 +31,10 @@ package com.thindeck.scenarios;
 
 import com.thindeck.api.Scenario;
 import com.thindeck.api.Step;
-import com.thindeck.scenarios.docker.DockerRun;
-import com.thindeck.scenarios.docker.DockerStop;
+import com.thindeck.steps.DockerRun;
+import com.thindeck.steps.DockerStop;
+import com.thindeck.steps.FindTanks;
+import com.thindeck.steps.Swap;
 import java.util.Arrays;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -53,6 +55,7 @@ public final class OnDeploy implements Scenario {
         return Arrays.asList(
             new FindTanks(),
             new DockerRun(),
+            new Swap(),
             new DockerStop()
         );
     }

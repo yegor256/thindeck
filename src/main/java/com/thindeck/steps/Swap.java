@@ -27,46 +27,66 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.scenarios;
+package com.thindeck.steps;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.xml.XML;
 import com.thindeck.api.Context;
 import com.thindeck.api.Step;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.logging.Level;
 import org.xembly.Directives;
 
 /**
- * Find tanks available for deployment.
+ * Swap BLUE and GREEN containers.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
  */
 @Immutable
-public final class FindTanks implements Step {
+public final class Swap implements Step {
 
     @Override
     public String name() {
-        return "find-tanks";
+        return "swap";
     }
 
     @Override
     public void exec(final Context ctx) throws IOException {
-        ctx.memo().update(
-            new Directives().xpath("/memo").addIf("tanks")
-                .xpath("tank").remove()
-                .add("tank").set("t1.thindeck.com")
+        final XML xml = ctx.memo().read();
+        final Collection<String> green = xml.xpath(
+            "/memo/containers/container[@type='green']/cid/text()"
+        );
+        final Collection<String> blue = xml.xpath(
+            "/memo/containers/container[@type='blue']/cid/text()"
+        );
+        final Directives dirs = new Directives();
+        for (final String cid : green) {
+            dirs.xpath(
+                String.format("/mnemo/containers/container[cid='%s']", cid)
+            ).attr("type", "blue");
+        }
+        for (final String cid : blue) {
+            dirs.xpath(
+                String.format("/mnemo/containers/container[cid='%s']", cid)
+            ).attr("type", "green");
+        }
+        ctx.memo().update(dirs);
+        ctx.log(
+            Level.INFO, "swap, %d blue vs %d green containers",
+            blue.size(), green.size()
         );
     }
 
     @Override
     public void commit(final Context ctx) {
-        ctx.log(Level.INFO, "nothing to commit");
+        // nothing to commit
     }
 
     @Override
     public void rollback(final Context ctx) {
-        ctx.log(Level.INFO, "nothing to roll back");
+        // nothing to rollback
     }
 }

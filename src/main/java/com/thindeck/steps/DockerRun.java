@@ -27,40 +27,85 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.scenarios.docker;
+package com.thindeck.steps;
 
+import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
+import com.jcabi.ssh.SSH;
+import com.jcabi.ssh.Shell;
+import com.jcabi.xml.XML;
 import com.thindeck.api.Context;
 import com.thindeck.api.Step;
+import java.io.IOException;
+import java.util.Collection;
 import java.util.logging.Level;
+import org.xembly.Directives;
 
 /**
- * Docker run.
+ * Start BLUE containers.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
  */
 @Immutable
-public final class DockerStop implements Step {
+public final class DockerRun implements Step {
 
     @Override
     public String name() {
-        return "docker-stop";
+        return "docker-run";
     }
 
     @Override
-    public void exec(final Context ctx) {
-        ctx.log(Level.INFO, "not implemented yet");
+    public void exec(final Context ctx) throws IOException {
+        final XML xml = ctx.memo().read();
+        final Collection<String> tanks = xml.xpath("/memo/tanks/tank/text()");
+        for (final String tank : tanks) {
+            this.run(
+                ctx, tank,
+                "https://github.com/yegor256/test-php-site.git"
+            );
+        }
+        ctx.log(Level.INFO, "containers started in %d tanks", tanks.size());
     }
 
     @Override
     public void commit(final Context ctx) {
-        ctx.log(Level.INFO, "nothing to commit");
+        // nothing to commit
     }
 
     @Override
     public void rollback(final Context ctx) {
-        throw new UnsupportedOperationException("#rollback()");
+        // nothing to rollback
     }
+
+    /**
+     * Run docker in this tank.
+     * @param ctx Context
+     * @param host Host name of the tank
+     * @param git Git URL to fetch
+     */
+    private void run(final Context ctx, final String host,
+        final String git) throws IOException {
+        final String[] lines = new Shell.Plain(new Remote().shell(host)).exec(
+            Joiner.on(" && ").join(
+                "dir=$(mktemp -d -t thindeck-XXXX)",
+                "cd \"${dir}\"",
+                String.format("git clone %s", SSH.escape(git)),
+                "sudo docker run -p 8081:80 \"--cidfile=$(pwd)/cid\" -v \"$(pwd):/var/www\" --rm yegor256/thindeck",
+                "cat cid",
+                "echo \"${dir}\""
+            )
+        ).split("\n");
+        ctx.memo().update(
+            new Directives().xpath("/memo").addIf("containers")
+                .add("container").attr("type", "blue")
+                .add("cid").set(lines[0]).up()
+                .add("port").set("8081").up()
+                .add("dir").set(lines[1]).up()
+                .add("tank").set(host).up()
+        );
+        ctx.log(Level.INFO, "container %s started", lines[0]);
+    }
+
 }

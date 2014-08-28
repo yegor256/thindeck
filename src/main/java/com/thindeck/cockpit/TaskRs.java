@@ -79,7 +79,7 @@ public final class TaskRs extends BaseRs {
      * @throws IOException If fails
      */
     @GET
-    @Path("/")
+    @Path("/log")
     public String log() throws IOException {
         final Repo repo = this.user().repos().get(this.name);
         final Task task = repo.tasks().get(this.number);

@@ -30,6 +30,7 @@
 package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import com.thindeck.api.Memo;
@@ -64,9 +65,7 @@ public final class MkMemo implements Memo {
      * @throws IOException If fails
      */
     public MkMemo() throws IOException {
-        final File file = File.createTempFile("thindeck-", ".xml");
-        FileUtils.forceDeleteOnExit(file);
-        this.path = file.getAbsolutePath();
+        this(MkMemo.temp());
     }
 
     /**
@@ -91,5 +90,21 @@ public final class MkMemo implements Memo {
             ).toString(),
             CharEncoding.UTF_8
         );
+        Logger.info(
+            this, "memo saved to %s (%d bytes)", this.path,
+            new File(this.path).length()
+        );
+    }
+
+    /**
+     * Create temp file.
+     * @return Temp file with XML
+     * @throws IOException If fails
+     */
+    private static File temp() throws IOException {
+        final File file = File.createTempFile("thindeck-", ".xml");
+        FileUtils.write(file, "<memo/>");
+        FileUtils.forceDeleteOnExit(file);
+        return file;
     }
 }

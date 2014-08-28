@@ -36,6 +36,7 @@ import com.thindeck.api.Repo;
 import com.thindeck.api.Task;
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -48,7 +49,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode
-@ScheduleWithFixedDelay
+@ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.MINUTES)
 @Loggable(Loggable.INFO)
 final class RoutineTxns implements Runnable, Closeable {
 
@@ -67,6 +68,7 @@ final class RoutineTxns implements Runnable, Closeable {
 
     @Override
     public void run() {
+        System.out.println("run");
         for (final Repo repo : this.base.repos()) {
             for (final Task task : repo.tasks().open()) {
                 try {

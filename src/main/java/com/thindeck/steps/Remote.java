@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.scenarios;
+package com.thindeck.steps;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.ssh.SSH;
@@ -52,9 +52,15 @@ public final class Remote {
      * @throws IOException If fails
      */
     public Shell shell(final String host) throws IOException {
-        return new SSH(
-            host, 22, "thindeck",
-            IOUtils.toString(this.getClass().getResourceAsStream("ssh.key"))
+        return new Shell.Verbose(
+            new Shell.Safe(
+                new SSH(
+                    host, 22, "thindeck",
+                    IOUtils.toString(
+                        this.getClass().getResourceAsStream("thindeck.key")
+                    )
+                )
+            )
         );
     }
 

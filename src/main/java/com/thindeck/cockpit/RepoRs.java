@@ -33,11 +33,13 @@ import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.jcabi.immutable.ArrayMap;
+import com.rexsl.page.JaxbBundle;
 import com.rexsl.page.JaxbGroup;
 import com.rexsl.page.Link;
 import com.rexsl.page.PageBuilder;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Task;
+import java.io.IOException;
 import java.util.logging.Level;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -72,10 +74,11 @@ public final class RepoRs extends BaseRs {
     /**
      * Get front page.
      * @return The JAX-RS response
+     * @throws IOException If fails
      */
     @GET
     @Path("/")
-    public Response front() {
+    public Response front() throws IOException {
         final Repo repo = this.user().repos().get(this.name);
         return new PageBuilder()
             .stylesheet("/xsl/repo.xsl")
@@ -83,6 +86,7 @@ public final class RepoRs extends BaseRs {
             .init(this)
             .link(new Link("add", "./add"))
             .append(new JxRepo(repo, this))
+            .append(new JaxbBundle("memo", repo.memo().read().toString()))
             .append(
                 JaxbGroup.build(
                     Collections2.transform(

@@ -27,71 +27,48 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.scenarios.docker;
+package com.thindeck.steps;
 
-import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
-import com.jcabi.ssh.SSH;
-import com.jcabi.ssh.Shell;
-import com.jcabi.xml.XML;
 import com.thindeck.api.Context;
 import com.thindeck.api.Step;
-import com.thindeck.scenarios.Remote;
 import java.io.IOException;
 import java.util.logging.Level;
+import org.xembly.Directives;
 
 /**
- * Docker run.
+ * Find tanks available for deployment.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
  */
 @Immutable
-public final class DockerRun implements Step {
+public final class FindTanks implements Step {
 
     @Override
     public String name() {
-        return "docker-run";
+        return "find-tanks";
     }
 
     @Override
     public void exec(final Context ctx) throws IOException {
-        final XML xml = ctx.memo().read();
-        for (final String tank : xml.xpath("/memo/tanks/tank/text()")) {
-            final String container = this.run(
-                tank, "git@github.com:yegor256/test-php-repo"
-            );
-            ctx.log(Level.INFO, "docker container %s started", container);
-        }
+        ctx.memo().update(
+            new Directives().xpath("/memo").addIf("tanks")
+                .xpath("tank").remove()
+                .xpath("/memo/tanks")
+                .add("tank").set("t1.thindeck.com")
+        );
+        ctx.log(Level.INFO, "one tank t1.thindeck.com found");
     }
 
     @Override
     public void commit(final Context ctx) {
-        ctx.log(Level.INFO, "nothing to commit");
+        // nothing to commit
     }
 
     @Override
     public void rollback(final Context ctx) {
-        throw new UnsupportedOperationException("#rollback()");
+        // nothing to rollback
     }
-
-    /**
-     * Run docker in this tank.
-     * @param host Host name of the tank
-     * @param git Git URL to fetch
-     * @return Container ID
-     */
-    private String run(final String host, final String git) throws IOException {
-        return new Shell.Plain(new Remote().shell(host)).exec(
-            Joiner.on(" && ").join(
-                "dir=$(mktemp -d -t thindeck-XXXX)",
-                "cd \"${dir}\"",
-                String.format("git clone %s", SSH.escape(git)),
-                "sudo docker run -i -t -p 80:80 --cidfile=cid -v $(pwd):/var/www --rm yegor256/thindeck 2>&1 >stdout &",
-                "cat cid"
-            )
-        ).trim();
-    }
-
 }

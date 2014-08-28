@@ -116,6 +116,7 @@ final class JxTask {
                 "log",
                 this.base.uriInfo().getBaseUriBuilder().clone()
                     .path(TaskRs.class)
+                    .path(TaskRs.class, "log")
                     .build(this.repo.name(), this.task.number())
             )
         );

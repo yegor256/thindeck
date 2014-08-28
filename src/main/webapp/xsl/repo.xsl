@@ -36,7 +36,10 @@
     <xsl:output method="xml" omit-xml-declaration="yes"/>
     <xsl:include href="/xsl/layout.xsl" />
     <xsl:template match="page" mode="body">
-        <p><xsl:value-of select="repo/name"/></p>
+        <p>
+            <strong><xsl:value-of select="repo/name"/></strong>
+        </p>
+        <pre><xsl:value-of select="memo"/></pre>
         <form action="{links/link[@rel='add']/@href}" method="post">
             <input name="cmd" size="65" placeholder="start a task..."/>
             <button type="submit">Start</button>

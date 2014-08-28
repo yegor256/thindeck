@@ -99,6 +99,7 @@ final class JxRepo {
                 "open",
                 this.base.uriInfo().getBaseUriBuilder().clone()
                     .path(RepoRs.class)
+                    .path(RepoRs.class, "front")
                     .build(this.repo.name())
             )
         );

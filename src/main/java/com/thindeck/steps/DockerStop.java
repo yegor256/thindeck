@@ -27,57 +27,79 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.steps;
 
+import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
-import com.jcabi.log.Logger;
+import com.jcabi.ssh.SSH;
+import com.jcabi.ssh.Shell;
+import com.jcabi.xml.XML;
 import com.thindeck.api.Context;
-import com.thindeck.api.Memo;
+import com.thindeck.api.Step;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.logging.Level;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import org.xembly.Directives;
 
 /**
- * Mock of {@link Context}.
+ * Stop all BLUE containers.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
  */
 @Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkContext implements Context {
+public final class DockerStop implements Step {
 
-    /**
-     * Memo.
-     */
-    private final transient Memo memo;
-
-    /**
-     * Ctor.
-     * @throws IOException If fails
-     */
-    public MkContext() throws IOException {
-        this(new MkMemo());
-    }
-
-    /**
-     * Ctor.
-     * @param mmo Memo to encapsulate
-     */
-    public MkContext(final Memo mmo) {
-        this.memo = mmo;
+    @Override
+    public String name() {
+        return "docker-stop";
     }
 
     @Override
-    public Memo memo() {
-        return this.memo;
+    public void exec(final Context ctx) throws IOException {
+        final XML xml = ctx.memo().read();
+        final Collection<XML> blue = xml.nodes(
+            "/memo/containers/container[@type='blue']"
+        );
+        for (final XML node : blue) {
+            this.stop(ctx, node);
+        }
+        ctx.log(Level.INFO, "%d blue containers stopped", blue.size());
     }
 
     @Override
-    public void log(final Level level, final String txt, final Object... args) {
-        Logger.log(level, this, txt, args);
+    public void commit(final Context ctx) {
+        // nothing to commit
     }
+
+    @Override
+    public void rollback(final Context ctx) {
+        // nothing to rollback
+    }
+
+    /**
+     * Stop docker container.
+     * @param ctx Context
+     * @param xml XML with container info
+     */
+    private void stop(final Context ctx, final XML xml) throws IOException {
+        final String host = xml.xpath("tank/text()").get(0);
+        final String cid = xml.xpath("cid/text()").get(0);
+        final String dir = xml.xpath("dir/text()").get(0);
+        new Shell.Empty(new Remote().shell(host)).exec(
+            Joiner.on(" && ").join(
+                String.format("dir=%s", SSH.escape(dir)),
+                String.format("sudo docker stop %s", SSH.escape(cid)),
+                "rm -rf \"${dir}\""
+            )
+        );
+        ctx.memo().update(
+            new Directives().xpath(
+                String.format("/memo/containers/container[cid='%s']", cid)
+            ).remove()
+        );
+        ctx.log(Level.INFO, "container %s terminated", cid);
+    }
+
 }
