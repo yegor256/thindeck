@@ -1,5 +1,6 @@
 language: java
 install:
   - sudo apt-get install graphviz
-script: 
+script:
+  - export PATH=$PATH:/tmp/casperjs/bin
   - mvn clean install -Pqulice --batch-mode --errors
