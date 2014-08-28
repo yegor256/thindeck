@@ -51,6 +51,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.MINUTES)
 @Loggable(Loggable.INFO)
+@SuppressWarnings("PMD.DoNotUseThreads")
 final class RoutineTxns implements Runnable, Closeable {
 
     /**

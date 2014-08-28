@@ -61,6 +61,7 @@ import lombok.ToString;
 @Immutable
 @ToString
 @EqualsAndHashCode
+@SuppressWarnings("PMD.TooManyMethods")
 public final class MnBase implements Base {
 
     /**

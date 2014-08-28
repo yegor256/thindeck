@@ -53,7 +53,7 @@ public final class MkContext implements Context {
     /**
      * Memo.
      */
-    private final transient Memo memo;
+    private final transient Memo mmo;
 
     /**
      * Ctor.
@@ -65,15 +65,15 @@ public final class MkContext implements Context {
 
     /**
      * Ctor.
-     * @param mmo Memo to encapsulate
+     * @param memo Memo to encapsulate
      */
-    public MkContext(final Memo mmo) {
-        this.memo = mmo;
+    public MkContext(final Memo memo) {
+        this.mmo = memo;
     }
 
     @Override
     public Memo memo() {
-        return this.memo;
+        return this.mmo;
     }
 
     @Override
