@@ -113,7 +113,7 @@ final class JxTask {
         final Collection<Link> links = new LinkedList<Link>();
         links.add(
             new Link(
-                "drain",
+                "log",
                 this.base.uriInfo().getBaseUriBuilder().clone()
                     .path(TaskRs.class)
                     .build(this.repo.name(), this.task.number())

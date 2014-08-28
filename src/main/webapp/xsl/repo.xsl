@@ -37,6 +37,10 @@
     <xsl:include href="/xsl/layout.xsl" />
     <xsl:template match="page" mode="body">
         <p><xsl:value-of select="repo/name"/></p>
+        <form action="{links/link[@rel='add']/@href}" method="post">
+            <input name="cmd" size="65" placeholder="start a task..."/>
+            <button type="submit">Start</button>
+        </form>
         <xsl:if test="not(tasks/task)">
             <p>No tasks in this repo yet.</p>
         </xsl:if>
@@ -49,7 +53,13 @@
     </xsl:template>
     <xsl:template match="task">
         <li>
-            <xsl:value-of select="name"/>
+            <xsl:value-of select="number"/>
+            <xsl:text>:</xsl:text>
+            <xsl:value-of select="command"/>
+            <xsl:text> </xsl:text>
+            <a href="{links/link[@rel='log']/@href}">
+                <xsl:text>log</xsl:text>
+            </a>
         </li>
     </xsl:template>
 </xsl:stylesheet>

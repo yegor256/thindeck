@@ -34,6 +34,7 @@ import com.rexsl.page.BasePage;
 import com.rexsl.page.BaseResource;
 import com.rexsl.page.Inset;
 import com.rexsl.page.Resource;
+import com.rexsl.page.inset.FlashInset;
 import com.rexsl.page.inset.LinksInset;
 import com.thindeck.api.Base;
 import com.thindeck.api.User;
@@ -64,6 +65,15 @@ public class BaseRs extends BaseResource {
                 builder.type(MediaType.TEXT_XML);
             }
         };
+    }
+
+    /**
+     * Flash.
+     * @return The inset with flash
+     */
+    @Inset.Runtime
+    public final FlashInset flash() {
+        return new FlashInset(this);
     }
 
     /**

@@ -32,11 +32,16 @@ package com.thindeck.cockpit;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
+import com.jcabi.immutable.ArrayMap;
 import com.rexsl.page.JaxbGroup;
+import com.rexsl.page.Link;
 import com.rexsl.page.PageBuilder;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Task;
+import java.util.logging.Level;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
@@ -76,6 +81,7 @@ public final class RepoRs extends BaseRs {
             .stylesheet("/xsl/repo.xsl")
             .build(TdPage.class)
             .init(this)
+            .link(new Link("add", "./add"))
             .append(new JxRepo(repo, this))
             .append(
                 JaxbGroup.build(
@@ -93,6 +99,29 @@ public final class RepoRs extends BaseRs {
             )
             .render()
             .build();
+    }
+
+    /**
+     * Add a new task.
+     * @param cmd Command
+     * @return The JAX-RS response
+     */
+    @POST
+    @Path("/add")
+    public Response add(@FormParam("cmd") final String cmd) {
+        final Repo repo = this.user().repos().get(this.name);
+        final Task task = repo.tasks().add("", new ArrayMap<String, String>());
+        throw this.flash().redirect(
+            this.uriInfo().getBaseUriBuilder()
+                .clone()
+                .path(RepoRs.class)
+                .build(this.name),
+            String.format(
+                "task #%d:%s added to the queue",
+                task.number(), task.command()
+            ),
+            Level.INFO
+        );
     }
 
 }
