@@ -87,25 +87,28 @@ public final class DockerRun implements Step {
      */
     private void run(final Context ctx, final String host,
         final String git) throws IOException {
-        final String[] lines = new Shell.Plain(new Remote().shell(host)).exec(
+        final Shell.Plain shell = new Shell.Plain(new Remote().shell(host));
+        final String dir = shell.exec("mktemp -d -t thindeck-XXXX").trim();
+        shell.exec(
             Joiner.on(" && ").join(
-                "dir=$(mktemp -d -t thindeck-XXXX)",
+                String.format("dir=%s", SSH.escape(dir)),
                 "cd \"${dir}\"",
                 String.format("git clone %s", SSH.escape(git)),
-                "sudo docker run -p 8081:80 \"--cidfile=$(pwd)/cid\" -v \"$(pwd):/var/www\" --rm yegor256/thindeck",
-                "cat cid",
-                "echo \"${dir}\""
+                "sudo docker run -d -p 8081:80 \"--cidfile=$(pwd)/cid\" -v \"$(pwd):/var/www\" yegor256/thindeck"
             )
-        ).split("\n");
+        );
+        final String cid = shell.exec(
+            String.format("dir=%s; cat \"${dir}/cid\"", SSH.escape(dir))
+        );
         ctx.memo().update(
             new Directives().xpath("/memo").addIf("containers")
                 .add("container").attr("type", "blue")
-                .add("cid").set(lines[0]).up()
+                .add("cid").set(cid).up()
                 .add("port").set("8081").up()
-                .add("dir").set(lines[1]).up()
+                .add("dir").set(dir).up()
                 .add("tank").set(host).up()
         );
-        ctx.log(Level.INFO, "container %s started", lines[0]);
+        ctx.log(Level.INFO, "container %s started", cid);
     }
 
 }

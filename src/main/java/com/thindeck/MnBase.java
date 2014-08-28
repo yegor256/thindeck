@@ -29,6 +29,7 @@
  */
 package com.thindeck;
 
+import com.jcabi.aspects.Cacheable;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.urn.URN;
 import com.thindeck.api.Base;
@@ -61,6 +62,16 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public final class MnBase implements Base {
+
+    /**
+     * Fake memo, common for all fake classes.
+     * @return Memo
+     * @throws IOException If fails
+     */
+    @Cacheable(forever = true)
+    public static Memo memo() throws IOException {
+        return new MkMemo();
+    }
 
     @Override
     public User user(final URN urn) {
@@ -107,7 +118,7 @@ public final class MnBase implements Base {
         }
         @Override
         public Memo memo() throws IOException {
-            return new MkMemo();
+            return MnBase.memo();
         }
     }
 

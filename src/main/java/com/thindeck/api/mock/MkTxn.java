@@ -31,6 +31,7 @@ package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
+import com.thindeck.MnBase;
 import com.thindeck.api.Context;
 import com.thindeck.api.Step;
 import com.thindeck.api.Task;
@@ -72,7 +73,7 @@ public final class MkTxn implements Txn {
 
     @Override
     public void increment() throws IOException {
-        final Context ctx = new MkContext();
+        final Context ctx = new MkContext(MnBase.memo());
         for (final Step step : this.task.scenario().steps()) {
             step.exec(ctx);
         }
