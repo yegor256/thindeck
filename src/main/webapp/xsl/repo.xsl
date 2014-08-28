@@ -37,10 +37,15 @@
     <xsl:include href="/xsl/layout.xsl" />
     <xsl:template match="page" mode="body">
         <p><xsl:value-of select="repo/name"/></p>
-        <p>Tasks:</p>
-        <ul>
-            <xsl:apply-templates select="tasks/task"/>
-        </ul>
+        <xsl:if test="not(tasks/task)">
+            <p>No tasks in this repo yet.</p>
+        </xsl:if>
+        <xsl:if test="tasks/task">
+            <p>Tasks:</p>
+            <ul>
+                <xsl:apply-templates select="tasks/task"/>
+            </ul>
+        </xsl:if>
     </xsl:template>
     <xsl:template match="task">
         <li>

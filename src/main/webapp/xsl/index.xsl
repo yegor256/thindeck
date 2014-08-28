@@ -37,6 +37,11 @@
     <xsl:output method="xml" omit-xml-declaration="yes"/>
     <xsl:include href="/xsl/layout.xsl" />
     <xsl:template match="page" mode="body">
+        <p>
+            <a href="{links/link[@rel='repos']/@href}">
+                <xsl:text>my repositories</xsl:text>
+            </a>
+        </p>
         <p>Welcome! :)</p>
     </xsl:template>
 </xsl:stylesheet>

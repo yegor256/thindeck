@@ -36,7 +36,7 @@
     <xsl:output method="xml" omit-xml-declaration="yes"/>
     <xsl:include href="/xsl/layout.xsl" />
     <xsl:template match="page" mode="body">
-        <p>Your repositories:</p>
+        <p>Repositories:</p>
         <ul>
             <xsl:apply-templates select="repos/repo"/>
         </ul>
