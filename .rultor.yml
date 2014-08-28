@@ -14,6 +14,7 @@ install:
   - "wget --retry-connrefused https://oss.sonatype.org/content/repositories/releases/net/sourceforge/plantuml/plantuml/8000/plantuml-8000.jar"
   - "sudo mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar"
   - "sudo gem install pdd"
+  - "git clone --depth=1 https://github.com/n1k0/casperjs.git /tmp/casperjs"
 
 deploy:
   script:
