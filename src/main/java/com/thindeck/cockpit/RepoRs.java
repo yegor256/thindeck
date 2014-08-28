@@ -84,7 +84,7 @@ public final class RepoRs extends BaseRs {
                         new Function<Task, Object>() {
                             @Override
                             public JxTask apply(final Task input) {
-                                return new JxTask(input, RepoRs.this);
+                                return new JxTask(repo, input, RepoRs.this);
                             }
                         }
                     ),

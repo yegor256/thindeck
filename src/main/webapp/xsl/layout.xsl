@@ -51,6 +51,11 @@
                 <xsl:apply-templates select="." mode="head"/>
             </head>
             <body>
+                <p>
+                    <a href="{links/link[@rel='home']/@href}">
+                        <xsl:text>thindeck.com</xsl:text>
+                    </a>
+                </p>
                 <div class="content" role="main">
                     <xsl:apply-templates select="." mode="body"/>
                 </div>

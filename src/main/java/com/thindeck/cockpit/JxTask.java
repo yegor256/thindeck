@@ -30,6 +30,7 @@
 package com.thindeck.cockpit;
 
 import com.rexsl.page.Link;
+import com.thindeck.api.Repo;
 import com.thindeck.api.Task;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -51,6 +52,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 final class JxTask {
 
     /**
+     * Repo.
+     */
+    private final transient Repo repo;
+
+    /**
      * Task.
      */
     private final transient Task task;
@@ -69,10 +75,12 @@ final class JxTask {
 
     /**
      * Ctor.
+     * @param rpo Repo
      * @param tsk Task
      * @param res BaseRs
      */
-    JxTask(final Task tsk, final BaseRs res) {
+    JxTask(final Repo rpo, final Task tsk, final BaseRs res) {
+        this.repo = rpo;
         this.task = tsk;
         this.base = res;
     }
@@ -108,7 +116,7 @@ final class JxTask {
                 "drain",
                 this.base.uriInfo().getBaseUriBuilder().clone()
                     .path(TaskRs.class)
-                    .build(this.task.number())
+                    .build(this.repo.name(), this.task.number())
             )
         );
         return links;

@@ -3,7 +3,8 @@
     '/',
     '/xsl/layout.xsl',
     '/robots.txt',
-    '/repos'
+    '/repos',
+    '/r/fake-repo'
 ].forEach(
     function (page) {
         casper.test.begin(

@@ -37,6 +37,6 @@
     <xsl:output method="xml" omit-xml-declaration="yes"/>
     <xsl:include href="/xsl/layout.xsl" />
     <xsl:template match="page" mode="body">
-        <p>Thindeck.com. Beta version.</p>
+        <p>Welcome! :)</p>
     </xsl:template>
 </xsl:stylesheet>
