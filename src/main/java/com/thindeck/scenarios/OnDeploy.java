@@ -36,6 +36,7 @@ import com.thindeck.steps.DockerStop;
 import com.thindeck.steps.FindTanks;
 import com.thindeck.steps.Swap;
 import java.util.Arrays;
+import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -51,6 +52,7 @@ import lombok.ToString;
 public final class OnDeploy implements Scenario {
 
     @Override
+    @NotNull
     public Iterable<Step> steps() {
         return Arrays.asList(
             new FindTanks(),
