@@ -83,12 +83,12 @@ More information about types and packages you can get at [JavaDoc](/apidocs).
 ## 4. Component View
 
 There is a dedicated article for
-[Component View]({% post_url 2014/jun/2014-06-24-component-view %}).
+[Component View]({% post_url 2014-06-24-component-view %}).
 
 ## 5. Deployment View
 
 There is a dedicated article for
-[Deployment View]({% post_url 2014/jun/2014-06-27-deployment-view %}).
+[Deployment View]({% post_url 2014-06-27-deployment-view %}).
 
 ## 6. Use Cases, Sequence Diagrams
 
@@ -106,7 +106,7 @@ Following risks have been identified:
 
 ## 8. Decisions Made
 
-As documented in [Component View]({% post_url 2014/jun/2014-06-24-component-view %})
+As documented in [Component View]({% post_url 2014-06-24-component-view %})
 there will be five major components of the application, which will communicate asynchronously.
 Two of the components **Meter** and **Board** will be a third party applications
 provided by AWS.

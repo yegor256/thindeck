@@ -23,6 +23,6 @@ Thindeck is a Platform as a Service (PaaS) cloud service that features:
 
  * built-in load balancing
 
-Check our [Architecture]({% post_url 2014/apr/2014-04-01-architecture %}).
+Check our [Architecture]({% post_url 2014-04-01-architecture %}).
 
 See also [Software Requirements Specification](/requs/requs.xml).

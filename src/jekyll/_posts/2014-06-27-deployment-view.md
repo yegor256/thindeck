@@ -8,7 +8,7 @@ authors:
   - "Yegor Bugayenko"
 ---
 
-As [Component View]({% post_url 2014/jun/2014-06-24-component-view %})
+As [Component View]({% post_url 2014-06-24-component-view %})
 explains, the system consists of three components:
 Load Balancer, Cockpit and Tank.
 
