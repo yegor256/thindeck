@@ -36,10 +36,24 @@ import com.jcabi.xml.XSDDocument;
 import com.jcabi.xml.XSL;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
+import javax.validation.constraints.NotNull;
 import org.xembly.Directive;
 
 /**
- * Memo.
+ * Memo of a {@link Repo}.
+ *
+ * <p>Memo is an XML document with data about the current
+ * state of the repository. A memo can contain, for example, the
+ * list of Docker containers that are running the repo at
+ * the moment.
+ *
+ * <p>Full description of what information a memo should (and can)
+ * include you can get from its XSD schema.
+ *
+ * <p>Memo should not guarantee any thread-safety. It is assumed
+ * that the client calls {@link #read()} and {@link #update(Iterable)}
+ * methods consequently. If two threads will update in parallel,
+ * the result may be unpredictable.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -64,13 +78,22 @@ public interface Memo {
 
     /**
      * Read XML.
+     *
+     * <p>The method must guarantee that the XML document it
+     * returns complies to the XSD schema.
+     *
      * @return XML
      * @throws IOException If fails
      */
+    @NotNull(message = "XML can't be null")
     XML read() throws IOException;
 
     /**
      * Update.
+     *
+     * <p>The method must throw a runtime exception if,
+     * after applying the changes to the XML, it violates the XSD schema.
+     *
      * @param dirs Directives
      * @throws IOException If fails
      */

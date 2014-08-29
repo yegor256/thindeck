@@ -30,9 +30,15 @@
 package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
+import javax.validation.constraints.NotNull;
 
 /**
- * Task.
+ * Task in a {@link Repo}.
+ *
+ * <p>Task is a group of work steps that has a number and a name. For example,
+ * there could be a "234:deploy" command in a repository. This command
+ * simply means that a collection of steps should be executed
+ * when it's possible.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -43,6 +49,9 @@ public interface Task {
 
     /**
      * Its unique number.
+     *
+     * <p>The number of the task should be unique in the entire system.
+     *
      * @return Number
      */
     long number();
@@ -51,12 +60,14 @@ public interface Task {
      * Command it is running.
      * @return Command
      */
+    @NotNull(message = "command can't be null")
     String command();
 
     /**
      * Scenario.
      * @return Scenario
      */
+    @NotNull(message = "scenario can't be null")
     Scenario scenario();
 
 }

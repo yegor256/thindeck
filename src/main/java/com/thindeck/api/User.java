@@ -31,6 +31,7 @@ package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.urn.URN;
+import javax.validation.constraints.NotNull;
 
 /**
  * User.
@@ -51,18 +52,21 @@ public interface User {
      *
      * @return URN
      */
+    @NotNull(message = "URN can't be null")
     URN urn();
 
     /**
      * Repositories.
      * @return All repositories of this user
      */
+    @NotNull(message = "repositories can't be null")
     Repos repos();
 
     /**
      * Consumption of resources.
      * @return Usage
      */
+    @NotNull(message = "usage can't be null")
     Usage usage();
 
 }

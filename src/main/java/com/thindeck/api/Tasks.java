@@ -31,6 +31,7 @@ package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
 import java.util.Map;
+import javax.validation.constraints.NotNull;
 
 /**
  * Backlog.
@@ -47,18 +48,21 @@ public interface Tasks {
      * @param number Task number
      * @return Task found
      */
+    @NotNull(message = "task can't be null")
     Task get(long number);
 
     /**
      * All tasks waiting processing.
      * @return Tasks
      */
+    @NotNull(message = "iterable of tasks can't be null")
     Iterable<Task> open();
 
     /**
      * All tasks.
      * @return Tasks
      */
+    @NotNull(message = "iterable of tasks can't be null")
     Iterable<Task> all();
 
     /**
@@ -67,6 +71,7 @@ public interface Tasks {
      * @param args Arguments
      * @return Task just added
      */
+    @NotNull(message = "task can't be null")
     Task add(String command, Map<String, String> args);
 
 }

@@ -31,9 +31,14 @@ package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
 import java.io.IOException;
+import javax.validation.constraints.NotNull;
 
 /**
  * Repository.
+ *
+ * <p>Repository is a configurable deployment of sources
+ * to Docker containers. Repository should be configured through
+ * {@link #memo()} and modified through {@link #tasks()}.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -44,14 +49,20 @@ public interface Repo {
 
     /**
      * Name, unique.
+     *
+     * <p>Name of the repository is unique for a given user. This means
+     * that two users can have repositories with the same name.
+     *
      * @return Unique name of the repo
      */
+    @NotNull(message = "repo name can't be null")
     String name();
 
     /**
      * Tasks.
      * @return Tasks
      */
+    @NotNull(message = "tasks can't be null")
     Tasks tasks();
 
     /**
@@ -59,6 +70,7 @@ public interface Repo {
      * @return Memo
      * @throws IOException If fails
      */
+    @NotNull(message = "memo can't be null")
     Memo memo() throws IOException;
 
 }
