@@ -219,52 +219,80 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <artifactId>maven-site-plugin</artifactId>
-                <configuration>
-                    <reportPlugins combine.children="append">
-                        <plugin>
-                            <groupId>org.requs</groupId>
-                            <artifactId>requs-maven-plugin</artifactId>
-                            <version>${requs.version}</version>
-                            <reportSets>
-                                <reportSet>
-                                    <reports>
-                                        <report>default</report>
-                                    </reports>
-                                </reportSet>
-                            </reportSets>
-                        </plugin>
-                    </reportPlugins>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <inherited>false</inherited>
-                <executions>
-                    <execution>
-                        <id>jekyll-build</id>
-                        <phase>pre-site</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>jekyll</executable>
-                            <arguments>
-                                <argument>build</argument>
-                                <argument>--source</argument>
-                                <argument>${basedir}/src/jekyll</argument>
-                                <argument>--destination</argument>
-                                <argument>${project.build.directory}/site</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
     <profiles>
+        <profile>
+            <id>site</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-jekyll-sources</id>
+                                <phase>pre-site</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/jekyll</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/jekyll</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <configuration>
+                            <reportPlugins combine.children="append">
+                                <plugin>
+                                    <groupId>org.requs</groupId>
+                                    <artifactId>requs-maven-plugin</artifactId>
+                                    <version>${requs.version}</version>
+                                    <reportSets>
+                                        <reportSet>
+                                            <reports>
+                                                <report>default</report>
+                                            </reports>
+                                        </reportSet>
+                                    </reportSets>
+                                </plugin>
+                            </reportPlugins>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <inherited>false</inherited>
+                        <executions>
+                            <execution>
+                                <id>jekyll-build</id>
+                                <phase>pre-site</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>jekyll</executable>
+                                    <arguments>
+                                        <argument>build</argument>
+                                        <argument>--source</argument>
+                                        <argument>${project.build.directory}/jekyll</argument>
+                                        <argument>--destination</argument>
+                                        <argument>${project.build.directory}/site</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>tomcat-test</id>
             <activation>

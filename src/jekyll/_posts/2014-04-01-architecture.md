@@ -80,7 +80,7 @@ the entire project is at risk.
 The types that comprise the data model and their relationships are documented
 in the [Software Requirements Specification](/requs/requs.xml).
 
-More information about types and packages you can get at [JavaDoc](/apidocs).
+More information about types and packages you can get at [JavaDoc](/apidocs-${project.version}).
 
 ## Component View
 
