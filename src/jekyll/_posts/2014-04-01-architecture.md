@@ -11,20 +11,22 @@ authors:
   - "Krzysztof Krason"
 ---
 
-This document specifies architecture and design decisions made in relation to
-the Thindeck.com project.
+This document specifies our key architecture and design decisions. The
+document is not intended to be complete. For a complete information always
+refer to the source code. The document serves mostly as guidelines for new
+contributors.
 
-Section 2 lists basic assumptions made after investigation of the provided
-business case description. Section 3 includes class diagrams showing the
-packaging and class design. Section 4 explains separation of software
-components, and the interaction between them and third-parties.
-Section 5 describes a proposed physical layout of the major tiers of the
-system under development (SuD). Section 6 gives internal details of major use
-case implementations. Section 7 lists the three most severe technical risks
-identified, analyzed, and planned. Section 8 lists all important technical
-decisions made during architecture and design.
+If you find any mistakes in this document or any other pages linked to it,
+don't hesitate to submit a [Github issue](https://github.com/yegor256/thindeck).
+Moreover, if something is not clear in this page or any other pages here,
+please submit an issue. It is our responsibility to keep these documentation
+clean and accurate. You will greatly help us if you report a bug.
 
-## 2. Assumptions
+## Assumptions
+
+We created the entire system having in mind the following assumptions. We
+honestly believe that we made no mistakes in this section. If we did,
+the entire project is at risk.
 
 <table>
   <thead>
@@ -73,29 +75,29 @@ decisions made during architecture and design.
   </tbody>
 </table>
 
-## 3. Class diagrams
+## Class diagrams
 
 The types that comprise the data model and their relationships are documented
 in the [Software Requirements Specification](/requs/requs.xml).
 
 More information about types and packages you can get at [JavaDoc](/apidocs).
 
-## 4. Component View
+## Component View
 
 There is a dedicated article for
 [Component View]({% post_url 2014-06-24-component-view %}).
 
-## 5. Deployment View
+## Deployment View
 
 There is a dedicated article for
 [Deployment View]({% post_url 2014-06-27-deployment-view %}).
 
-## 6. Use Cases, Sequence Diagrams
+## Use Cases, Sequence Diagrams
 
 Use Cases and their associated Sequence Diagrams can be found in the
 [Software Requirements Specification](/requs/requs.xml).
 
-## 7. Technical Risks
+## Technical Risks
 
 Following risks have been identified:
 
@@ -104,7 +106,7 @@ Following risks have been identified:
   * relaying on AWS could cause problems if a migration would be desirable (e.g. when a better platform is found)
   * UI responsive design might be to heavy for mobile devices
 
-## 8. Decisions Made
+## Decisions Made
 
 As documented in [Component View]({% post_url 2014-06-24-component-view %})
 there will be five major components of the application, which will communicate asynchronously.
@@ -118,7 +120,7 @@ provided by AWS.
   * containers will use Linux operating system
   * containers will be created using Docker virtualization technology
 
-## 9. References
+## References
 
 UML 2.0, Infrastructure and Superstructure, by OMG,
 {{http://www.omg.org/spec/UML/2.0/}}.
