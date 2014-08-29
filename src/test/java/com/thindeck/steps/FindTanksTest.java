@@ -27,44 +27,38 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api;
+package com.thindeck.steps;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.xml.XML;
-import com.jcabi.xml.XSD;
-import com.jcabi.xml.XSDDocument;
+import com.jcabi.matchers.XhtmlMatchers;
+import com.thindeck.api.Context;
+import com.thindeck.api.Step;
+import com.thindeck.api.mock.MkContext;
 import java.io.IOException;
-import org.xembly.Directive;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Memo.
+ * Test case for {@link FindTanks}.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
  */
-@Immutable
-public interface Memo {
+public final class FindTanksTest {
 
     /**
-     * Schema.
-     */
-    XSD SCHEMA = XSDDocument.make(
-        Memo.class.getResourceAsStream("memo.xsd")
-    );
-
-    /**
-     * Read XML.
-     * @return XML
+     * FindTanks can find tanks and report them in XML.
      * @throws IOException If fails
      */
-    XML read() throws IOException;
-
-    /**
-     * Update.
-     * @param dirs Directives
-     * @throws IOException If fails
-     */
-    void update(Iterable<Directive> dirs) throws IOException;
+    @Test
+    public void findsTanksAndDocumentsInXml() throws IOException {
+        final Step step = new FindTanks();
+        final Context ctx = new MkContext();
+        step.exec(ctx);
+        MatcherAssert.assertThat(
+            ctx.memo().read(),
+            XhtmlMatchers.hasXPaths("/memo/tanks/tank")
+        );
+    }
 
 }

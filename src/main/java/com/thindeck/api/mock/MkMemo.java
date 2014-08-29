@@ -31,6 +31,7 @@ package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
+import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import com.thindeck.api.Memo;
@@ -78,15 +79,21 @@ public final class MkMemo implements Memo {
 
     @Override
     public XML read() throws IOException {
-        return new XMLDocument(new File(this.path));
+        return new StrictXML(
+            new XMLDocument(new File(this.path)),
+            Memo.SCHEMA
+        );
     }
 
     @Override
     public void update(final Iterable<Directive> dirs) throws IOException {
         FileUtils.write(
             new File(this.path),
-            new XMLDocument(
-                new Xembler(dirs).applyQuietly(this.read().node())
+            new StrictXML(
+                new XMLDocument(
+                    new Xembler(dirs).applyQuietly(this.read().node())
+                ),
+                Memo.SCHEMA
             ).toString(),
             CharEncoding.UTF_8
         );
