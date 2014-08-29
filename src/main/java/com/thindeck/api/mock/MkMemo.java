@@ -80,7 +80,7 @@ public final class MkMemo implements Memo {
     @Override
     public XML read() throws IOException {
         return new StrictXML(
-            new XMLDocument(new File(this.path)),
+            Memo.CLEANUP.transform(new XMLDocument(new File(this.path))),
             Memo.SCHEMA
         );
     }
@@ -90,8 +90,10 @@ public final class MkMemo implements Memo {
         FileUtils.write(
             new File(this.path),
             new StrictXML(
-                new XMLDocument(
-                    new Xembler(dirs).applyQuietly(this.read().node())
+                Memo.CLEANUP.transform(
+                    new XMLDocument(
+                        new Xembler(dirs).applyQuietly(this.read().node())
+                    )
                 ),
                 Memo.SCHEMA
             ).toString(),

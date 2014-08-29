@@ -1,4 +1,5 @@
-/**
+<?xml version="1.0"?>
+<!--
  * Copyright (c) 2014, Thindeck.com
  * All rights reserved.
  *
@@ -26,54 +27,16 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-package com.thindeck.api;
-
-import com.jcabi.aspects.Immutable;
-import com.jcabi.xml.XML;
-import com.jcabi.xml.XSD;
-import com.jcabi.xml.XSDDocument;
-import com.jcabi.xml.XSL;
-import com.jcabi.xml.XSLDocument;
-import java.io.IOException;
-import org.xembly.Directive;
-
-/**
- * Memo.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.1
- */
-@Immutable
-public interface Memo {
-
-    /**
-     * Schema.
-     */
-    XSD SCHEMA = XSDDocument.make(
-        Memo.class.getResourceAsStream("memo.xsd")
-    );
-
-    /**
-     * Clean-up XSL.
-     */
-    XSL CLEANUP = XSLDocument.make(
-        Memo.class.getResourceAsStream("memo-cleanup.xsl")
-    );
-
-    /**
-     * Read XML.
-     * @return XML
-     * @throws IOException If fails
-     */
-    XML read() throws IOException;
-
-    /**
-     * Update.
-     * @param dirs Directives
-     * @throws IOException If fails
-     */
-    void update(Iterable<Directive> dirs) throws IOException;
-
-}
+ -->
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+    <xsl:output method="xml"/>
+    <xsl:strip-space elements="*" />
+    <xsl:template match="node()|@*">
+        <xsl:copy>
+            <xsl:apply-templates select="node()|@*"/>
+        </xsl:copy>
+    </xsl:template>
+</xsl:stylesheet>
