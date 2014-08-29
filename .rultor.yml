@@ -18,7 +18,7 @@ install:
 deploy:
   script:
     - "sudo bundle install"
-    - "mvn clean test install site-deploy -Pgh-pages -Psite -Pqulice --errors --settings ../settings.xml"
+    - "mvn clean test install site-deploy -Psite -Pqulice --errors --settings ../settings.xml"
     - "mvn clean"
     - "pdd --source=$(pwd) --verbose --file=thindeck.xml"
     - "s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml"
@@ -34,4 +34,4 @@ release:
   script:
     - "mvn versions:set \"-DnewVersion=${tag}\""
     - "git commit -am \"${tag}\""
-    - "mvn clean deploy -Pqulice -Psonatype -Pthindeck --errors --settings ../settings.xml"
+    - "mvn clean deploy -Pqulice -Pthindeck --errors --settings ../settings.xml"
