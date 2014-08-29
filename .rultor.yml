@@ -7,31 +7,31 @@ assets:
 env:
   MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
 
-install:
-  - "sudo apt-get install -y openjdk-6-jre"
-  - "wget --retry-connrefused http://yar.fruct.org/attachments/download/362/plantuml_7707-1_all.deb"
-  - "sudo dpkg -i plantuml_7707-1_all.deb"
-  - "wget --retry-connrefused https://oss.sonatype.org/content/repositories/releases/net/sourceforge/plantuml/plantuml/8000/plantuml-8000.jar"
-  - "sudo mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar"
-  - "sudo gem install pdd"
+install: |
+  sudo apt-get install -y openjdk-6-jre
+  wget --retry-connrefused http://yar.fruct.org/attachments/download/362/plantuml_7707-1_all.deb
+  sudo dpkg -i plantuml_7707-1_all.deb
+  wget --retry-connrefused https://oss.sonatype.org/content/repositories/releases/net/sourceforge/plantuml/plantuml/8000/plantuml-8000.jar
+  sudo mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar
+  sudo gem install pdd
+  sudo bundle install
 
 deploy:
-  script:
-    - "sudo bundle install"
-    - "mvn clean test install site-deploy -Psite -Pqulice --errors --settings ../settings.xml"
-    - "mvn clean"
-    - "pdd --source=$(pwd) --verbose --file=thindeck.xml"
-    - "s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml"
+  script: |
+    mvn clean deploy -Prultor --settings ../settings.xml
+    mvn clean
+    pdd --source=$(pwd) --verbose --file=thideck.xml
+    s3cmd --no-progress put rultor.xml --config=../s3cfg s3://pdd.teamed.io/thideck.xml
 
 merge:
-  script:
-    - "sudo bundle install"
-    - "mvn clean install site -Pqulice -Psite --errors --settings ../settings.xml"
-    - "mvn clean"
-    - "pdd --source=$(pwd) --verbose --file=/dev/null"
+  script: |
+    mvn clean install site -Pqulice -Psite --errors --settings ../settings.xml
+    mvn clean
+    pdd --source=$(pwd) --verbose --file=/dev/null
 
 release:
-  script:
-    - "mvn versions:set \"-DnewVersion=${tag}\""
-    - "git commit -am \"${tag}\""
-    - "mvn clean deploy -Pqulice -Pthindeck --errors --settings ../settings.xml"
+  script: |
+    mvn versions:set "-DnewVersion=${tag}"
+    git commit -am "${tag}"
+    mvn clean deploy -Pqulice -Pthindeck --errors --settings ../settings.xml
+    mvn clean site-deploy -Psite --settings ../settings.xml
