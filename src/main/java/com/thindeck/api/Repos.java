@@ -30,9 +30,10 @@
 package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
+import javax.validation.constraints.NotNull;
 
 /**
- * Repos.
+ * Repositories of a {@link User}.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -43,22 +44,34 @@ public interface Repos {
 
     /**
      * Get it by name.
+     *
+     * <p>The method should throw a runtime exception if a repo
+     * with this name doesn't exist. You should call {@link #add(String)}
+     * to create a repo first.
+     *
      * @param name The name
      * @return Repo
      */
+    @NotNull(message = "repo can't be null")
     Repo get(String name);
 
     /**
      * Add a new repository.
+     *
+     * <p>The method should throw a runtime exception if a repository
+     * with this name already exists.
+     *
      * @param name Unique name
      * @return Repo
      */
+    @NotNull(message = "repo can't be null")
     Repo add(String name);
 
     /**
      * Iterate them all.
      * @return All repositories of the user
      */
+    @NotNull(message = "iterable of repos can't be null")
     Iterable<Repo> iterate();
 
 }

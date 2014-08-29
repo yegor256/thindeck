@@ -67,11 +67,6 @@ public final class MkTxn implements Txn {
     }
 
     @Override
-    public boolean finished() {
-        return false;
-    }
-
-    @Override
     public void increment() throws IOException {
         final Context ctx = new MkContext(MnBase.memo());
         for (final Step step : this.task.scenario().steps()) {

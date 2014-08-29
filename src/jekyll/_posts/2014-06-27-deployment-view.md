@@ -3,20 +3,22 @@ layout: default
 title: "Deployment View"
 date: 2014-06-27
 description:
-  Deployment view of the architecture
+  Deployment view of Thindeck.com hosting system, explaining
+  processes that involve Rultor.com, Travis-ci.org, and
+  CloudBees.
 authors:
   - "Yegor Bugayenko"
 ---
 
 As [Component View]({% post_url 2014-06-24-component-view %})
 explains, the system consists of three components:
-Load Balancer, Cockpit and Tank.
+Load Balancer(s), Cockpit and Tank(s).
 
 **Load Balancer** is deployed to a cluster of AWS EC2
 [t1.micro](http://aws.amazon.com/ec2/instance-types/)
 instances.
 
-**Cockpit** is deployed to Heroku as a WAR package.
+**Cockpit** is deployed to CloudBees as a WAR package.
 
 **Tank** is deployed to a cluster of AWS EC2
 [c3.large](http://aws.amazon.com/ec2/instance-types/)
@@ -24,8 +26,8 @@ instances.
 
 ## Build Automation
 
-The system is built as a multi-module
-[Maven](http://maven.apache.org/) project.
+The system is built as a single-module
+[Maven](http://maven.apache.org/) WAR project.
 
 Static analysis of the source code is done by
 [Qulice](http://www.qulice.com).
@@ -90,7 +92,3 @@ documentation website (the one you're looking at now) to Github Pages.
 What site deployment is done, Rultor reports success into Github issue.
 
 Rultor also tags deployed version in Github and creates a Github "release".
-
-Load Balancer and Tank regularly check version number of Cockpit (via HTTP
-requests) and compare it with their own. If versions differ, they attempt
-to update themselves, getting the required version from Maven Central.

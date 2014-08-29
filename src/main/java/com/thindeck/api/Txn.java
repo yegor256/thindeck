@@ -31,9 +31,31 @@ package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
 import java.io.IOException;
+import javax.validation.constraints.NotNull;
 
 /**
- * Transaction of a task.
+ * Transaction of a {@link Task}.
+ *
+ * <p>Transaction is stateful entity that remembers where current
+ * task is and what should be done next in order to finish it ASAP.
+ * We implement a two-phase commit (2PC) approach. First, we try
+ * to call {@link Step#exec(Context)} on every one of them. If anyone
+ * fails (throws an exception), we try to rollback the entire transaction,
+ * by calling {@link Step#rollback(Context)} on those steps that
+ * were successfully executed up to the moment of failure.
+ *
+ * <p>Then, when all steps were successfully executed, we try to
+ * commit them by calling {@link Step#commit(Context)}. If any of them
+ * fails, we just cancel the entire transaction and mark it as failed.
+ * We don't rollback anything in this situation.
+ *
+ * <p>We assume that all steps are designed with this 2PC concept in mind.
+ * They all do the most important and critical part inside
+ * their {@link Step#exec(Context)} methods. And they except this
+ * code to fail. They know how they will rollback in case of failure.
+ *
+ * <p>Also, we assume that a step will never fail at
+ * {@link Step#commit(Context)} phase.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -43,14 +65,15 @@ import java.io.IOException;
 public interface Txn {
 
     /**
-     * Is if finished?
-     * @return TRUE if finished already
-     * @throws IOException If fails
-     */
-    boolean finished() throws IOException;
-
-    /**
      * Make one step forward.
+     *
+     * <p>This method is called by an application-wide controller,
+     * which wants to give control to this particular transaction. It is
+     * expected that this method will return control very soon,
+     * in a few milliseconds. There could be thousands of transactions
+     * running at the same time, that's why every particular one should
+     * try to be very quick.
+     *
      * @throws IOException If fails
      */
     void increment() throws IOException;
@@ -67,10 +90,16 @@ public interface Txn {
      * @return Log lines
      * @throws IOException If fails
      */
+    @NotNull(message = "log can't be null")
     Iterable<String> log() throws IOException;
 
     /**
      * Rerun is required.
+     *
+     * <p>This exception can be thrown by {@link Step#exec(Context)},
+     * {@link Step#commit(Context)} or {@link Step#rollback(Context)}. When
+     * it occurs, this means that the execution has reached the point where
+     * we can wait a few minutes and try again later.
      */
     final class ReRunException extends RuntimeException {
         /**

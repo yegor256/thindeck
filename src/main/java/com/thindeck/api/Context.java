@@ -32,9 +32,14 @@ package com.thindeck.api;
 import com.jcabi.aspects.Immutable;
 import java.io.IOException;
 import java.util.logging.Level;
+import javax.validation.constraints.NotNull;
 
 /**
  * Context of a step.
+ *
+ * <p>An instance of this interface is passed to one the methods
+ * in {@link Step}, in order to make it aware of the context it
+ * is in.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -45,9 +50,16 @@ public interface Context {
 
     /**
      * Memo.
-     * @return Memo
+     *
+     * <p>The method returns a memo that represents the information
+     * from the memo of the repository current task is working in. All
+     * changes made by a step to this memo should be immediately
+     * translated to the memo of the repo.
+     *
+     * @return Memo of the running repo/transaction
      * @throws IOException If fails
      */
+    @NotNull(message = "memo can't be null")
     Memo memo() throws IOException;
 
     /**

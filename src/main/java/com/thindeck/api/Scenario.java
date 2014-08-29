@@ -30,9 +30,12 @@
 package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
+import javax.validation.constraints.NotNull;
 
 /**
  * Scenario.
+ *
+ * <p>Scenario is a collection of steps, nothing more.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -43,8 +46,14 @@ public interface Scenario {
 
     /**
      * Steps.
+     *
+     * <p>The method should guarantee that all steps returned have
+     * unique names, exposed by {@link com.thindeck.api.Step#name()}. If
+     * names are not unique, the method may throw a runtime exception.
+     *
      * @return Steps
      */
+    @NotNull(message = "iterable of steps can't be null")
     Iterable<Step> steps();
 
 }

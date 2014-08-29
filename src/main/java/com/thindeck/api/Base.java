@@ -31,9 +31,15 @@ package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.urn.URN;
+import javax.validation.constraints.NotNull;
 
 /**
  * Base of the entire system.
+ *
+ * <p>Base is an entry point to the entire object model of
+ * the system. You start from getting an instance of this type
+ * from somewhere (depends on the implementation) and then
+ * use one of the users, repos or transactions.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -44,22 +50,33 @@ public interface Base {
 
     /**
      * Get user by URN.
+     *
+     * <p>If the user is absent, it should be automatically created
+     * and returned.
+     *
      * @param urn His URN
-     * @return User
+     * @return User found or created
      */
+    @NotNull(message = "user can't be null")
     User user(URN urn);
 
     /**
      * Get all active repositories.
      * @return Repositories
      */
+    @NotNull(message = "iterable of repos can't be null")
     Iterable<Repo> repos();
 
     /**
      * Get transaction for the particular task.
+     *
+     * <p>This method should either return an existing transaction
+     * or create a new one.
+     *
      * @param task The task
-     * @return Transaction
+     * @return Transaction for the task
      */
+    @NotNull(message = "transaction can't be null")
     Txn txn(Task task);
 
 }
