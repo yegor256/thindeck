@@ -56,6 +56,9 @@
                         <img src="//img.thindeck.com/logo.svg" style="width:128px;"/>
                     </a>
                 </p>
+                <p style="color:red;">
+                    <xsl:text>pre-alpha testing version, be careful</xsl:text>
+                </p>
                 <div class="content" role="main">
                     <xsl:apply-templates select="." mode="body"/>
                 </div>
