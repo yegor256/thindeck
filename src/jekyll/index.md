@@ -6,17 +6,29 @@ authors:
   - "Yegor Bugayenko"
   - "Carlos Miranda"
 description:
-  Thinkdeck is a hosting that deploys itself
+  Thinkdeck is a PaaS platform that automates blue-green
+  deployment and up/down scaling of
+  your web application in Docker containers
 ---
 
-Thindeck is a hosting that deploys itself. It is
-an open source product, sponsored and hosted
-by [teamed.io](http://www.teamed.io). If you're interested
-in joining our development team, send an email to
-[join@thindeck.com](mailto:join@thindeck.com).
+Thindeck is a Platform as a Service (PaaS) cloud service that features:
 
-Check our [Architecture]({% post_url 2014/apr/2014-04-01-architecture %}).
+ * automatic up/down scaling of running nodes
 
-See also [Software Requirements Specification](/requs/requs.xml).
+ * every web app node runs in its own Docker container
 
-REMPL list of [PDD puzzles](/rempl/com.rempl.pdd.SummaryReport/index.xml).
+ * resource usage is charged per second of CPU
+
+ * blue-green automated deployments
+
+ * built-in load balancing
+
+To start working with Thindeck,
+go to [www.thindeck.com](http://www.thindeck.com), create a repository
+and follow the instructions.
+
+There are two sections in the documentation, which are
+dedicated mostly to project contributors. If you're only a user
+of Thindeck, you can skip them:
+[Software Architecture Document (SAD)]({% post_url 2014-04-01-architecture %}) and
+[Software Requirements Specification (SRS)](/requs/requs.xml).

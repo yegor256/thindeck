@@ -108,3 +108,13 @@ pre {
 strong {
   font-weight: 700;
 }
+table {
+  width: 100%;
+  table-layout: fixed;
+  tr {
+    th, td {
+      vertical-align: top;
+      text-align: left;
+    }
+  }
+}

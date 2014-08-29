@@ -1,6 +1,7 @@
-<img src="http://img.thindeck.com/logo-384x128.png" width="192px" height="64px" />
+<img src="http://img.thindeck.com/logo.svg" width="192px" height="64px" />
 
 [![Made By Teamed.io](http://img.teamed.io/btn.svg)](http://www.teamed.io)
+[![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/thindeck)](http://www.rultor.com/p/yegor256/thindeck)
 
 [![Build Status](https://travis-ci.org/yegor256/thindeck.svg?branch=master)](https://travis-ci.org/yegor256/thindeck)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.thindeck/thideck/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.thindeck/thindeck)
@@ -10,32 +11,25 @@
 How it works:
 
  1. You create a [`Dockerfile`](https://www.docker.io/) in your Github repo
- 2. You give us your Github repo coordinates (and a private SSH key, if necessary)
+ 2. You give us your Github repo coordinates
  3. We pull your repo and start a container (with a public IP and open ports)
- 4. Every five minutes we pull your repo and restart a container on changes
+ 4. Every five minutes we check your repo for updates and re-deploy if any
  5. You pay for our CPU usage (per load!) and traffic (per Gb)
 
-Look at [Software Requirements Specification (SRS)](http://doc.thindeck.com/requs/requs.xml).
-
-Technical documentation is [here](http://doc.thindeck.com/).
+Technical documentation is here: [doc.thindeck.com](http://doc.thindeck.com/)
 
 We're aware of their existence (you also should be):
 
  * [elastic beanstalk](http://aws.typepad.com/aws/2014/04/aws-elastic-beanstalk-for-docker.html)
- * heroku.com
- * cloudbees.com
- * quay.io
- * stackdock.com
- * digitalocean.com
- * orchardup.com
+ * [heroku.com](http://www.heroku.com)
+ * [cloudbees.com](http://www.cloudbees.com)
+ * [quay.io](http://www.quay.io)
+ * [stackdock.com](http://www.stackdock.com)
+ * [digitalocean.com](http://www.digitalocean.com)
+ * [orchardup.com](http://www.orchardup.com)
 
-Our advantages are:
+Our unique advantages are:
 
- 1. you don't need to "push/deploy", we pull instead (means big convenience)
- 2. we charge per CPU load, not per hour (means big saving)
-
-What Thindeck can be used for:
-
- * Hosting of simple stateless PHP/Python/Ruby/etc websites
-   (as an alternative of a traditional FTP-deployable shared hosting)
- * Pre-production testing and staging
+ 1. We can host any tech stack, because of Docker
+ 1. We fully automate blue/green deployments, pulling your sources
+ 2. We charge per second of CPU load, not per calendar hour

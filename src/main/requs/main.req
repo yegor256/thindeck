@@ -1,3 +1,4 @@
+:UC1 is implemented.
 UC1 where User (a user) deploys Application (an app):
   1. The user creates Repository (a repo);
   2. The repo launches the app;
@@ -6,12 +7,14 @@ UC1 where User (a user) deploys Application (an app):
   5. The user deletes the repo;
   6. The user pays for the repo.
 
+:UC2 is implemented.
 UC2 where Repository (a repo) launches Application (an app):
   1. The repo creates Deployment (a deployment);
   2. The deployment executes the app;
   3. The repo deletes the deployment
     "every 5 minutes, if repository sources are updated".
 
+:UC2.3 is implemented.
 UC2.3 where Deployment (a deployment) executes Application (an app):
   1. Cloud (a cloud) creates Server (a server);
   2. The server creates Container (a container);
@@ -29,6 +32,7 @@ UC6 where User (a user) pays for Repository (a repo):
   3. The repo updates the user
     "via email when his balance is below $5".
 
+:UC10.1 is implemented.
 UC10.1 where Visitor (a visitor) utilizes Application (an app):
   1. The visitor reads the app;
   2. Fail as "low balance" when "user balance is below $5";
