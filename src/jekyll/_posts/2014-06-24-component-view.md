@@ -12,16 +12,40 @@ authors:
 The following technical concerns were taken into account
 during the design of Thindeck:
 
- *
+ * **Server resources are unreliable**.
+   We can't guarantee that any of our
+   servers are stable. Moreover, we should be able to work with
+   commodity hardware, at the same time delivering high-availability
+   to our end-users.
 
-There is a number of technical concepts:
+ * **Deployment is a complex multi-step process**.
+   We want to give our users an ability to deploy in one click.
+   But we need to remember that a proper deployment of a complex
+   web application is a multi-step process, involving starting
+   new web containers, checking their health status, destroying
+   old containers, re-configuring load balancers, etc. The process
+   involves multiple steps and multiple server resources (nodes,
+   load balancers, etc).
 
- * **Repository** is
+ * **Transparent logging is critical**.
+   It is very important to enable transparent logging of all
+   processes, including deployment, start/stop of web app,
+   continuous running of the app, etc. Since every application involves
+   a number of hardware resources, we should invent a mechanism
+   of logs aggregation or at least making them all visible.
 
- * **Task** is a collection of steps to be executed one-by-one
-   in order to change the situation in a repository.
+There is a number of technical concepts (full list of them
+is in [JavaDoc](/apidocs-${project.version}/com/thindeck/api/index.html)):
 
- * **Txn** (transaction) is
+ * [**Repository**](/apidocs-${project.version}/com/thindeck/api/Repo.html) is
+   an entity that knows where the sources are and continuously deploys them.
+
+ * [**Task**](/apidocs-${project.version}/com/thindeck/api/Task.html) is
+   a collection of steps to be executed one-by-one
+   in order to change the situation in a repository (for example, to deploy it).
+
+ * [**Txn**](/apidocs-${project.version}/com/thindeck/api/Txn.html) (transaction) is
+   a multi-step process of deployment a repository.
 
 The system consists of the following components:
 
@@ -56,4 +80,4 @@ The system consists of the following components:
    The Meter is out of our technical scope and is provided to us
    as a cloud web service, through RESTful API.
 
-This is a simple
+
