@@ -23,6 +23,12 @@ Thindeck is a Platform as a Service (PaaS) cloud service that features:
 
  * built-in load balancing
 
-Check our [Architecture]({% post_url 2014-04-01-architecture %}).
+To start working with Thindeck,
+go to [www.thindeck.com](http://www.thindeck.com), create a repository
+and follow the instructions.
 
-See also [Software Requirements Specification](/requs/requs.xml).
+There are two sections in the documentation, which are
+dedicated mostly to project contributors. If you're only a user
+of Thindeck, you can skip them:
+[Software Architecture Document (SAD)]({% post_url 2014-04-01-architecture %}) and
+[Software Requirements Specification (SRS)](/requs/requs.xml).
