@@ -317,42 +317,25 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
+                        <groupId>com.github.linsolas</groupId>
+                        <artifactId>casperjs-runner-maven-plugin</artifactId>
+                        <version>1.0.1</version>
                         <executions>
-                            <execution>
-                                <id>casperjs-install</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <configuration>
-                                    <executable>git</executable>
-                                    <arguments>
-                                        <argument>clone</argument>
-                                        <argument>--depth=1</argument>
-                                        <argument>https://github.com/n1k0/casperjs.git</argument>
-                                        <argument>${project.build.directory}/casperjs</argument>
-                                    </arguments>
-                                </configuration>
-                            </execution>
                             <execution>
                                 <id>casperjs-test</id>
                                 <phase>integration-test</phase>
                                 <goals>
-                                    <goal>exec</goal>
+                                    <goal>test</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>${project.build.directory}/casperjs/bin/casperjs</executable>
-                                    <workingDirectory>${basedir}</workingDirectory>
                                     <arguments>
-                                        <argument>test</argument>
-                                        <argument>--verbose</argument>
                                         <argument>--no-colors</argument>
                                         <argument>--concise</argument>
                                         <argument>--home=http://localhost:${tomcat.port}</argument>
-                                        <argument>${basedir}/src/test/casperjs</argument>
                                     </arguments>
+                                    <testsDir>${basedir}/src/test/casperjs</testsDir>
+                                    <includeJS>true</includeJS>
+                                    <verbose>true</verbose>
                                     <environmentVariables>
                                         <PHANTOMJS_EXECUTABLE>${phantomjs.binary}</PHANTOMJS_EXECUTABLE>
                                     </environmentVariables>
