@@ -51,9 +51,17 @@
                 <xsl:apply-templates select="." mode="head"/>
             </head>
             <body>
+                <a href="https://github.com/yegor256/thindeck">
+                    <img src="//img.jcabi.com/fork-me.svg" class="fork-me" alt="fork me in github"/>
+                </a>
                 <p>
                     <a href="{links/link[@rel='home']/@href}">
                         <img src="//img.thindeck.com/logo.svg" style="width:128px;"/>
+                    </a>
+                </p>
+                <p>
+                    <a href="http://doc.thindeck.com">
+                        <xsl:text>documentation</xsl:text>
                     </a>
                 </p>
                 <p style="color:red;">
