@@ -32,6 +32,18 @@
  * @version $Id$
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="tcp">
+        <xs:restriction base="xs:integer">
+            <xs:maxInclusive value="65535"/>
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="port">
+        <xs:all>
+            <xs:element name="in" type="tcp"/>
+            <xs:element name="out" type="tcp"/>
+        </xs:all>
+    </xs:complexType>
     <xs:complexType name="container">
         <xs:all>
             <xs:element name="cid">
@@ -41,13 +53,12 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="port">
-                <xs:simpleType>
-                    <xs:restriction base="xs:integer">
-                        <xs:maxInclusive value="65535"/>
-                        <xs:minInclusive value="1024"/>
-                    </xs:restriction>
-                </xs:simpleType>
+            <xs:element name="ports">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="port" type="port" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
             </xs:element>
             <xs:element name="dir">
                 <xs:simpleType>
@@ -92,7 +103,7 @@
                 <xs:element name="containers" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="tank" type="container" minOccurs="0" maxOccurs="unbounded"/>
+                            <xs:element name="container" type="container" minOccurs="0" maxOccurs="unbounded"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

@@ -119,7 +119,9 @@ public final class DockerRun implements Step {
             new Directives().xpath("/memo").addIf("containers")
                 .add("container").attr("type", "blue")
                 .add("cid").set(cid).up()
-                .add("port").set(Integer.toString(port)).up()
+                .add("ports").add("port")
+                .add("in").set("80").up()
+                .add("out").set(Integer.toString(port)).up().up().up()
                 .add("dir").set(dir).up()
                 .add("tank").set(host).up()
         );
