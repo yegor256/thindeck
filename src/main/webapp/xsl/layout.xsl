@@ -52,7 +52,8 @@
             </head>
             <body>
                 <a href="https://github.com/yegor256/thindeck">
-                    <img src="//img.jcabi.com/fork-me.svg" style="width:128px;height:128px;"
+                    <img src="//img.jcabi.com/fork-me.svg"
+                        style="position: absolute;right:0;top:0;width:128px;height:128px;"
                         alt="fork me in github"/>
                 </a>
                 <p>
