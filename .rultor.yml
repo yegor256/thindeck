@@ -26,6 +26,7 @@ deploy:
 
 merge:
   script: |
+    export PATH=$PATH:/tmp/casperjs/bin
     mvn clean install site -Pqulice -Psite --errors --settings ../settings.xml
     mvn clean
     pdd --source=$(pwd) --verbose --file=/dev/null
