@@ -15,6 +15,7 @@ install: |
   sudo mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar
   sudo gem install pdd
   sudo bundle install
+  git clone --depth=1 https://github.com/n1k0/casperjs.git /tmp/casperjs
 
 deploy:
   script: |
