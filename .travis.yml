@@ -1,4 +1,7 @@
 language: java
+cache:
+  directories:
+    - $HOME/.m2
 install:
   - sudo apt-get install graphviz
 script: 
