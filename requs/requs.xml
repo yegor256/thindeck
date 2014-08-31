@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="6307" time="2014-08-22T12:12:00">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="4593" time="2014-08-31T09:38:33">
    <files>
-      <file id="0" line="1">/home/r/repo/src/main/requs/acronyms.req</file>
-      <file id="1" line="16">/home/r/repo/src/main/requs/anonymous.req</file>
-      <file id="2" line="32">/home/r/repo/src/main/requs/main.req</file>
-      <file id="3" line="136">/home/r/repo/src/main/requs/nfrs.req</file>
-      <file id="4" line="196">/home/r/repo/src/main/requs/vision.req</file>
+      <file id="0" line="1">/Volumes/ssd2/code/thindeck/src/main/requs/acronyms.req</file>
+      <file id="1" line="16">/Volumes/ssd2/code/thindeck/src/main/requs/anonymous.req</file>
+      <file id="2" line="32">/Volumes/ssd2/code/thindeck/src/main/requs/main.req</file>
+      <file id="3" line="140">/Volumes/ssd2/code/thindeck/src/main/requs/nfrs.req</file>
+      <file id="4" line="200">/Volumes/ssd2/code/thindeck/src/main/requs/vision.req</file>
    </files>
    <input>MTBF means "Mean Time Between Failures,
 which is time that System spends in continuous
@@ -38,6 +38,7 @@ UC9.1 where Anonymous (an anonymous) explores thindeck:
   1. The anonymous reads PublicData (a data);
   2. The anonymous reads RuntimeStatistics (a stats).
 
+:UC1 is implemented.
 UC1 where User (a user) deploys Application (an app):
   1. The user creates Repository (a repo);
   2. The repo launches the app;
@@ -46,12 +47,14 @@ UC1 where User (a user) deploys Application (an app):
   5. The user deletes the repo;
   6. The user pays for the repo.
 
+:UC2 is implemented.
 UC2 where Repository (a repo) launches Application (an app):
   1. The repo creates Deployment (a deployment);
   2. The deployment executes the app;
   3. The repo deletes the deployment
     "every 5 minutes, if repository sources are updated".
 
+:UC2.3 is implemented.
 UC2.3 where Deployment (a deployment) executes Application (an app):
   1. Cloud (a cloud) creates Server (a server);
   2. The server creates Container (a container);
@@ -69,6 +72,7 @@ UC6 where User (a user) pays for Repository (a repo):
   3. The repo updates the user
     "via email when his balance is below $5".
 
+:UC10.1 is implemented.
 UC10.1 where Visitor (a visitor) utilizes Application (an app):
   1. The visitor reads the app;
   2. Fail as "low balance" when "user balance is below $5";
@@ -280,10 +284,10 @@ class Anonymous {
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="72pt"
-     style="width:203px;height:72px;"
+     style="width:186px;height:72px;"
      version="1.1"
-     viewBox="0 0 203 72"
-     width="203pt"&gt;
+     viewBox="0 0 186 72"
+     width="186pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -296,23 +300,23 @@ class Anonymous {
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="202"
+            textLength="185"
             x="0"
-            y="12.0669"&gt;Anonymous: Class Diagram&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            y="12.5684"&gt;Anonymous: Class Diagram&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="78"
-            x="56"
-            y="23.1328"/&gt;
+            width="72"
+            x="50.5"
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="72"
-            x="59"
-            y="39.2715"&gt;Anonymous&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="57" x2="133" y1="47.1016"
-            y2="47.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="57" x2="133" y1="55.1016"
-            y2="55.1016"/&gt;
+            textLength="66"
+            x="53.5"
+            y="39.9121"&gt;Anonymous&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="51.5" x2="121.5" y1="47.4434"
+            y2="47.4434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="51.5" x2="121.5" y1="55.4434"
+            y2="55.4434"/&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -337,10 +341,10 @@ class PublicData {
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="72pt"
-     style="width:198px;height:72px;"
+     style="width:177px;height:72px;"
      version="1.1"
-     viewBox="0 0 198 72"
-     width="198pt"&gt;
+     viewBox="0 0 177 72"
+     width="177pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -353,23 +357,23 @@ class PublicData {
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="197"
+            textLength="176"
             x="0"
-            y="12.0669"&gt;PublicData: Class Diagram&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            y="12.5684"&gt;PublicData: Class Diagram&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="73"
-            x="56"
-            y="23.1328"/&gt;
+            width="67"
+            x="48.5"
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="67"
-            x="59"
-            y="39.2715"&gt;PublicData&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="57" x2="128" y1="47.1016"
-            y2="47.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="57" x2="128" y1="55.1016"
-            y2="55.1016"/&gt;
+            textLength="61"
+            x="51.5"
+            y="39.9121"&gt;PublicData&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="49.5" x2="114.5" y1="47.4434"
+            y2="47.4434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="49.5" x2="114.5" y1="55.4434"
+            y2="55.4434"/&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -395,10 +399,10 @@ class RuntimeStatistics {
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="72pt"
-     style="width:247px;height:72px;"
+     style="width:221px;height:72px;"
      version="1.1"
-     viewBox="0 0 247 72"
-     width="247pt"&gt;
+     viewBox="0 0 221 72"
+     width="221pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -411,23 +415,23 @@ class RuntimeStatistics {
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="246"
+            textLength="220"
             x="0"
-            y="12.0669"&gt;RuntimeStatistics: Class Diagram&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            y="12.5684"&gt;RuntimeStatistics: Class Diagram&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="115"
-            x="59.5"
-            y="23.1328"/&gt;
+            width="102"
+            x="53"
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="109"
-            x="62.5"
-            y="39.2715"&gt;RuntimeStatistics&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="60.5" x2="173.5" y1="47.1016"
-            y2="47.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="60.5" x2="173.5" y1="55.1016"
-            y2="55.1016"/&gt;
+            textLength="96"
+            x="56"
+            y="39.9121"&gt;RuntimeStatistics&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="54" x2="154" y1="47.4434"
+            y2="47.4434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="54" x2="154" y1="55.4434"
+            y2="55.4434"/&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -436,11 +440,11 @@ class RuntimeStatistics {
       <type>
          <name>User</name>
          <mentioned>
-            <where>2:1</where>
-            <where>2:23</where>
-            <where>2:39</where>
-            <where>2:40</where>
-            <where>2:40</where>
+            <where>2:2</where>
+            <where>2:26</where>
+            <where>2:43</where>
+            <where>2:44</where>
+            <where>2:44</where>
          </mentioned>
          <info>
             <informal>a person who uses or wants to use hosting and is identified
@@ -451,7 +455,7 @@ by the system (logged in)</informal>
             <slot>
                <name>repo</name>
                <mentioned>
-                  <where>2:41</where>
+                  <where>2:45</where>
                </mentioned>
                <arity>0..*</arity>
                <composition>true</composition>
@@ -460,7 +464,7 @@ by the system (logged in)</informal>
             <slot>
                <name>URN</name>
                <mentioned>
-                  <where>2:42</where>
+                  <where>2:46</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -471,7 +475,7 @@ by the system (logged in)</informal>
             <slot>
                <name>authTokens</name>
                <mentioned>
-                  <where>2:43</where>
+                  <where>2:47</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -483,7 +487,7 @@ by the system (logged in)</informal>
             <slot>
                <name>balance</name>
                <mentioned>
-                  <where>2:45</where>
+                  <where>2:49</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -507,11 +511,11 @@ class Repository
 User  *-- Repository: repo
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="110pt"
-     style="width:257px;height:110px;"
+     height="111pt"
+     style="width:247px;height:111px;"
      version="1.1"
-     viewBox="0 0 257 110"
-     width="257pt"&gt;
+     viewBox="0 0 247 111"
+     width="247pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -524,63 +528,63 @@ User  *-- Repository: repo
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="150"
-            x="58"
-            y="12.0669"&gt;User: Class Diagram&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="78.3828"
+            textLength="135"
+            x="60.5"
+            y="12.5684"&gt;User: Class Diagram&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="78.998"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="78"
+            width="75"
             x="6"
-            y="23.1328"/&gt;
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="29"
+            textLength="26"
             x="30.5"
-            y="39.2715"&gt;User&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="83" y1="47.1016"
-            y2="47.1016"/&gt;
+            y="39.9121"&gt;User&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="80" y1="47.4434"
+            y2="47.4434"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
             textLength="23"
             x="12"
-            y="61.312"&gt;URN&lt;/text&gt;
+            y="62.0781"&gt;URN&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="66"
+            textLength="63"
             x="12"
-            y="74.1167"&gt;authTokens&lt;/text&gt;
+            y="75.0332"&gt;authTokens&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="44"
+            textLength="41"
             x="12"
-            y="86.9214"&gt;balance&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="83" y1="93.5156"
-            y2="93.5156"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            y="87.9883"&gt;balance&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="80" y1="94.3086"
+            y2="94.3086"/&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="72"
-            x="176"
-            y="42.1328"/&gt;
+            width="67"
+            x="171"
+            y="42.8105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="66"
-            x="179"
-            y="58.2715"&gt;Repository&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="177" x2="247" y1="66.1016"
-            y2="66.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="177" x2="247" y1="74.1016"
-            y2="74.1016"/&gt;
-      &lt;path d="M97.4712,62.1328 C122.913,62.1328 152.964,62.1328 175.755,62.1328 "
+            textLength="61"
+            x="174"
+            y="59.4121"&gt;Repository&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="172" x2="237" y1="66.9434"
+            y2="66.9434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="172" x2="237" y1="74.9434"
+            y2="74.9434"/&gt;
+      &lt;path d="M94.673,62.8105 C119.567,62.8105 148.923,62.8105 170.868,62.8105 "
             fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="84.269,62.1328,90.269,66.1328,96.269,62.1328,90.269,58.1328,84.269,62.1328"
+               points="81.3774,62.8105,87.3774,66.8105,93.3774,62.8105,87.3774,58.8105,81.3774,62.8105"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="29"
-            x="115"
-            y="57.1997"&gt;repo&lt;/text&gt;
+            textLength="28"
+            x="112"
+            y="59.3789"&gt;repo&lt;/text&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -589,9 +593,9 @@ User  *-- Repository: repo
       <type>
          <name>Repository</name>
          <mentioned>
-            <where>2:9</where>
-            <where>2:48</where>
-            <where>2:49</where>
+            <where>2:11</where>
+            <where>2:52</where>
+            <where>2:53</where>
          </mentioned>
          <info>
             <informal>a local copy of files and folders being pulled every
@@ -601,7 +605,7 @@ User  *-- Repository: repo
             <slot>
                <name>name</name>
                <mentioned>
-                  <where>2:50</where>
+                  <where>2:54</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -612,7 +616,7 @@ User  *-- Repository: repo
             <slot>
                <name>coordinates</name>
                <mentioned>
-                  <where>2:51</where>
+                  <where>2:55</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -623,7 +627,7 @@ User  *-- Repository: repo
             <slot>
                <name>deployment</name>
                <mentioned>
-                  <where>2:52</where>
+                  <where>2:56</where>
                </mentioned>
                <arity>0..*</arity>
                <composition>true</composition>
@@ -632,7 +636,7 @@ User  *-- Repository: repo
             <slot>
                <name>dockerFile</name>
                <mentioned>
-                  <where>2:53</where>
+                  <where>2:57</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -643,7 +647,7 @@ User  *-- Repository: repo
             <slot>
                <name>domain</name>
                <mentioned>
-                  <where>2:54</where>
+                  <where>2:58</where>
                </mentioned>
                <arity>1..*</arity>
                <composition>true</composition>
@@ -656,7 +660,7 @@ User  *-- Repository: repo
             <slot>
                <name>port</name>
                <mentioned>
-                  <where>2:57</where>
+                  <where>2:61</where>
                </mentioned>
                <arity>1..*</arity>
                <composition>true</composition>
@@ -682,11 +686,11 @@ class Deployment
 Repository  *-- Deployment: deployment
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="136pt"
-     style="width:315px;height:136px;"
+     height="137pt"
+     style="width:302px;height:137px;"
      version="1.1"
-     viewBox="0 0 315 136"
-     width="315pt"&gt;
+     viewBox="0 0 302 137"
+     width="302pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -699,73 +703,73 @@ Repository  *-- Deployment: deployment
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="196"
-            x="64"
-            y="12.0669"&gt;Repository: Class Diagram&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="103.9922"
+            textLength="176"
+            x="67.5"
+            y="12.5684"&gt;Repository: Class Diagram&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="104.9082"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="79"
-            x="6.5"
-            y="23.1328"/&gt;
+            width="76"
+            x="6"
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="66"
-            x="13"
-            y="39.2715"&gt;Repository&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7.5" x2="84.5" y1="47.1016"
-            y2="47.1016"/&gt;
+            textLength="61"
+            x="13.5"
+            y="39.9121"&gt;Repository&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="81" y1="47.4434"
+            y2="47.4434"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="32"
-            x="12.5"
-            y="61.312"&gt;name&lt;/text&gt;
+            textLength="29"
+            x="12"
+            y="62.0781"&gt;name&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="67"
-            x="12.5"
-            y="74.1167"&gt;coordinates&lt;/text&gt;
+            textLength="64"
+            x="12"
+            y="75.0332"&gt;coordinates&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="57"
-            x="12.5"
-            y="86.9214"&gt;dockerFile&lt;/text&gt;
+            textLength="55"
+            x="12"
+            y="87.9883"&gt;dockerFile&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="50"
-            x="12.5"
-            y="99.7261"&gt;domain[]&lt;/text&gt;
+            textLength="48"
+            x="12"
+            y="100.9434"&gt;domain[]&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
             textLength="31"
-            x="12.5"
-            y="112.5308"&gt;port[]&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7.5" x2="84.5" y1="119.125"
-            y2="119.125"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            x="12"
+            y="113.8984"&gt;port[]&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="81" y1="120.2188"
+            y2="120.2188"/&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="80"
-            x="226"
-            y="55.1328"/&gt;
+            width="75"
+            x="218"
+            y="55.8105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="74"
-            x="229"
-            y="71.2715"&gt;Deployment&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="227" x2="305" y1="79.1016"
-            y2="79.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="227" x2="305" y1="87.1016"
-            y2="87.1016"/&gt;
-      &lt;path d="M98.8939,75.1328 C137.874,75.1328 190.431,75.1328 225.904,75.1328 "
+            textLength="69"
+            x="221"
+            y="72.4121"&gt;Deployment&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="219" x2="292" y1="79.9434"
+            y2="79.9434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="219" x2="292" y1="87.9434"
+            y2="87.9434"/&gt;
+      &lt;path d="M95.6959,75.8105 C133.363,75.8105 183.874,75.8105 217.721,75.8105 "
             fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="85.7228,75.1328,91.7228,79.1328,97.7228,75.1328,91.7228,71.1328,85.7228,75.1328"
+               points="82.4544,75.8105,88.4544,79.8105,94.4544,75.8105,88.4544,71.8105,82.4544,75.8105"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="76"
-            x="117.5"
-            y="70.1997"&gt;deployment&lt;/text&gt;
+            textLength="74"
+            x="113"
+            y="72.3789"&gt;deployment&lt;/text&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -774,9 +778,9 @@ Repository  *-- Deployment: deployment
       <type>
          <name>Deployment</name>
          <mentioned>
-            <where>2:15</where>
-            <where>2:60</where>
-            <where>2:61</where>
+            <where>2:18</where>
+            <where>2:64</where>
+            <where>2:65</where>
          </mentioned>
          <info>
             <informal>a deployed and working instance of Repository</informal>
@@ -785,7 +789,7 @@ Repository  *-- Deployment: deployment
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>2:62</where>
+                  <where>2:66</where>
                </mentioned>
                <arity>1..*</arity>
                <composition>true</composition>
@@ -809,10 +813,10 @@ Deployment  *-- Container: container
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="72pt"
-     style="width:286px;height:72px;"
+     style="width:272px;height:72px;"
      version="1.1"
-     viewBox="0 0 286 72"
-     width="286pt"&gt;
+     viewBox="0 0 272 72"
+     width="272pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -825,48 +829,48 @@ Deployment  *-- Container: container
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="206"
-            x="45"
-            y="12.0669"&gt;Deployment: Class Diagram&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            textLength="186"
+            x="47.5"
+            y="12.5684"&gt;Deployment: Class Diagram&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="80"
+            width="75"
             x="6"
-            y="23.1328"/&gt;
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="74"
+            textLength="69"
             x="9"
-            y="39.2715"&gt;Deployment&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="85" y1="47.1016"
-            y2="47.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="85" y1="55.1016"
-            y2="55.1016"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            y="39.9121"&gt;Deployment&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="80" y1="47.4434"
+            y2="47.4434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="80" y1="55.4434"
+            y2="55.4434"/&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="67"
-            x="210.5"
-            y="23.1328"/&gt;
+            width="61"
+            x="202"
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="61"
-            x="213.5"
-            y="39.2715"&gt;Container&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="211.5" x2="276.5" y1="47.1016"
-            y2="47.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="211.5" x2="276.5" y1="55.1016"
-            y2="55.1016"/&gt;
-      &lt;path d="M99.6454,43.1328 C134.91,43.1328 180.226,43.1328 210.372,43.1328 "
+            textLength="55"
+            x="205"
+            y="39.9121"&gt;Container&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="203" x2="262" y1="47.4434"
+            y2="47.4434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="203" x2="262" y1="55.4434"
+            y2="55.4434"/&gt;
+      &lt;path d="M94.479,43.3105 C128.685,43.3105 172.894,43.3105 201.709,43.3105 "
             fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="86.1925,43.1328,92.1925,47.1328,98.1925,43.1328,92.1925,39.1328,86.1925,43.1328"
+               points="81.4452,43.3105,87.4452,47.3105,93.4452,43.3105,87.4452,39.3105,81.4452,43.3105"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="60"
-            x="117.5"
-            y="38.1997"&gt;container&lt;/text&gt;
+            textLength="59"
+            x="112"
+            y="39.8789"&gt;container&lt;/text&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -875,7 +879,7 @@ Deployment  *-- Container: container
       <type>
          <name>Visitor</name>
          <mentioned>
-            <where>2:32</where>
+            <where>2:36</where>
          </mentioned>
          <diagrams>
             <diagram>
@@ -887,10 +891,10 @@ class Visitor {
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="72pt"
-     style="width:165px;height:72px;"
+     style="width:148px;height:72px;"
      version="1.1"
-     viewBox="0 0 165 72"
-     width="165pt"&gt;
+     viewBox="0 0 148 72"
+     width="148pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -903,23 +907,23 @@ class Visitor {
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="164"
+            textLength="147"
             x="0"
-            y="12.0669"&gt;Visitor: Class Diagram&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            y="12.5684"&gt;Visitor: Class Diagram&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="45"
-            x="53.5"
-            y="23.1328"/&gt;
+            width="42"
+            x="46.5"
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="39"
-            x="56.5"
-            y="39.2715"&gt;Visitor&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="54.5" x2="97.5" y1="47.1016"
-            y2="47.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="54.5" x2="97.5" y1="55.1016"
-            y2="55.1016"/&gt;
+            textLength="36"
+            x="49.5"
+            y="39.9121"&gt;Visitor&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="47.5" x2="87.5" y1="47.4434"
+            y2="47.4434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="47.5" x2="87.5" y1="55.4434"
+            y2="55.4434"/&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -928,8 +932,8 @@ class Visitor {
       <type>
          <name>Container</name>
          <mentioned>
-            <where>2:66</where>
-            <where>2:71</where>
+            <where>2:70</where>
+            <where>2:75</where>
          </mentioned>
          <info>
             <informal>a virtual operating system running user's
@@ -943,7 +947,7 @@ class Visitor {
             <slot>
                <name>server</name>
                <mentioned>
-                  <where>2:72</where>
+                  <where>2:76</where>
                </mentioned>
                <arity>1</arity>
                <composition>false</composition>
@@ -952,7 +956,7 @@ class Visitor {
             <slot>
                <name>logs</name>
                <mentioned>
-                  <where>2:73</where>
+                  <where>2:77</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -963,7 +967,7 @@ class Visitor {
             <slot>
                <name>state</name>
                <mentioned>
-                  <where>2:74</where>
+                  <where>2:78</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -974,7 +978,7 @@ class Visitor {
             <slot>
                <name>invoice</name>
                <mentioned>
-                  <where>2:75</where>
+                  <where>2:79</where>
                </mentioned>
                <arity>0..*</arity>
                <composition>true</composition>
@@ -997,10 +1001,10 @@ Container  *-- Invoice: invoice
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="147pt"
-     style="width:240px;height:147px;"
+     style="width:228px;height:147px;"
      version="1.1"
-     viewBox="0 0 240 147"
-     width="240pt"&gt;
+     viewBox="0 0 228 147"
+     width="228pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -1013,83 +1017,83 @@ Container  *-- Invoice: invoice
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="188"
-            x="31"
-            y="12.0669"&gt;Container: Class Diagram&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="65.5781"
+            textLength="170"
+            x="33.5"
+            y="12.5684"&gt;Container: Class Diagram&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="66.043"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="67"
-            x="6.5"
-            y="48.1328"/&gt;
+            width="61"
+            x="6"
+            y="48.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="61"
-            x="9.5"
-            y="64.2715"&gt;Container&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7.5" x2="72.5" y1="72.1016"
-            y2="72.1016"/&gt;
+            textLength="55"
+            x="9"
+            y="64.9121"&gt;Container&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="66" y1="72.4434"
+            y2="72.4434"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="24"
-            x="12.5"
-            y="86.312"&gt;logs&lt;/text&gt;
+            textLength="23"
+            x="12"
+            y="87.0781"&gt;logs&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="29"
-            x="12.5"
-            y="99.1167"&gt;state&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7.5" x2="72.5" y1="105.7109"
-            y2="105.7109"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            textLength="26"
+            x="12"
+            y="100.0332"&gt;state&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="66" y1="106.3535"
+            y2="106.3535"/&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="46"
-            x="184"
-            y="23.1328"/&gt;
+            width="42"
+            x="175.5"
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="40"
-            x="187"
-            y="39.2715"&gt;Server&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="185" x2="229" y1="47.1016"
-            y2="47.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="185" x2="229" y1="55.1016"
-            y2="55.1016"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            textLength="36"
+            x="178.5"
+            y="39.9121"&gt;Server&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="176.5" x2="216.5" y1="47.4434"
+            y2="47.4434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="176.5" x2="216.5" y1="55.4434"
+            y2="55.4434"/&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="49"
-            x="182.5"
-            y="98.1328"/&gt;
+            width="45"
+            x="174"
+            y="98.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="43"
-            x="185.5"
-            y="114.2715"&gt;Invoice&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="183.5" x2="230.5" y1="122.1016"
-            y2="122.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="183.5" x2="230.5" y1="130.1016"
-            y2="130.1016"/&gt;
-      &lt;path d="M86.4875,70.6569 C118.032,63.3921 158.683,54.03 183.519,48.3102 "
+            textLength="39"
+            x="177"
+            y="114.9121"&gt;Invoice&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="175" x2="218" y1="122.4434"
+            y2="122.4434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="175" x2="218" y1="130.4434"
+            y2="130.4434"/&gt;
+      &lt;path d="M80.2474,71.0295 C111.187,63.5883 151.6,53.8687 175.432,48.1371 "
             fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="none"
-               points="73.5987,73.6252,80.3434,76.1766,85.2926,70.9321,78.5479,68.3807,73.5987,73.6252"
+               points="67.2186,74.163,73.9876,76.6491,78.8859,71.3569,72.1169,68.8709,67.2186,74.163"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="40"
-            x="107.5"
-            y="52.1997"&gt;server&lt;/text&gt;
-      &lt;path d="M86.2515,98.9555 C92.1631,100.898 98.1853,102.69 104,104.1328 C130.369,110.676 161.384,114.3847 182.232,116.3181 "
+            textLength="38"
+            x="101.5"
+            y="53.8789"&gt;server&lt;/text&gt;
+      &lt;path d="M79.4948,98.0358 C85.3169,100.0016 91.2666,101.8304 97,103.3105 C122.961,110.0124 153.594,114.0976 173.725,116.2779 "
             fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="73.6106,94.5399,77.9558,100.2948,84.9393,98.4972,80.5941,92.7423,73.6106,94.5399"
+               points="67.0863,93.596,71.3879,99.3836,78.3848,97.6389,74.0831,91.8513,67.0863,93.596"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="44"
-            x="105.5"
-            y="99.1997"&gt;invoice&lt;/text&gt;
+            textLength="45"
+            x="98"
+            y="99.8789"&gt;invoice&lt;/text&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -1098,8 +1102,8 @@ Container  *-- Invoice: invoice
       <type>
          <name>Server</name>
          <mentioned>
-            <where>2:77</where>
-            <where>2:78</where>
+            <where>2:81</where>
+            <where>2:82</where>
          </mentioned>
          <info>
             <informal>a physical (or virtual) machine provided on-demand by Cloud</informal>
@@ -1108,7 +1112,7 @@ Container  *-- Invoice: invoice
             <slot>
                <name>ip</name>
                <mentioned>
-                  <where>2:79</where>
+                  <where>2:83</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1119,7 +1123,7 @@ Container  *-- Invoice: invoice
             <slot>
                <name>state</name>
                <mentioned>
-                  <where>2:80</where>
+                  <where>2:84</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1130,7 +1134,7 @@ Container  *-- Invoice: invoice
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>2:81</where>
+                  <where>2:85</where>
                </mentioned>
                <arity>0..*</arity>
                <composition>true</composition>
@@ -1150,11 +1154,11 @@ class Container
 Server  *-- Container: container
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="97pt"
-     style="width:252px;height:97px;"
+     height="98pt"
+     style="width:239px;height:98px;"
      version="1.1"
-     viewBox="0 0 252 97"
-     width="252pt"&gt;
+     viewBox="0 0 239 98"
+     width="239pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -1167,58 +1171,58 @@ Server  *-- Container: container
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="164"
-            x="49"
-            y="12.0669"&gt;Server: Class Diagram&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="65.5781"
+            textLength="147"
+            x="50.5"
+            y="12.5684"&gt;Server: Class Diagram&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="66.043"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="46"
+            width="42"
             x="6"
-            y="23.1328"/&gt;
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="40"
+            textLength="36"
             x="9"
-            y="39.2715"&gt;Server&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="51" y1="47.1016"
-            y2="47.1016"/&gt;
+            y="39.9121"&gt;Server&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="47" y1="47.4434"
+            y2="47.4434"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
             textLength="10"
             x="12"
-            y="61.312"&gt;ip&lt;/text&gt;
+            y="62.0781"&gt;ip&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="29"
+            textLength="26"
             x="12"
-            y="74.1167"&gt;state&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="51" y1="80.7109"
-            y2="80.7109"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            y="75.0332"&gt;state&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="47" y1="81.3535"
+            y2="81.3535"/&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="67"
-            x="176.5"
-            y="36.1328"/&gt;
+            width="61"
+            x="169"
+            y="36.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="61"
-            x="179.5"
-            y="52.2715"&gt;Container&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="177.5" x2="242.5" y1="60.1016"
-            y2="60.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="177.5" x2="242.5" y1="68.1016"
-            y2="68.1016"/&gt;
-      &lt;path d="M65.5581,56.1328 C97.8374,56.1328 145.048,56.1328 176.379,56.1328 "
+            textLength="55"
+            x="172"
+            y="52.9121"&gt;Container&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="170" x2="229" y1="60.4434"
+            y2="60.4434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="170" x2="229" y1="68.4434"
+            y2="68.4434"/&gt;
+      &lt;path d="M61.4211,56.3105 C92.6733,56.3105 138.903,56.3105 168.867,56.3105 "
             fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="52.3085,56.1328,58.3085,60.1328,64.3085,56.1328,58.3085,52.1328,52.3085,56.1328"
+               points="48.2281,56.3105,54.2281,60.3105,60.2281,56.3105,54.2281,52.3105,48.2281,56.3105"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="60"
-            x="83.5"
-            y="51.1997"&gt;container&lt;/text&gt;
+            textLength="59"
+            x="79"
+            y="52.8789"&gt;container&lt;/text&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -1227,8 +1231,8 @@ Server  *-- Container: container
       <type>
          <name>Cloud</name>
          <mentioned>
-            <where>2:83</where>
-            <where>2:84</where>
+            <where>2:87</where>
+            <where>2:88</where>
          </mentioned>
          <info>
             <informal>a provider of on-demand virtual or physical servers, for example AWS</informal>
@@ -1237,7 +1241,7 @@ Server  *-- Container: container
             <slot>
                <name>credentials</name>
                <mentioned>
-                  <where>2:85</where>
+                  <where>2:89</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1248,7 +1252,7 @@ Server  *-- Container: container
             <slot>
                <name>server</name>
                <mentioned>
-                  <where>2:86</where>
+                  <where>2:90</where>
                </mentioned>
                <arity>0..*</arity>
                <composition>true</composition>
@@ -1267,11 +1271,11 @@ class Server
 Cloud  *-- Server: server
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="84pt"
-     style="width:241px;height:84px;"
+     height="85pt"
+     style="width:228px;height:85px;"
      version="1.1"
-     viewBox="0 0 241 84"
-     width="241pt"&gt;
+     viewBox="0 0 228 85"
+     width="228pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -1284,53 +1288,53 @@ Cloud  *-- Server: server
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="159"
-            x="45.5"
-            y="12.0669"&gt;Cloud: Class Diagram&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="52.7734"
+            textLength="143"
+            x="47"
+            y="12.5684"&gt;Cloud: Class Diagram&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="53.0879"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="75"
-            x="6.5"
-            y="22.6328"/&gt;
+            width="71"
+            x="6"
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="35"
-            x="26.5"
-            y="38.7715"&gt;Cloud&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7.5" x2="80.5" y1="46.6016"
-            y2="46.6016"/&gt;
+            textLength="33"
+            x="25"
+            y="39.9121"&gt;Cloud&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="76" y1="47.4434"
+            y2="47.4434"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="63"
-            x="12.5"
-            y="60.812"&gt;credentials&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7.5" x2="80.5" y1="67.4063"
-            y2="67.4063"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            textLength="59"
+            x="12"
+            y="62.0781"&gt;credentials&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="76" y1="68.3984"
+            y2="68.3984"/&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="46"
-            x="186"
-            y="29.1328"/&gt;
+            width="42"
+            x="177"
+            y="29.8105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="40"
-            x="189"
-            y="45.2715"&gt;Server&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="187" x2="231" y1="53.1016"
-            y2="53.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="187" x2="231" y1="61.1016"
-            y2="61.1016"/&gt;
-      &lt;path d="M94.9285,49.1328 C125.195,49.1328 162.332,49.1328 185.589,49.1328 "
+            textLength="36"
+            x="180"
+            y="46.4121"&gt;Server&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="178" x2="218" y1="53.9434"
+            y2="53.9434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="178" x2="218" y1="61.9434"
+            y2="61.9434"/&gt;
+      &lt;path d="M90.3729,49.8105 C119.35,49.8105 154.808,49.8105 176.648,49.8105 "
             fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="81.5804,49.1328,87.5804,53.1328,93.5804,49.1328,87.5804,45.1328,81.5804,49.1328"
+               points="77.1728,49.8105,83.1728,53.8105,89.1728,49.8105,83.1728,45.8105,77.1728,49.8105"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="40"
-            x="113.5"
-            y="44.1997"&gt;server&lt;/text&gt;
+            textLength="38"
+            x="108"
+            y="46.3789"&gt;server&lt;/text&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -1339,8 +1343,8 @@ Cloud  *-- Server: server
       <type>
          <name>Invoice</name>
          <mentioned>
-            <where>2:88</where>
-            <where>2:89</where>
+            <where>2:92</where>
+            <where>2:93</where>
          </mentioned>
          <info>
             <informal>an atomic track record of the usage of resources,
@@ -1350,7 +1354,7 @@ Cloud  *-- Server: server
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>2:90</where>
+                  <where>2:94</where>
                </mentioned>
                <arity>1</arity>
                <composition>false</composition>
@@ -1359,7 +1363,7 @@ Cloud  *-- Server: server
             <slot>
                <name>hour</name>
                <mentioned>
-                  <where>2:91</where>
+                  <where>2:95</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1370,7 +1374,7 @@ Cloud  *-- Server: server
             <slot>
                <name>cpuSeconds</name>
                <mentioned>
-                  <where>2:92</where>
+                  <where>2:96</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1383,7 +1387,7 @@ Cloud  *-- Server: server
             <slot>
                <name>bytesIn</name>
                <mentioned>
-                  <where>2:95</where>
+                  <where>2:99</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1394,7 +1398,7 @@ Cloud  *-- Server: server
             <slot>
                <name>bytesOut</name>
                <mentioned>
-                  <where>2:96</where>
+                  <where>2:100</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1418,11 +1422,11 @@ class Container
 Invoice  o-- Container: container
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="122pt"
-     style="width:288px;height:122px;"
+     height="124pt"
+     style="width:274px;height:124px;"
      version="1.1"
-     viewBox="0 0 288 122"
-     width="288pt"&gt;
+     viewBox="0 0 274 124"
+     width="274pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -1435,68 +1439,68 @@ Invoice  o-- Container: container
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="168"
-            x="65"
-            y="12.0669"&gt;Invoice: Class Diagram&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="91.1875"
+            textLength="152"
+            x="65.5"
+            y="12.5684"&gt;Invoice: Class Diagram&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="91.9531"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="81"
-            x="6.5"
-            y="22.6328"/&gt;
+            width="77"
+            x="6"
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="43"
-            x="25.5"
-            y="38.7715"&gt;Invoice&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7.5" x2="86.5" y1="46.6016"
-            y2="46.6016"/&gt;
+            textLength="39"
+            x="25"
+            y="39.9121"&gt;Invoice&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="82" y1="47.4434"
+            y2="47.4434"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
             textLength="26"
-            x="12.5"
-            y="60.812"&gt;hour&lt;/text&gt;
+            x="12"
+            y="62.0781"&gt;hour&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="69"
-            x="12.5"
-            y="73.6167"&gt;cpuSeconds&lt;/text&gt;
+            textLength="65"
+            x="12"
+            y="75.0332"&gt;cpuSeconds&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="41"
-            x="12.5"
-            y="86.4214"&gt;bytesIn&lt;/text&gt;
+            textLength="39"
+            x="12"
+            y="87.9883"&gt;bytesIn&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="51"
-            x="12.5"
-            y="99.2261"&gt;bytesOut&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7.5" x2="86.5" y1="105.8203"
-            y2="105.8203"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            textLength="49"
+            x="12"
+            y="100.9434"&gt;bytesOut&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="82" y1="107.2637"
+            y2="107.2637"/&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="67"
-            x="212.5"
-            y="48.1328"/&gt;
+            width="61"
+            x="204"
+            y="49.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="61"
-            x="215.5"
-            y="64.2715"&gt;Container&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="213.5" x2="278.5" y1="72.1016"
-            y2="72.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="213.5" x2="278.5" y1="80.1016"
-            y2="80.1016"/&gt;
-      &lt;path d="M100.9243,68.1328 C136.43,68.1328 182.07,68.1328 212.366,68.1328 "
+            textLength="55"
+            x="207"
+            y="65.9121"&gt;Container&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="205" x2="264" y1="73.4434"
+            y2="73.4434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="205" x2="264" y1="81.4434"
+            y2="81.4434"/&gt;
+      &lt;path d="M96.2447,69.3105 C130.74,69.3105 175.174,69.3105 203.993,69.3105 "
             fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="none"
-               points="87.8659,68.1328,93.8659,72.1328,99.8659,68.1328,93.8659,64.1328,87.8659,68.1328"
+               points="83.0928,69.3105,89.0928,73.3105,95.0928,69.3105,89.0928,65.3105,83.0928,69.3105"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="60"
-            x="119.5"
-            y="63.1997"&gt;container&lt;/text&gt;
+            textLength="59"
+            x="114"
+            y="65.8789"&gt;container&lt;/text&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -1505,9 +1509,9 @@ Invoice  o-- Container: container
       <type>
          <name>PayPal</name>
          <mentioned>
-            <where>2:98</where>
-            <where>2:98</where>
-            <where>2:99</where>
+            <where>2:102</where>
+            <where>2:102</where>
+            <where>2:103</where>
          </mentioned>
          <info>
             <informal>a payment processing system, at www.paypal.com</informal>
@@ -1517,7 +1521,7 @@ Invoice  o-- Container: container
             <slot>
                <name>credentials</name>
                <mentioned>
-                  <where>2:100</where>
+                  <where>2:104</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1536,11 +1540,11 @@ class PayPal {
 }
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="84pt"
-     style="width:168px;height:84px;"
+     height="85pt"
+     style="width:149px;height:85px;"
      version="1.1"
-     viewBox="0 0 168 84"
-     width="168pt"&gt;
+     viewBox="0 0 149 85"
+     width="149pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -1553,28 +1557,28 @@ class PayPal {
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="167"
+            textLength="148"
             x="0"
-            y="12.0669"&gt;PayPal: Class Diagram&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="52.7734"
+            y="12.5684"&gt;PayPal: Class Diagram&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="53.0879"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="75"
-            x="40"
-            y="22.6328"/&gt;
+            width="71"
+            x="32.5"
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="41"
-            x="57"
-            y="38.7715"&gt;PayPal&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="41" x2="114" y1="46.6016"
-            y2="46.6016"/&gt;
+            textLength="37"
+            x="49.5"
+            y="39.9121"&gt;PayPal&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="33.5" x2="102.5" y1="47.4434"
+            y2="47.4434"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="11"
             lengthAdjust="spacingAndGlyphs"
-            textLength="63"
-            x="46"
-            y="60.812"&gt;credentials&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="41" x2="114" y1="67.4063"
-            y2="67.4063"/&gt;
+            textLength="59"
+            x="38.5"
+            y="62.0781"&gt;credentials&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="33.5" x2="102.5" y1="68.3984"
+            y2="68.3984"/&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -1583,7 +1587,7 @@ class PayPal {
       <type>
          <name>Application</name>
          <mentioned>
-            <where>2:102</where>
+            <where>2:106</where>
          </mentioned>
          <info>
             <informal>a custom sofware application packaged inside
@@ -1599,10 +1603,10 @@ class Application {
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="72pt"
-     style="width:201px;height:72px;"
+     style="width:182px;height:72px;"
      version="1.1"
-     viewBox="0 0 201 72"
-     width="201pt"&gt;
+     viewBox="0 0 182 72"
+     width="182pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -1615,23 +1619,23 @@ class Application {
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="200"
+            textLength="181"
             x="0"
-            y="12.0669"&gt;Application: Class Diagram&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="39.9688"
+            y="12.5684"&gt;Application: Class Diagram&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="40.1328"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="75"
-            x="56.5"
-            y="23.1328"/&gt;
+            width="70"
+            x="49.5"
+            y="23.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="12"
             lengthAdjust="spacingAndGlyphs"
-            textLength="69"
-            x="59.5"
-            y="39.2715"&gt;Application&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="57.5" x2="130.5" y1="47.1016"
-            y2="47.1016"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="57.5" x2="130.5" y1="55.1016"
-            y2="55.1016"/&gt;
+            textLength="64"
+            x="52.5"
+            y="39.9121"&gt;Application&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="50.5" x2="118.5" y1="47.4434"
+            y2="47.4434"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.5;" x1="50.5" x2="118.5" y1="55.4434"
+            y2="55.4434"/&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -1843,11 +1847,11 @@ anonymous -&gt; data : reads
 anonymous -&gt; stats : reads
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="191pt"
-     style="width:217px;height:191px;"
+     height="192pt"
+     style="width:214px;height:192px;"
      version="1.1"
-     viewBox="0 0 217 191"
-     width="217pt"&gt;
+     viewBox="0 0 214 192"
+     width="214pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -1860,70 +1864,70 @@ anonymous -&gt; stats : reads
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="193"
-            x="12"
-            y="19.0669"&gt;UC9.1: Sequence Diagram&lt;/text&gt;
+            textLength="174"
+            x="20"
+            y="19.5684"&gt;UC9.1: Sequence Diagram&lt;/text&gt;
       &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="48"
             x2="48"
-            y1="112.4297"
-            y2="190.6953"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="126"
-            x2="126"
-            y1="112.4297"
-            y2="190.6953"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="186"
-            x2="186"
-            y1="112.4297"
-            y2="190.6953"/&gt;
+            y1="112.7988"
+            y2="191.4199"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="125"
+            x2="125"
+            y1="112.7988"
+            y2="191.4199"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="184"
+            x2="184"
+            y1="112.7988"
+            y2="191.4199"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="81"
+            textLength="80"
             x="5"
-            y="109.1279"&gt;anonymous&lt;/text&gt;
-      &lt;ellipse cx="48.5" cy="39.1328" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
+            y="109.8457"&gt;anonymous&lt;/text&gt;
+      &lt;ellipse cx="48" cy="39.3105" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
                style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;path d="M48.5,47.1328 L48.5,74.1328 M35.5,55.1328 L61.5,55.1328 M48.5,74.1328 L35.5,89.1328 M48.5,74.1328 L61.5,89.1328 "
+      &lt;path d="M48,47.3105 L48,74.3105 M35,55.3105 L61,55.3105 M48,74.3105 L35,89.3105 M48,74.3105 L61,89.3105 "
             fill="#FEFECE"
             filter="url(#f1)"
             style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
             width="44"
-            x="102"
-            y="77.1328"/&gt;
+            x="101"
+            y="77.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="30"
-            x="109"
-            y="97.1279"&gt;data&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            x="108"
+            y="97.8457"&gt;data&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="48"
-            x="160"
-            y="77.1328"/&gt;
+            width="46"
+            x="159"
+            y="77.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
+            textLength="32"
+            x="166"
+            y="97.8457"&gt;stats&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="113,139.7988,123,143.7988,113,147.7988,117,143.7988"
+               style="stroke: #A80036; stroke-width: 1.0;"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="48" x2="119" y1="143.7988"
+            y2="143.7988"/&gt;
+      &lt;text fill="#000000" font-family="sans-serif" font-size="13"
+            lengthAdjust="spacingAndGlyphs"
             textLength="34"
-            x="167"
-            y="97.1279"&gt;stats&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="114,139.4297,124,143.4297,114,147.4297,118,143.4297"
+            x="55"
+            y="139.3672"&gt;reads&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="172,169.1094,182,173.1094,172,177.1094,176,173.1094"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="48.5" x2="120" y1="143.4297"
-            y2="143.4297"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="48" x2="178" y1="173.1094"
+            y2="173.1094"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="36"
-            x="55.5"
-            y="138.4966"&gt;reads&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="174,168.5625,184,172.5625,174,176.5625,178,172.5625"
-               style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="48.5" x2="180" y1="172.5625"
-            y2="172.5625"/&gt;
-      &lt;text fill="#000000" font-family="sans-serif" font-size="13"
-            lengthAdjust="spacingAndGlyphs"
-            textLength="36"
-            x="55.5"
-            y="167.6294"&gt;reads&lt;/text&gt;
+            textLength="34"
+            x="55"
+            y="168.6777"&gt;reads&lt;/text&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -1936,11 +1940,11 @@ explores thindeck"
 primary -&gt; main
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="194pt"
-     style="width:190px;height:194px;"
+     height="197pt"
+     style="width:179px;height:197px;"
      version="1.1"
-     viewBox="0 0 190 194"
-     width="190pt"&gt;
+     viewBox="0 0 179 197"
+     width="179pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -1953,47 +1957,51 @@ primary -&gt; main
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="189"
-            x="0"
-            y="12.0669"&gt;UC9.1: Use Case Diagram&lt;/text&gt;
-      &lt;ellipse cx="88.5" cy="32.6328" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
+            textLength="170"
+            x="8"
+            y="12.5684"&gt;UC9.1: Use Case Diagram&lt;/text&gt;
+      &lt;ellipse cx="87" cy="33.8105" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
                style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;path d="M88.5,40.6328 L88.5,67.6328 M75.5,48.6328 L101.5,48.6328 M88.5,67.6328 L75.5,82.6328 M88.5,67.6328 L101.5,82.6328 "
+      &lt;path d="M87,41.8105 L87,68.8105 M74,49.8105 L100,49.8105 M87,68.8105 L74,83.8105 M87,68.8105 L100,83.8105 "
             fill="#FEFECE"
             filter="url(#f1)"
             style="stroke: #A80036; stroke-width: 2.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="82"
-            x="47.5"
-            y="102.6279"&gt;Anonymous&lt;/text&gt;
-      &lt;ellipse cx="88.4638" cy="164.2924" fill="#FEFECE" filter="url(#f1)" rx="80.9638"
-               ry="23.6596"
+            x="46"
+            y="104.3457"&gt;Anonymous&lt;/text&gt;
+      &lt;ellipse cx="86.9638" cy="166.2128" fill="#FEFECE" filter="url(#f1)" rx="80.9638"
+               ry="23.9023"
                style="stroke: #A80036; stroke-width: 1.5;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="42"
-            x="67.4638"
-            y="157.1933"&gt;UC9.1&lt;/text&gt;
+            x="65.9638"
+            y="159.0714"&gt;UC9.1&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="123"
-            x="26.9638"
-            y="173.4901"&gt;explores thindeck&lt;/text&gt;
-      &lt;path d="M88.5,105.4048 C88.5,115.4221 88.5,125.4395 88.5,135.4569 " fill="none"
+            x="25.4638"
+            y="175.5596"&gt;explores thindeck&lt;/text&gt;
+      &lt;path d="M87,107.083 C87,117.0636 87,127.0443 87,137.0249 " fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="88.5,140.6953,92.5,131.6953,88.5,135.6953,84.5,131.6953,88.5,140.6953"
+               points="87,142.2441,91,133.2441,87,137.2441,83,133.2441,87,142.2441"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
          </diagrams>
       </method>
-      <method seal="004224">
+      <method seal="3a14c9">
          <id>UC1</id>
+         <attributes>
+            <attribute seal="">implemented</attribute>
+         </attributes>
          <mentioned>
             <where>2:1</where>
+            <where>2:2</where>
             <where>3:2</where>
             <where>3:4</where>
             <where>3:9</where>
@@ -2026,7 +2034,7 @@ primary -&gt; main
             <step>
                <number>1</number>
                <mentioned>
-                  <where>2:2</where>
+                  <where>2:3</where>
                </mentioned>
                <object>user</object>
                <signature>creates</signature>
@@ -2035,7 +2043,7 @@ primary -&gt; main
             <step>
                <number>2</number>
                <mentioned>
-                  <where>2:3</where>
+                  <where>2:4</where>
                </mentioned>
                <object>repo</object>
                <signature ref="UC2">launches</signature>
@@ -2044,7 +2052,7 @@ primary -&gt; main
             <step>
                <number>3</number>
                <mentioned>
-                  <where>2:4</where>
+                  <where>2:5</where>
                </mentioned>
                <object>user</object>
                <signature>reads</signature>
@@ -2053,7 +2061,7 @@ primary -&gt; main
             <step>
                <number>4</number>
                <mentioned>
-                  <where>2:5</where>
+                  <where>2:6</where>
                </mentioned>
                <object>user</object>
                <signature>updates</signature>
@@ -2062,7 +2070,7 @@ primary -&gt; main
             <step>
                <number>5</number>
                <mentioned>
-                  <where>2:6</where>
+                  <where>2:7</where>
                </mentioned>
                <object>user</object>
                <signature>deletes</signature>
@@ -2071,7 +2079,7 @@ primary -&gt; main
             <step>
                <number>6</number>
                <mentioned>
-                  <where>2:7</where>
+                  <where>2:8</where>
                </mentioned>
                <object>user</object>
                <signature ref="UC6">pays for</signature>
@@ -2339,11 +2347,11 @@ user -&gt; repo : deletes
 user -&gt; repo : pays for
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="308pt"
-     style="width:194px;height:308px;"
+     height="309pt"
+     style="width:184px;height:309px;"
      version="1.1"
-     viewBox="0 0 194 308"
-     width="194pt"&gt;
+     viewBox="0 0 184 309"
+     width="184pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -2356,106 +2364,113 @@ user -&gt; repo : pays for
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="179"
+            textLength="162"
             x="12"
-            y="19.0669"&gt;UC1: Sequence Diagram&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="32"
-            x2="32"
-            y1="112.4297"
-            y2="307.2266"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="83"
-            x2="83"
-            y1="112.4297"
-            y2="307.2266"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="164"
-            x2="164"
-            y1="112.4297"
-            y2="307.2266"/&gt;
+            y="19.5684"&gt;UC1: Sequence Diagram&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;"
+            x1="24.5"
+            x2="24.5"
+            y1="112.7988"
+            y2="308.6621"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;"
+            x1="74.5"
+            x2="74.5"
+            y1="112.7988"
+            y2="308.6621"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;"
+            x1="154.5"
+            x2="154.5"
+            y1="112.7988"
+            y2="308.6621"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="31"
-            x="14"
-            y="109.1279"&gt;user&lt;/text&gt;
-      &lt;ellipse cx="32.5" cy="39.1328" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
+            textLength="30"
+            x="6.5"
+            y="109.8457"&gt;user&lt;/text&gt;
+      &lt;ellipse cx="24.5" cy="39.3105" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
                style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;path d="M32.5,47.1328 L32.5,74.1328 M19.5,55.1328 L45.5,55.1328 M32.5,74.1328 L19.5,89.1328 M32.5,74.1328 L45.5,89.1328 "
+      &lt;path d="M24.5,47.3105 L24.5,74.3105 M11.5,55.3105 L37.5,55.3105 M24.5,74.3105 L11.5,89.3105 M24.5,74.3105 L37.5,89.3105 "
             fill="#FEFECE"
             filter="url(#f1)"
             style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
             width="40"
-            x="61"
-            y="77.1328"/&gt;
+            x="52.5"
+            y="77.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="26"
-            x="68"
-            y="97.1279"&gt;app&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            x="59.5"
+            y="97.8457"&gt;app&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
             width="46"
-            x="139"
-            y="77.1328"/&gt;
+            x="129.5"
+            y="77.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="32"
-            x="146"
-            y="97.1279"&gt;repo&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="152,139.4297,162,143.4297,152,147.4297,156,143.4297"
+            x="136.5"
+            y="97.8457"&gt;repo&lt;/text&gt;
+      &lt;polygon fill="#A80036"
+               points="142.5,139.7988,152.5,143.7988,142.5,147.7988,146.5,143.7988"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="32.5" x2="158" y1="143.4297"
-            y2="143.4297"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="24.5" x2="148.5" y1="143.7988"
+            y2="143.7988"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="48"
-            x="39.5"
-            y="138.4966"&gt;creates&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="94,168.5625,84,172.5625,94,176.5625,90,172.5625"
+            textLength="45"
+            x="31.5"
+            y="139.3672"&gt;creates&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="85.5,169.1094,75.5,173.1094,85.5,177.1094,81.5,173.1094"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="88" x2="163" y1="172.5625"
-            y2="172.5625"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="79.5" x2="153.5" y1="173.1094"
+            y2="173.1094"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="57"
-            x="100"
-            y="167.6294"&gt;launches&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="152,197.6953,162,201.6953,152,205.6953,156,201.6953"
+            textLength="56"
+            x="91.5"
+            y="168.6777"&gt;launches&lt;/text&gt;
+      &lt;polygon fill="#A80036"
+               points="142.5,198.4199,152.5,202.4199,142.5,206.4199,146.5,202.4199"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="32.5" x2="158" y1="201.6953"
-            y2="201.6953"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="24.5" x2="148.5" y1="202.4199"
+            y2="202.4199"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="36"
-            x="39.5"
-            y="196.7622"&gt;reads&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="152,226.8281,162,230.8281,152,234.8281,156,230.8281"
+            textLength="34"
+            x="31.5"
+            y="197.9883"&gt;reads&lt;/text&gt;
+      &lt;polygon fill="#A80036"
+               points="142.5,227.7305,152.5,231.7305,142.5,235.7305,146.5,231.7305"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="32.5" x2="158" y1="230.8281"
-            y2="230.8281"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="24.5" x2="148.5" y1="231.7305"
+            y2="231.7305"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="52"
-            x="39.5"
-            y="225.895"&gt;updates&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="152,255.9609,162,259.9609,152,263.9609,156,259.9609"
+            textLength="50"
+            x="31.5"
+            y="227.2988"&gt;updates&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="142.5,257.041,152.5,261.041,142.5,265.041,146.5,261.041"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="32.5" x2="158" y1="259.9609"
-            y2="259.9609"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="24.5" x2="148.5" y1="261.041"
+            y2="261.041"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="47"
-            x="39.5"
-            y="255.0278"&gt;deletes&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="152,285.0938,162,289.0938,152,293.0938,156,289.0938"
+            textLength="45"
+            x="31.5"
+            y="256.6094"&gt;deletes&lt;/text&gt;
+      &lt;polygon fill="#A80036"
+               points="142.5,286.3516,152.5,290.3516,142.5,294.3516,146.5,290.3516"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="32.5" x2="158" y1="289.0938"
-            y2="289.0938"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="24.5" x2="148.5" y1="290.3516"
+            y2="290.3516"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
             textLength="51"
-            x="39.5"
-            y="284.1606"&gt;pays for&lt;/text&gt;
+            x="31.5"
+            y="285.9199"&gt;pays for&lt;/text&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -2474,11 +2489,11 @@ pays for"
 main ---&gt; UC6
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="237pt"
-     style="width:298px;height:237px;"
+     height="238pt"
+     style="width:293px;height:238px;"
      version="1.1"
-     viewBox="0 0 298 237"
-     width="298pt"&gt;
+     viewBox="0 0 293 238"
+     width="293pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -2491,85 +2506,89 @@ main ---&gt; UC6
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="175"
-            x="67.5"
-            y="12.0669"&gt;UC1: Use Case Diagram&lt;/text&gt;
-      &lt;ellipse cx="44" cy="32.6328" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
+            textLength="158"
+            x="73"
+            y="12.5684"&gt;UC1: Use Case Diagram&lt;/text&gt;
+      &lt;ellipse cx="43.5" cy="33.3105" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
                style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;path d="M44,40.6328 L44,67.6328 M31,48.6328 L57,48.6328 M44,67.6328 L31,82.6328 M44,67.6328 L57,82.6328 "
+      &lt;path d="M43.5,41.3105 L43.5,68.3105 M30.5,49.3105 L56.5,49.3105 M43.5,68.3105 L30.5,83.3105 M43.5,68.3105 L56.5,83.3105 "
             fill="#FEFECE"
             filter="url(#f1)"
             style="stroke: #A80036; stroke-width: 2.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="32"
+            textLength="31"
             x="28"
-            y="102.6279"&gt;User&lt;/text&gt;
-      &lt;ellipse cx="43.9528" cy="165.2299" fill="#FEFECE" filter="url(#f1)" rx="37.9528"
-               ry="24.0971"
+            y="103.8457"&gt;User&lt;/text&gt;
+      &lt;ellipse cx="43.3518" cy="165.6842" fill="#FEFECE" filter="url(#f1)" rx="37.3518"
+               ry="24.3736"
                style="stroke: #A80036; stroke-width: 1.5;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="29"
-            x="29.4528"
-            y="158.8307"&gt;UC1&lt;/text&gt;
+            x="28.8518"
+            y="159.2962"&gt;UC1&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="54"
-            x="16.9528"
-            y="175.1276"&gt;deploys&lt;/text&gt;
-      &lt;ellipse cx="247.8983" cy="123.0333" fill="#FEFECE" filter="url(#f1)" rx="43.3983"
-               ry="23.9005"
+            textLength="53"
+            x="16.8518"
+            y="175.7845"&gt;deploys&lt;/text&gt;
+      &lt;ellipse cx="244.1833" cy="123.993" fill="#FEFECE" filter="url(#f1)" rx="42.1833"
+               ry="24.1825"
                style="stroke: #A80036; stroke-width: 1.5;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="29"
-            x="233.3983"
-            y="116.3224"&gt;UC2&lt;/text&gt;
+            x="229.6833"
+            y="117.3026"&gt;UC2&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="63"
-            x="216.3983"
-            y="132.6192"&gt;launches&lt;/text&gt;
-      &lt;ellipse cx="247.9528" cy="206.2299" fill="#FEFECE" filter="url(#f1)" rx="37.9528"
-               ry="24.0971"
+            textLength="61"
+            x="213.6833"
+            y="133.7909"&gt;launches&lt;/text&gt;
+      &lt;ellipse cx="244.0547" cy="207.6282" fill="#FEFECE" filter="url(#f1)" rx="38.5547"
+               ry="24.3177"
                style="stroke: #A80036; stroke-width: 1.5;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="29"
-            x="233.4528"
-            y="199.8307"&gt;UC6&lt;/text&gt;
+            x="229.5547"
+            y="201.1522"&gt;UC6&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="54"
-            x="220.9528"
-            y="216.1276"&gt;pays for&lt;/text&gt;
-      &lt;path d="M44,105.6048 C44,115.6708 44,125.7368 44,135.8026 " fill="none"
+            textLength="55"
+            x="216.5547"
+            y="217.6404"&gt;pays for&lt;/text&gt;
+      &lt;path d="M43.5,106.4525 C43.5,116.2455 43.5,126.0395 43.5,135.8335 " fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="44,141.0664,48,132.0664,44,136.0664,40,132.0664,44,141.0664"
+               points="43.5,140.955,47.5,131.955,43.5,135.955,39.5,131.955,43.5,140.955"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;path d="M80.6486,157.7207 C114.33,150.7177 165.003,140.1816 201.569,132.5789 "
+      &lt;path d="M79.5309,158.3984 C112.841,151.3505 163.063,140.7241 199.045,133.1108 "
             fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="206.857,131.4793,197.2315,129.3938,201.9616,132.4965,198.8589,137.2265,206.857,131.4793"
+               points="204.247,132.0105,194.6142,129.959,199.3552,133.0449,196.2692,137.7859,204.247,132.0105"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;path d="M80.6486,172.3684 C115.841,179.5115 169.585,190.4199 206.403,197.8928 "
+      &lt;path d="M79.5309,173.2226 C113.796,180.4725 165.956,191.509 202.103,199.1573 "
             fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="211.708,198.9695,203.6832,193.2596,206.8079,197.9752,202.0923,201.0999,211.708,198.9695"
+               points="207.316,200.2603,199.3397,194.4829,202.4244,199.2247,197.6826,202.3094,207.316,200.2603"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
          </diagrams>
       </method>
-      <method seal="a767be">
+      <method seal="be39fe">
          <id>UC2</id>
+         <attributes>
+            <attribute seal="">implemented</attribute>
+         </attributes>
          <mentioned>
-            <where>2:9</where>
+            <where>2:10</where>
+            <where>2:11</where>
             <where>3:30</where>
             <where>3:32</where>
             <where>3:35</where>
@@ -2599,7 +2618,7 @@ main ---&gt; UC6
             <step>
                <number>1</number>
                <mentioned>
-                  <where>2:10</where>
+                  <where>2:12</where>
                </mentioned>
                <object>repo</object>
                <signature>creates</signature>
@@ -2608,7 +2627,7 @@ main ---&gt; UC6
             <step>
                <number>2</number>
                <mentioned>
-                  <where>2:11</where>
+                  <where>2:13</where>
                </mentioned>
                <object>deployment</object>
                <signature ref="UC2.3">executes</signature>
@@ -2617,7 +2636,7 @@ main ---&gt; UC6
             <step>
                <number>3</number>
                <mentioned>
-                  <where>2:12</where>
+                  <where>2:14</where>
                </mentioned>
                <object>repo</object>
                <signature>deletes</signature>
@@ -2837,11 +2856,11 @@ deployment -&gt; app : executes
 repo -&gt; deployment : deletes
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="172pt"
-     style="width:224px;height:172px;"
+     height="173pt"
+     style="width:223px;height:173px;"
      version="1.1"
-     viewBox="0 0 224 172"
-     width="224pt"&gt;
+     viewBox="0 0 223 173"
+     width="223pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -2854,78 +2873,79 @@ repo -&gt; deployment : deletes
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="179"
-            x="22.5"
-            y="19.0669"&gt;UC2: Sequence Diagram&lt;/text&gt;
+            textLength="162"
+            x="30.5"
+            y="19.5684"&gt;UC2: Sequence Diagram&lt;/text&gt;
       &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="30"
             x2="30"
-            y1="64.4297"
-            y2="171.8281"/&gt;
+            y1="64.7988"
+            y2="172.7305"/&gt;
       &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="87"
             x2="87"
-            y1="64.4297"
-            y2="171.8281"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="169"
-            x2="169"
-            y1="64.4297"
-            y2="171.8281"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            y1="64.7988"
+            y2="172.7305"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="168"
+            x2="168"
+            y1="64.7988"
+            y2="172.7305"/&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
             width="46"
             x="5"
-            y="29.1328"/&gt;
+            y="29.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="32"
             x="12"
-            y="49.1279"&gt;repo&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            y="49.8457"&gt;repo&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
             width="40"
             x="65"
-            y="29.1328"/&gt;
+            y="29.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="26"
             x="72"
-            y="49.1279"&gt;app&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            y="49.8457"&gt;app&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="96"
+            width="95"
             x="119"
-            y="29.1328"/&gt;
+            y="29.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="82"
+            textLength="81"
             x="126"
-            y="49.1279"&gt;deployment&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="157,91.4297,167,95.4297,157,99.4297,161,95.4297"
+            y="49.8457"&gt;deployment&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="156.5,91.7988,166.5,95.7988,156.5,99.7988,160.5,95.7988"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="30" x2="163" y1="95.4297"
-            y2="95.4297"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="30" x2="162.5" y1="95.7988"
+            y2="95.7988"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="48"
+            textLength="45"
             x="37"
-            y="90.4966"&gt;creates&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="98,120.5625,88,124.5625,98,128.5625,94,124.5625"
+            y="91.3672"&gt;creates&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="98,121.1094,88,125.1094,98,129.1094,94,125.1094"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="92" x2="168" y1="124.5625"
-            y2="124.5625"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="92" x2="167.5" y1="125.1094"
+            y2="125.1094"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="58"
+            textLength="56"
             x="104"
-            y="119.6294"&gt;executes&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="157,149.6953,167,153.6953,157,157.6953,161,153.6953"
+            y="120.6777"&gt;executes&lt;/text&gt;
+      &lt;polygon fill="#A80036"
+               points="156.5,150.4199,166.5,154.4199,156.5,158.4199,160.5,154.4199"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="30" x2="163" y1="153.6953"
-            y2="153.6953"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="30" x2="162.5" y1="154.4199"
+            y2="154.4199"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="47"
+            textLength="45"
             x="37"
-            y="148.7622"&gt;deletes&lt;/text&gt;
+            y="149.9883"&gt;deletes&lt;/text&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -2941,11 +2961,11 @@ executes"
 main ---&gt; UC2.3
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="196pt"
-     style="width:313px;height:196px;"
+     height="197pt"
+     style="width:304px;height:197px;"
      version="1.1"
-     viewBox="0 0 313 196"
-     width="313pt"&gt;
+     viewBox="0 0 304 197"
+     width="304pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -2958,66 +2978,70 @@ main ---&gt; UC2.3
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="175"
-            x="74.5"
-            y="12.0669"&gt;UC2: Use Case Diagram&lt;/text&gt;
-      &lt;ellipse cx="50" cy="32.6328" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
+            textLength="158"
+            x="79"
+            y="12.5684"&gt;UC2: Use Case Diagram&lt;/text&gt;
+      &lt;ellipse cx="48" cy="33.8105" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
                style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;path d="M50,40.6328 L50,67.6328 M37,48.6328 L63,48.6328 M50,67.6328 L37,82.6328 M50,67.6328 L63,82.6328 "
+      &lt;path d="M48,41.8105 L48,68.8105 M35,49.8105 L61,49.8105 M48,68.8105 L35,83.8105 M48,68.8105 L61,83.8105 "
             fill="#FEFECE"
             filter="url(#f1)"
             style="stroke: #A80036; stroke-width: 2.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="74"
-            x="13"
-            y="102.6279"&gt;Repository&lt;/text&gt;
-      &lt;ellipse cx="49.8983" cy="165.0333" fill="#FEFECE" filter="url(#f1)" rx="43.3983"
-               ry="23.9005"
+            textLength="73"
+            x="11.5"
+            y="104.3457"&gt;Repository&lt;/text&gt;
+      &lt;ellipse cx="48.1833" cy="166.493" fill="#FEFECE" filter="url(#f1)" rx="42.1833"
+               ry="24.1825"
                style="stroke: #A80036; stroke-width: 1.5;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="29"
-            x="35.3983"
-            y="158.3224"&gt;UC2&lt;/text&gt;
+            x="33.6833"
+            y="159.8026"&gt;UC2&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="63"
-            x="18.3983"
-            y="174.6192"&gt;launches&lt;/text&gt;
-      &lt;ellipse cx="261.1574" cy="165.1026" fill="#FEFECE" filter="url(#f1)" rx="45.1574"
-               ry="24.4698"
+            textLength="61"
+            x="17.6833"
+            y="176.2909"&gt;launches&lt;/text&gt;
+      &lt;ellipse cx="254.3975" cy="166.1494" fill="#FEFECE" filter="url(#f1)" rx="43.3975"
+               ry="24.8389"
                style="stroke: #A80036; stroke-width: 1.5;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="42"
-            x="240.1574"
-            y="159.283"&gt;UC2.3&lt;/text&gt;
+            x="233.3975"
+            y="160.4815"&gt;UC2.3&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="64"
-            x="229.1574"
-            y="175.5799"&gt;executes&lt;/text&gt;
-      &lt;path d="M50,105.6048 C50,115.6707 50,125.7366 50,135.8026 " fill="none"
+            textLength="61"
+            x="223.8975"
+            y="176.9697"&gt;executes&lt;/text&gt;
+      &lt;path d="M48,107.083 C48,117.0636 48,127.0443 48,137.0249 " fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="50,141.0664,54,132.0664,50,136.0664,46,132.0664,50,141.0664"
+               points="48,142.2441,52,133.2441,48,137.2441,44,133.2441,48,142.2441"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;path d="M93.5462,165.1328 C127.446,165.1328 174.96,165.1328 210.55,165.1328 "
+      &lt;path d="M90.3836,166.3105 C123.755,166.3105 170.727,166.3105 205.7,166.3105 "
             fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="215.711,165.1328,206.711,161.1328,210.711,165.1328,206.711,169.1328,215.711,165.1328"
+               points="210.77,166.3105,201.77,162.3105,205.77,166.3105,201.77,170.3105,210.77,166.3105"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
          </diagrams>
       </method>
-      <method seal="311a44">
+      <method seal="69b834">
          <id>UC2.3</id>
+         <attributes>
+            <attribute seal="">implemented</attribute>
+         </attributes>
          <mentioned>
-            <where>2:15</where>
+            <where>2:17</where>
+            <where>2:18</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3056,7 +3080,7 @@ main ---&gt; UC2.3
             <step>
                <number>1</number>
                <mentioned>
-                  <where>2:16</where>
+                  <where>2:19</where>
                </mentioned>
                <object>cloud</object>
                <signature>creates</signature>
@@ -3065,7 +3089,7 @@ main ---&gt; UC2.3
             <step>
                <number>2</number>
                <mentioned>
-                  <where>2:17</where>
+                  <where>2:20</where>
                </mentioned>
                <object>server</object>
                <signature>creates</signature>
@@ -3074,7 +3098,7 @@ main ---&gt; UC2.3
             <step>
                <number>3</number>
                <mentioned>
-                  <where>2:18</where>
+                  <where>2:21</where>
                </mentioned>
                <object>container</object>
                <signature>creates</signature>
@@ -3083,7 +3107,7 @@ main ---&gt; UC2.3
             <step>
                <number>4</number>
                <mentioned>
-                  <where>2:19</where>
+                  <where>2:22</where>
                </mentioned>
                <object>visitor</object>
                <signature ref="UC10.1">utilizes</signature>
@@ -3092,7 +3116,7 @@ main ---&gt; UC2.3
             <step>
                <number>5</number>
                <mentioned>
-                  <where>2:20</where>
+                  <where>2:23</where>
                </mentioned>
                <object>server</object>
                <signature>deletes</signature>
@@ -3101,7 +3125,7 @@ main ---&gt; UC2.3
             <step>
                <number>6</number>
                <mentioned>
-                  <where>2:21</where>
+                  <where>2:24</where>
                </mentioned>
                <object>cloud</object>
                <signature>deletes</signature>
@@ -3343,11 +3367,11 @@ server -&gt; container : deletes
 cloud -&gt; server : deletes
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="260pt"
-     style="width:465px;height:260px;"
+     height="261pt"
+     style="width:463px;height:261px;"
      version="1.1"
-     viewBox="0 0 465 260"
-     width="465pt"&gt;
+     viewBox="0 0 463 261"
+     width="463pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -3360,150 +3384,148 @@ cloud -&gt; server : deletes
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="193"
-            x="136"
-            y="19.0669"&gt;UC2.3: Sequence Diagram&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="55"
-            x2="55"
-            y1="64.4297"
-            y2="259.2266"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="137"
-            x2="137"
-            y1="64.4297"
-            y2="259.2266"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="197"
-            x2="197"
-            y1="64.4297"
-            y2="259.2266"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;"
-            x1="268.5"
-            x2="268.5"
-            y1="64.4297"
-            y2="259.2266"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;"
-            x1="350.5"
-            x2="350.5"
-            y1="64.4297"
-            y2="259.2266"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;"
-            x1="431.5"
-            x2="431.5"
-            y1="64.4297"
-            y2="259.2266"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            textLength="174"
+            x="144.5"
+            y="19.5684"&gt;UC2.3: Sequence Diagram&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="54"
+            x2="54"
+            y1="64.7988"
+            y2="260.6621"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="136"
+            x2="136"
+            y1="64.7988"
+            y2="260.6621"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="196"
+            x2="196"
+            y1="64.7988"
+            y2="260.6621"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="265"
+            x2="265"
+            y1="64.7988"
+            y2="260.6621"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="346"
+            x2="346"
+            y1="64.7988"
+            y2="260.6621"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="428"
+            x2="428"
+            y1="64.7988"
+            y2="260.6621"/&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="96"
+            width="95"
             x="5"
-            y="29.1328"/&gt;
+            y="29.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="82"
+            textLength="81"
             x="12"
-            y="49.1279"&gt;deployment&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            y="49.8457"&gt;deployment&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
             width="40"
-            x="115"
-            y="29.1328"/&gt;
+            x="114"
+            y="29.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="26"
-            x="122"
-            y="49.1279"&gt;app&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            x="121"
+            y="49.8457"&gt;app&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
             width="52"
-            x="169"
-            y="29.1328"/&gt;
+            x="168"
+            y="29.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="38"
-            x="176"
-            y="49.1279"&gt;cloud&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            x="175"
+            y="49.8457"&gt;cloud&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="57"
-            x="238.5"
-            y="29.1328"/&gt;
+            width="56"
+            x="235"
+            y="29.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="43"
-            x="245.5"
-            y="49.1279"&gt;server&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            textLength="42"
+            x="242"
+            y="49.8457"&gt;server&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
             width="79"
-            x="309.5"
-            y="29.1328"/&gt;
+            x="305"
+            y="29.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="65"
-            x="316.5"
-            y="49.1279"&gt;container&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            x="312"
+            y="49.8457"&gt;container&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="54"
-            x="402.5"
-            y="29.1328"/&gt;
+            width="56"
+            x="398"
+            y="29.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="40"
-            x="409.5"
-            y="49.1279"&gt;visitor&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="257,91.4297,267,95.4297,257,99.4297,261,95.4297"
+            textLength="42"
+            x="405"
+            y="49.8457"&gt;visitor&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="253,91.7988,263,95.7988,253,99.7988,257,95.7988"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="197" x2="263" y1="95.4297"
-            y2="95.4297"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="196" x2="259" y1="95.7988"
+            y2="95.7988"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="48"
-            x="204"
-            y="90.4966"&gt;creates&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="339,120.5625,349,124.5625,339,128.5625,343,124.5625"
+            textLength="45"
+            x="203"
+            y="91.3672"&gt;creates&lt;/text&gt;
+      &lt;polygon fill="#A80036"
+               points="334.5,121.1094,344.5,125.1094,334.5,129.1094,338.5,125.1094"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="269" x2="345" y1="124.5625"
-            y2="124.5625"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="265" x2="340.5" y1="125.1094"
+            y2="125.1094"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="48"
-            x="276"
-            y="119.6294"&gt;creates&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="148,149.6953,138,153.6953,148,157.6953,144,153.6953"
+            textLength="45"
+            x="272"
+            y="120.6777"&gt;creates&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="147,150.4199,137,154.4199,147,158.4199,143,154.4199"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="142" x2="350" y1="153.6953"
-            y2="153.6953"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="141" x2="345.5" y1="154.4199"
+            y2="154.4199"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="48"
-            x="154"
-            y="148.7622"&gt;creates&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="148,178.8281,138,182.8281,148,186.8281,144,182.8281"
+            textLength="45"
+            x="153"
+            y="149.9883"&gt;creates&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="147,179.7305,137,183.7305,147,187.7305,143,183.7305"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="142" x2="430.5" y1="182.8281"
-            y2="182.8281"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="141" x2="427" y1="183.7305"
+            y2="183.7305"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="44"
-            x="154"
-            y="177.895"&gt;utilizes&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="339,207.9609,349,211.9609,339,215.9609,343,211.9609"
+            textLength="46"
+            x="153"
+            y="179.2988"&gt;utilizes&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="334.5,209.041,344.5,213.041,334.5,217.041,338.5,213.041"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="269" x2="345" y1="211.9609"
-            y2="211.9609"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="265" x2="340.5" y1="213.041"
+            y2="213.041"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="47"
-            x="276"
-            y="207.0278"&gt;deletes&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="257,237.0938,267,241.0938,257,245.0938,261,241.0938"
+            textLength="45"
+            x="272"
+            y="208.6094"&gt;deletes&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="253,238.3516,263,242.3516,253,246.3516,257,242.3516"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="197" x2="263" y1="241.0938"
-            y2="241.0938"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="196" x2="259" y1="242.3516"
+            y2="242.3516"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="47"
-            x="204"
-            y="236.1606"&gt;deletes&lt;/text&gt;
+            textLength="45"
+            x="203"
+            y="237.9199"&gt;deletes&lt;/text&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -3519,11 +3541,11 @@ utilizes"
 main ---&gt; UC10.1
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="198pt"
-     style="width:302px;height:198px;"
+     height="200pt"
+     style="width:298px;height:200px;"
      version="1.1"
-     viewBox="0 0 302 198"
-     width="302pt"&gt;
+     viewBox="0 0 298 200"
+     width="298pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -3536,66 +3558,66 @@ main ---&gt; UC10.1
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="189"
-            x="62.5"
-            y="12.0669"&gt;UC2.3: Use Case Diagram&lt;/text&gt;
-      &lt;ellipse cx="51" cy="32.6328" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
+            textLength="170"
+            x="69.5"
+            y="12.5684"&gt;UC2.3: Use Case Diagram&lt;/text&gt;
+      &lt;ellipse cx="49.5" cy="33.8105" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
                style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;path d="M51,40.6328 L51,67.6328 M38,48.6328 L64,48.6328 M51,67.6328 L38,82.6328 M51,67.6328 L64,82.6328 "
+      &lt;path d="M49.5,41.8105 L49.5,68.8105 M36.5,49.8105 L62.5,49.8105 M49.5,68.8105 L36.5,83.8105 M49.5,68.8105 L62.5,83.8105 "
             fill="#FEFECE"
             filter="url(#f1)"
             style="stroke: #A80036; stroke-width: 2.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="84"
-            x="9"
-            y="102.6279"&gt;Deployment&lt;/text&gt;
-      &lt;ellipse cx="51.1574" cy="165.1026" fill="#FEFECE" filter="url(#f1)" rx="45.1574"
-               ry="24.4698"
+            textLength="82"
+            x="8.5"
+            y="104.3457"&gt;Deployment&lt;/text&gt;
+      &lt;ellipse cx="49.3975" cy="167.1494" fill="#FEFECE" filter="url(#f1)" rx="43.3975"
+               ry="24.8389"
                style="stroke: #A80036; stroke-width: 1.5;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="42"
-            x="30.1574"
-            y="159.283"&gt;UC2.3&lt;/text&gt;
+            x="28.3975"
+            y="161.4815"&gt;UC2.3&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="64"
-            x="19.1574"
-            y="175.5799"&gt;executes&lt;/text&gt;
-      &lt;ellipse cx="257.0514" cy="165.3535" fill="#FEFECE" filter="url(#f1)" rx="38.5514"
-               ry="25.7207"
+            textLength="61"
+            x="18.8975"
+            y="177.9697"&gt;executes&lt;/text&gt;
+      &lt;ellipse cx="252.7175" cy="167.4055" fill="#FEFECE" filter="url(#f1)" rx="38.7175"
+               ry="26.0949"
                style="stroke: #A80036; stroke-width: 1.5;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="51"
-            x="231.5514"
-            y="162.3187"&gt;UC10.1&lt;/text&gt;
+            x="227.2175"
+            y="164.2224"&gt;UC10.1&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="48"
-            x="233.0514"
-            y="178.6156"&gt;utilizes&lt;/text&gt;
-      &lt;path d="M51,105.3921 C51,115.4064 51,125.4207 51,135.435 " fill="none"
+            textLength="49"
+            x="228.2175"
+            y="180.7107"&gt;utilizes&lt;/text&gt;
+      &lt;path d="M49.5,107.0639 C49.5,117.04 49.5,127.0161 49.5,136.9921 " fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="51,140.6719,55,131.6719,51,135.6719,47,131.6719,51,140.6719"
+               points="49.5,142.2089,53.5,133.2089,49.5,137.2089,45.5,133.2089,49.5,142.2089"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;path d="M96.0138,165.1328 C130.591,165.1328 178.482,165.1328 212.838,165.1328 "
+      &lt;path d="M93.1269,167.3105 C127.037,167.3105 174.28,167.3105 208.331,167.3105 "
             fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="218.232,165.1328,209.232,161.1328,213.232,165.1328,209.232,169.1328,218.232,165.1328"
+               points="213.679,167.3105,204.679,163.3105,208.679,167.3105,204.679,171.3105,213.679,167.3105"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
          </diagrams>
       </method>
-      <method seal="61c0f3">
+      <method seal="732451">
          <id>UC6</id>
          <mentioned>
-            <where>2:23</where>
+            <where>2:26</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3622,7 +3644,7 @@ main ---&gt; UC10.1
             <step>
                <number>1</number>
                <mentioned>
-                  <where>2:24</where>
+                  <where>2:27</where>
                </mentioned>
                <object>repo</object>
                <signature>updates</signature>
@@ -3635,7 +3657,7 @@ main ---&gt; UC10.1
             <step>
                <number>2</number>
                <mentioned>
-                  <where>2:27</where>
+                  <where>2:30</where>
                </mentioned>
                <object>paypal</object>
                <signature>updates</signature>
@@ -3647,7 +3669,7 @@ main ---&gt; UC10.1
             <step>
                <number>3</number>
                <mentioned>
-                  <where>2:29</where>
+                  <where>2:32</where>
                </mentioned>
                <object>repo</object>
                <signature>updates</signature>
@@ -3856,11 +3878,11 @@ paypal -&gt; user : updates
 repo -&gt; user : updates
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="220pt"
-     style="width:192px;height:220px;"
+     height="221pt"
+     style="width:179px;height:221px;"
      version="1.1"
-     viewBox="0 0 192 220"
-     width="192pt"&gt;
+     viewBox="0 0 179 221"
+     width="179pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -3873,82 +3895,80 @@ repo -&gt; user : updates
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="179"
-            x="12"
-            y="19.0669"&gt;UC6: Sequence Diagram&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="30"
-            x2="30"
-            y1="112.4297"
-            y2="219.8281"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;"
-            x1="106.5"
-            x2="106.5"
-            y1="112.4297"
-            y2="219.8281"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;"
-            x1="166.5"
-            x2="166.5"
-            y1="112.4297"
-            y2="219.8281"/&gt;
+            textLength="162"
+            x="13"
+            y="19.5684"&gt;UC6: Sequence Diagram&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="23"
+            x2="23"
+            y1="112.7988"
+            y2="220.7305"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="97"
+            x2="97"
+            y1="112.7988"
+            y2="220.7305"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="157"
+            x2="157"
+            y1="112.7988"
+            y2="220.7305"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="31"
-            x="12"
-            y="109.1279"&gt;user&lt;/text&gt;
-      &lt;ellipse cx="30.5" cy="39.1328" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
+            textLength="30"
+            x="5"
+            y="109.8457"&gt;user&lt;/text&gt;
+      &lt;ellipse cx="23" cy="39.3105" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
                style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;path d="M30.5,47.1328 L30.5,74.1328 M17.5,55.1328 L43.5,55.1328 M30.5,74.1328 L17.5,89.1328 M30.5,74.1328 L43.5,89.1328 "
+      &lt;path d="M23,47.3105 L23,74.3105 M10,55.3105 L36,55.3105 M23,74.3105 L10,89.3105 M23,74.3105 L36,89.3105 "
             fill="#FEFECE"
             filter="url(#f1)"
             style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
             width="46"
-            x="81.5"
-            y="77.1328"/&gt;
+            x="72"
+            y="77.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="32"
-            x="88.5"
-            y="97.1279"&gt;repo&lt;/text&gt;
+            x="79"
+            y="97.8457"&gt;repo&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="44"
-            x="141.5"
-            y="109.1279"&gt;paypal&lt;/text&gt;
-      &lt;ellipse cx="166.5" cy="39.1328" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
+            textLength="45"
+            x="132"
+            y="109.8457"&gt;paypal&lt;/text&gt;
+      &lt;ellipse cx="157.5" cy="39.3105" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
                style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;path d="M166.5,47.1328 L166.5,74.1328 M153.5,55.1328 L179.5,55.1328 M166.5,74.1328 L153.5,89.1328 M166.5,74.1328 L179.5,89.1328 "
+      &lt;path d="M157.5,47.3105 L157.5,74.3105 M144.5,55.3105 L170.5,55.3105 M157.5,74.3105 L144.5,89.3105 M157.5,74.3105 L170.5,89.3105 "
             fill="#FEFECE"
             filter="url(#f1)"
             style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;polygon fill="#A80036" points="41.5,139.4297,31.5,143.4297,41.5,147.4297,37.5,143.4297"
+      &lt;polygon fill="#A80036" points="34,139.7988,24,143.7988,34,147.7988,30,143.7988"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="35.5" x2="105.5" y1="143.4297"
-            y2="143.4297"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="28" x2="96" y1="143.7988"
+            y2="143.7988"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="52"
-            x="47.5"
-            y="138.4966"&gt;updates&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="41.5,168.5625,31.5,172.5625,41.5,176.5625,37.5,172.5625"
+            textLength="50"
+            x="40"
+            y="139.3672"&gt;updates&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="34,169.1094,24,173.1094,34,177.1094,30,173.1094"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="35.5" x2="165.5" y1="172.5625"
-            y2="172.5625"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="28" x2="156.5" y1="173.1094"
+            y2="173.1094"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="52"
-            x="47.5"
-            y="167.6294"&gt;updates&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="41.5,197.6953,31.5,201.6953,41.5,205.6953,37.5,201.6953"
+            textLength="50"
+            x="40"
+            y="168.6777"&gt;updates&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="34,198.4199,24,202.4199,34,206.4199,30,202.4199"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="35.5" x2="105.5" y1="201.6953"
-            y2="201.6953"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="28" x2="96" y1="202.4199"
+            y2="202.4199"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="52"
-            x="47.5"
-            y="196.7622"&gt;updates&lt;/text&gt;
+            textLength="50"
+            x="40"
+            y="197.9883"&gt;updates&lt;/text&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -3962,10 +3982,10 @@ primary -&gt; main
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      height="196pt"
-     style="width:176px;height:196px;"
+     style="width:159px;height:196px;"
      version="1.1"
-     viewBox="0 0 176 196"
-     width="176pt"&gt;
+     viewBox="0 0 159 196"
+     width="159pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -3978,47 +3998,50 @@ primary -&gt; main
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="175"
+            textLength="158"
             x="0"
-            y="12.0669"&gt;UC6: Use Case Diagram&lt;/text&gt;
-      &lt;ellipse cx="81.5" cy="32.6328" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
+            y="12.5684"&gt;UC6: Use Case Diagram&lt;/text&gt;
+      &lt;ellipse cx="73" cy="33.3105" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
                style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;path d="M81.5,40.6328 L81.5,67.6328 M68.5,48.6328 L94.5,48.6328 M81.5,67.6328 L68.5,82.6328 M81.5,67.6328 L94.5,82.6328 "
+      &lt;path d="M73,41.3105 L73,68.3105 M60,49.3105 L86,49.3105 M73,68.3105 L60,83.3105 M73,68.3105 L86,83.3105 "
             fill="#FEFECE"
             filter="url(#f1)"
             style="stroke: #A80036; stroke-width: 2.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="32"
-            x="65.5"
-            y="102.6279"&gt;User&lt;/text&gt;
-      &lt;ellipse cx="81.4528" cy="165.2299" fill="#FEFECE" filter="url(#f1)" rx="37.9528"
-               ry="24.0971"
+            textLength="31"
+            x="57.5"
+            y="103.8457"&gt;User&lt;/text&gt;
+      &lt;ellipse cx="73.0547" cy="165.6282" fill="#FEFECE" filter="url(#f1)" rx="38.5547"
+               ry="24.3177"
                style="stroke: #A80036; stroke-width: 1.5;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="29"
-            x="66.9528"
-            y="158.8307"&gt;UC6&lt;/text&gt;
+            x="58.5547"
+            y="159.1522"&gt;UC6&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="54"
-            x="54.4528"
-            y="175.1276"&gt;pays for&lt;/text&gt;
-      &lt;path d="M81.5,105.6048 C81.5,115.6707 81.5,125.7366 81.5,135.8026 " fill="none"
+            textLength="55"
+            x="45.5547"
+            y="175.6404"&gt;pays for&lt;/text&gt;
+      &lt;path d="M73,106.452 C73,116.2459 73,126.0397 73,135.8335 " fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;polygon fill="#A80036"
-               points="81.5,141.0664,85.5,132.0664,81.5,136.0664,77.5,132.0664,81.5,141.0664"
+      &lt;polygon fill="#A80036" points="73,140.955,77,131.955,73,135.955,69,131.955,73,140.955"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
          </diagrams>
       </method>
-      <method seal="7331f3">
+      <method seal="2bf79c">
          <id>UC10.1</id>
+         <attributes>
+            <attribute seal="">implemented</attribute>
+         </attributes>
          <mentioned>
-            <where>2:32</where>
+            <where>2:35</where>
+            <where>2:36</where>
             <where>3:40</where>
             <where>3:43</where>
             <where>3:47</where>
@@ -4048,7 +4071,7 @@ primary -&gt; main
             <step>
                <number>1</number>
                <mentioned>
-                  <where>2:33</where>
+                  <where>2:37</where>
                </mentioned>
                <object>visitor</object>
                <signature>reads</signature>
@@ -4057,7 +4080,7 @@ primary -&gt; main
             <step>
                <number>2</number>
                <mentioned>
-                  <where>2:34</where>
+                  <where>2:38</where>
                </mentioned>
                <object>_self</object>
                <signature>fail</signature>
@@ -4069,7 +4092,7 @@ primary -&gt; main
             <step>
                <number>3</number>
                <mentioned>
-                  <where>2:35</where>
+                  <where>2:39</where>
                </mentioned>
                <object>visitor</object>
                <signature>creates</signature>
@@ -4078,7 +4101,7 @@ primary -&gt; main
             <step>
                <number>4</number>
                <mentioned>
-                  <where>2:36</where>
+                  <where>2:40</where>
                </mentioned>
                <object>visitor</object>
                <signature>updates</signature>
@@ -4278,11 +4301,11 @@ visitor -&gt; invoice : creates
 visitor -&gt; invoice : updates
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="214pt"
-     style="width:270px;height:214px;"
+     height="216pt"
+     style="width:272px;height:216px;"
      version="1.1"
-     viewBox="0 0 270 214"
-     width="270pt"&gt;
+     viewBox="0 0 272 216"
+     width="272pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -4295,106 +4318,106 @@ visitor -&gt; invoice : updates
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="202"
-            x="35"
-            y="19.0669"&gt;UC10.1: Sequence Diagram&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="34"
-            x2="34"
-            y1="64.4297"
-            y2="213.9609"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="95"
-            x2="95"
-            y1="64.4297"
-            y2="213.9609"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="160"
-            x2="160"
-            y1="64.4297"
-            y2="213.9609"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="227"
-            x2="227"
-            y1="64.4297"
-            y2="213.9609"/&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            textLength="183"
+            x="45.5"
+            y="19.5684"&gt;UC10.1: Sequence Diagram&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="35"
+            x2="35"
+            y1="64.7988"
+            y2="215.041"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="97"
+            x2="97"
+            y1="64.7988"
+            y2="215.041"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="162"
+            x2="162"
+            y1="64.7988"
+            y2="215.041"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="229"
+            x2="229"
+            y1="64.7988"
+            y2="215.041"/&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
-            width="54"
+            width="56"
             x="5"
-            y="29.1328"/&gt;
+            y="29.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="40"
+            textLength="42"
             x="12"
-            y="49.1279"&gt;visitor&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            y="49.8457"&gt;visitor&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
             width="40"
-            x="73"
-            y="29.1328"/&gt;
+            x="75"
+            y="29.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="26"
-            x="80"
-            y="49.1279"&gt;app&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            x="82"
+            y="49.8457"&gt;app&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
             width="62"
-            x="127"
-            y="29.1328"/&gt;
+            x="129"
+            y="29.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="48"
-            x="134"
-            y="49.1279"&gt;invoice&lt;/text&gt;
-      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.2969"
+            x="136"
+            y="49.8457"&gt;invoice&lt;/text&gt;
+      &lt;rect fill="#FEFECE" filter="url(#f1)" height="30.4883"
             style="stroke: #A80036; stroke-width: 1.5;"
             width="45"
-            x="203"
-            y="29.1328"/&gt;
+            x="205"
+            y="29.3105"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="31"
-            x="210"
-            y="49.1279"&gt;_self&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="83,91.4297,93,95.4297,83,99.4297,87,95.4297"
+            x="212"
+            y="49.8457"&gt;_self&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="85,91.7988,95,95.7988,85,99.7988,89,95.7988"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="34" x2="89" y1="95.4297"
-            y2="95.4297"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="35" x2="91" y1="95.7988"
+            y2="95.7988"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="36"
-            x="41"
-            y="90.4966"&gt;reads&lt;/text&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="227.5" x2="269.5" y1="124.6953"
-            y2="124.6953"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="269.5" x2="269.5" y1="124.6953"
-            y2="137.6953"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="228.5" x2="269.5" y1="137.6953"
-            y2="137.6953"/&gt;
+            textLength="34"
+            x="42"
+            y="91.3672"&gt;reads&lt;/text&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="229.5" x2="271.5" y1="125.4199"
+            y2="125.4199"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="271.5" x2="271.5" y1="125.4199"
+            y2="138.4199"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="230.5" x2="271.5" y1="138.4199"
+            y2="138.4199"/&gt;
       &lt;polygon fill="#A80036"
-               points="238.5,133.6953,228.5,137.6953,238.5,141.6953,234.5,137.6953"
+               points="240.5,134.4199,230.5,138.4199,240.5,142.4199,236.5,138.4199"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="18"
-            x="234.5"
-            y="119.6294"&gt;fail&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="148,162.6953,158,166.6953,148,170.6953,152,166.6953"
+            textLength="20"
+            x="236.5"
+            y="120.6777"&gt;fail&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="150,163.4199,160,167.4199,150,171.4199,154,167.4199"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="34" x2="154" y1="166.6953"
-            y2="166.6953"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="35" x2="156" y1="167.4199"
+            y2="167.4199"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="48"
-            x="41"
-            y="161.7622"&gt;creates&lt;/text&gt;
-      &lt;polygon fill="#A80036" points="148,191.8281,158,195.8281,148,199.8281,152,195.8281"
+            textLength="45"
+            x="42"
+            y="162.9883"&gt;creates&lt;/text&gt;
+      &lt;polygon fill="#A80036" points="150,192.7305,160,196.7305,150,200.7305,154,196.7305"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
-      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="34" x2="154" y1="195.8281"
-            y2="195.8281"/&gt;
+      &lt;line style="stroke: #A80036; stroke-width: 1.0;" x1="35" x2="156" y1="196.7305"
+            y2="196.7305"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13"
             lengthAdjust="spacingAndGlyphs"
-            textLength="52"
-            x="41"
-            y="190.895"&gt;updates&lt;/text&gt;
+            textLength="50"
+            x="42"
+            y="192.2988"&gt;updates&lt;/text&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>
             </diagram>
@@ -4407,11 +4430,11 @@ utilizes"
 primary -&gt; main
 </uml>
                <svg>&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="199pt"
-     style="width:199px;height:199px;"
+     height="201pt"
+     style="width:180px;height:201px;"
      version="1.1"
-     viewBox="0 0 199 199"
-     width="199pt"&gt;
+     viewBox="0 0 180 201"
+     width="180pt"&gt;
    &lt;defs &gt;
       &lt;filter height="300%" id="f1" width="300%" x="-1" y="-1"&gt;
          &lt;feGaussianBlur result="blurOut" stdDeviation="2.0"/&gt;
@@ -4424,37 +4447,37 @@ primary -&gt; main
    &lt;g &gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold"
             lengthAdjust="spacingAndGlyphs"
-            textLength="198"
+            textLength="179"
             x="0"
-            y="12.0669"&gt;UC10.1: Use Case Diagram&lt;/text&gt;
-      &lt;ellipse cx="93" cy="32.6328" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
+            y="12.5684"&gt;UC10.1: Use Case Diagram&lt;/text&gt;
+      &lt;ellipse cx="83.5" cy="33.8105" fill="#FEFECE" filter="url(#f1)" rx="8" ry="8"
                style="stroke: #A80036; stroke-width: 2.0;"/&gt;
-      &lt;path d="M93,40.6328 L93,67.6328 M80,48.6328 L106,48.6328 M93,67.6328 L80,82.6328 M93,67.6328 L106,82.6328 "
+      &lt;path d="M83.5,41.8105 L83.5,68.8105 M70.5,49.8105 L96.5,49.8105 M83.5,68.8105 L70.5,83.8105 M83.5,68.8105 L96.5,83.8105 "
             fill="#FEFECE"
             filter="url(#f1)"
             style="stroke: #A80036; stroke-width: 2.0;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="42"
-            x="72"
-            y="102.6279"&gt;Visitor&lt;/text&gt;
-      &lt;ellipse cx="93.0514" cy="166.3535" fill="#FEFECE" filter="url(#f1)" rx="38.5514"
-               ry="25.7207"
+            textLength="44"
+            x="61.5"
+            y="104.3457"&gt;Visitor&lt;/text&gt;
+      &lt;ellipse cx="83.7175" cy="168.4055" fill="#FEFECE" filter="url(#f1)" rx="38.7175"
+               ry="26.0949"
                style="stroke: #A80036; stroke-width: 1.5;"/&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
             textLength="51"
-            x="67.5514"
-            y="163.3187"&gt;UC10.1&lt;/text&gt;
+            x="58.2175"
+            y="165.2224"&gt;UC10.1&lt;/text&gt;
       &lt;text fill="#000000" font-family="sans-serif" font-size="14"
             lengthAdjust="spacingAndGlyphs"
-            textLength="48"
-            x="69.0514"
-            y="179.6156"&gt;utilizes&lt;/text&gt;
-      &lt;path d="M93,105.6699 C93,115.5943 93,125.5186 93,135.443 " fill="none"
+            textLength="49"
+            x="59.2175"
+            y="181.7107"&gt;utilizes&lt;/text&gt;
+      &lt;path d="M83.5,107.0364 C83.5,117.0058 83.5,126.9753 83.5,136.9448 " fill="none"
             style="stroke: #A80036; stroke-width: 1.0;"/&gt;
       &lt;polygon fill="#A80036"
-               points="93,140.6328,97,131.6328,93,135.6328,89,131.6328,93,140.6328"
+               points="83.5,142.1582,87.5,133.1582,83.5,137.1582,79.5,133.1582,83.5,142.1582"
                style="stroke: #A80036; stroke-width: 1.0;"/&gt;
    &lt;/g&gt;
 &lt;/svg&gt;</svg>

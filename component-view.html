@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
   <head>
     <meta charset="utf-8"/>
-    <meta name="description" content="Component view of the architecture" />
+    <meta name="description" content="Component view of the Thindeck architecture, including key UML diagrams and views" />
     <meta name="keywords" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="icon" type="image/png" href="//img.thindeck.com/logo-128x128.png">
@@ -18,161 +18,102 @@
       <header class="header">
         <p>
           <a href="/">
-            <img src="//img.thindeck.com/logo-384x128.png" class="logo" alt="logo"/>
+            <img src="//img.thindeck.com/logo.svg" class="logo" alt="logo"/>
           </a>
         </p>
         <p>
-          Last update on 24 June 2014
+          <a href="http://www.teamed.io">
+            <img src="//img.teamed.io/btn.svg" alt="made by teamed.io"/>
+          </a>
+          <a href="http://www.rultor.com/p/yegor256/thindeck">
+            <img src="//img.rultor.com/b/yegor256/thinkdeck" alt="devops by rultor.com"/>
+          </a>
+        </p>
+        <p>
+          1.0-SNAPSHOT on 24 June 2014
         </p>
         <p>
           Author(s): Yegor Bugayenko
         </p>
       </header>
       <h1>Component View</h1>
-      <p>In order to achieve high scalability and at the same
-time stability of the system, we decentralize its functionality
-among a number of independent components. In order to make
-the system even more scalable and cloud-ready we make components
-stateless and connect them <strong>asychronously</strong>.</p>
-
-<p>Asynchronous connection between components means that none
-of them assume online availability of the other. They simply never connect
-to each other. They all communicate through stateful resources available
-in cloud, like, for example, <a href="http://aws.amazon.com/">Amazon Web Services</a>.</p>
-
-<p>The diagram shows all highest level components and their
-interfaces:</p>
-
-<p><img src='/uml/1665d464109d1a4a3c4ca71c9c856c4f.svg' alt='UML' style='width:100%;'/></p>
-
-<p><strong>Meter</strong> collects metrics from all other components and presents
-summary reports on them. Basically, there are a few useful
-metrics: load-by-IP, load-by-host, traffic-by-host, etc. Every metric
-may have a number of &quot;dimensions&quot;. For example, load-by-IP has IP as
-a single dimension.</p>
-
-<p><strong>Board</strong> is a data storage component, much like a database. It can
-store tabular data and fetch them back on request.</p>
-
-<p>Meter and Board are outside of scope of our solution. They are provided
-by third party companies. At the moment, it is
-<a href="http://aws.amazon.com/cloudwatch/">AWS CloudWatch</a> for Meter and
-<a href="http://aws.amazon.com/dynamodb/">AWS DynamoDB</a> for Board.</p>
-
-<p>Thus, there are three components inside the technical scope of the system:</p>
-
-<ol>
-<li><p><strong>Load Balancer</strong> accepts incoming HTTP/S requests and dispatches
-them to open TCP ports of containers in Tanks.</p></li>
-<li><p><strong>Cockpit</strong> is a web panel accessible by users through web browsers.
-It presents all the data from the Meter and the Board and saves necessary
-changes to the Board.</p></li>
-<li><p><strong>Tank</strong> is a holder of Docker containers. It regularly checks
-what&#39;s published on the Board and starts/stops containers, making
-their TCP ports exposable to Internet.</p></li>
-</ol>
-
-<h2 id="traffic-dispatching">Traffic Dispatching</h2>
-
-<p>Incoming web traffic reaches Load Balancer, which accepts all
-requests at its open ports 80 (HTTP) and 443 (HTTPS). It acts as
-a simple HTTP proxy, reading <code>Host</code> HTTP header in order
-to understand which host the client is looking for.</p>
-
-<p>According to
-1) the information obtained from the HTTP 1.1 request,
-2) routing map retrieved from the Board, and
-3) recent load average of every Tank,
-Load Balancer makes a decision which IP address should
-process the request.</p>
-
-<p><img src='/uml/68eeb97bb6fbe2ef9a2023611648c75d.svg' alt='UML' style='width:100%;'/></p>
-
-<p>The diagram explains what steps an HTTP request passes from a
-web visitor open an HTML page of a web site hosted by Thindeck.</p>
-
-<h2 id="key-maps-in-the-board">Key Maps in the Board</h2>
-
-<p>The Board should contain the following key mappings
-(aka tables or relations):</p>
+      <div role="main"><p>The following technical concerns were taken into account
+during the design of Thindeck:</p>
 
 <ul>
-<li><p><strong><code>users</code></strong>: <code>user</code> to <code>repository</code>, one-to-many</p></li>
-<li><p><strong><code>hosts</code></strong>: <code>repository</code> to <code>hostname</code>, one-to-many</p></li>
-<li><p><strong><code>alive</code></strong>: <code>hostname</code> to <code>IP:port</code>, one-to-many</p></li>
+<li><p><strong>Server resources are unreliable</strong>.
+We can&#39;t guarantee that any of our
+servers are stable. Moreover, we should be able to work with
+commodity hardware, at the same time delivering high-availability
+to our end-users.</p></li>
+<li><p><strong>Deployment is a complex multi-step process</strong>.
+We want to give our users an ability to deploy in one click.
+But we need to remember that a proper deployment of a complex
+web application is a multi-step process, involving starting
+new web containers, checking their health status, destroying
+old containers, re-configuring load balancers, etc. The process
+involves multiple steps and multiple server resources (nodes,
+load balancers, etc).</p></li>
+<li><p><strong>Transparent logging is critical</strong>.
+It is very important to enable transparent logging of all
+processes, including deployment, start/stop of web app,
+continuous running of the app, etc. Since every application involves
+a number of hardware resources, we should invent a mechanism
+of logs aggregation or at least making them all visible.</p></li>
 </ul>
 
-<p><code>users</code> mapping contains a list of all registered users and
-their repositories. Repository is just a URI, where source
-can be found, for example <code>ftp://me:secret@ftp.example.com/</code>.
-This mapping is updated only by the Cockpit.</p>
-
-<p><code>hosts</code> contains all seen repositories and hostnames detected
-inside them. This mapping is updated by Tanks. Once a Tank sees
-that some repository exists in <code>users</code> but doesn&#39;t exist in
-<code>hosts</code>, it tries to checks it out, parse, and update <code>hosts</code> mapping.</p>
-
-<p><code>alive</code> mapping is updated by Tanks, when they deploy new
-containers. Also this mapping is updated by a Tank, when
-he sees that another Tank doesn&#39;t reply to a regular status request (ping).
-In that case, the Tank removes certain records from the mapping.</p>
-
-<p>Every Tank is making its own decision where to host a repository
-or not, using the information from the Meter.</p>
-
-<h2 id="key-metrics-in-the-meter">Key Metrics in the Meter</h2>
-
-<p>The Meter should contain the following key metrics:</p>
+<p>There is a number of technical concepts (full list of them
+is in <a href="/apidocs-1.0-SNAPSHOT/com/thindeck/api/index.html">JavaDoc</a>):</p>
 
 <ul>
-<li><p>load average by <code>IP</code></p></li>
-<li><p>traffic in Gb per minute by <code>IP:port</code></p></li>
-<li><p>CPU usage per minute by <code>IP:port</code></p></li>
+<li><p><a href="/apidocs-1.0-SNAPSHOT/com/thindeck/api/Repo.html"><strong>Repository</strong></a> is
+an entity that knows where the sources are and continuously deploys them.</p></li>
+<li><p><a href="/apidocs-1.0-SNAPSHOT/com/thindeck/api/Task.html"><strong>Task</strong></a> is
+a collection of steps to be executed one-by-one
+in order to change the situation in a repository (for example, to deploy it).</p></li>
+<li><p><a href="/apidocs-1.0-SNAPSHOT/com/thindeck/api/Txn.html"><strong>Txn</strong></a> (transaction) is
+a multi-step process of deployment a repository.</p></li>
 </ul>
 
-<h2 id="routine-update">Routine Update</h2>
-
-<p>Every Tank does the following operations on its regular routine
-update (every five minutes):</p>
-
-<ol>
-<li><p>Gets a full list of other Tanks&#39; IP addresses from <code>alive</code>.
-Pings them all. If some of them doesn&#39;t reply within
-a very tight timeout, removes that records from <code>alive</code>.</p></li>
-<li><p>Gets a list of all repositories from <code>users</code>.
-Check out those that don&#39;t have any records in <code>hosts</code>,
-and update mapping <code>hosts</code> according to the information in
-repository manifests.</p></li>
-<li><p>Goes through <code>alive</code> list of hostnames and makes a decision
-which <code>hostname</code> needs more running containers. The Tank should try to keep a
-balance between good resource utilization and high performance. To achieve
-this goal, we should target a load percentage of 50 to 75%:</p>
+<p>The system consists of the following components:</p>
 
 <ul>
-<li>At the minimum, there should be at least three running containers for any
-repository.</li>
-<li>If the five minute load average of a given <code>hostname</code> exceeds 75%,
-Tank should start a new container for it.</li>
-<li>If the five minute load average of a given <code>hostname</code> falls below 50%,
-Tank should shut down one of the containers (picked randomly) that are
-allocated for it.</li>
-</ul></li>
-<li><p>Makes a decision about currently running Tanks. We should keep a balance
-between efficient usage of available Tanks and high performance. If we need
-more Tanks, their number should be increased by requesting more instances from
-hosting provider. If we need less, random Tanks should be terminated. We will
-target a load average across all Tanks of 50 to 75%</p>
-
-<ul>
-<li>At the minimum, there should be at least one running Tank available.</li>
-<li>If the five minute load average all running Tanks exceeds 75%, we should
-request a new instance from the hosting provider.</li>
-<li>If the five minute load average all running tanks falls below 50%, one
-Tank will be terminated at random.</li>
-</ul></li>
-</ol>
-
+<li><p><strong>Cockpit</strong> is a Java web app that communicates with
+end-users and API clients. The Cockpit registers repositories,
+starts tasks and shows task logs. Besides that, the Cockpit,
+activates transactions regularly, every minute.</p></li>
+<li><p><strong>Tank</strong> is a server node (preferrably hosted by Amazon Web Services
+or a similar could hosting) with an open SSH and pre-installed Docker
+service. There are many tanks in the system and their amount
+is growing and decreasing dynamically. Tanks host Docker
+containers. They don&#39;t have any active components inside them. The
+entire control is happening from the Cockpit, through SSH.</p></li>
+<li><p><strong>Load Balancer</strong> is a server node with an installed load balancing
+software (like Apache HTTP Server or Nginx) and an open SSH. The
+Cockpit configures the Load Balancer on demand, through SSH. The Load
+Balancer by itself is a passive component. It can&#39;t configure anything
+by itself and is not connected to the Board or the Meter.
+There should be a number of Load Balancers in the system, fully
+duplicating each other.</p></li>
+<li><p><strong>Board</strong> is a persistence layer (preferrably implemented in AWS DynamoDB).
+The Board stores the data that the Cockpit is manipulating.
+The Board is out of our technical scope and is provided to us
+as a cloud web service, through RESTful API.</p></li>
+<li><p><strong>Meter</strong> is a usage tracking service, that helps us to record
+runtime information about traffic and CPU usage by our repositories
+and Docker containers.
+The Meter is out of our technical scope and is provided to us
+as a cloud web service, through RESTful API.</p></li>
+</ul>
+</div>
       <footer class="footer">
+        <p>
+          <a href="/apidocs-1.0-SNAPSHOT">JavaDoc</a>
+          |
+          <a href="/cobertura">Code Coverage</a>
+          |
+          <a href="/team-list.html">Team</a>
+        </p>
         <p>
           &copy; <span itemprop="author">thindeck.com</span>, 2014
         </p>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
   <head>
     <meta charset="utf-8"/>
-    <meta name="description" content="Deployment view of the architecture" />
+    <meta name="description" content="Deployment view of Thindeck.com hosting system, explaining processes that involve Rultor.com, Travis-ci.org, and CloudBees." />
     <meta name="keywords" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="icon" type="image/png" href="//img.thindeck.com/logo-128x128.png">
@@ -18,20 +18,28 @@
       <header class="header">
         <p>
           <a href="/">
-            <img src="//img.thindeck.com/logo-384x128.png" class="logo" alt="logo"/>
+            <img src="//img.thindeck.com/logo.svg" class="logo" alt="logo"/>
           </a>
         </p>
         <p>
-          Last update on 27 June 2014
+          <a href="http://www.teamed.io">
+            <img src="//img.teamed.io/btn.svg" alt="made by teamed.io"/>
+          </a>
+          <a href="http://www.rultor.com/p/yegor256/thindeck">
+            <img src="//img.rultor.com/b/yegor256/thinkdeck" alt="devops by rultor.com"/>
+          </a>
+        </p>
+        <p>
+          1.0-SNAPSHOT on 27 June 2014
         </p>
         <p>
           Author(s): Yegor Bugayenko
         </p>
       </header>
       <h1>Deployment View</h1>
-      <p>As <a href="/component-view.html">Component View</a>
+      <div role="main"><p>As <a href="/component-view.html">Component View</a>
 explains, the system consists of three components:
-Load Balancer, Cockpit and Tank.</p>
+Load Balancer(s), Cockpit and Tank(s).</p>
 
 <p><strong>Load Balancer</strong> is deployed to a cluster of AWS EC2
 <a href="http://aws.amazon.com/ec2/instance-types/">t1.micro</a>
@@ -45,8 +53,8 @@ instances.</p>
 
 <h2 id="build-automation">Build Automation</h2>
 
-<p>The system is built as a multi-module
-<a href="http://maven.apache.org/">Maven</a> project.</p>
+<p>The system is built as a single-module
+<a href="http://maven.apache.org/">Maven</a> WAR project.</p>
 
 <p>Static analysis of the source code is done by
 <a href="http://www.qulice.com">Qulice</a>.</p>
@@ -62,7 +70,7 @@ and submitted for review in a pull request by its author.</p>
 <p>Every pull request has to pass a mandatory code review by a randomly
 selected developer from the development team.</p>
 
-<p>When changes satisfy code reviewer, he posts a message for
+<p>When changes satisfy the code reviewer, he posts a message for
 <a href="http://www.rultor.com">rultor.com</a>, which monitors all our pull requests and
 picks up those that have <a href="http://doc.rultor.com/commands.html">Rultor commands</a>.
 Rultor merges pull request into <code>master</code> branch and attempts to build it (using build automation
@@ -97,7 +105,7 @@ platform, one of architects gives a &quot;release&quot; command to Rultor,
 via a new comment in a Github issue. If it is a bug fix, we&#39;re using
 the same Github issue where the bug was fixed.</p>
 
-<p>If it is a major release, we create a new Github issue, where explain
+<p>If it is a major release, we create a new Github issue, where we explain
 all the changes being released, and analyze an impact of them
 for a running production environment.</p>
 
@@ -105,18 +113,21 @@ for a running production environment.</p>
 
 <p>Rultor picks up &quot;release&quot; command, builds the entire package and deploys
 all JAR artifacts to Maven Central (Load Balancer and Tank). Then,
-it deploys Cockpit to CloudBees. Then it builds and deploys
+it deploys Cockpit to Heroku. Then it builds and deploys
 documentation website (the one you&#39;re looking at now) to Github Pages.</p>
 
 <p>What site deployment is done, Rultor reports success into Github issue.</p>
 
-<p>Rultor also tags deployed version in Github.</p>
-
-<p>Load Balancer and Tank regularly check version number of Cockpit (via HTTP
-requests) and compare it with their own. If versions differ, they attempt
-to update themselves, getting the required version from Maven Central.</p>
-
+<p>Rultor also tags deployed version in Github and creates a Github &quot;release&quot;.</p>
+</div>
       <footer class="footer">
+        <p>
+          <a href="/apidocs-1.0-SNAPSHOT">JavaDoc</a>
+          |
+          <a href="/cobertura">Code Coverage</a>
+          |
+          <a href="/team-list.html">Team</a>
+        </p>
         <p>
           &copy; <span itemprop="author">thindeck.com</span>, 2014
         </p>

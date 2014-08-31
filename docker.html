@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="description" content="Thindeck is using a pre-defined Docker image yegor256/thindeck, which runs Apache2 with PHP5, Perl, and Ruby pre-installed" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/png" href="//img.thindeck.com/logo-128x128.png">
+    <link rel="shortcut icon" href="//img.thindeck.com/logo-128x128.png" />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="http://doc.thindeck.com/rss.xml"/>
+    <link rel="author" href="//plus.google.com/u/0/114792568016408327418?rel=author" />
+    <link rel="stylesheet" href="/css/layout.css?"/>
+    <link rel="canonical" href="//doc.thindeck.com/docker.html" />
+    <title>Default Docker Image</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <p>
+          <a href="/">
+            <img src="//img.thindeck.com/logo.svg" class="logo" alt="logo"/>
+          </a>
+        </p>
+        <p>
+          <a href="http://www.teamed.io">
+            <img src="//img.teamed.io/btn.svg" alt="made by teamed.io"/>
+          </a>
+          <a href="http://www.rultor.com/p/yegor256/thindeck">
+            <img src="//img.rultor.com/b/yegor256/thinkdeck" alt="devops by rultor.com"/>
+          </a>
+        </p>
+        <p>
+          1.0-SNAPSHOT on 29 August 2014
+        </p>
+        <p>
+          Author(s): Yegor Bugayenko
+        </p>
+      </header>
+      <h1>Default Docker Image</h1>
+      <div role="main"><p><code>yegor256/thindeck</code> is our default Docker image that is
+used for your web app, unless you have your own <code>Dockerfile</code>
+in the root directory of your repository.</p>
+
+<p>Our default Docker image starts Apache2 HTTP Server with
+PHP5 module enabled.</p>
+
+<p>If you want to extend our image, use this template (for example, to
+run a Sinatra web app):</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">FROM yegor256/thindeck
+RUN sudo gem install sinatra
+CMD ruby hi.rb</code></pre></div>
+</div>
+      <footer class="footer">
+        <p>
+          <a href="/apidocs-1.0-SNAPSHOT">JavaDoc</a>
+          |
+          <a href="/cobertura">Code Coverage</a>
+          |
+          <a href="/team-list.html">Team</a>
+        </p>
+        <p>
+          &copy; <span itemprop="author">thindeck.com</span>, 2014
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

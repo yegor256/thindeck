@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
   <head>
     <meta charset="utf-8"/>
-    <meta name="description" content="Thinkdeck is a hosting that deploys itself" />
+    <meta name="description" content="Thinkdeck is a PaaS platform that automates blue-green deployment and up/down scaling of your web application in Docker containers" />
     <meta name="keywords" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="icon" type="image/png" href="//img.thindeck.com/logo-128x128.png">
@@ -18,30 +18,53 @@
       <header class="header">
         <p>
           <a href="/">
-            <img src="//img.thindeck.com/logo-384x128.png" class="logo" alt="logo"/>
+            <img src="//img.thindeck.com/logo.svg" class="logo" alt="logo"/>
           </a>
         </p>
         <p>
-          Last update on 22 June 2014
+          <a href="http://www.teamed.io">
+            <img src="//img.teamed.io/btn.svg" alt="made by teamed.io"/>
+          </a>
+          <a href="http://www.rultor.com/p/yegor256/thindeck">
+            <img src="//img.rultor.com/b/yegor256/thinkdeck" alt="devops by rultor.com"/>
+          </a>
+        </p>
+        <p>
+          1.0-SNAPSHOT on 22 June 2014
         </p>
         <p>
           Author(s): Yegor Bugayenko, Carlos Miranda
         </p>
       </header>
       <h1>Technical Documentation</h1>
-      <p>Thindeck is a hosting that deploys itself. It is
-an open source product, sponsored and hosted
-by <a href="http://www.teamed.io">teamed.io</a>. If you&#39;re interested
-in joining our development team, send an email to
-<a href="mailto:join@thindeck.com">join@thindeck.com</a>.</p>
+      <div role="main"><p>Thindeck is a Platform as a Service (PaaS) cloud service that features:</p>
 
-<p>Check our <a href="/architecture.html">Architecture</a>.</p>
+<ul>
+<li><p>automatic up/down scaling of running nodes</p></li>
+<li><p>every web app node runs in its own Docker container</p></li>
+<li><p>resource usage is charged per second of CPU</p></li>
+<li><p>blue-green automated deployments</p></li>
+<li><p>built-in load balancing</p></li>
+</ul>
 
-<p>See also <a href="/requs/requs.xml">Software Requirements Specification</a>.</p>
+<p>To start working with Thindeck,
+go to <a href="http://www.thindeck.com">www.thindeck.com</a>, create a repository
+and follow the instructions.</p>
 
-<p>REMPL list of <a href="/rempl/com.rempl.pdd.SummaryReport/index.xml">PDD puzzles</a>.</p>
-
+<p>There are two sections in the documentation, which are
+dedicated mostly to project contributors. If you&#39;re only a user
+of Thindeck, you can skip them:
+<a href="/architecture.html">Software Architecture Document (SAD)</a> and
+<a href="/requs/requs.xml">Software Requirements Specification (SRS)</a>.</p>
+</div>
       <footer class="footer">
+        <p>
+          <a href="/apidocs-1.0-SNAPSHOT">JavaDoc</a>
+          |
+          <a href="/cobertura">Code Coverage</a>
+          |
+          <a href="/team-list.html">Team</a>
+        </p>
         <p>
           &copy; <span itemprop="author">thindeck.com</span>, 2014
         </p>
