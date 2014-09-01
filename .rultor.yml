@@ -16,6 +16,7 @@ install: |
   sudo gem install pdd
   sudo bundle install
   git clone --depth=1 https://github.com/n1k0/casperjs.git /tmp/casperjs
+  export PATH=$PATH:/tmp/casperjs/bin
 
 deploy:
   script: |
