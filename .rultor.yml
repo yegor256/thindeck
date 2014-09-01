@@ -16,6 +16,7 @@ install: |
   sudo gem install pdd
   sudo bundle install
   git clone --depth=1 https://github.com/n1k0/casperjs.git /tmp/casperjs
+  export PATH=$PATH:/tmp/casperjs/bin
 
 deploy:
   script: |
@@ -36,4 +37,4 @@ release:
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mvn clean deploy -Pqulice -Pthindeck --errors --settings ../settings.xml
-    mvn clean site-deploy -Psite --settings ../settings.xml
+    mvn clean site-deploy -Psite --errors --settings ../settings.xml
