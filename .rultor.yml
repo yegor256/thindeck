@@ -21,6 +21,7 @@ install: |
 deploy:
   script: |
     mvn clean deploy -Prultor --settings ../settings.xml
+    s3cmd --no-progress put target/requs/requs.xml --config=../s3cfg s3://requs.teamed.io/thideck.xml
     mvn clean
     pdd --source=$(pwd) --verbose --file=thideck.xml
     s3cmd --no-progress put rultor.xml --config=../s3cfg s3://pdd.teamed.io/thideck.xml
