@@ -1,0 +1,4 @@
+Thindeck-GithubId: 1234567
+Thindeck-GithubSecret: 1234567
+Thindeck-SecurityKey: key
+Thindeck-SecuritySalt: salt
