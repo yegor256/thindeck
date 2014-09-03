@@ -51,6 +51,19 @@
                 <xsl:apply-templates select="." mode="head"/>
             </head>
             <body>
+                <section itemscope="" itemtype="http://schema.org/WebApplication">
+                    <nav role="navigation" class="menu">
+                        <xsl:if test="not(identity)">
+                            <span>
+                                <a href="{links/link[@rel='rexsl:github']/@href}" title="login via Github">
+                                    <xsl:text>login</xsl:text>
+                                </a>
+                            </span>
+                        </xsl:if>
+                        <xsl:apply-templates select="identity"/>
+                    </nav>
+                    <xsl:apply-templates select="." mode="body"/>
+                </section>
                 <a href="https://github.com/yegor256/thindeck">
                     <img src="//img.jcabi.com/fork-me.svg"
                         style="position: absolute;right:0;top:0;width:128px;height:128px;"
@@ -74,5 +87,15 @@
                 </div>
             </body>
         </html>
+    </xsl:template>
+    <xsl:template match="identity">
+        <span title="Github account logged in: {urn}">
+            <xsl:value-of select="name"/>
+        </span>
+        <span>
+            <a title="log out" href="{/page/links/link[@rel='rexsl:logout']/@href}">
+                <xsl:text>logout</xsl:text>
+            </a>
+        </span>
     </xsl:template>
 </xsl:stylesheet>
