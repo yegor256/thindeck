@@ -62,7 +62,6 @@
                         </xsl:if>
                         <xsl:apply-templates select="identity"/>
                     </nav>
-                    <xsl:apply-templates select="." mode="body"/>
                 </section>
                 <a href="https://github.com/yegor256/thindeck">
                     <img src="//img.jcabi.com/fork-me.svg"
