@@ -28,7 +28,8 @@ deploy:
 
 merge:
   script: |
-    mvn clean install site -Pqulice -Psite --errors --settings ../settings.xml
+    mvn clean install -Pqulice --errors --settings ../settings.xml
+    mvn clean site -Psite --errors --settings ../settings.xml
     mvn clean
     pdd --source=$(pwd) --verbose --file=/dev/null
 
