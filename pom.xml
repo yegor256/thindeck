@@ -231,7 +231,7 @@
                         <executions>
                             <execution>
                                 <id>copy-jekyll-sources</id>
-                                <phase>initialize</phase>
+                                <phase>pre-site</phase>
                                 <goals>
                                     <goal>copy-resources</goal>
                                 </goals>
