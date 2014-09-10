@@ -1,0 +1,3 @@
+Thindeck-GithubId: ${github.id}
+Thindeck-GithubSecret: ${github.secret}
+Thindeck-SecurityKey: ${security.key}

@@ -29,11 +29,13 @@
  */
 package com.thindeck.cockpit;
 
-import com.jcabi.urn.URN;
+import com.jcabi.manifests.Manifests;
 import com.rexsl.page.BasePage;
 import com.rexsl.page.BaseResource;
 import com.rexsl.page.Inset;
 import com.rexsl.page.Resource;
+import com.rexsl.page.auth.AuthInset;
+import com.rexsl.page.auth.Github;
 import com.rexsl.page.inset.FlashInset;
 import com.rexsl.page.inset.LinksInset;
 import com.thindeck.api.Base;
@@ -77,11 +79,22 @@ public class BaseRs extends BaseResource {
     }
 
     /**
+     * Authentication inset.
+     * @return The inset
+     */
+    @Inset.Runtime
+    public final AuthInset auth() {
+        // @checkstyle LineLength (2 lines)
+        return new AuthInset(this, Manifests.read("Thindeck-SecurityKey"))
+            .with(new Github(this, Manifests.read("Thindeck-GithubId"), Manifests.read("Thindeck-GithubSecret")));
+    }
+
+    /**
      * Get current user.
-     * @return User
+     * @return Name of the user
      */
     protected final User user() {
-        return this.base().user(URN.create("urn:test:1"));
+        return this.base().user(this.auth().identity().urn());
     }
 
     /**
