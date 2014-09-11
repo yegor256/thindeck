@@ -21,14 +21,16 @@ install: |
 deploy:
   script: |
     mvn clean deploy -Prultor --settings ../settings.xml
+    s3cmd --no-progress put target/requs/requs.xml --config=../s3cfg s3://requs.teamed.io/thideck.xml
     mvn clean
-    pdd --source=$(pwd) --verbose --file=thideck.xml
-    s3cmd --no-progress put rultor.xml --config=../s3cfg s3://pdd.teamed.io/thideck.xml
+    pdd --source=$(pwd) --verbose --file=thindeck.xml
+    s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml
 
 merge:
   script: |
     export PATH=$PATH:/tmp/casperjs/bin
-    mvn clean install site -Pqulice -Psite --errors --settings ../settings.xml
+    mvn clean install -Pqulice --errors --settings ../settings.xml
+    mvn clean site -Psite --errors --settings ../settings.xml
     mvn clean
     pdd --source=$(pwd) --verbose --file=/dev/null
 
@@ -37,4 +39,4 @@ release:
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mvn clean deploy -Pqulice -Pthindeck --errors --settings ../settings.xml
-    mvn clean site-deploy -Psite --errors --settings ../settings.xml
+    mvn clean site-deploy -Psite --errors --settings ../settings.xml || echo 'site-deploy failed'
