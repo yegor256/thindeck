@@ -38,6 +38,7 @@ import java.io.IOException;
  *
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
+ * @since 0.2
  */
 public final class UpdateLB implements Step {
 

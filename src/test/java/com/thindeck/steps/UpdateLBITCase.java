@@ -46,6 +46,7 @@ import org.xembly.Directives;
  *
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
+ * @since 0.2
  */
 public final class UpdateLBITCase {
 
@@ -65,7 +66,7 @@ public final class UpdateLBITCase {
     public void updatesLoadBalancerNginxConfig() throws IOException {
         // @checkstyle MultipleStringLiterals (5 lines)
         Assume.assumeNotNull(
-            System.getProperty("failsafe.lb.ssh.location"),
+            System.getProperty("failsafe.lb.ssh.host"),
             System.getProperty("failsafe.lb.ssh.port"),
             System.getProperty("failsafe.lb.ssh.user"),
             System.getProperty("failsafe.lb.ssh.key")
@@ -80,7 +81,7 @@ public final class UpdateLBITCase {
         );
         step.exec(ctx);
         final Shell ssh = new SSH(
-            System.getProperty("failsafe.lb.ssh.location"),
+            System.getProperty("failsafe.lb.ssh.host"),
             Integer.valueOf(System.getProperty("failsafe.lb.ssh.port")),
             System.getProperty("failsafe.lb.ssh.user"),
             System.getProperty("failsafe.lb.ssh.key")
