@@ -29,68 +29,63 @@
  */
 package com.thindeck.steps;
 
-import com.jcabi.ssh.SSH;
-import com.jcabi.ssh.Shell;
 import com.thindeck.api.Context;
 import com.thindeck.api.Step;
 import com.thindeck.api.mock.MkContext;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Assume;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.xembly.Directives;
 
 /**
- * Integration test for {@link UpdateLB}.
+ * Test case for {@link UpdateLB}.
  *
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.3
  */
-public final class UpdateLBITCase {
+public final class UpdateLBTest {
 
     /**
      * FindTanks can update load balancer configuration from memo.
      * @throws IOException If fails
-     * @todo #293 Let's implement UpdateLB. What this step needs to do is to
-     *  update the load balancer configuration on the load balancer(s). We are
-     *  assuming, for the moment, that Nginx is used. In this case, UpdateLB
-     *  should SSH to the load balancer and update its nginx.conf. This test
-     *  will check whether the configuration of a server with Nginx installed is
-     *  updated after UpdateLB is executed. For more details, see
-     *  https://github.com/yegor256/thindeck/issues/303
      */
     @Test
-    @org.junit.Ignore
     public void updatesLoadBalancerNginxConfig() throws IOException {
-        // @checkstyle MultipleStringLiterals (5 lines)
-        Assume.assumeNotNull(
-            System.getProperty("failsafe.lb.ssh.host"),
-            System.getProperty("failsafe.lb.ssh.port"),
-            System.getProperty("failsafe.lb.ssh.user"),
-            System.getProperty("failsafe.lb.ssh.key")
-        );
-        final Step step = new UpdateLB();
+        final Nginx nginx = Mockito.mock(Nginx.class);
+        final Nginx.Config[] conf = new Nginx.Config[1];
+        Mockito.doAnswer(
+            new Answer<Void>() {
+                @Override
+                public Void answer(final InvocationOnMock invocation) {
+                    conf[0] = (Nginx.Config) invocation.getArguments()[0];
+                    return null;
+                }
+            }
+        ).when(nginx).update(Mockito.any(Nginx.Config.class));
+        final Step step = new UpdateLB(nginx);
         final Context ctx = new MkContext();
+        final String server = "tank.fake";
+        // @checkstyle LineLength (6 lines)
         ctx.memo().update(
             new Directives()
-                .xpath("/memo/containers")
-                .addIf("container")
-                .add("tank").set("tank.fake").up()
+                .xpath("/memo")
+                .addIf("containers")
+                .addIf("container").attr("type", "green")
+                .add("cid").set("abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789").up()
+                .add("ports").up()
+                .add("dir").set("/fake/dir").up()
+                .add("tank").set(server)
         );
         step.exec(ctx);
-        final Shell ssh = new SSH(
-            System.getProperty("failsafe.lb.ssh.host"),
-            Integer.valueOf(System.getProperty("failsafe.lb.ssh.port")),
-            System.getProperty("failsafe.lb.ssh.user"),
-            System.getProperty("failsafe.lb.ssh.key")
-        );
+        Mockito.verify(nginx).update(Mockito.any(Nginx.Config.class));
         MatcherAssert.assertThat(
-            new Shell.Plain(ssh).exec(
-                "cat /usr/local/nginx/conf/nginx.conf"
-            ),
-            Matchers.containsString("server tank.fake")
+            conf[0].servers(),
+            Matchers.contains(server)
         );
     }
 

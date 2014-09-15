@@ -40,7 +40,12 @@ import lombok.ToString;
  *
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.3
+ * @todo #293 Let's implement a real Nginx class. It should be able to connect
+ *  via SSH to a server that has Nginx installed. At the minimum, we should be
+ *  able to retrieve and update the Nginx configuration of the server it's
+ *  connected to. This class will be used primarily for the UpdateLB step. See
+ *  https://github.com/yegor256/thindeck/issues/303 for more details.
  */
 @Immutable
 interface Nginx {
@@ -96,34 +101,4 @@ interface Nginx {
 
     }
 
-    /**
-     * Mock implementation of Nginx.
-     */
-    @Immutable
-    @EqualsAndHashCode(of = "config")
-    final class Mock implements Nginx {
-        /**
-         * The config.
-         */
-        private final transient Config config;
-
-        /**
-         * Ctor.
-         * @param conf The config
-         */
-        public Mock(final Config conf) {
-            this.config = conf;
-        }
-
-        @Override
-        public Nginx update(final Config conf) {
-            return new Nginx.Mock(conf);
-        }
-
-        @Override
-        public Config config() {
-            return this.config;
-        }
-
-    }
 }

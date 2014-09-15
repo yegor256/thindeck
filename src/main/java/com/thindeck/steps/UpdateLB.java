@@ -29,18 +29,35 @@
  */
 package com.thindeck.steps;
 
+import com.jcabi.aspects.Immutable;
+import com.jcabi.xml.XMLDocument;
 import com.thindeck.api.Context;
 import com.thindeck.api.Step;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Update Load Balancer.
  *
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.3
  */
+@Immutable
 public final class UpdateLB implements Step {
+
+    /**
+     * Nginix load balancer instance.
+     */
+    private final transient Nginx nginx;
+
+    /**
+     * Public ctor.
+     * @param balancer The Nginx load balancer
+     */
+    public UpdateLB(final Nginx balancer) {
+        this.nginx = balancer;
+    }
 
     @Override
     public String name() {
@@ -49,7 +66,12 @@ public final class UpdateLB implements Step {
 
     @Override
     public void exec(final Context ctx) throws IOException {
-        throw new UnsupportedOperationException("Not yet implemented");
+        final List<String> servers = new XMLDocument(
+            ctx.memo().read().node()
+        ).xpath("//memo/containers/container/tank/text()");
+        this.nginx.update(
+            new Nginx.Config(servers.toArray(new String[servers.size()]))
+        );
     }
 
     @Override
