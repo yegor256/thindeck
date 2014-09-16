@@ -30,75 +30,32 @@
 package com.thindeck.steps;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.immutable.Array;
-import java.util.List;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
- * Nginx server representation.
+ * Load balancer representation.
  *
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  * @since 0.3
- * @todo #293 Let's implement a real Nginx class. It should be able to connect
- *  via SSH to a server that has Nginx installed. At the minimum, we should be
- *  able to retrieve and update the Nginx configuration of the server it's
+ * @todo #293 Let's implement a class Nginx that implements this interface. It
+ *  should be able to connect via SSH to a server that has Nginx installed. At
+ *  the minimum, we should be update the Nginx configuration of the server it's
  *  connected to. This class will be used primarily for the UpdateLB step. See
  *  https://github.com/yegor256/thindeck/issues/303 for more details.
  */
 @Immutable
-interface Nginx {
+public interface LoadBalancer {
 
     /**
-     * Update Nginx configuration.
-     * @param config Configuration
-     * @return Instance of {@link Nginx} with updated configuration.
+     * Update load balancer configuration with the given mapping.
+     * @param host The host name indicated by requests
+     * @param hport Port corresponding to the host name
+     * @param server Server name to redirect requests to
+     * @param sport Server port to redirect requests to
+     * @checkstyle ParameterNumber (3 lines)
      */
-    Nginx update(Config config);
-
-    /**
-     * Obtain current configuration.
-     * @return Configuration.
-     */
-    Config config();
-
-    /**
-     * Nginx server configuration.
-     *
-     * @todo #293 Let's expose all the relevant information that Thindeck might
-     *  need when configuring our Nginx load balancers. For now I've included
-     *  only the servers that it will be pointing to. This is definitely
-     *  insufficient, and the abstraction I provided below initially is likely
-     *  to be wrong, but I'm not so well-versed in Nginx configuration.
-     */
-    @Immutable
-    @ToString
-    @EqualsAndHashCode(of = "servers")
-    final class Config {
-
-        /**
-         * The mirror servers that Nginx will point to.
-         */
-        private final transient Array<String> servers;
-
-        /**
-         * Ctor.
-         *
-         * @param svrs The servers to point to.
-         */
-        public Config(final String... svrs) {
-            this.servers = new Array<String>(svrs);
-        }
-
-        /**
-         * Get the servers indicated for this configuration.
-         * @return Server host names
-         */
-        public List<String> servers() {
-            return this.servers;
-        }
-
-    }
+    void update(
+        final String host, final int hport, final String server, final int sport
+    );
 
 }

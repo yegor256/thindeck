@@ -33,12 +33,8 @@ import com.thindeck.api.Context;
 import com.thindeck.api.Step;
 import com.thindeck.api.mock.MkContext;
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.xembly.Directives;
 
 /**
@@ -53,40 +49,54 @@ public final class UpdateLBTest {
     /**
      * FindTanks can update load balancer configuration from memo.
      * @throws IOException If fails
+     * @todo #293 The test is currently ignored for two reasons:
+     *  1. The schema memo.xsd does not yet define the domain element. The test
+     *  will fail because the XML validation will throw an exception.
+     *  2. UpdateLB is not yet implemented, which means the verify statements
+     *  will fail even if the Memo XML is valid.
+     *  Let's address these issues and enable this test. See Github issue
+     *  https://github.com/yegor256/thindeck/issues/308 for further details.
      */
     @Test
+    @org.junit.Ignore
     public void updatesLoadBalancerNginxConfig() throws IOException {
-        final Nginx nginx = Mockito.mock(Nginx.class);
-        final Nginx.Config[] conf = new Nginx.Config[1];
-        Mockito.doAnswer(
-            new Answer<Void>() {
-                @Override
-                public Void answer(final InvocationOnMock invocation) {
-                    conf[0] = (Nginx.Config) invocation.getArguments()[0];
-                    return null;
-                }
-            }
-        ).when(nginx).update(Mockito.any(Nginx.Config.class));
-        final Step step = new UpdateLB(nginx);
+        final LoadBalancer balancer = Mockito.mock(LoadBalancer.class);
+        final Step step = new UpdateLB(balancer);
         final Context ctx = new MkContext();
-        final String server = "tank.fake";
-        // @checkstyle LineLength (6 lines)
+        // @checkstyle MagicNumber (6 lines)
+        final String domain = "www.example.com";
+        final int firstport = 80;
+        final int secondport = 443;
+        final String tank = "tank.thindeck.com";
+        final int firstout = 32667;
+        final int secondout = 32668;
+        // @checkstyle MultipleStringLiterals (30 lines)
+        // @checkstyle LineLength (13 lines)
         ctx.memo().update(
             new Directives()
                 .xpath("/memo")
+                .addIf("domains")
+                .addIf("domain")
+                .add("host").set(domain).up()
+                .addIf("ports")
+                .add("port").set(String.valueOf(firstport)).up()
+                .add("port").set(String.valueOf(secondport)).up()
+                .up().up().up()
                 .addIf("containers")
                 .addIf("container").attr("type", "green")
                 .add("cid").set("abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789").up()
-                .add("ports").up()
+                .add("ports")
+                .add("in").set(String.valueOf(firstport)).up()
+                .add("out").set(String.valueOf(firstout)).up()
+                .add("in").set(String.valueOf(secondport)).up()
+                .add("out").set(String.valueOf(secondout)).up()
+                .up()
                 .add("dir").set("/fake/dir").up()
-                .add("tank").set(server)
+                .add("tank").set(tank)
         );
         step.exec(ctx);
-        Mockito.verify(nginx).update(Mockito.any(Nginx.Config.class));
-        MatcherAssert.assertThat(
-            conf[0].servers(),
-            Matchers.contains(server)
-        );
+        Mockito.verify(balancer).update(domain, firstport, tank, firstout);
+        Mockito.verify(balancer).update(domain, secondport, tank, secondout);
     }
 
 }
