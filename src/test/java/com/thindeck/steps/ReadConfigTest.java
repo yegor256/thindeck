@@ -29,6 +29,7 @@
  */
 package com.thindeck.steps;
 
+import com.google.common.base.Joiner;
 import com.jcabi.github.Github;
 import com.jcabi.github.Repo;
 import com.jcabi.github.mock.MkGithub;
@@ -67,10 +68,10 @@ public final class ReadConfigTest {
                 .add("name", "test")
                 .build()
         );
-        final String config = new StringBuilder()
-            .append("domains: [\"example.com\", \"test.example.com\"]\n")
-            .append("ports: [80, 443]")
-            .toString();
+        final String config = Joiner.on('\n').join(
+            "domains: [\"example.com\", \"test.example.com\"]",
+            "ports: [80, 443]"
+        );
         repo.contents().create(
             Json.createObjectBuilder()
                 .add("path", ".thindeck.yml")
