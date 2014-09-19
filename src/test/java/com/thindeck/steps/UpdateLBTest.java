@@ -71,7 +71,7 @@ public final class UpdateLBTest {
             new Directives()
                 .xpath("/memo")
                 .addIf("domains")
-                .addIf("domain").set(domain).up()
+                .addIf("domain").set(domain).up().up()
                 .addIf("ports")
                 .add("port").set(String.valueOf(firstport)).up()
                 .add("port").set(String.valueOf(secondport)).up()

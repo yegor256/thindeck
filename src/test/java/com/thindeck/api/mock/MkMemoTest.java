@@ -59,7 +59,7 @@ public final class MkMemoTest {
             new Directives()
                 .xpath("/memo")
                 .addIf("domains")
-                .addIf("domain").set(domain).up()
+                .addIf("domain").set(domain).up().up()
                 .addIf("ports")
                 // @checkstyle MultipleStringLiterals (2 lines)
                 .add("port").set(String.valueOf(first)).up()
@@ -70,8 +70,8 @@ public final class MkMemoTest {
             XhtmlMatchers.hasXPaths(
                 String.format("//memo/domains/domain[.='%s']", domain),
                 // @checkstyle MultipleStringLiterals (2 lines)
-                String.format("//memo/domains/ports/port[.='%d']", first),
-                String.format("//memo/domains/ports/port[.='%d']", second)
+                String.format("//memo/ports/port[.='%d']", first),
+                String.format("//memo/ports/port[.='%d']", second)
             )
         );
     }
