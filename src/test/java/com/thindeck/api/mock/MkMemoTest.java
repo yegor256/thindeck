@@ -69,6 +69,7 @@ public final class MkMemoTest {
             ctx.read(),
             XhtmlMatchers.hasXPaths(
                 String.format("//memo/domains/domain[.='%s']", domain),
+                // @checkstyle MultipleStringLiterals (2 lines)
                 String.format("//memo/domains/ports/port[.='%d']", first),
                 String.format("//memo/domains/ports/port[.='%d']", second)
             )
