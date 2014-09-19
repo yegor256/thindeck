@@ -55,24 +55,22 @@ public final class MkMemoTest {
         final String domain = "test.thindeck.com";
         final int first = 80;
         final int second = 8080;
-        // @checkstyle MultipleStringLiterals (25 lines)
         ctx.update(
             new Directives()
                 .xpath("/memo")
                 .addIf("domains")
-                .addIf("domain")
-                .add("host").set(domain).up()
+                .addIf("domain").set(domain).up()
                 .addIf("ports")
+                // @checkstyle MultipleStringLiterals (2 lines)
                 .add("port").set(String.valueOf(first)).up()
                 .add("port").set(String.valueOf(second)).up()
         );
-        // @checkstyle LineLength (6 lines)
         MatcherAssert.assertThat(
             ctx.read(),
             XhtmlMatchers.hasXPaths(
-                String.format("//memo/domains/domain/host[.='%s']", domain),
-                String.format("//memo/domains/domain/ports/port[.='%d']", first),
-                String.format("//memo/domains/domain/ports/port[.='%d']", second)
+                String.format("//memo/domains/domain[.='%s']", domain),
+                String.format("//memo/domains/ports/port[.='%d']", first),
+                String.format("//memo/domains/ports/port[.='%d']", second)
             )
         );
     }

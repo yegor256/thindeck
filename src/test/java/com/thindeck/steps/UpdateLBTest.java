@@ -67,19 +67,18 @@ public final class UpdateLBTest {
         final int firstout = 32667;
         final int secondout = 32668;
         // @checkstyle MultipleStringLiterals (30 lines)
-        // @checkstyle LineLength (13 lines)
         ctx.memo().update(
             new Directives()
                 .xpath("/memo")
                 .addIf("domains")
-                .addIf("domain")
-                .add("host").set(domain).up()
+                .addIf("domain").set(domain).up()
                 .addIf("ports")
                 .add("port").set(String.valueOf(firstport)).up()
                 .add("port").set(String.valueOf(secondport)).up()
                 .up().up().up()
                 .addIf("containers")
                 .addIf("container").attr("type", "green")
+                 // @checkstyle LineLength (1 line)
                 .add("cid").set("abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789").up()
                 .add("ports")
                 .add("in").set(String.valueOf(firstport)).up()
