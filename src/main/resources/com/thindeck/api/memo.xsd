@@ -84,9 +84,34 @@
             </xs:simpleType>
         </xs:attribute>
     </xs:complexType>
+    <xs:complexType name="domain">
+        <xs:all>
+            <xs:element name="host" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value=".+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ports">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="port" type="tcp" minOccurs="1" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
     <xs:element name="memo">
         <xs:complexType>
             <xs:all>
+                <xs:element name="domains" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="domain" type="domain" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="tanks" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>

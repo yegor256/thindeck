@@ -49,17 +49,13 @@ public final class UpdateLBTest {
     /**
      * FindTanks can update load balancer configuration from memo.
      * @throws IOException If fails
-     * @todo #293 The test is currently ignored for two reasons:
-     *  1. The schema memo.xsd does not yet define the domain element. The test
-     *  will fail because the XML validation will throw an exception.
-     *  2. UpdateLB is not yet implemented, which means the verify statements
-     *  will fail even if the Memo XML is valid.
-     *  Let's address these issues and enable this test. See Github issue
+     * @todo #311 The test is currently ignored because UpdateLB is not yet
+     *  implemented. Let's implement it and enable the test. See Github issue
      *  https://github.com/yegor256/thindeck/issues/308 for further details.
      */
     @Test
     @org.junit.Ignore
-    public void updatesLoadBalancerNginxConfig() throws IOException {
+    public void updatesLoadBalancerConfig() throws IOException {
         final LoadBalancer balancer = Mockito.mock(LoadBalancer.class);
         final Step step = new UpdateLB(balancer);
         final Context ctx = new MkContext();
