@@ -33,11 +33,17 @@ import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.rexsl.page.JaxbGroup;
+import com.rexsl.page.Link;
 import com.rexsl.page.PageBuilder;
 import com.thindeck.api.Repo;
+import java.io.IOException;
+import java.util.logging.Level;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import org.xembly.Directives;
 
 /**
  * List of repositories.
@@ -60,6 +66,7 @@ public final class ReposRs extends BaseRs {
             .stylesheet("/xsl/repos.xsl")
             .build(TdPage.class)
             .init(this)
+            .link(new Link("add", "./add"))
             .append(
                 JaxbGroup.build(
                     Collections2.transform(
@@ -78,4 +85,34 @@ public final class ReposRs extends BaseRs {
             .build();
     }
 
+    /**
+     * Add a new repo.
+     * @param name Repo name
+     * @param uri Repo URI
+     * @return The JAX-RS response
+     */
+    @POST
+    @Path("/add")
+    public Response add(@FormParam("name") final String name,
+        @FormParam("uri") final String uri) {
+        final Repo repo = this.user().repos().add(name);
+        try {
+            repo.memo().update(
+                new Directives().xpath("/memo").add("uri").set(uri)
+            );
+        } catch (IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+        throw this.flash().redirect(
+            this.uriInfo().getBaseUriBuilder()
+                .clone()
+                .path(ReposRs.class)
+                .build(),
+            String.format(
+                "repo %s added",
+                repo.name()
+            ),
+            Level.INFO
+        );
+    }
 }

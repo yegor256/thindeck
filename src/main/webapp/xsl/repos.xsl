@@ -40,6 +40,11 @@
         <ul>
             <xsl:apply-templates select="repos/repo"/>
         </ul>
+        <form action="{links/link[@rel='add']/@href}" method="post">
+            <input name="name" placeholder="repo name"/>
+            <input name="uri" placeholder="repo URI"/>
+            <button type="submit">Add</button>
+        </form>
     </xsl:template>
     <xsl:template match="repo">
         <li>

@@ -87,6 +87,7 @@
     <xs:element name="memo">
         <xs:complexType>
             <xs:all>
+                <xs:element name="uri" type="xs:anyURI" minOccurs="0"/>
                 <xs:element name="domains" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
