@@ -34,5 +34,7 @@
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
+ * @todo #289 Increase test code coverage > 70% for this package (check by
+ *  uncommenting executions in qulice plugin configuration)
  */
 package com.thindeck.cockpit;

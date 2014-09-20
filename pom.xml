@@ -440,6 +440,14 @@
         </profile>
         <profile>
             <id>qulice</id>
+            <dependencies>
+                <dependency>
+                    <groupId>net.sourceforge.cobertura</groupId>
+                    <artifactId>cobertura</artifactId>
+                    <version>1.9.4.1</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
@@ -456,6 +464,16 @@
                                 <exclude>duplicatefinder:.*</exclude>
                             </excludes>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <!--
+                                    <goal>instrument</goal>
+                                    <goal>check</goal>
+                                    -->
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
