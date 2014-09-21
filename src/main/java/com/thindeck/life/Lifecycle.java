@@ -30,9 +30,13 @@
 package com.thindeck.life;
 
 import com.jcabi.aspects.Loggable;
+import com.jcabi.dynamo.Credentials;
+import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.retry.ReRegion;
 import com.jcabi.manifests.Manifests;
 import com.thindeck.MnBase;
 import com.thindeck.api.Base;
+import com.thindeck.dynamo.DyBase;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Collection;
@@ -42,6 +46,7 @@ import javax.servlet.ServletContextListener;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Lifecycle of the app.
@@ -68,7 +73,15 @@ public final class Lifecycle implements ServletContextListener {
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
-        final Base base = new MnBase();
+        final Base base;
+        if (StringUtils.startsWith(
+            // @checkstyle MultipleStringLiteralsCheck (1 line)
+            Manifests.read("Thindeck-DynamoKey"), "${"
+        )) {
+            base = new MnBase();
+        } else {
+            base = new DyBase(this.dynamo());
+        }
         event.getServletContext().setAttribute(Base.class.getName(), base);
         this.daemons.add(new RoutineTxns(base));
     }
@@ -80,4 +93,18 @@ public final class Lifecycle implements ServletContextListener {
         }
     }
 
+    /**
+     * Dynamo DB region.
+     * @return Region
+     */
+    private Region dynamo() {
+        final String key = Manifests.read("Thindeck-DynamoKey");
+        final Credentials creds = new Credentials.Simple(
+            key,
+            Manifests.read("Thindeck-DynamoSecret")
+        );
+        return new Region.Prefixed(
+            new ReRegion(new Region.Simple(creds)), "td-"
+        );
+    }
 }
