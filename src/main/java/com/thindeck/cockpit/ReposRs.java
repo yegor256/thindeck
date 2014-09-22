@@ -100,7 +100,7 @@ public final class ReposRs extends BaseRs {
             repo.memo().update(
                 new Directives().xpath("/memo").add("uri").set(uri)
             );
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
         throw this.flash().redirect(
