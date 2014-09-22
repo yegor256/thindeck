@@ -27,6 +27,8 @@ deploy:
     s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml
 
 merge:
+  commanders:
+    - carlosmiranda
   script: |
     export PATH=$PATH:/tmp/casperjs/bin
     mvn clean install -Pqulice --errors --settings ../settings.xml
