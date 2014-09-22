@@ -1,3 +1,5 @@
 Thindeck-GithubId: ${github.id}
 Thindeck-GithubSecret: ${github.secret}
 Thindeck-SecurityKey: ${security.key}
+Thindeck-DynamoKey: ${dynamo.key}
+Thindeck-DynamoSecret: ${dynamo.secret}
