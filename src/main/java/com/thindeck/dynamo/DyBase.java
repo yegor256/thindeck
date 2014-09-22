@@ -43,6 +43,7 @@ import java.util.Collections;
  *
  * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
+ * @since 0.3
  * @todo #290 Implement user, repos and txn methods to retrieve data from
  * appropriate tables and remove SuppressWarnings.
  * @todo #290 Add dynamo maven plugin and create IT tests for dynamo based
@@ -65,7 +66,7 @@ public final class DyBase implements Base {
 
     @Override
     public User user(final URN urn) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -75,6 +76,6 @@ public final class DyBase implements Base {
 
     @Override
     public Txn txn(final Task task) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 }

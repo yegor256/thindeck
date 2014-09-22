@@ -33,6 +33,6 @@
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.3
  */
 package com.thindeck.dynamo;
