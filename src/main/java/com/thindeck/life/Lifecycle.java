@@ -46,7 +46,6 @@ import javax.servlet.ServletContextListener;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Lifecycle of the app.
@@ -74,10 +73,8 @@ public final class Lifecycle implements ServletContextListener {
             throw new IllegalStateException(ex);
         }
         final Base base;
-        if (StringUtils.startsWith(
-            // @checkstyle MultipleStringLiteralsCheck (1 line)
-            Manifests.read("Thindeck-DynamoKey"), "${"
-        )) {
+        // @checkstyle MultipleStringLiteralsCheck (1 line)
+        if (Manifests.read("Thindeck-DynamoKey").startsWith("${")) {
             base = new MnBase();
         } else {
             base = new DyBase(this.dynamo());
