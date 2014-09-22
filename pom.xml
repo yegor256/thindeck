@@ -442,6 +442,10 @@
             <id>qulice</id>
             <dependencies>
                 <dependency>
+                    <!-- This dependency has to be either in runtime or compile scope
+                         to prevent following error while testing instrumented classes:
+                         java.lang.NoClassDefFoundError: net/sourceforge/cobertura/coveragedata/HasBeenInstrumented
+                    -->
                     <groupId>net.sourceforge.cobertura</groupId>
                     <artifactId>cobertura</artifactId>
                     <version>1.9.4.1</version>
