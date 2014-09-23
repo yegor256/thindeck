@@ -472,6 +472,10 @@
                             <execution>
                                 <goals>
                                     <!--
+                                      @todo #289 Increase test code coverage >= 80% for all packages
+                                       and uncomment lines below.
+                                     -->
+                                    <!--
                                     <goal>instrument</goal>
                                     <goal>check</goal>
                                     -->
