@@ -33,7 +33,6 @@ import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.jcabi.immutable.ArrayMap;
-import com.rexsl.page.JaxbBundle;
 import com.rexsl.page.JaxbGroup;
 import com.rexsl.page.Link;
 import com.rexsl.page.PageBuilder;
@@ -87,7 +86,7 @@ public final class RepoRs extends BaseRs {
             .init(this)
             .link(new Link("add", "./add"))
             .append(new JxRepo(repo, this))
-            .append(new JaxbBundle("memo", repo.memo().read().toString()))
+            .append(new JxMemo(repo.memo()))
             .append(
                 JaxbGroup.build(
                     Collections2.transform(
