@@ -53,7 +53,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-1.0-SNAPSHOT/index.html" title="JavaDoc 1.0-SNAPSHOT">JavaDoc 1.0-SNAPSHOT</a>
+                            <span>                        <a href="apidocs-0.3/index.html" title="JavaDoc 0.3">JavaDoc 0.3</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -114,7 +114,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-1.0-SNAPSHOT/index.html" title="JavaDocs">JavaDocs</a>
+                            <span>                        <a href="apidocs-0.3/index.html" title="JavaDocs">JavaDocs</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -155,11 +155,11 @@
                             </div>
                             <div class="date">
                                 <div class="date-numbers">
-                                    <strong itemprop="version">1.0-SNAPSHOT</strong>
+                                    <strong itemprop="version">0.3</strong>
                                     
-                                    <time itemprop="datePublished" datetime="2014-08-31T09:37:53Z">
+                                    <time itemprop="datePublished" datetime="2014-09-26T03:24:04Z">
                                         
-                                        31-Aug-2014
+                                        26-Sep-2014
                                     </time>
                                 </div>
                                                                                                     <div>
@@ -202,12 +202,12 @@ function toggleDisplay(elementId) {
 <th>Success Rate</th>
 <th>Time</th></tr>
 <tr class="b">
+<td>6</td>
+<td>0</td>
+<td>0</td>
 <td>2</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>100%</td>
-<td>1.363</td></tr></table><br />
+<td>66.667%</td>
+<td>10.713</td></tr></table><br />
 <p>Note: failures are anticipated and checked for with assertions while errors are unanticipated.</p><br /></div>
 <div class="section">
 <h2><a name="Package_List"></a>Package List</h2><a name="Package_List"></a>
@@ -222,14 +222,51 @@ function toggleDisplay(elementId) {
 <th>Success Rate</th>
 <th>Time</th></tr>
 <tr class="b">
-<td><a href="#com.thindeck.steps">com.thindeck.steps</a></td>
-<td>2</td>
+<td><a href="#com.thindeck.cockpit">com.thindeck.cockpit</a></td>
+<td>1</td>
 <td>0</td>
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>1.363</td></tr></table><br />
+<td>2.889</td></tr>
+<tr class="a">
+<td><a href="#com.thindeck.steps">com.thindeck.steps</a></td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>50%</td>
+<td>5.155</td></tr>
+<tr class="b">
+<td><a href="#com.thindeck.api.mock">com.thindeck.api.mock</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>2.669</td></tr></table><br />
 <p>Note: package statistics are not computed recursively, they only sum up all of its testsuites numbers.</p>
+<div class="section">
+<h3><a name="com.thindeck.cockpit"></a>com.thindeck.cockpit</h3><a name="com.thindeck.cockpit"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#com.thindeck.cockpitJxMemoTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#com.thindeck.cockpitJxMemoTest">JxMemoTest</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>2.889</td></tr></table></div>
 <div class="section">
 <h3><a name="com.thindeck.steps"></a>com.thindeck.steps</h3><a name="com.thindeck.steps"></a>
 <table border="1" class="bodyTable">
@@ -243,15 +280,24 @@ function toggleDisplay(elementId) {
 <th>Success Rate</th>
 <th>Time</th></tr>
 <tr class="b">
-<td><a href="#com.thindeck.stepsFindTanksTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#com.thindeck.stepsFindTanksTest">FindTanksTest</a></td>
+<td><a href="#com.thindeck.stepsReadConfigTest"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
+<td><a href="#com.thindeck.stepsReadConfigTest">ReadConfigTest</a></td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td>0</td>
-<td>100%</td>
-<td>0.661</td></tr>
+<td>1</td>
+<td>0%</td>
+<td>0</td></tr>
 <tr class="a">
+<td><a href="#com.thindeck.stepsUpdateLBTest"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
+<td><a href="#com.thindeck.stepsUpdateLBTest">UpdateLBTest</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0%</td>
+<td>0</td></tr>
+<tr class="b">
 <td><a href="#com.thindeck.stepsSwapTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.thindeck.stepsSwapTest">SwapTest</a></td>
 <td>1</td>
@@ -259,24 +305,108 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.702</td></tr></table></div><br /></div>
+<td>2.694</td></tr>
+<tr class="a">
+<td><a href="#com.thindeck.stepsFindTanksTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#com.thindeck.stepsFindTanksTest">FindTanksTest</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>2.461</td></tr></table></div>
+<div class="section">
+<h3><a name="com.thindeck.api.mock"></a>com.thindeck.api.mock</h3><a name="com.thindeck.api.mock"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#com.thindeck.api.mockMkMemoTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#com.thindeck.api.mockMkMemoTest">MkMemoTest</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>2.669</td></tr></table></div><br /></div>
 <div class="section">
 <h2><a name="Test_Cases"></a>Test Cases</h2><a name="Test_Cases"></a>
 <p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p>
 <div class="section">
-<h3><a name="FindTanksTest"></a>FindTanksTest</h3><a name="com.thindeck.stepsFindTanksTest"></a>
+<h3><a name="ReadConfigTest"></a>ReadConfigTest</h3><a name="com.thindeck.stepsReadConfigTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>findsTanksAndDocumentsInXml</td>
-<td>0.661</td></tr></table></div>
+<td><a href="#com.thindeck.steps.ReadConfigTest.fetchesRepoConfigAndUpdatesMemo"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
+<td><a href="#com.thindeck.steps.ReadConfigTest.fetchesRepoConfigAndUpdatesMemo">fetchesRepoConfigAndUpdatesMemo</a>
+<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;com_thindeck_steps_ReadConfigTest_fetchesRepoConfigAndUpdatesMemo&apos;);"><span style="display:inline;" id="com_thindeck_steps_ReadConfigTest_fetchesRepoConfigAndUpdatesMemooff"> + </span><span style="display:none;" id="com_thindeck_steps_ReadConfigTest_fetchesRepoConfigAndUpdatesMemoon"> - </span>[ Detail ]</a></div></td>
+<td>0</td></tr>
+<tr class="b">
+<td></td>
+<td>skipped</td>
+<td></td></tr></table></div>
+<div class="section">
+<h3><a name="UpdateLBTest"></a>UpdateLBTest</h3><a name="com.thindeck.stepsUpdateLBTest"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<td><a href="#com.thindeck.steps.UpdateLBTest.updatesLoadBalancerConfig"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
+<td><a href="#com.thindeck.steps.UpdateLBTest.updatesLoadBalancerConfig">updatesLoadBalancerConfig</a>
+<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;com_thindeck_steps_UpdateLBTest_updatesLoadBalancerConfig&apos;);"><span style="display:inline;" id="com_thindeck_steps_UpdateLBTest_updatesLoadBalancerConfigoff"> + </span><span style="display:none;" id="com_thindeck_steps_UpdateLBTest_updatesLoadBalancerConfigon"> - </span>[ Detail ]</a></div></td>
+<td>0</td></tr>
+<tr class="b">
+<td></td>
+<td>skipped</td>
+<td></td></tr></table></div>
 <div class="section">
 <h3><a name="SwapTest"></a>SwapTest</h3><a name="com.thindeck.stepsSwapTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>swapsGreenAndBlueContainers</td>
-<td>0.702</td></tr></table></div><br /></div>
+<td>2.694</td></tr></table></div>
+<div class="section">
+<h3><a name="MkMemoTest"></a>MkMemoTest</h3><a name="com.thindeck.api.mockMkMemoTest"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>acceptsDomainDefinition</td>
+<td>2.669</td></tr></table></div>
+<div class="section">
+<h3><a name="FindTanksTest"></a>FindTanksTest</h3><a name="com.thindeck.stepsFindTanksTest"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>findsTanksAndDocumentsInXml</td>
+<td>2.461</td></tr></table></div>
+<div class="section">
+<h3><a name="JxMemoTest"></a>JxMemoTest</h3><a name="com.thindeck.cockpitJxMemoTest"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>convertsToXml</td>
+<td>2.889</td></tr></table></div><br /></div>
+<div class="section">
+<h2><a name="Failure_Details"></a>Failure Details</h2><a name="Failure_Details"></a>
+<p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p><br />
+<table border="1" class="bodyTable">
+<tr class="a">
+<td><img src="images/icon_warning_sml.gif" alt="" /></td>
+<td><a name="com.thindeck.steps.ReadConfigTest.fetchesRepoConfigAndUpdatesMemo"></a>fetchesRepoConfigAndUpdatesMemo</td></tr>
+<tr class="b">
+<td></td>
+<td>skipped: skipped</td></tr>
+<tr class="a">
+<td><img src="images/icon_warning_sml.gif" alt="" /></td>
+<td><a name="com.thindeck.steps.UpdateLBTest.updatesLoadBalancerConfig"></a>updatesLoadBalancerConfig</td></tr>
+<tr class="b">
+<td></td>
+<td>skipped: skipped</td></tr></table><br /></div>
                             <img class="maven-logo" src="//img.jcabi.com/built-by-maven.png" alt="built by maven"/>
                         </article>
                     </div>
