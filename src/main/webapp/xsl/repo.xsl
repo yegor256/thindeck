@@ -39,7 +39,7 @@
         <p>
             <strong><xsl:value-of select="repo/name"/></strong>
         </p>
-        <pre><xsl:value-of select="memo"/></pre>
+        <pre><xsl:apply-templates select="memo"/></pre>
         <form action="{links/link[@rel='add']/@href}" method="post">
             <input name="cmd" size="65" placeholder="start a task..."/>
             <button type="submit">Start</button>
@@ -64,5 +64,33 @@
                 <xsl:text>log</xsl:text>
             </a>
         </li>
+    </xsl:template>
+    <xsl:template match="memo">
+        <p>Running containers:</p>
+        <table>
+            <tr>
+                <th>CID</th>
+                <th>Type</th>
+                <th>Ports (In/Out)</th>
+                <th>Dir</th>
+                <th>Tank</th>
+            </tr>
+            <xsl:for-each select="containers/container">
+                <tr>
+                   <td><xsl:value-of select="cid"/></td>
+                   <td><xsl:value-of select="@type"/></td>
+                   <td><xsl:value-of select="dir"/></td>
+                   <td>
+                      <xsl:for-each select="ports/port">
+                          <xsl:value-of select="in"/>
+                          <xsl:text>/</xsl:text>
+                          <xsl:value-of select="out"/>
+                          <br/>
+                      </xsl:for-each>
+                    </td>
+                    <td><xsl:value-of select="tank"/></td>
+                </tr>
+            </xsl:for-each>
+        </table>
     </xsl:template>
 </xsl:stylesheet>
