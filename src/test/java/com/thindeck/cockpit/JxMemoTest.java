@@ -29,11 +29,10 @@
  */
 package com.thindeck.cockpit;
 
+import com.jcabi.matchers.JaxbConverter;
 import com.jcabi.matchers.XhtmlMatchers;
 import com.thindeck.api.Memo;
 import com.thindeck.api.mock.MkMemo;
-import java.io.StringWriter;
-import javax.xml.bind.JAXBContext;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.xembly.Directives;
@@ -60,12 +59,8 @@ public final class JxMemoTest {
                 .addIf("domains")
                 .addIf("domain").set("domain.thindeck.com")
         );
-        final StringWriter writer = new StringWriter();
-        JAXBContext.newInstance(JxMemo.class)
-            .createMarshaller()
-            .marshal(new JxMemo(memo), writer);
         MatcherAssert.assertThat(
-            writer.toString(),
+            JaxbConverter.the(new JxMemo(memo)),
             XhtmlMatchers.hasXPaths(
                 "//memo/uri[.='fake.thindeck.com']",
                 "//memo/domains/domain[.='domain.thindeck.com']"
