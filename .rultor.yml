@@ -53,5 +53,5 @@ release:
     git commit -m 'settings.xml'
     git fetch --unshallow
     git push -f heroku $(git symbolic-ref --short HEAD):master
-    curl -f --connect-timeout 15 --retry 5 --retry-delay 30 http://www.thindeck.com
+    curl -f --connect-timeout 15 --retry 5 --retry-delay 30 http://thindeck.heroku.com
     mvn clean site-deploy -Psite --settings settings.xml
