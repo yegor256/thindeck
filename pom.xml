@@ -308,9 +308,6 @@
         </profile>
         <profile>
             <id>tomcat-test</id>
-            <activation>
-                <file><exists>pom.xml</exists></file>
-            </activation>
             <build>
                 <plugins>
                     <plugin>

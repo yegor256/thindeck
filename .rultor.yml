@@ -33,7 +33,7 @@ merge:
     - carlosmiranda
   script: |
     export PATH=$PATH:/tmp/casperjs/bin
-    mvn clean install -Pqulice --errors --settings ../settings.xml
+    mvn clean install -Ptomcat-test -Pqulice --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
     mvn clean
     pdd --source=$(pwd) --verbose --file=/dev/null
@@ -43,7 +43,7 @@ release:
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mv ../settings.xml settings.xml
-    mvn clean install -Pqulice --errors
+    mvn clean install -Ptomcat-test -Pqulice --errors
     git remote add heroku git@heroku.com:thindeck.git
     mkdir ~/.ssh
     mv ../id_rsa ../id_rsa.pub ~/.ssh
