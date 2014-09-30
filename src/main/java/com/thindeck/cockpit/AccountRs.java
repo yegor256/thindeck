@@ -36,13 +36,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 /**
- * RESTful front of Thindeck cockpit.
+ * My account.
  *
  * @author Paul Polishchuk (ppol@ua.fm)
  * @version $Id$
  */
 @Path("/")
-public final class IndexRs extends BaseRs {
+public final class AccountRs extends BaseRs {
 
     /**
      * Get front page.
