@@ -53,7 +53,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.3/index.html" title="JavaDoc 0.3">JavaDoc 0.3</a>
+                            <span>                        <a href="apidocs-0.4/index.html" title="JavaDoc 0.4">JavaDoc 0.4</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -161,11 +161,11 @@
                             </div>
                             <div class="date">
                                 <div class="date-numbers">
-                                    <strong itemprop="version">0.3</strong>
+                                    <strong itemprop="version">0.4</strong>
                                     
-                                    <time itemprop="datePublished" datetime="2014-09-26T03:23:59Z">
+                                    <time itemprop="datePublished" datetime="2014-09-30T12:28:37Z">
                                         
-                                        26-Sep-2014
+                                        30-Sep-2014
                                     </time>
                                 </div>
                                                                                                     <div>
@@ -297,7 +297,13 @@
 <td><a class="externalLink" href="http://commons.apache.org/proper/commons-lang/">commons-lang3</a></td>
 <td>3.3.2</td>
 <td>jar</td>
-<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr></table></div><a name="Project_Dependencies_runtime"></a>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
+<tr class="b">
+<td>org.apache.tomcat.embed</td>
+<td><a class="externalLink" href="http://tomcat.apache.org/">tomcat-embed-core</a></td>
+<td>7.0.34</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></td></tr></table></div><a name="Project_Dependencies_runtime"></a>
 <div class="section">
 <h3><a name="runtime"></a>runtime</h3>
 <p>The following is a list of runtime dependencies for this project. These dependencies are required to run the application:</p>
@@ -320,6 +326,18 @@
 <td>1.2.17</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
+<tr class="b">
+<td>org.apache.tomcat.embed</td>
+<td><a class="externalLink" href="http://tomcat.apache.org/">tomcat-embed-jasper</a></td>
+<td>7.0.34</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></td></tr>
+<tr class="a">
+<td>org.apache.tomcat.embed</td>
+<td><a class="externalLink" href="http://tomcat.apache.org/">tomcat-embed-logging-juli</a></td>
+<td>7.0.34</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></td></tr>
 <tr class="b">
 <td>org.aspectj</td>
 <td><a class="externalLink" href="http://www.aspectj.org">aspectjrt</a></td>
@@ -587,7 +605,14 @@
 <td>9.1.0.8</td>
 <td>dom</td>
 <td>jar</td>
-<td><a class="externalLink" href="http://www.mozilla.org/MPL/MPL-1.0.txt">Mozilla Public License Version 1.0</a></td></tr></table></div><a name="Project_Transitive_Dependencies_test"></a>
+<td><a class="externalLink" href="http://www.mozilla.org/MPL/MPL-1.0.txt">Mozilla Public License Version 1.0</a></td></tr>
+<tr class="b">
+<td>org.eclipse.jdt.core.compiler</td>
+<td><a class="externalLink" href="http://www.eclipse.org/jdt/">ecj</a></td>
+<td>3.7.2</td>
+<td>-</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.eclipse.org/org/documents/epl-v10.php">Eclipse Public License v1.0</a></td></tr></table></div><a name="Project_Transitive_Dependencies_test"></a>
 <div class="section">
 <h3><a name="test"></a>test</h3>
 <p>The following is a list of test dependencies for this project. These dependencies are only required to compile and run unit tests for the application:</p>
@@ -648,7 +673,7 @@
 <div class="section">
 <h3><a name="Dependency_Tree"></a>Dependency Tree</h3>
 <ul>
-<li>com.thindeck:thindeck:war:0.3 <img id="_img1" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep0', '_img1' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep0" style="display:none">
+<li>com.thindeck:thindeck:war:0.4 <img id="_img1" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep0', '_img1' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep0" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>thindeck</th></tr>
@@ -1139,7 +1164,44 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>Default provider for JSR 353:Java API for Processing JSON</p>
 <p><b>URL: </b><a class="externalLink" href="http://jsonp.java.net">http://jsonp.java.net</a></p>
 <p><b>Project License: </b><a class="externalLink" href="https://glassfish.java.net/public/CDDL+GPL_1_1.html">Dual license consisting of the CDDL v1.1 and GPL v2</a></p></td></tr></table></div></li>
-<li>javax.validation:validation-api:jar:1.1.0.Final (compile) <img id="_img103" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep102', '_img103' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep102" style="display:none">
+<li>org.apache.tomcat.embed:tomcat-embed-core:jar:7.0.34 (compile) <img id="_img103" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep102', '_img103' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep102" style="display:none">
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>tomcat-embed-core</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>Core Tomcat implementation</p>
+<p><b>URL: </b><a class="externalLink" href="http://tomcat.apache.org/">http://tomcat.apache.org/</a></p>
+<p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></p></td></tr></table></div></li>
+<li>org.apache.tomcat.embed:tomcat-embed-logging-juli:jar:7.0.34 (runtime) <img id="_img105" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep104', '_img105' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep104" style="display:none">
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>tomcat-embed-logging-juli</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>JULI logging implementation for embedded Tomcat</p>
+<p><b>URL: </b><a class="externalLink" href="http://tomcat.apache.org/">http://tomcat.apache.org/</a></p>
+<p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></p></td></tr></table></div></li>
+<li>org.apache.tomcat.embed:tomcat-embed-jasper:jar:7.0.34 (runtime) <img id="_img107" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep106', '_img107' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep106" style="display:none">
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>tomcat-embed-jasper</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>Core Tomcat implementation</p>
+<p><b>URL: </b><a class="externalLink" href="http://tomcat.apache.org/">http://tomcat.apache.org/</a></p>
+<p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></p></td></tr></table></div>
+<ul>
+<li>org.eclipse.jdt.core.compiler:ecj:jar:3.7.2 (runtime) <img id="_img109" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep108', '_img109' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep108" style="display:none">
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>Eclipse ECJ</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>Eclipse JDT Core Batch Compiler</p>
+<p><b>URL: </b><a class="externalLink" href="http://www.eclipse.org/jdt/">http://www.eclipse.org/jdt/</a></p>
+<p><b>Project License: </b><a class="externalLink" href="http://www.eclipse.org/org/documents/epl-v10.php">Eclipse Public License v1.0</a></p></td></tr></table></div></li></ul></li>
+<li>javax.validation:validation-api:jar:1.1.0.Final (compile) <img id="_img111" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep110', '_img111' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep110" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Bean Validation API</th></tr>
@@ -1148,7 +1210,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>Bean Validation API</p>
 <p><b>URL: </b><a class="externalLink" href="http://beanvalidation.org">http://beanvalidation.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.hibernate:hibernate-validator:jar:5.1.2.Final (provided) <img id="_img105" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep104', '_img105' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep104" style="display:none">
+<li>org.hibernate:hibernate-validator:jar:5.1.2.Final (provided) <img id="_img113" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep112', '_img113' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep112" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Hibernate Validator Engine</th></tr>
@@ -1158,7 +1220,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="http://validator.hibernate.org/hibernate-validator">http://validator.hibernate.org/hibernate-validator</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.jboss.logging:jboss-logging:jar:3.1.3.GA (provided) <img id="_img107" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep106', '_img107' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep106" style="display:none">
+<li>org.jboss.logging:jboss-logging:jar:3.1.3.GA (provided) <img id="_img115" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep114', '_img115' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep114" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>JBoss Logging 3</th></tr>
@@ -1167,7 +1229,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>The JBoss Logging Framework</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.jboss.org">http://www.jboss.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, version 2.0</a></p></td></tr></table></div></li>
-<li>com.fasterxml:classmate:jar:1.0.0 (provided) <img id="_img109" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep108', '_img109' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep108" style="display:none">
+<li>com.fasterxml:classmate:jar:1.0.0 (provided) <img id="_img117" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep116', '_img117' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep116" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>ClassMate</th></tr>
@@ -1177,7 +1239,7 @@ file comparators, endian transformation classes, and much more.</p>
         including resolving of field and method types.</p>
 <p><b>URL: </b><a class="externalLink" href="http://github.com/cowtowncoder/java-classmate">http://github.com/cowtowncoder/java-classmate</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>junit:junit:jar:4.11 (test) <img id="_img111" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep110', '_img111' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep110" style="display:none">
+<li>junit:junit:jar:4.11 (test) <img id="_img119" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep118', '_img119' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep118" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>JUnit</th></tr>
@@ -1187,7 +1249,7 @@ file comparators, endian transformation classes, and much more.</p>
         It is used by the developer who implements unit tests in Java.</p>
 <p><b>URL: </b><a class="externalLink" href="http://junit.org">http://junit.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/cpl1.0.txt">Common Public License Version 1.0</a></p></td></tr></table></div></li>
-<li>org.hamcrest:hamcrest-core:jar:1.3 (test) <img id="_img113" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep112', '_img113' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep112" style="display:none">
+<li>org.hamcrest:hamcrest-core:jar:1.3 (test) <img id="_img121" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep120', '_img121' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep120" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Hamcrest Core</th></tr>
@@ -1196,7 +1258,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>This is the core API of hamcrest matcher framework to be used by third-party framework providers. This includes the a foundation set of matcher implementations for common operations.</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/hamcrest/JavaHamcrest/hamcrest-core">https://github.com/hamcrest/JavaHamcrest/hamcrest-core</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></p></td></tr></table></div></li>
-<li>org.hamcrest:hamcrest-library:jar:1.3 (test) <img id="_img115" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep114', '_img115' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep114" style="display:none">
+<li>org.hamcrest:hamcrest-library:jar:1.3 (test) <img id="_img123" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep122', '_img123' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep122" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Hamcrest library</th></tr>
@@ -1205,7 +1267,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>Hamcrest library of matcher implementations.</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/hamcrest/JavaHamcrest/hamcrest-library">https://github.com/hamcrest/JavaHamcrest/hamcrest-library</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></p></td></tr></table></div></li>
-<li>org.mockito:mockito-core:jar:1.9.5 (test) <img id="_img117" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep116', '_img117' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep116" style="display:none">
+<li>org.mockito:mockito-core:jar:1.9.5 (test) <img id="_img125" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep124', '_img125' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep124" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Mockito</th></tr>
@@ -1215,7 +1277,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.mockito.org">http://www.mockito.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://code.google.com/p/mockito/wiki/License">The MIT License</a></p></td></tr></table></div>
 <ul>
-<li>org.objenesis:objenesis:jar:1.0 (test) <img id="_img119" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep118', '_img119' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep118" style="display:none">
+<li>org.objenesis:objenesis:jar:1.0 (test) <img id="_img127" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep126', '_img127' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep126" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Objenesis</th></tr>
@@ -1233,10 +1295,11 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>BSD: </b>jcabi-aspects, jcabi-dynamo, jcabi-github, jcabi-http, jcabi-immutable, jcabi-log, jcabi-manifests, jcabi-matchers, jcabi-ssh, jcabi-urn, jcabi-xml, rexsl, thindeck, xembly</p>
 <p><b>BSD licence: </b>ANTLR 3 Runtime</p>
 <p><b>Eclipse Public License - v 1.0: </b>AspectJ runtime</p>
-<p><b>Apache License, Version 2.0: </b>AWS SDK for Java, Hibernate Validator Engine, fastinfoset</p>
+<p><b>Apache License, Version 2.0: </b>AWS SDK for Java, Hibernate Validator Engine, fastinfoset, tomcat-embed-core, tomcat-embed-jasper, tomcat-embed-logging-juli</p>
 <p><b>Mozilla Public License Version 1.0: </b>SaxonB</p>
 <p><b>LGPL 2.1: </b>Javassist</p>
 <p><b>MPL 1.1: </b>Javassist</p>
+<p><b>Eclipse Public License v1.0: </b>Eclipse ECJ</p>
 <p><b>Dual license consisting of the CDDL v1.1 and GPL v2: </b>JSR 353 (JSON Processing) Default Provider</p>
 <p><b>The Apache Software License, Version 2.0: </b>Apache Commons Codec, Apache Commons Lang, Apache Log4j, Bean Validation API, ClassMate, Commons IO, Commons Logging, Guava: Google Core Libraries for Java, Jackson-annotations, Jackson-core, jackson-databind</p>
 <p><b>Revised BSD: </b>JSch</p>
