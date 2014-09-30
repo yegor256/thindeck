@@ -42,6 +42,5 @@
                 <xsl:text>my repositories</xsl:text>
             </a>
         </p>
-        <p>Welcome! :)</p>
     </xsl:template>
 </xsl:stylesheet>
