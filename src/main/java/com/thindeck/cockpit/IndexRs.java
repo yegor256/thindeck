@@ -52,7 +52,7 @@ public final class IndexRs extends BaseRs {
     @Path("/")
     public Response front() {
         return new PageBuilder()
-            .stylesheet("/xsl/index.xsl")
+            .stylesheet("/xsl/account.xsl")
             .build(TdPage.class)
             .init(this)
             .link(new Link("repos", "./repos"))
