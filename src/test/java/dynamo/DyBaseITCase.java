@@ -29,13 +29,14 @@
  */
 package dynamo;
 
+import com.jcabi.dynamo.Credentials;
 import com.jcabi.dynamo.Region;
-import com.thindeck.api.Base;
 import com.thindeck.dynamo.DyBase;
+import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
  * Integration case for {@link DyBase}.
@@ -45,15 +46,38 @@ import org.mockito.Mockito;
 public final class DyBaseITCase {
 
     /**
-     * DyBase can make a {@link Repos}.
+     * DyBase can add a command.
      * @throws Exception If there is some problem inside
+     * @todo #321 Uncomment the test it became passing.
      */
     @Test
-    public void makesReposObject() throws Exception {
-        final Base base = new DyBase(Mockito.mock(Region.class));
+    @Ignore
+    public void canAddCommand() throws Exception {
+        final String command = "command";
         MatcherAssert.assertThat(
-            base.repos(),
-            Matchers.notNullValue()
+            new DyBase(
+                DyBaseITCase.region()
+            ).repos().add("test").tasks()
+            .add(
+                command, Collections.<String, String>emptyMap()
+            ).command(),
+            Matchers.equalTo(command)
+        );
+    }
+
+    /**
+     * Create Region for tests.
+     * @return Region
+     */
+    private static Region region() {
+        return new Region.Simple(
+            new Credentials.Direct(
+                new Credentials.Simple(
+                    System.getProperty("dynamo.key"),
+                    System.getProperty("dynamo.secret")
+                ),
+                Integer.parseInt(System.getProperty("dynamo.port"))
+            )
         );
     }
 

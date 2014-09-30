@@ -61,11 +61,11 @@ public interface Base {
     User user(URN urn);
 
     /**
-     * Get all active repositories.
-     * @return Repositories
+     * Get active repositories.
+     * @return Repos
      */
-    @NotNull(message = "iterable of repos can't be null")
-    Iterable<Repo> repos();
+    @NotNull(message = "Repos can't be null")
+    Repos repos();
 
     /**
      * Get transaction for the particular task.

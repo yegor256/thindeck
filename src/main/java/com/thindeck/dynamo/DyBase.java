@@ -32,11 +32,10 @@ package com.thindeck.dynamo;
 import com.jcabi.dynamo.Region;
 import com.jcabi.urn.URN;
 import com.thindeck.api.Base;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Repos;
 import com.thindeck.api.Task;
 import com.thindeck.api.Txn;
 import com.thindeck.api.User;
-import java.util.Collections;
 
 /**
  * Dynamo implementation of the {@link Base}.
@@ -70,8 +69,8 @@ public final class DyBase implements Base {
     }
 
     @Override
-    public Iterable<Repo> repos() {
-        return Collections.emptyList();
+    public Repos repos() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
