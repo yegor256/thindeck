@@ -55,12 +55,10 @@ public final class DyBaseITCase {
     public void canAddCommand() throws Exception {
         final String command = "command";
         MatcherAssert.assertThat(
-            new DyBase(
-                DyBaseITCase.region()
-            ).repos().add("test").tasks()
-            .add(
-                command, Collections.<String, String>emptyMap()
-            ).command(),
+            new DyBase(DyBaseITCase.region())
+                .repos().add("test").tasks()
+                .add(command, Collections.<String, String>emptyMap())
+                .command(),
             Matchers.equalTo(command)
         );
     }
