@@ -29,20 +29,20 @@
  */
 package com.thindeck.cockpit;
 
+import com.rexsl.page.Link;
 import com.rexsl.page.PageBuilder;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 /**
- * Index page.
+ * My account.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Paul Polishchuk (ppol@ua.fm)
  * @version $Id$
- * @since 0.4
  */
-@Path("/")
-public final class IndexRs extends BaseRs {
+@Path("/acc")
+public final class AccountRs extends BaseRs {
 
     /**
      * Get front page.
@@ -52,9 +52,10 @@ public final class IndexRs extends BaseRs {
     @Path("/")
     public Response front() {
         return new PageBuilder()
-            .stylesheet("/xsl/index.xsl")
+            .stylesheet("/xsl/account.xsl")
             .build(TdPage.class)
             .init(this)
+            .link(new Link("repos", "./repos"))
             .render()
             .build();
     }

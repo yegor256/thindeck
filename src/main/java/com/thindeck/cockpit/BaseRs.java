@@ -33,6 +33,7 @@ import com.jcabi.manifests.Manifests;
 import com.rexsl.page.BasePage;
 import com.rexsl.page.BaseResource;
 import com.rexsl.page.Inset;
+import com.rexsl.page.Link;
 import com.rexsl.page.Resource;
 import com.rexsl.page.auth.AuthInset;
 import com.rexsl.page.auth.Github;
@@ -65,6 +66,21 @@ public class BaseRs extends BaseResource {
             public void render(final BasePage<?, ?> page,
                 final Response.ResponseBuilder builder) {
                 builder.type(MediaType.TEXT_XML);
+            }
+        };
+    }
+
+    /**
+     * Links.
+     * @return The inset
+     */
+    @Inset.Runtime
+    public final Inset insetLinks() {
+        return new Inset() {
+            @Override
+            public void render(final BasePage<?, ?> page,
+                final Response.ResponseBuilder builder) {
+                page.link(new Link("account", "/acc"));
             }
         };
     }

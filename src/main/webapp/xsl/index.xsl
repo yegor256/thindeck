@@ -28,7 +28,6 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Paul Polishchuk (ppol@ua.fm)
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  -->
@@ -37,11 +36,46 @@
     <xsl:output method="xml" omit-xml-declaration="yes"/>
     <xsl:include href="/xsl/layout.xsl" />
     <xsl:template match="page" mode="body">
+        <p>Thindeck.com is a platform-as-a-service that deploys itself.</p>
+        <p>It is that simple:</p>
+        <ol>
+            <li>Tell us where we can find your app (sources or binaries)</li>
+            <li>We pull the app and start a few instances of it</li>
+            <li>Every instance runs in its own Docker container</li>
+            <li>We equally balance the traffic between containers</li>
+            <li>You pay per second (!) of CPU usage</li>
+            <li>We automatically re-deploy once the app is changed</li>
+        </ol>
         <p>
-            <a href="{links/link[@rel='repos']/@href}">
-                <xsl:text>my repositories</xsl:text>
-            </a>
+            Thindeck is in
+            <a href="{links/link[@rel='account']/@href}">pre-alpha version</a>
+            now.
         </p>
-        <p>Welcome! :)</p>
+        <p>The most important unique features:</p>
+        <ul>
+            <li>
+                You pay per second of CPU usage, not per hour or per month.
+                If your app is silent, you pay nothing. Once you get the traffic
+                and your containers consume more CPU time, you pay proportionally more.
+            </li>
+            <li>
+                The number of containers is scaled automatically. We monitor
+                your CPU usage and start more containers when needed. Once your
+                application slows down, we shut down unnecessary containers.
+                This is happening behind the scene.
+            </li>
+            <li>
+                We fully support green/blue deployment strategy, out of the box.
+                When a new version of your app is ready for deployment, we attempt
+                to start new containers for it, check their readiness, and
+                then we shut down the old version. End-users experience zero down-time.
+            </li>
+            <li>
+                Unlike many other PaaS providers, we support all technologies
+                that can run on Linux, including Java, Ruby, Go, Python, PHP, etc.
+                Thanks to Docker, you have full control of your app configuration.
+            </li>
+        </ul>
+        <p>follow us on <a href="https://twitter.com/thindeck">twitter</a></p>
     </xsl:template>
 </xsl:stylesheet>
