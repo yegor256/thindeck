@@ -48,7 +48,10 @@ public final class DyBaseITCase {
     /**
      * DyBase can add a command.
      * @throws Exception If there is some problem inside
-     * @todo #321 Uncomment the test it became passing.
+     * @todo #321 DyBase should be implemented to make this test pass.
+     *  You should make sure the DynamoDB Local has all the required tables,
+     *  and all methods of all API-classes are implemented
+     *  in com.thinkdeck.dynamo package
      */
     @Test
     @Ignore
