@@ -52,10 +52,10 @@ public final class AccountRsTest {
         final AccountRs home = new ResourceMocker().mock(AccountRs.class);
         MatcherAssert.assertThat(
             JaxbConverter.the(home.front().getEntity()),
-                XhtmlMatchers.hasXPaths(
-                    "/page[@date]",
-                    "/page/links/link[@rel='home']"
-                )
-            );
+            XhtmlMatchers.hasXPaths(
+                "/page[@date]",
+                "/page/links/link[@rel='home']"
+            )
+        );
     }
 }
