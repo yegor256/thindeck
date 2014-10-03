@@ -22,7 +22,7 @@ install: |
 
 deploy:
   script: |
-    mvn clean deploy -Prultor --settings ../settings.xml
+    mvn clean install -Prultor --settings ../settings.xml
     s3cmd --no-progress put target/requs/requs.xml --config=../s3cfg s3://requs.teamed.io/thideck.xml
     mvn clean
     pdd --source=$(pwd) --verbose --file=thindeck.xml
