@@ -33,3 +33,11 @@ Our unique advantages are:
  1. We can host any tech stack, because of Docker
  1. We fully automate blue/green deployments, pulling your sources
  2. We charge per second of CPU load, not per calendar hour
+
+Known issues:
+
+ 1. Because of maven issue (http://jira.codehaus.org/browse/MNG-5478)
+    command "mvn clean install -Pqulice -Psite site" is not working properly.
+    Please, use these two commands instead:
+    - "mvn clean install -Pqulice"
+    - "mvn clean site -Psite"
