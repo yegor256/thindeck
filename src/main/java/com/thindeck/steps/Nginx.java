@@ -33,8 +33,11 @@ import com.google.common.base.Joiner;
 import com.jcabi.manifests.Manifests;
 import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
+import java.io.File;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import javax.validation.constraints.NotNull;
+import org.apache.commons.io.FileUtils;
 
 /**
  * Nginx load balancer.
@@ -70,16 +73,21 @@ import java.net.UnknownHostException;
  */
 public final class Nginx implements LoadBalancer {
     @Override
-    public void update(final String host, final int hport, final String server,
-        final int sport) {
+    public void update(@NotNull final String host, @NotNull final int hport,
+        @NotNull final String server, @NotNull final int sport) {
         try {
             new Shell.Plain(
                 new SSH(
                     Manifests.read("Thindeck-LoadBalancer-Host"),
-                    // @checkstyle MagicNumber (1 line)
-                    22,
+                    Integer.parseInt(
+                        Manifests.read("Thindeck-LoadBalancer-Port")
+                    ),
                     Manifests.read("Thindeck-LoadBalancer-User"),
-                    Manifests.read("Thindeck-LoadBalancer-Key")
+                    FileUtils.readFileToString(
+                        new File(
+                            Manifests.read("Thindeck-LoadBalancer-Key-File")
+                        )
+                    )
                 )
             ).exec(
                 Joiner.on(";").join(
@@ -87,13 +95,15 @@ public final class Nginx implements LoadBalancer {
                         "cd %s",
                         Manifests.read("Thindeck-LoadBalancer-Directory")
                     ),
+                    "TMPFILE=`mktemp`",
                     String.format(
                         // @checkstyle LineLength (1 line)
-                        "cat %s.hosts.conf | sed -r 's/}/    server %s:%d;\\n}/'",
+                        "cat %s.hosts.conf | sed -r 's/}/    server %s:%d;\\n}/' > $TMPFILE",
                         host,
                         server,
                         sport
                     ),
+                    String.format("mv $TMPFILE %s.hosts.conf", host),
                     "pkill -HUP -f ngnix"
                 )
             );
