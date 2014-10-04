@@ -71,37 +71,13 @@ public final class NginxTest {
         final int port = sshd.start();
         final File key = this.temp.newFile();
         FileUtils.write(key, sshd.key());
-        final String file = Joiner.on('\n').join(
-            "Thindeck-LoadBalancer-Host: localhost",
-            String.format("Thindeck-LoadBalancer-Port: %d", port),
-            String.format("Thindeck-LoadBalancer-User: %s", sshd.login()),
-            String.format(
-                "Thindeck-LoadBalancer-Key-File: %s", key.toString()
-            ),
-            String.format(
-                "Thindeck-LoadBalancer-Directory: %s", path.toString()
-            ),
-            StringUtils.EMPTY
-        );
-        Manifests.append(
-            new ByteArrayInputStream(file.getBytes())
-        );
+        this.manifest(path, sshd.login(), port, key);
         final String host = "host";
-        final int hport = 1234;
-        final String server = "server";
         final int sport = 567;
-        final String shosts = String.format("%s.hosts.conf", host);
-        final File fhosts = new File(path, shosts);
-        FileUtils.writeStringToFile(
-            fhosts,
-            Joiner.on('\n').join(
-                "upstream example_servers {",
-                "    server 10.0.0.1:80;",
-                "    server 10.0.0.2:80;",
-                "}"
-            )
-        );
-        new Nginx().update(host, hport, server, sport);
+        final String server = "server";
+        final File fhosts = this.hosts(path, host);
+        // @checkstyle MagicNumber (1 line)
+        new Nginx().update(host, 1234, server, sport);
         MatcherAssert.assertThat(
             FileUtils.readFileToString(fhosts),
             Matchers.equalTo(
@@ -113,6 +89,57 @@ public final class NginxTest {
                     "}"
                 )
             )
+        );
+    }
+
+    /**
+     * Create host configuration file.
+     * @param path Directory where to create file.
+     * @param host Name of the host.
+     * @return Location of created file.
+     * @throws IOException In case of error.
+     */
+    private File hosts(final File path, final String host) throws IOException {
+        final File fhosts = new File(
+            path, String.format("%s.hosts.conf", host)
+        );
+        FileUtils.writeStringToFile(
+            fhosts,
+            Joiner.on('\n').join(
+                "upstream example_servers {",
+                "    server 10.0.0.1:80;",
+                "    server 10.0.0.2:80;",
+                "}"
+            )
+        );
+        return fhosts;
+    }
+
+    /**
+     * Create mock manifest.
+     * @param path Nginx directory.
+     * @param login User performing update.
+     * @param port SSH port to use.
+     * @param key User private key file.
+     * @throws IOException In case of error.
+     * @checkstyle ParameterNumber (3 lines)
+     */
+    private void manifest(final File path, final String login, final int port,
+        final File key) throws IOException {
+        final String file = Joiner.on('\n').join(
+            "Thindeck-LoadBalancer-Host: localhost",
+            String.format("Thindeck-LoadBalancer-Port: %d", port),
+            String.format("Thindeck-LoadBalancer-User: %s", login),
+            String.format(
+                "Thindeck-LoadBalancer-Key-File: %s", key.toString()
+            ),
+            String.format(
+                "Thindeck-LoadBalancer-Directory: %s", path.toString()
+            ),
+            StringUtils.EMPTY
+        );
+        Manifests.append(
+            new ByteArrayInputStream(file.getBytes())
         );
     }
 }
