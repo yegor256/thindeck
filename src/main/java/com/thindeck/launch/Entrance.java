@@ -27,36 +27,39 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.cockpit;
+package com.thindeck.launch;
 
-import com.rexsl.page.PageBuilder;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
+import java.io.File;
+import org.apache.catalina.startup.Tomcat;
 
 /**
- * Index page.
+ * Launch (used only for heroku).
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.4
  */
-@Path("/")
-public final class IndexRs extends BaseRs {
+public final class Entrance {
 
     /**
-     * Get front page.
-     * @return The JAX-RS response
+     * Utility class.
      */
-    @GET
-    @Path("/")
-    public Response front() {
-        return new PageBuilder()
-            .stylesheet("/xsl/index.xsl")
-            .build(TdPage.class)
-            .init(this)
-            .render()
-            .build();
+    private Entrance() {
+        // intentionally empty
+    }
+
+    /**
+     * Entry point.
+     * @param args Command line args
+     * @throws Exception If fails
+     */
+    public static void main(final String... args) throws Exception {
+        final Tomcat tomcat = new Tomcat();
+        final String port = System.getenv("PORT");
+        tomcat.setPort(Integer.valueOf(port));
+        tomcat.addWebapp("/", new File("target/thindeck").getAbsolutePath());
+        tomcat.start();
+        tomcat.getServer().await();
     }
 
 }

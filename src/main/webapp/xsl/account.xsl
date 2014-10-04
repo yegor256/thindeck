@@ -1,4 +1,5 @@
-/**
+<?xml version="1.0"?>
+<!--
  * Copyright (c) 2014, Thindeck.com
  * All rights reserved.
  *
@@ -26,37 +27,20 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-package com.thindeck.cockpit;
-
-import com.rexsl.page.PageBuilder;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
-
-/**
- * Index page.
  *
+ * @author Paul Polishchuk (ppol@ua.fm)
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.4
- */
-@Path("/")
-public final class IndexRs extends BaseRs {
-
-    /**
-     * Get front page.
-     * @return The JAX-RS response
-     */
-    @GET
-    @Path("/")
-    public Response front() {
-        return new PageBuilder()
-            .stylesheet("/xsl/index.xsl")
-            .build(TdPage.class)
-            .init(this)
-            .render()
-            .build();
-    }
-
-}
+ -->
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns="http://www.w3.org/1999/xhtml" version="1.0">
+    <xsl:output method="xml" omit-xml-declaration="yes"/>
+    <xsl:include href="/xsl/layout.xsl" />
+    <xsl:template match="page" mode="body">
+        <p>
+            <a href="{links/link[@rel='repos']/@href}">
+                <xsl:text>my repositories</xsl:text>
+            </a>
+        </p>
+    </xsl:template>
+</xsl:stylesheet>

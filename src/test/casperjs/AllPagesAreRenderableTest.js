@@ -3,6 +3,7 @@
     '/',
     '/xsl/layout.xsl',
     '/robots.txt',
+    '/acc',
     '/repos',
     '/r/fake-repo',
     '/t/fake-repo/1/log'

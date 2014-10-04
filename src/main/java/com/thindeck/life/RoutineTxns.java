@@ -69,7 +69,7 @@ final class RoutineTxns implements Runnable, Closeable {
 
     @Override
     public void run() {
-        for (final Repo repo : this.base.repos()) {
+        for (final Repo repo : this.base.repos().iterate()) {
             for (final Task task : repo.tasks().open()) {
                 try {
                     this.base.txn(task).increment();

@@ -27,36 +27,59 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.cockpit;
+package dynamo;
 
-import com.rexsl.page.PageBuilder;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
+import com.jcabi.dynamo.Credentials;
+import com.jcabi.dynamo.Region;
+import com.thindeck.dynamo.DyBase;
+import java.util.Collections;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
- * Index page.
- *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * Integration case for {@link DyBase}.
+ * @author Paul Polishchuk (ppol@ua.fm)
  * @version $Id$
- * @since 0.4
  */
-@Path("/")
-public final class IndexRs extends BaseRs {
+public final class DyBaseITCase {
 
     /**
-     * Get front page.
-     * @return The JAX-RS response
+     * DyBase can add a command.
+     * @throws Exception If there is some problem inside
+     * @todo #321 DyBase should be implemented to make this test pass.
+     *  You should make sure the DynamoDB Local has all the required tables,
+     *  and all methods of all API-classes are implemented
+     *  in com.thinkdeck.dynamo package
      */
-    @GET
-    @Path("/")
-    public Response front() {
-        return new PageBuilder()
-            .stylesheet("/xsl/index.xsl")
-            .build(TdPage.class)
-            .init(this)
-            .render()
-            .build();
+    @Test
+    @Ignore
+    public void canAddCommand() throws Exception {
+        final String command = "command";
+        MatcherAssert.assertThat(
+            new DyBase(DyBaseITCase.region())
+                .repos().add("test").tasks()
+                .add(command, Collections.<String, String>emptyMap())
+                .command(),
+            Matchers.equalTo(command)
+        );
+    }
+
+    /**
+     * Create Region for tests.
+     * @return Region
+     */
+    private static Region region() {
+        return new Region.Simple(
+            new Credentials.Direct(
+                new Credentials.Simple(
+                    System.getProperty("dynamo.key"),
+                    System.getProperty("dynamo.secret")
+                ),
+                Integer.parseInt(System.getProperty("dynamo.port"))
+            )
+        );
     }
 
 }

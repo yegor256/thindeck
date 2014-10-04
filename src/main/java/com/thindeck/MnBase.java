@@ -93,10 +93,8 @@ public final class MnBase implements Base {
     }
 
     @Override
-    public Iterable<Repo> repos() {
-        return Collections.<Repo>singleton(
-            new MnBase.FakeRepo()
-        );
+    public Repos repos() {
+        throw new UnsupportedOperationException("#repos()");
     }
 
     @Override
