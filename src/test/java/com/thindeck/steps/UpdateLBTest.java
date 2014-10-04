@@ -49,12 +49,9 @@ public final class UpdateLBTest {
     /**
      * FindTanks can update load balancer configuration from memo.
      * @throws IOException If fails
-     * @todo #311 The test is currently ignored because UpdateLB is not yet
-     *  implemented. Let's implement it and enable the test. See Github issue
-     *  https://github.com/yegor256/thindeck/issues/308 for further details.
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @Test
-    @org.junit.Ignore
     public void updatesLoadBalancerConfig() throws IOException {
         final LoadBalancer balancer = Mockito.mock(LoadBalancer.class);
         final Step step = new UpdateLB(balancer);
@@ -75,17 +72,20 @@ public final class UpdateLBTest {
                 .addIf("ports")
                 .add("port").set(String.valueOf(firstport)).up()
                 .add("port").set(String.valueOf(secondport)).up()
-                .up().up().up()
+                .up()
                 .addIf("containers")
                 .addIf("container").attr("type", "green")
                  // @checkstyle LineLength (1 line)
                 .add("cid").set("abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789").up()
                 .add("ports")
+                .add("port")
                 .add("in").set(String.valueOf(firstport)).up()
                 .add("out").set(String.valueOf(firstout)).up()
+                .up()
+                .add("port")
                 .add("in").set(String.valueOf(secondport)).up()
                 .add("out").set(String.valueOf(secondout)).up()
-                .up()
+                .up().up()
                 .add("dir").set("/fake/dir").up()
                 .add("tank").set(tank)
         );
