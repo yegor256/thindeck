@@ -104,7 +104,7 @@ public final class Nginx implements LoadBalancer {
                         sport
                     ),
                     String.format("mv $TMPFILE %s.hosts.conf", host),
-                    "pkill -HUP -f ngnix"
+                    "pkill -HUP -f nginx"
                 )
             );
         } catch (final UnknownHostException ex) {
