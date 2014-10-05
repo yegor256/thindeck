@@ -578,9 +578,8 @@
                         <executions>
                             <execution>
                                 <goals>
-                                    <!--
-                                      @todo #289 Increase test code coverage >= 80% for all packages
-                                       and uncomment lines below.
+                                    <!-- @todo 319 Increase code coverage > 30%, by uncommenting the lines below
+                                          and writting test classes.
                                      -->
                                     <!--
                                     <goal>instrument</goal>
