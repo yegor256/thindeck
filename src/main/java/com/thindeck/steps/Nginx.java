@@ -95,15 +95,14 @@ public final class Nginx implements LoadBalancer {
                         "cd %s",
                         Manifests.read("Thindeck-LoadBalancer-Directory")
                     ),
-                    "TMPFILE=`mktemp`",
                     String.format(
                         // @checkstyle LineLength (1 line)
-                        "cat %s.hosts.conf | sed -r 's/}/    server %s:%d;\\n}/' > $TMPFILE",
-                        host,
+                        "sed -i.bak -r 's/}/    server %s:%d;\\n}/' %s.hosts.conf",
                         server,
-                        sport
+                        sport,
+                        host
                     ),
-                    String.format("mv $TMPFILE %s.hosts.conf", host),
+                    String.format("rm %s.hosts.conf.bak", host),
                     "pkill -HUP -f nginx"
                 )
             );
