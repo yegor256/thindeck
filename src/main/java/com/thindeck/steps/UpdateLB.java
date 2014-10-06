@@ -30,9 +30,11 @@
 package com.thindeck.steps;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.xml.XML;
 import com.thindeck.api.Context;
 import com.thindeck.api.Step;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Update Load Balancer.
@@ -45,12 +47,16 @@ import java.io.IOException;
 public final class UpdateLB implements Step {
 
     /**
+     * Load Balancer to use.
+     */
+    private final transient LoadBalancer balancer;
+
+    /**
      * Public ctor.
      * @param bal The load balancer
      */
-    @SuppressWarnings("PMD.UnusedFormalParameter")
     public UpdateLB(final LoadBalancer bal) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        this.balancer = bal;
     }
 
     @Override
@@ -60,7 +66,23 @@ public final class UpdateLB implements Step {
 
     @Override
     public void exec(final Context ctx) throws IOException {
-        throw new UnsupportedOperationException("exec: Not yet implemented");
+        final XML memo = ctx.memo().read();
+        final List<String> domains = memo.xpath("/memo/domains/domain/text()");
+        final List<String> ports = memo.xpath("/memo/ports/port/text()");
+        final List<XML> containers = memo.nodes("/memo/containers/container");
+        for (final XML container : containers) {
+            final String tank = container
+                .xpath("/container/tank/text()").get(0);
+            for (final String port : ports) {
+                final List<String> outports = container.xpath(
+                    String.format(
+                        "/container/ports/port[in/text()='%s']/out/text()",
+                        port
+                    )
+                );
+                this.updates(domains, tank, port, outports);
+            }
+        }
     }
 
     @Override
@@ -73,4 +95,23 @@ public final class UpdateLB implements Step {
         // nothing to rollback
     }
 
+    /**
+     * Perform LB updates for given list of domains, containers and ports.
+     * @param domains Domains to balance.
+     * @param tank Container to use.
+     * @param port Input port.
+     * @param outports Output ports.
+     * @checkstyle ParameterNumber (3 lines)
+     */
+    private void updates(final List<String> domains, final String tank,
+        final String port, final List<String> outports) {
+        for (final String domain : domains) {
+            for (final String outport : outports) {
+                this.balancer.update(
+                    domain, Integer.parseInt(port),
+                    tank, Integer.parseInt(outport)
+                );
+            }
+        }
+    }
 }
