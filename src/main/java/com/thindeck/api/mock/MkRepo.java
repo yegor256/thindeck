@@ -27,52 +27,40 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.dynamo;
+package com.thindeck.api.mock;
 
-import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Base;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
-import com.thindeck.api.User;
+import com.jcabi.aspects.Immutable;
+import com.thindeck.api.Memo;
+import com.thindeck.api.Repo;
+import com.thindeck.api.Tasks;
+import java.io.IOException;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Dynamo implementation of the {@link Base}.
+ * Mock of {@link Repo}.
  *
- * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.3
- * @todo #290 Implement user, repos and txn methods to retrieve data from
- * appropriate tables and remove SuppressWarnings.
+ * @since 0.4
  */
-@SuppressWarnings({ "PMD.SingularField", "PMD.UnusedPrivateField" })
-public final class DyBase implements Base {
-    /**
-     * Region we're in.
-     */
-    private final transient Region region;
+@Immutable
+@ToString
+@EqualsAndHashCode
+public final class MkRepo implements Repo {
 
-    /**
-     * Constructor.
-     * @param rgn Region
-     */
-    public DyBase(final Region rgn) {
-        this.region = rgn;
+    @Override
+    public String name() {
+        return "test";
     }
 
     @Override
-    public User user(final URN urn) {
-        throw new UnsupportedOperationException();
+    public Tasks tasks() {
+        throw new UnsupportedOperationException("#tasks()");
     }
 
     @Override
-    public Repos repos() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Txn txn(final Task task) {
-        throw new UnsupportedOperationException();
+    public Memo memo() throws IOException {
+        return new MkMemo();
     }
 }

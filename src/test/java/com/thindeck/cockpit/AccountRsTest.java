@@ -27,52 +27,35 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.dynamo;
+package com.thindeck.cockpit;
 
-import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Base;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
-import com.thindeck.api.User;
+import com.jcabi.matchers.JaxbConverter;
+import com.jcabi.matchers.XhtmlMatchers;
+import com.rexsl.page.mock.ResourceMocker;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Dynamo implementation of the {@link Base}.
- *
- * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * Test case for {@link AccountRs}.
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.3
- * @todo #290 Implement user, repos and txn methods to retrieve data from
- * appropriate tables and remove SuppressWarnings.
+ * @since 0.4
  */
-@SuppressWarnings({ "PMD.SingularField", "PMD.UnusedPrivateField" })
-public final class DyBase implements Base {
-    /**
-     * Region we're in.
-     */
-    private final transient Region region;
+public final class AccountRsTest {
 
     /**
-     * Constructor.
-     * @param rgn Region
+     * AccountRs can render a page in XML.
+     * @throws Exception If something goes wrong.
      */
-    public DyBase(final Region rgn) {
-        this.region = rgn;
-    }
-
-    @Override
-    public User user(final URN urn) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Repos repos() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Txn txn(final Task task) {
-        throw new UnsupportedOperationException();
+    @Test
+    public void rendersXmlPage() throws Exception {
+        final AccountRs home = new ResourceMocker().mock(AccountRs.class);
+        MatcherAssert.assertThat(
+            JaxbConverter.the(home.front().getEntity()),
+            XhtmlMatchers.hasXPaths(
+                "/page[@date]",
+                "/page/links/link[@rel='home']"
+            )
+        );
     }
 }

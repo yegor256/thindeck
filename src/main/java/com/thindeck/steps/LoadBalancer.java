@@ -37,11 +37,6 @@ import com.jcabi.aspects.Immutable;
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  * @since 0.3
- * @todo #293 Let's implement a class Nginx that implements this interface. It
- *  should be able to connect via SSH to a server that has Nginx installed. At
- *  the minimum, we should be update the Nginx configuration of the server it's
- *  connected to. This class will be used primarily for the UpdateLB step. See
- *  https://github.com/yegor256/thindeck/issues/303 for more details.
  */
 @Immutable
 public interface LoadBalancer {
