@@ -70,6 +70,7 @@ public final class LifecycleTest {
     /**
      * RoutineTxn can increment transactions.
      * @throws IOException In case of error.
+     * @todo #319 Migrate to com.thindeck.api.mock classes instead of mockito.
      */
     @Test
     public void incrementsTransactionCount() throws IOException {
