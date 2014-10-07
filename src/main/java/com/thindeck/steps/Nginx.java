@@ -68,7 +68,6 @@ import org.apache.commons.io.FileUtils;
  *  basic main.conf and hosts.conf files, and add them to ngnix.conf.
  * @todo #312 Handle case when given hosts is already in the load balancing
  *  group.
- * @todo #312 Add a test for this class.
  * @checkstyle ParameterNumber (4 lines)
  */
 public final class Nginx implements LoadBalancer {
