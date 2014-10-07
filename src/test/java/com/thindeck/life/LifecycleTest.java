@@ -85,7 +85,7 @@ public final class LifecycleTest {
         Mockito.when(repo.tasks()).thenReturn(tasks);
         Mockito.when(tasks.open()).thenReturn(Collections.singleton(task));
         Mockito.when(base.txn(Mockito.any(Task.class))).thenReturn(txn);
-        final RoutineTxns routine = new RoutineTxns(base);
+        final RoutineTxns routine = new RoutineTxns(base, true);
         routine.close();
         routine.run();
         Mockito.verify(txn).increment();

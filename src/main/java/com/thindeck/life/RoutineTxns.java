@@ -64,7 +64,19 @@ final class RoutineTxns implements Runnable, Closeable {
      * @param bse Base
      */
     RoutineTxns(final Base bse) {
+        this(bse, false);
+    }
+
+    /**
+     * Execute them all with stop.
+     * @param bse Base
+     * @param stop Should scheduled execution be stopped
+     */
+    RoutineTxns(final Base bse, final boolean stop) {
         this.base = bse;
+        if (stop) {
+            this.close();
+        }
     }
 
     @Override
