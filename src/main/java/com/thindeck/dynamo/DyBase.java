@@ -46,7 +46,6 @@ import com.thindeck.api.User;
  * @since 0.3
  * @todo #322 Implement txn method to retrieve data from appropriate table.
  */
-@SuppressWarnings({ "PMD.SingularField", "PMD.UnusedPrivateField" })
 public final class DyBase implements Base {
     /**
      * Region we're in.
