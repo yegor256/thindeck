@@ -29,6 +29,7 @@
  */
 package com.thindeck;
 
+import com.jcabi.aspects.Cacheable;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.urn.URN;
 import com.thindeck.api.Base;
@@ -68,6 +69,7 @@ public final class MnBase implements Base {
      * @return Memo
      * @throws IOException If fails
      */
+    @Cacheable(forever = true)
     public static Memo memo() throws IOException {
         return new MkMemo();
     }

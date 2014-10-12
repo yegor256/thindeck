@@ -99,7 +99,7 @@ public final class ReposRs extends BaseRs {
         final Repo repo = this.user().repos().add(name);
         try {
             repo.memo().update(
-                new Directives().xpath("/memo").add("uri").set(uri)
+                new Directives().xpath("/memo").addIf("uri").set(uri)
             );
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
