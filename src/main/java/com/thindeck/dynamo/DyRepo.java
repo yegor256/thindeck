@@ -29,61 +29,60 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.dynamo.QueryValve;
-import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Base;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
-import com.thindeck.api.User;
+import com.jcabi.dynamo.Item;
+import com.thindeck.api.Memo;
+import com.thindeck.api.Repo;
+import com.thindeck.api.Tasks;
+import java.io.IOException;
 
 /**
- * Dynamo implementation of the {@link Base}.
+ * Dynamo implementation of {@link Repo}.
  *
- * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.3
- * @todo #322 Implement txn method to retrieve data from appropriate table.
- * @todo #290 Add dynamo maven plugin and create IT tests for dynamo based
- *  classes.
+ * @todo #322 Implement tasks and memo methods.
  */
-@SuppressWarnings({ "PMD.SingularField", "PMD.UnusedPrivateField" })
-public final class DyBase implements Base {
+public final class DyRepo implements Repo {
     /**
-     * Region we're in.
+     * Table name.
      */
-    private final transient Region region;
+    public static final String TBL = "repos";
 
     /**
-     * Constructor.
-     * @param rgn Region
+     * URN attribute.
      */
-    public DyBase(final Region rgn) {
-        this.region = rgn;
+    public static final String ATTR_NAME = "name";
+
+    /**
+     * When updated.
+     */
+    public static final String ATTR_UPDATED = "updated";
+
+    /**
+     * Item.
+     */
+    private final transient Item item;
+
+    /**
+     * Ctor.
+     * @param itm Item
+     */
+    public DyRepo(final Item itm) {
+        this.item = itm;
     }
 
     @Override
-    public User user(final URN urn) {
-        return new DyUser(
-            this.region.table(DyUser.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyUser.ATTR_URN, urn.toString())
-                .iterator().next()
-        );
+    public String name() {
+        return this.item.get(DyRepo.ATTR_NAME).getS();
     }
 
     @Override
-    public Repos repos() {
-        return new DyRepos(this.region);
+    public Tasks tasks() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public Txn txn(final Task task) {
+    public Memo memo() throws IOException {
         throw new UnsupportedOperationException();
     }
 }
