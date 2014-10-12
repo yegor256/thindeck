@@ -30,28 +30,43 @@
 package com.thindeck.steps;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.github.Coordinates;
 import com.jcabi.github.Github;
+import com.jcabi.github.Repo;
+import com.jcabi.xml.XML;
 import com.thindeck.api.Context;
 import com.thindeck.api.Step;
 import java.io.IOException;
+import java.net.URI;
+import javax.validation.constraints.NotNull;
+import org.apache.commons.io.IOUtils;
+import org.xembly.Directives;
 
 /**
  * Read repository configuration.
  *
  * @author Carlos Miranda (miranda.cma@gmail.com)
+ * @author Paul Polishchuk (ppol@ua.fm)
  * @version $Id$
  * @since 0.3
+ * @todo #310 Add check if domains and ports are already in memo.
+ *  Current implementation duplicates them if step is called several
+ *  times on the same context.
  */
 @Immutable
 public final class ReadConfig implements Step {
 
     /**
+     * Github repo to read the configuration from.
+     */
+    private final transient Github github;
+
+    /**
      * Public ctor.
      * @param ghub Github instance.
      */
-    @SuppressWarnings("PMD.UnusedFormalParameter")
-    public ReadConfig(final Github ghub) {
-        throw new UnsupportedOperationException("Not yet implemented.");
+    public ReadConfig(@NotNull final Github ghub) {
+        this.github = ghub;
     }
 
     @Override
@@ -61,7 +76,28 @@ public final class ReadConfig implements Step {
 
     @Override
     public void exec(final Context ctx) throws IOException {
-        throw new UnsupportedOperationException("exec: Not yet implemented");
+        final String uri = ctx.memo().read().xpath("/memo/uri/text()").get(0);
+        final Repo repo = this.github.repos().get(
+            new Coordinates.Simple(
+                URI.create(uri).getPath()
+                    .replaceFirst("/", "").replaceFirst("\\.git", "")
+            )
+        );
+        final XML content = new YamlXML(
+            IOUtils.toString(repo.contents().get(".thindeck.yml").raw())
+        ).get();
+        final Directives dirs = new Directives()
+            .xpath("/memo").addIf("domains");
+        for (final String domain
+            : content.xpath("//entry[@key='domains']/item/text()")) {
+            dirs.xpath("/memo/domains").add("domain").set(domain);
+        }
+        dirs.up().up().addIf("ports");
+        for (final String port
+            : content.xpath("//entry[@key='ports']/item/text()")) {
+            dirs.xpath("/memo/ports").add("port").set(port);
+        }
+        ctx.memo().update(dirs);
     }
     @Override
     public void commit(final Context ctx) {
