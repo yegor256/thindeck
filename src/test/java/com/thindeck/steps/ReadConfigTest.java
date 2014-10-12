@@ -60,7 +60,6 @@ public final class ReadConfigTest {
      *  https://github.com/yegor256/thindeck/issues/291 for further details.
      */
     @Test
-    @org.junit.Ignore
     public void fetchesRepoConfigAndUpdatesMemo() throws Exception {
         final Github ghub = new MkGithub("thindeck");
         final Repo repo = ghub.repos().create(
@@ -82,9 +81,8 @@ public final class ReadConfigTest {
         final Context ctx = new MkContext();
         ctx.memo().update(
             new Directives()
-                .add("/memo")
-                .add("/repo")
-                .add("/uri").set("git@github.com:thindeck/test.git")
+                .xpath("/memo")
+                .add("uri").set("git://github.com/thindeck/test.git")
         );
         final Step step = new ReadConfig(ghub);
         step.exec(ctx);
