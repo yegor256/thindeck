@@ -38,6 +38,7 @@ import com.thindeck.api.Context;
 import com.thindeck.api.Step;
 import com.thindeck.api.mock.MkContext;
 import javax.json.Json;
+import org.apache.commons.codec.binary.Base64;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.xembly.Directives;
@@ -54,10 +55,6 @@ public final class ReadConfigTest {
     /**
      * Fetch repo configuration and update memo accordingly.
      * @throws Exception If something goes wrong
-     * @todo #291 This test is currently ignored because ReadConfig is not yet
-     *  implemented. Let's implement it, and have it read the info from the
-     *  .thindeck.yml file of the repository root and update the Memo XML. See
-     *  https://github.com/yegor256/thindeck/issues/291 for further details.
      */
     @Test
     public void fetchesRepoConfigAndUpdatesMemo() throws Exception {
@@ -75,8 +72,14 @@ public final class ReadConfigTest {
             Json.createObjectBuilder()
                 .add("path", ".thindeck.yml")
                 .add("message", "Thindeck config")
-                .add("content", config)
-                .build()
+                .add(
+                    "content",
+                    new String(
+                        Base64.encodeBase64(
+                            config.getBytes()
+                        )
+                    )
+                ).build()
         );
         final Context ctx = new MkContext();
         ctx.memo().update(
