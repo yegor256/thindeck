@@ -31,6 +31,8 @@ deploy:
 merge:
   commanders:
     - carlosmiranda
+    - krzyk
+    - longtimeago
   script: |
     export PATH=$PATH:/tmp/casperjs/bin
     mvn clean install -Ptomcat-test -Pqulice --errors --settings ../settings.xml

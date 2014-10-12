@@ -45,8 +45,6 @@ import com.thindeck.api.User;
  * @version $Id$
  * @since 0.3
  * @todo #322 Implement txn method to retrieve data from appropriate table.
- * @todo #290 Add dynamo maven plugin and create IT tests for dynamo based
- *  classes.
  */
 @SuppressWarnings({ "PMD.SingularField", "PMD.UnusedPrivateField" })
 public final class DyBase implements Base {

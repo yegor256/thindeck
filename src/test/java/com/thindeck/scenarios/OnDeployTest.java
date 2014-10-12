@@ -27,40 +27,37 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.scenarios;
 
-import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Tasks;
-import java.io.IOException;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.thindeck.api.Step;
+import com.thindeck.steps.DockerRun;
+import com.thindeck.steps.DockerStop;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Mock of {@link Repo}.
+ * Tests for {@link OnDeploy}.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.4
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkRepo implements Repo {
-
-    @Override
-    public String name() {
-        return "test";
-    }
-
-    @Override
-    public Tasks tasks() {
-        return new MkTasks();
-    }
-
-    @Override
-    public Memo memo() throws IOException {
-        return new MkMemo();
+public final class OnDeployTest {
+    /**
+     * OnDeploy will execute correct steps.
+     */
+    @Test
+    public void executesNecessarySteps() {
+        MatcherAssert.assertThat(
+            new OnDeploy().steps(),
+            Matchers.allOf(
+                Matchers.<Step>hasItem(
+                    Matchers.instanceOf(DockerRun.class)
+                ),
+                Matchers.<Step>hasItem(
+                    Matchers.instanceOf(DockerStop.class)
+                )
+            )
+        );
     }
 }

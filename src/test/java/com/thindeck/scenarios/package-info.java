@@ -27,40 +27,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
-
-import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Tasks;
-import java.io.IOException;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
- * Mock of {@link Repo}.
+ * Scenario tests.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.4
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkRepo implements Repo {
-
-    @Override
-    public String name() {
-        return "test";
-    }
-
-    @Override
-    public Tasks tasks() {
-        return new MkTasks();
-    }
-
-    @Override
-    public Memo memo() throws IOException {
-        return new MkMemo();
-    }
-}
+package com.thindeck.scenarios;

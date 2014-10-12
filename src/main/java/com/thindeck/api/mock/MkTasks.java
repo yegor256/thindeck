@@ -30,37 +30,42 @@
 package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Task;
 import com.thindeck.api.Tasks;
-import java.io.IOException;
+import java.util.Collections;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Mock of {@link Repo}.
+ * Mock of {@link Tasks}.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Paul Polishchuk (ppol@yua.fm)
  * @version $Id$
- * @since 0.4
+ * @since 0.5
  */
 @Immutable
 @ToString
 @EqualsAndHashCode
-public final class MkRepo implements Repo {
+public final class MkTasks implements Tasks {
 
     @Override
-    public String name() {
-        return "test";
+    public Task get(final long number) {
+        return new MkTask(number);
     }
 
     @Override
-    public Tasks tasks() {
-        return new MkTasks();
+    public Iterable<Task> open() {
+        return Collections.<Task>singleton(new MkTask());
     }
 
     @Override
-    public Memo memo() throws IOException {
-        return new MkMemo();
+    public Iterable<Task> all() {
+        return Collections.<Task>singleton(new MkTask());
+    }
+
+    @Override
+    public Task add(final String command, final Map<String, String> args) {
+        throw new UnsupportedOperationException("MkTasks#add");
     }
 }

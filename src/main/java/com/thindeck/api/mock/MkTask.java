@@ -30,37 +30,55 @@
 package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Tasks;
-import java.io.IOException;
+import com.thindeck.api.Scenario;
+import com.thindeck.api.Task;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Mock of {@link Repo}.
+ * Mock of {@link Task}.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Paul Polishchuk (ppol@yua.fm)
  * @version $Id$
- * @since 0.4
+ * @since 0.5
  */
 @Immutable
 @ToString
 @EqualsAndHashCode
-public final class MkRepo implements Repo {
+public final class MkTask implements Task {
 
-    @Override
-    public String name() {
-        return "test";
+    /**
+     * Task number.
+     */
+    private final transient long numb;
+
+    /**
+     * Default ctor.
+     */
+    public MkTask() {
+        this(0L);
+    }
+
+    /**
+     * Ctor.
+     * @param num Task number
+     */
+    public MkTask(final long num) {
+        this.numb = num;
     }
 
     @Override
-    public Tasks tasks() {
-        return new MkTasks();
+    public long number() {
+        return this.numb;
     }
 
     @Override
-    public Memo memo() throws IOException {
-        return new MkMemo();
+    public String command() {
+        return "some_command";
+    }
+
+    @Override
+    public Scenario scenario() {
+        throw new UnsupportedOperationException("MkTask#scenario");
     }
 }
