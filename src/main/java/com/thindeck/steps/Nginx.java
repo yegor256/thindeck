@@ -68,9 +68,30 @@ import org.apache.commons.io.FileUtils;
  *  basic main.conf and hosts.conf files, and add them to ngnix.conf.
  * @todo #312 Handle case when given hosts is already in the load balancing
  *  group.
- * @checkstyle ParameterNumber (4 lines)
+ * @checkstyle ParameterNumber (40 lines)
  */
 public final class Nginx implements LoadBalancer {
+
+    /**
+     * Nginx binary name.
+     */
+    private final transient String binary;
+
+    /**
+     * Constructor.
+     * @param bin Nginx binary name.
+     */
+    public Nginx(final String bin) {
+        this.binary = bin;
+    }
+
+    /**
+     * Default constructor.
+     */
+    public Nginx() {
+        this("nginx");
+    }
+
     @Override
     public void update(@NotNull final String host, @NotNull final int hport,
         @NotNull final String server, @NotNull final int sport) {
@@ -102,7 +123,7 @@ public final class Nginx implements LoadBalancer {
                         host
                     ),
                     String.format("rm %s.hosts.conf.bak", host),
-                    "pkill -HUP -f nginx"
+                    String.format("pkill -HUP -f %s", this.binary)
                 )
             );
         } catch (final UnknownHostException ex) {

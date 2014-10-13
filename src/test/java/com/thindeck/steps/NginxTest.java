@@ -36,6 +36,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.hamcrest.MatcherAssert;
@@ -50,8 +51,6 @@ import org.junit.rules.TemporaryFolder;
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #312 Create a test to check that ngnix process receives HUP signal,
- *  after configuration update.
  */
 public final class NginxTest {
     /**
@@ -71,10 +70,10 @@ public final class NginxTest {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final File path = this.temp.newFolder();
         final SSHD sshd = new SSHD(path);
-        final int port = sshd.start();
+        sshd.start();
         final File key = this.temp.newFile();
         FileUtils.write(key, sshd.key());
-        this.manifest(path, sshd.login(), port, key);
+        this.manifest(path, sshd.login(), sshd.port(), key);
         final String host = "host";
         final int sport = 567;
         final String server = "server";
@@ -92,6 +91,53 @@ public final class NginxTest {
                     "}"
                 )
             )
+        );
+    }
+
+    /**
+     * Ngnix can reload configuration.
+     * @throws Exception In case of error.
+     */
+    @Test
+    public void reloadsConfiguration() throws Exception {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final File path = this.temp.newFolder();
+        final SSHD sshd = new SSHD(path);
+        sshd.start();
+        final File key = this.temp.newFile();
+        FileUtils.write(key, sshd.key());
+        this.manifest(path, sshd.login(), sshd.port(), key);
+        final String bin = String.format(
+            "%s.sh", RandomStringUtils.randomAlphanumeric(128)
+        );
+        final File script = this.temp.newFile(bin);
+        final File marker = this.temp.newFile();
+        FileUtils.writeStringToFile(
+            script,
+            Joiner.on("\n").join(
+                "#!/bin/bash",
+                "function sighup(){",
+                String.format("    echo restarted > %s", marker.toString()),
+                "    exit 0",
+                "}",
+                String.format("    echo running > %s", marker.toString()),
+                "trap 'sighup' HUP",
+                "sleep 30",
+                String.format("    echo stopped > %s", marker.toString())
+            )
+        );
+        final ProcessBuilder builder = new ProcessBuilder(
+            "/bin/bash", script.toString()
+        );
+        builder.redirectInput(new File("/dev/null"));
+        builder.redirectOutput(new File("/dev/null"));
+        builder.redirectError(new File("/dev/null"));
+        final Process process = builder.start();
+        new Nginx(bin).update("", 1, "", 2);
+        process.waitFor();
+        MatcherAssert.assertThat(
+            FileUtils.readFileToString(marker),
+            Matchers.equalTo("restarted\n")
         );
     }
 
