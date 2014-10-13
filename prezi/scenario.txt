@@ -1,0 +1,66 @@
+A traditional PaaS is a cloud service that
+takes your packaged web application, runs it
+on virtual servers, and allows you to monitor
+and configure it.
+
+You pay per every hour your application is up.
+The amount you pay depends on the size of virtual
+servers PaaS platform is giving you, from one cent
+to two dollars per hour.
+
+Over the last few years a number of very successful
+PaaS product emerged on the market, including
+Heroku, Amazon Elastic Beanstalk, RedHat OpenShift,
+and CloudBees.
+
+Even though these platforms are successful,
+they have a few drawbacks.
+
+First, they are expensive. For example, to run
+a small Java web applicatio on Heroku you will have to
+pay $34.50 per month, which is over $400 per year.
+An average web developer may have a dozen of web apps.
+
+Second, they are too complex to be easily used by
+an average web designer. Most of programmers are used
+to a more traditional "shared hosting" where they
+simply upload their content via FTP, without
+any deployment and re-deployment procedures.
+
+Third, their support of programming languages is very
+limited. For example, AWS EBT supports only Java, PHP and
+Node.js. Heroku supports only Ruby and Java, etc.
+
+To overcome these drawbacks we created Thindeck.
+
+Thindeck is extremely cost-effective, deploys everything
+automatically and supports all tech-stacks available in Linux.
+
+There are three innovations that make this possible.
+
+First, we are charging our users for CPU usage, instead of
+server up-time. They simply don't pay anything when their
+applications don't consume CPU time. This is an absolutely
+unique approach.
+
+Second, Thindeck deploys and re-deploys web applications
+automatically, in a "pull" mode. Our users don't need to
+"push" anything to our servers, instead, we're pulling their
+source code from Github, Dropbox, or Google Drive. This approach
+is also a very unique.
+
+Third, we're using Docker as a virtualization technology. Docker
+allows our users to use any web development language they wish,
+including Java, Go, Python, Ruby, PHP, etc. Thindeck can
+host any of them, thanks to Docker virtualization.
+
+We started to develop Thindeck in April 2014. Over the
+last six months we managed to build a project team and
+create a working prototype. We're planning to launch Thindeck
+to the market in February 2015.
+
+Thindeck is being funded and developed by Teamed.io,
+a custom software development company from San Francisco. Teamed.io
+is developing software since 2001. Yegor Bugayenko is a
+CTO of Teamed.io and a chief architect of Thindeck.
+
