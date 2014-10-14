@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.net.URI;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.CharEncoding;
 import org.xembly.Directives;
 
 /**
@@ -84,7 +85,10 @@ public final class ReadConfig implements Step {
             )
         );
         final XML content = new YamlXML(
-            IOUtils.toString(repo.contents().get(".thindeck.yml").raw())
+            IOUtils.toString(
+                repo.contents().get(".thindeck.yml").raw(),
+                CharEncoding.UTF_8
+            )
         ).get();
         final Directives dirs = new Directives()
             .xpath("/memo").addIf("domains");
