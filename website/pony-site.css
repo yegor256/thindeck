@@ -1,0 +1,143 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
+.text-field, .signup-email-field {
+  position: relative;
+  border-radius: 14px;
+  cursor: pointer;
+  border: 0;
+  width: 100%;
+  outline: none;
+  white-space: nowrap; }
+
+.text-field, .signup-email-field {
+  transition: all 0.3s ease !important;
+  -moz-transition: all 0.3s ease !important;
+  -o-transition: all 0.3s ease !important;
+  -webkit-transition: all 0.3s ease !important;
+  font-family: "Open Sans";
+  font-weight: 300;
+  color: black;
+  background-color: #484860;
+  cursor: text;
+  font-size: 20px;
+  padding: 11.11111px;
+  box-shadow: inset 0 1px 2px #3d3d52; }
+  .text-field:hover, .signup-email-field:hover {
+    transition: all .3s ease;
+    background-color: #4a4a63; }
+  .text-field:focus, .signup-email-field:focus {
+    transition: all .3s ease;
+    background-color: #53536f; }
+
+::-webkit-input-placeholder {
+  color: #282835; }
+
+::-moz-placeholder {
+  color: #282835; }
+
+:-ms-input-placeholder {
+  color: #282835; }
+
+.brand {
+  font-weight: 700;
+  font-size: 100px;
+  font-family: 'Roboto Slab', serif; }
+
+.number-slab {
+  font-weight: 700;
+  font-family: 'Roboto Slab', serif;
+  font-size: 100px; }
+
+.grad {
+  background: #111117;
+  /* Old browsers */
+  background: -moz-linear-gradient(45deg, #111117 0%, #2a2a38 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #111117), color-stop(100%, #2a2a38));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(45deg, #111117 0%, #2a2a38 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(45deg, #111117 0%, #2a2a38 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(45deg, #111117 0%, #2a2a38 100%);
+  /* IE10+ */
+  background: linear-gradient(45deg, #111117 0%, #2a2a38 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#111117', endColorstr='#2a2a38',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */ }
+
+.grad-light {
+  background: #d5d5e8;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #d5d5e8 0%, white 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #d5d5e8), color-stop(100%, white));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, #d5d5e8 0%, white 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg, #d5d5e8 0%, white 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg, #d5d5e8 0%, white 100%);
+  /* IE10+ */
+  background: linear-gradient(135deg, #d5d5e8 0%, white 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d5d5e8', endColorstr='#ffffff',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */ }
+
+.border-bottom {
+  border-bottom: 1px solid #1c1c26; }
+
+.border-top {
+  border-top: 1px solid white; }
+
+.sub-grad {
+  background-color: rgba(17, 17, 23, 0.1); }
+
+.beta {
+  background-color: #bfbfcf; }
+
+.signup-element {
+  width: 100%;
+  font-size: 0; }
+  .signup-element div {
+    display: inline-block; }
+  .signup-element div > input {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    padding: 20px; }
+  .signup-element div > button {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    padding: 20px; }
+
+.signup-email-field {
+  background-color: #21212c;
+  color: #53536f;
+  box-shadow: inset -3px 0px 3px #1e1e29; }
+  .signup-email-field:hover {
+    background-color: #272734; }
+  .signup-email-field:focus {
+    background-color: #272734; }
+  .signup-email-field::-webkit-input-placeholder {
+    color: #484860; }
+
+.face-icon {
+  font-size: 200px !important; }
+
+.teamed-button {
+  width: 200px; }
+
+.box-image {
+  width: 100px; }
+
+#signed-up-container-success, #signed-up-container-failure {
+  display: none;
+  max-height: 130px;
+}
+
+#signup-container {
+  max-height: 130px;
+}
+.signup-height {
+  min-height: 200px;
+}
