@@ -32,13 +32,18 @@ package com.thindeck.cockpit;
 import com.jcabi.matchers.XhtmlMatchers;
 import com.rexsl.mock.MkServletContext;
 import com.rexsl.page.mock.ResourceMocker;
+import com.thindeck.MnBase;
 import com.thindeck.api.Base;
 import com.thindeck.api.mock.MkBase;
 import java.io.ByteArrayOutputStream;
+import java.net.HttpURLConnection;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.xml.bind.Marshaller;
 import org.apache.commons.lang3.CharEncoding;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -75,5 +80,34 @@ public final class ReposRsTest {
                 "//repo/links/link[@rel='open']"
             )
         );
+    }
+
+    /**
+     * RepoRs can accept adding different repos.
+     */
+    @Test
+    public void acceptsAddOfMultipleRepos() {
+        final Base base = new MnBase();
+        final ReposRs home = new ResourceMocker().mock(ReposRs.class);
+        home.setServletContext(
+            new MkServletContext().withAttr(Base.class.getName(), base)
+        );
+        for (int time = 0; time < 2; ++time) {
+            try {
+                final Response response = home.add(
+                    String.format("num%s", time),
+                    String.format("http://www.example.com/num%d", time)
+                );
+                MatcherAssert.assertThat(
+                    response.getStatus(),
+                    Matchers.equalTo(HttpURLConnection.HTTP_OK)
+                );
+            } catch (final WebApplicationException ex) {
+                MatcherAssert.assertThat(
+                    ex.getResponse().getStatus(),
+                    Matchers.equalTo(HttpURLConnection.HTTP_SEE_OTHER)
+                );
+            }
+        }
     }
 }
