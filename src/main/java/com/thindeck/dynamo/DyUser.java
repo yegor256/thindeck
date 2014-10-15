@@ -29,58 +29,55 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.dynamo.QueryValve;
-import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.Item;
 import com.jcabi.urn.URN;
-import com.thindeck.api.Base;
 import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
+import com.thindeck.api.Usage;
 import com.thindeck.api.User;
 
 /**
- * Dynamo implementation of the {@link Base}.
+ * Dynamo implementation of the {@link User}.
  *
- * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.3
- * @todo #322 Implement txn method to retrieve data from appropriate table.
+ * @todo #322 Implement repos and usage methods.
  */
-public final class DyBase implements Base {
+public final class DyUser implements User {
     /**
-     * Region we're in.
+     * Table name.
      */
-    private final transient Region region;
+    public static final String TBL = "users";
 
     /**
-     * Constructor.
-     * @param rgn Region
+     * URN attribute.
      */
-    public DyBase(final Region rgn) {
-        this.region = rgn;
+    public static final String ATTR_URN = "urn";
+
+    /**
+     * Item.
+     */
+    private final transient Item item;
+
+    /**
+     * Ctor.
+     * @param itm Item
+     */
+    DyUser(final Item itm) {
+        this.item = itm;
     }
 
     @Override
-    public User user(final URN urn) {
-        return new DyUser(
-            this.region.table(DyUser.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyUser.ATTR_URN, urn.toString())
-                .iterator().next()
-        );
+    public URN urn() {
+        return URN.create(this.item.get(DyUser.ATTR_URN).getS());
     }
 
     @Override
     public Repos repos() {
-        return new DyRepos(this.region);
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public Txn txn(final Task task) {
+    public Usage usage() {
         throw new UnsupportedOperationException();
     }
 }

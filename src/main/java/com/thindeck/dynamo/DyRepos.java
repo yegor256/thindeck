@@ -29,24 +29,21 @@
  */
 package com.thindeck.dynamo;
 
+import com.jcabi.dynamo.Attributes;
+import com.jcabi.dynamo.Conditions;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Base;
+import com.thindeck.api.Repo;
 import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
-import com.thindeck.api.User;
 
 /**
- * Dynamo implementation of the {@link Base}.
- *
- * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * Dynamo implementation of {@link Repos}.
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.3
- * @todo #322 Implement txn method to retrieve data from appropriate table.
+ * @todo #322 Implement iterate method.
+ * @todo #322 Create test for this class when jcabi/jcabi-dynamo#13 is done.
  */
-public final class DyBase implements Base {
+public final class DyRepos implements Repos {
     /**
      * Region we're in.
      */
@@ -56,31 +53,47 @@ public final class DyBase implements Base {
      * Constructor.
      * @param rgn Region
      */
-    public DyBase(final Region rgn) {
+    public DyRepos(final Region rgn) {
         this.region = rgn;
     }
 
     @Override
-    public User user(final URN urn) {
-        return new DyUser(
-            this.region.table(DyUser.TBL)
+    public Repo get(final String name) {
+        return new DyRepo(
+            this.region.table(DyRepo.TBL)
                 .frame()
                 .through(
                     new QueryValve()
                         .withLimit(1)
                 )
-                .where(DyUser.ATTR_URN, urn.toString())
+                .where(DyRepo.ATTR_NAME, name)
                 .iterator().next()
         );
     }
 
     @Override
-    public Repos repos() {
-        return new DyRepos(this.region);
+    public Repo add(final String name) {
+        if (this.region.table(DyRepo.TBL)
+            .frame()
+            .through(
+                new QueryValve()
+                    .withLimit(1)
+            )
+            .where(DyRepo.ATTR_NAME, Conditions.equalTo(name))
+            .iterator().hasNext()) {
+            throw new IllegalArgumentException();
+        }
+        return new DyRepo(
+            this.region.table(DyRepo.TBL).put(
+                new Attributes()
+                    .with(DyRepo.ATTR_NAME, name)
+                    .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
+            )
+        );
     }
 
     @Override
-    public Txn txn(final Task task) {
+    public Iterable<Repo> iterate() {
         throw new UnsupportedOperationException();
     }
 }

@@ -29,58 +29,35 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.dynamo.QueryValve;
-import com.jcabi.dynamo.Region;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.jcabi.dynamo.Item;
 import com.jcabi.urn.URN;
-import com.thindeck.api.Base;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
-import com.thindeck.api.User;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
- * Dynamo implementation of the {@link Base}.
+ * Tests for {@link DyUser}.
  *
- * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.3
- * @todo #322 Implement txn method to retrieve data from appropriate table.
  */
-public final class DyBase implements Base {
-    /**
-     * Region we're in.
-     */
-    private final transient Region region;
+public final class DyUserTest {
 
     /**
-     * Constructor.
-     * @param rgn Region
+     * DyUser can return URN from dynamo.
      */
-    public DyBase(final Region rgn) {
-        this.region = rgn;
-    }
-
-    @Override
-    public User user(final URN urn) {
-        return new DyUser(
-            this.region.table(DyUser.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyUser.ATTR_URN, urn.toString())
-                .iterator().next()
+    @Test
+    public void returnsUrnFromDynamo() {
+        final URN urn = URN.create("urn:foo:3");
+        final Item item = Mockito.mock(Item.class);
+        final AttributeValue value = Mockito.mock(AttributeValue.class);
+        Mockito.when(value.getS()).thenReturn(urn.toString());
+        Mockito.when(item.get(DyUser.ATTR_URN)).thenReturn(value);
+        MatcherAssert.assertThat(
+            new DyUser(item).urn(),
+            Matchers.equalTo(urn)
         );
-    }
-
-    @Override
-    public Repos repos() {
-        return new DyRepos(this.region);
-    }
-
-    @Override
-    public Txn txn(final Task task) {
-        throw new UnsupportedOperationException();
     }
 }

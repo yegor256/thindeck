@@ -27,60 +27,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.dynamo;
-
-import com.jcabi.dynamo.QueryValve;
-import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Base;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
-import com.thindeck.api.User;
 
 /**
- * Dynamo implementation of the {@link Base}.
+ * Dynamo tests.
  *
- * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.3
- * @todo #322 Implement txn method to retrieve data from appropriate table.
  */
-public final class DyBase implements Base {
-    /**
-     * Region we're in.
-     */
-    private final transient Region region;
-
-    /**
-     * Constructor.
-     * @param rgn Region
-     */
-    public DyBase(final Region rgn) {
-        this.region = rgn;
-    }
-
-    @Override
-    public User user(final URN urn) {
-        return new DyUser(
-            this.region.table(DyUser.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyUser.ATTR_URN, urn.toString())
-                .iterator().next()
-        );
-    }
-
-    @Override
-    public Repos repos() {
-        return new DyRepos(this.region);
-    }
-
-    @Override
-    public Txn txn(final Task task) {
-        throw new UnsupportedOperationException();
-    }
-}
+package com.thindeck.dynamo;
