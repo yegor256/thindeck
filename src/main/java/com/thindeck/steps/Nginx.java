@@ -68,7 +68,6 @@ import org.apache.commons.io.FileUtils;
  *  basic main.conf and hosts.conf files, and add them to ngnix.conf.
  * @todo #312 Handle case when given hosts is already in the load balancing
  *  group.
- * @checkstyle ParameterNumber (40 lines)
  */
 public final class Nginx implements LoadBalancer {
 
@@ -92,6 +91,14 @@ public final class Nginx implements LoadBalancer {
         this("nginx");
     }
 
+    /**
+     * See {@link LoadBalancer#update(String, int, String, int)}.
+     * @param host The host name indicated by requests
+     * @param hport Port corresponding to the host name
+     * @param server Server name to redirect requests to
+     * @param sport Server port to redirect requests to
+     * @checkstyle ParameterNumber (4 lines)
+     */
     @Override
     public void update(@NotNull final String host, @NotNull final int hport,
         @NotNull final String server, @NotNull final int sport) {
