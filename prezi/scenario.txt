@@ -32,7 +32,6 @@ limited. For example, AWS EBT supports only Java, PHP and
 Node.js. Heroku supports only Ruby and Java, etc.
 
 To overcome these drawbacks we created Thindeck.
-
 Thindeck is extremely cost-effective, deploys everything
 automatically and supports all tech-stacks available in Linux.
 
