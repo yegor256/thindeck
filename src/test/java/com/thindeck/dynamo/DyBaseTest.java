@@ -29,71 +29,52 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.dynamo.Attributes;
-import com.jcabi.dynamo.Conditions;
-import com.jcabi.dynamo.QueryValve;
+import com.jcabi.dynamo.Frame;
+import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
+import com.jcabi.dynamo.Table;
+import com.jcabi.dynamo.Valve;
+import com.jcabi.urn.URN;
+import java.util.Collections;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
- * Dynamo implementation of {@link Repos}.
+ * Tests for {@link DyBase}.
+ *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #322 Implement iterate method.
- * @todo #322 Create test for this class when jcabi/jcabi-dynamo#13 is done.
  */
-public final class DyRepos implements Repos {
-    /**
-     * Region we're in.
-     */
-    private final transient Region region;
+public final class DyBaseTest {
 
     /**
-     * Constructor.
-     * @param rgn Region
+     * DyBase can create DyUser.
+     * @todo #322 Enable this test when jcabi/jcabi-dynamo#13 is done.
      */
-    public DyRepos(final Region rgn) {
-        this.region = rgn;
-    }
-
-    @Override
-    public Repo get(final String name) {
-        return new DyRepo(
-            this.region.table(DyRepo.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyRepo.ATTR_NAME, name)
-                .iterator().next()
-        );
-    }
-
-    @Override
-    public Repo add(final String name) {
-        if (this.region.table(DyRepo.TBL)
-            .frame()
-            .through(
-                new QueryValve()
-                    .withLimit(1)
+    @Test
+    @Ignore
+    public void createsDyUser() {
+        final Region region = Mockito.mock(Region.class);
+        final Table table = Mockito.mock(Table.class);
+        final Frame frame = Mockito.mock(Frame.class);
+        final URN urn = URN.create("urn:test:1");
+        Mockito.when(region.table(Mockito.eq(DyUser.TBL))).thenReturn(table);
+        Mockito.when(table.frame()).thenReturn(frame);
+        Mockito.when(frame.through(Mockito.any(Valve.class))).thenReturn(frame);
+        Mockito.when(
+            frame.where(
+                Mockito.eq(DyUser.ATTR_URN), Mockito.eq(urn.toString())
             )
-            .where(DyRepo.ATTR_NAME, Conditions.equalTo(name))
-            .iterator().hasNext()) {
-            throw new IllegalArgumentException();
-        }
-        return new DyRepo(
-            this.region.table(DyRepo.TBL).put(
-                new Attributes()
-                    .with(DyRepo.ATTR_NAME, name)
-                    .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
-            )
+        ).thenReturn(frame);
+        final Item item = Mockito.mock(Item.class);
+        Mockito.when(frame.iterator())
+            .thenReturn(Collections.singleton(item).iterator());
+        MatcherAssert.assertThat(
+            new DyBase(region).user(urn).urn(),
+            Matchers.equalTo(urn)
         );
-    }
-
-    @Override
-    public Iterable<Repo> iterate() {
-        throw new UnsupportedOperationException();
     }
 }
