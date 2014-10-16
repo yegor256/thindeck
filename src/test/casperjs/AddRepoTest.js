@@ -10,7 +10,7 @@ casper.test.begin(
         );
         casper.then(
             function () {
-                this.fillForm('.content > form', {
+                this.fill('.content > form', {
                     'name' : 'test_repo_name',
                     'uri'  : 'test_repo_uri'
                 });
