@@ -8,7 +8,6 @@ casper.test.begin(
                 test.assertHttpStatus(200);
             }
         );
-
         casper.then(
             function () {
                 this.fillForm('.content > form', {
