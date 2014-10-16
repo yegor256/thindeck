@@ -40,7 +40,8 @@
 
 .brand {
   font-weight: 700;
-  font-size: 100px;
+  font-size: 60px;
+  color: #dadae6;
   font-family: 'Roboto Slab', serif; }
 
 .number-slab {
