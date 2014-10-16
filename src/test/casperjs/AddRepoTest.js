@@ -8,13 +8,12 @@ casper.test.begin(
                 test.assertHttpStatus(200);
             }
         );
-
         casper.then(
             function () {
-                this.fillForm('.content > form', {
+                this.fill('.content > form', {
                     'name' : 'test_repo_name',
                     'uri'  : 'test_repo_uri'
-                });
+                }, true);
                 test.assertHttpStatus(200);
             }
         );
