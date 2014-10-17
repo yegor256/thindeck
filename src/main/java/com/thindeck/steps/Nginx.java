@@ -144,7 +144,7 @@ public final class Nginx implements LoadBalancer {
                         "else printf %s > %s.hosts.conf",
                         Joiner.on("\\n").join(
                             "'server {",
-                            String.format("    server %s:%d", server, sport),
+                            String.format("    server %s:%d;", server, sport),
                             "}'"
                         ),
                         host
