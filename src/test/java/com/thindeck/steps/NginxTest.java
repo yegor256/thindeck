@@ -71,6 +71,7 @@ public final class NginxTest {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final File path = this.temp.newFolder();
         final SSHD sshd = new SSHD(path);
+        sshd.start();
         final File key = this.temp.newFile();
         FileUtils.write(key, sshd.key());
         this.manifest(path, sshd.login(), sshd.port(), key);
@@ -78,13 +79,8 @@ public final class NginxTest {
         final int sport = 567;
         final String server = "server";
         final File fhosts = this.hosts(path, host);
-        try {
-            sshd.start();
-            // @checkstyle MagicNumber (1 line)
-            new Nginx().update(host, 1234, server, sport);
-        } finally {
-            sshd.stop();
-        }
+        // @checkstyle MagicNumber (1 line)
+        new Nginx().update(host, 1234, server, sport);
         MatcherAssert.assertThat(
             FileUtils.readFileToString(fhosts),
             Matchers.equalTo(
@@ -124,7 +120,7 @@ public final class NginxTest {
             FileUtils.readFileToString(new File(path, this.hostsConfig(host))),
             Matchers.equalTo(
                 Joiner.on('\n').join(
-                    "upstream example_servers {",
+                    String.format("upstream %s_servers {", host),
                     String.format("    server %s:%d;", server, sport),
                     "}"
                 )
