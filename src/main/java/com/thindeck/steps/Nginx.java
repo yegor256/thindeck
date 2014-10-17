@@ -64,10 +64,19 @@ import org.apache.commons.io.FileUtils;
  * those files are loaded from main ngnix.conf file using include directive.
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #312 Handle case when given host is not yet configured, need to create
- *  basic main.conf and hosts.conf files, and add them to ngnix.conf.
  * @todo #312 Handle case when given hosts is already in the load balancing
  *  group.
+ * @todo #342 When a *hosts.conf file is created for a new host, it should be
+ *  included in nginx.conf so that it can be loaded by the Nginx server. See
+ *  the explanation in in https://github.com/yegor256/thindeck/issues/347
+ *  for more details.
+ * @todo #342 Let's handle the file *main.conf, which should contain the server
+ *  configuration for a given host. The file name is prefixed by the host name,
+ *  e.g. the host "www.example.com" will have the file name
+ *  "www.example.com.hosts.conf". If the file doesn't exist yet, we should
+ *  create it and include it in nginx.conf. If it already exists, we should
+ *  update it. See the Javadoc above or the explanation in
+ *  https://github.com/yegor256/thindeck/issues/347 for more details.
  */
 public final class Nginx implements LoadBalancer {
 
@@ -122,13 +131,23 @@ public final class Nginx implements LoadBalancer {
                         "cd %s",
                         Manifests.read("Thindeck-LoadBalancer-Directory")
                     ),
+                    String.format("if [ -f %s.hosts.conf ]", host),
                     String.format(
                         // @checkstyle LineLength (1 line)
-                        "sed -i.bak -r 's/}/    server %s:%d;\\n}/' %s.hosts.conf",
+                        "then sed -i.bak -r 's/}/    server %s:%d;\\n}/' %s.hosts.conf",
                         server,
                         sport,
                         host
                     ),
+                    String.format(
+                        "else printf %s > %s.hosts.conf",
+                        Joiner.on("\n").join(
+                            "server {",
+                            String.format("    server %s:%d", server, sport),
+                            "}"
+                        )
+                    ),
+                    "fi",
                     String.format("rm %s.hosts.conf.bak", host),
                     String.format("pkill -HUP -f %s", this.binary)
                 )

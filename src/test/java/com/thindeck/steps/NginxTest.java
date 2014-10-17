@@ -30,6 +30,7 @@
 package com.thindeck.steps;
 
 import com.google.common.base.Joiner;
+import com.jcabi.aspects.Tv;
 import com.jcabi.manifests.Manifests;
 import com.jcabi.ssh.SSHD;
 import java.io.ByteArrayInputStream;
@@ -95,6 +96,35 @@ public final class NginxTest {
     }
 
     /**
+     * Nginx can create server.hosts.conf file.
+     * @throws IOException If something goes wrong
+     */
+    @Test
+    public void createsHostsConfFile() throws IOException {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final File path = this.temp.newFolder();
+        final SSHD sshd = new SSHD(path);
+        sshd.start();
+        final File key = this.temp.newFile();
+        FileUtils.write(key, sshd.key());
+        this.manifest(path, sshd.login(), sshd.port(), key);
+        final String host = "host2";
+        final int sport = 456;
+        final String server = "server2";
+        new Nginx().update(host, Tv.THOUSAND, server, sport);
+        MatcherAssert.assertThat(
+            FileUtils.readFileToString(new File(path, this.hostsConfig(host))),
+            Matchers.equalTo(
+                Joiner.on('\n').join(
+                    "upstream example_servers {",
+                    String.format("    server %s:%d;", server, sport),
+                    "}"
+                )
+            )
+        );
+    }
+
+    /**
      * Ngnix can reload configuration.
      * @throws Exception In case of error.
      */
@@ -142,7 +172,7 @@ public final class NginxTest {
     }
 
     /**
-     * Create host configuration file.
+     * Create hosts configuration file.
      * @param path Directory where to create file.
      * @param host Name of the host.
      * @return Location of created file.
@@ -150,7 +180,7 @@ public final class NginxTest {
      */
     private File hosts(final File path, final String host) throws IOException {
         final File fhosts = new File(
-            path, String.format("%s.hosts.conf", host)
+            path, this.hostsConfig(host)
         );
         FileUtils.writeStringToFile(
             fhosts,
@@ -190,5 +220,14 @@ public final class NginxTest {
         Manifests.append(
             new ByteArrayInputStream(file.getBytes())
         );
+    }
+
+    /**
+     * File name for hosts config.
+     * @param host The host
+     * @return File name for hosts config.
+     */
+    private String hostsConfig(final String host) {
+        return String.format("%s.hosts.conf", host);
     }
 }
