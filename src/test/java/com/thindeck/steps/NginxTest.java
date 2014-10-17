@@ -104,14 +104,18 @@ public final class NginxTest {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final File path = this.temp.newFolder();
         final SSHD sshd = new SSHD(path);
-        sshd.start();
         final File key = this.temp.newFile();
         FileUtils.write(key, sshd.key());
         this.manifest(path, sshd.login(), sshd.port(), key);
         final String host = "host2";
         final int sport = 456;
         final String server = "server2";
-        new Nginx().update(host, Tv.THOUSAND, server, sport);
+        try {
+            sshd.start();
+            new Nginx().update(host, Tv.THOUSAND, server, sport);
+        } finally {
+            sshd.stop();
+        }
         MatcherAssert.assertThat(
             FileUtils.readFileToString(new File(path, this.hostsConfig(host))),
             Matchers.equalTo(
