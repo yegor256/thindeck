@@ -145,7 +145,8 @@ public final class Nginx implements LoadBalancer {
                             "server {",
                             String.format("    server %s:%d", server, sport),
                             "}"
-                        )
+                        ),
+                        host
                     ),
                     "fi",
                     String.format("rm %s.hosts.conf.bak", host),
