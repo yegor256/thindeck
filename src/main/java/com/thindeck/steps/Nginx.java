@@ -139,9 +139,10 @@ public final class Nginx implements LoadBalancer {
                         sport,
                         host
                     ),
+                    String.format("rm %s.hosts.conf.bak", host),
                     String.format(
                         "else printf %s > %s.hosts.conf",
-                        Joiner.on("\n").join(
+                        Joiner.on("\\n").join(
                             "'server {",
                             String.format("    server %s:%d", server, sport),
                             "}'"
@@ -149,7 +150,6 @@ public final class Nginx implements LoadBalancer {
                         host
                     ),
                     "fi",
-                    String.format("rm %s.hosts.conf.bak", host),
                     String.format("pkill -HUP -f %s", this.binary)
                 )
             );
