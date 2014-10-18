@@ -41,7 +41,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.After;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -60,6 +62,23 @@ public final class NginxTest {
     @Rule
     public final transient TemporaryFolder temp = new TemporaryFolder();
 
+    private File path;
+    private SSHD sshd;
+
+	@Before
+	public void init() throws Exception {
+		Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+		path = this.temp.newFolder();
+		sshd = new SSHD(path);
+		sshd.start();
+	}
+
+	@After
+	public void shutdown() {
+		if (sshd != null)
+			sshd.stop();
+	}
+
     /**
      * Ngnix can create host configuration.
      * @throws IOException In case of error.
@@ -67,10 +86,6 @@ public final class NginxTest {
      */
     @Test
     public void createsHostsConfiguration() throws IOException {
-        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-        final File path = this.temp.newFolder();
-        final SSHD sshd = new SSHD(path);
-        sshd.start();
         final File key = this.temp.newFile();
         FileUtils.write(key, sshd.key());
         this.manifest(path, sshd.login(), sshd.port(), key);
@@ -100,10 +115,6 @@ public final class NginxTest {
      */
     @Test
     public void reloadsConfiguration() throws Exception {
-        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-        final File path = this.temp.newFolder();
-        final SSHD sshd = new SSHD(path);
-        sshd.start();
         final File key = this.temp.newFile();
         FileUtils.write(key, sshd.key());
         this.manifest(path, sshd.login(), sshd.port(), key);
