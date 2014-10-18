@@ -34,6 +34,7 @@ import com.jcabi.urn.URN;
 import com.thindeck.api.Repos;
 import com.thindeck.api.Usage;
 import com.thindeck.api.User;
+import java.io.IOException;
 
 /**
  * Dynamo implementation of the {@link User}.
@@ -68,7 +69,11 @@ public final class DyUser implements User {
 
     @Override
     public URN urn() {
-        return URN.create(this.item.get(DyUser.ATTR_URN).getS());
+        try {
+            return URN.create(this.item.get(DyUser.ATTR_URN).getS());
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
     @Override
