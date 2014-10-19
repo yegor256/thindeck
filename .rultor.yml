@@ -1,7 +1,7 @@
 assets:
   settings.xml: "yegor256/home#assets/thindeck/settings.xml"
-  id_rsa: "yegor256/home#assets/thindeck/id_rsa"
-  id_rsa.pub: "yegor256/home#assets/thindeck/id_rsa.pub"
+  id_rsa: "yegor256/home#assets/heroku-key"
+  id_rsa.pub: "yegor256/home#assets/heroku-key.pub"
   s3cfg: "yegor256/home#assets/s3cfg"
 
 env:
