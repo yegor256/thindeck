@@ -42,6 +42,7 @@ import org.apache.commons.lang3.SystemUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Assume;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -66,6 +67,7 @@ public final class NginxTest {
      * @checkstyle MultipleStringLiterals (120 lines)
      */
     @Test
+    @Ignore
     public void createsHostsConfiguration() throws IOException {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final File path = this.temp.newFolder();
