@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>thindeck</title>
+    <meta charset='UTF-8'/>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'/>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+    <link rel="shortcut icon" href="box.gif"/>
+    <link href='pony.css' rel='stylesheet' type='text/css'/>
+    <link href='pony-site.css' rel='stylesheet' type='text/css'/>
+    <link href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'/>
+    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="email.js"></script>
+</head>
+<body>
+<div class='container center grad padding-bottom-large'>
+    <div class='container shift1 border-bottom padding-around-base'>
+        <div class='span1'>
+        </div>
+        <div class='span11 right'>
+            <nav class='double-lighten-default menu animate-show-slow'>
+                <li class='hover-warning'>
+                    <a class='no-underline' href='#docs'>documentation</a>
+                </li>
+                <li class='hover-warning'>
+                    <a class='no-underline' href='#pricing'>pricing</a>
+                </li>
+                <li class='hover-warning'>
+                    <button class='button-modern-default base tooltip-bottom tooltip-default' tip="Oops, we're not ready yet">
+                        <i class='fa fa-github warning'></i>
+                        &#160;&#160;
+                        sign-in
+                    </button>
+                </li>
+            </nav>
+        </div>
+    </div>
+    <div class='container shift2 center padding-vertical-medium animate-slide-children-top-to-bottom'>
+        <h1 class='tight brand'>
+            <img src='thindeck.svg' width='120px'>
+            thindeck
+        </h1>
+        <p class='medium lighten-default'>
+            <span class='controls-text-color big'>hosts, deploys and scales any-stack web app</span>
+            <br>
+            you pay only when our CPU works for your app
+        </p>
+    </div>
+    <div class='container center padding-around-small sub-grad signup-height'>
+        <div id="signup-container">
+            <div class='container lighten-default'>
+                Want to be the first to know about our beta launch?
+                &#160;
+                <i class='fa fa-chevron-circle-right warning hover-success'></i>
+            </div>
+            <div class='container padding-around-base'>
+                <form id="send-form">
+                    <div class='signup-element'>
+                        <div>
+                            <input class='signup-email-field base' type="email" id="email" placeholder='leave your email' required>
+                        </div>
+                        <div>
+                            <button type="submit" class='button-warning base' id="send-button">
+                                &#160;
+                                <i class='fa fa-envelope-o'></i>
+                                &#160;
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class='container' id='signed-up-container-success'>
+            <p class='lighten-default padding-around-small'>
+                <span class='controls-text-color medium'>Sure, thank you!</span>
+                <br>
+                We'll get in touch when ready
+            </p>
+        </div>
+        <div class='container' id='signed-up-container-failure'>
+            <p class='lighten-default padding-around-small'>
+                <span class='controls-text-color medium'>Oops, something went wrong!</span>
+                <br>
+                We could not send email to your address
+            </p>
+        </div>
+    </div>
+</div>
+<div class='container background-controls-text-color padding-around-large grad-light'>
+    <div class='container shift1 lighten-default padding-vertical-large'>
+        <div class='span4'>
+            <div class='container'>
+                <div class='span3'>
+                    <span class='lighten-warning number-slab'>1</span>
+                </div>
+                <div class='span9 medium padding-vertical-medium'>
+                    Point us to your sources or binaries
+                </div>
+            </div>
+        </div>
+        <div class='span4'>
+            <div class='container'>
+                <div class='span3'>
+                    <span class='lighten-warning number-slab'>2</span>
+                </div>
+                <div class='span9 medium padding-vertical-medium'>
+                    We run/host them in Docker containers
+                </div>
+            </div>
+        </div>
+        <div class='span4'>
+            <div class='container'>
+                <div class='span3'>
+                    <span class='lighten-warning number-slab'>3</span>
+                </div>
+                <div class='span9 medium padding-vertical-medium'>
+                    You pay only for our CPU time
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a name='pricing'></a>
+<div class='container lighten-background padding-around-large border-top grad'>
+    <div class='container shift2 lighten-default padding-vertical-large'>
+        <div class='span6 padding-around-large'>
+            <h1 class='lighten-default controls-text-color'>Pricing</h1>
+            <p>
+                Usually, they charge you per hour, either your site is working
+                hard or is idle. We're the only platform in the
+                world that charges per CPU usage.
+            </p>
+        </div>
+        <div class='span6 center'>
+            <p>
+                <span class='number-slab warning'>$0.24</span>
+                <br>
+                per outbound Gb
+            </p>
+            <p>
+                <span class='number-slab'>&#162;0.04</span>
+                <br>
+                per minute of CPU
+            </p>
+        </div>
+    </div>
+</div>
+<a name='docs'></a>
+<div class='container padding-around-large background-controls-text-color border-top'>
+    <div class='container padding-vertical-base shift2'>
+        <div class='span7 padding-around-large'>
+            <h2 class='lighten-default'>
+                Uniquely Cost Effective
+            </h2>
+            <p class='lighten-default'>
+                You pay per second of CPU usage, not per hour or per month. If your app is silent, you pay nothing. Once you get the traffic and your containers consume more CPU time, you pay proportionally more.
+            </p>
+        </div>
+        <div class='span5'>
+            <img src="thin1.jpg"/>
+        </div>
+    </div>
+    <div class='container padding-vertical-base shift2'>
+        <div class='span5'>
+            <img src="thin2.jpg"/>
+        </div>
+        <div class='span7 padding-around-large'>
+            <h2 class='lighten-default'>
+                Scales From Zero To Infinity
+            </h2>
+            <p class='lighten-default'>
+                The number of containers is scaled automatically. We monitor your CPU usage and start more containers when needed. Once your application slows down, we shut down unnecessary containers. This is happening behind the scene.
+            </p>
+        </div>
+    </div>
+    <div class='container padding-vertical-base shift2'>
+        <div class='span7 padding-around-large'>
+            <h2 class='lighten-default'>
+                Zero-Downtime Deployments Out-of-the-box
+            </h2>
+            <p class='lighten-default'>
+                We fully support green/blue deployment strategy, out of the box. When a new version of your app is ready for deployment, we attempt to start new containers for it, check their readiness, and then we shut down the old version. End-users experience zero down-time.
+            </p>
+        </div>
+        <div class='span5'>
+            <img src="thin3.jpg"/>
+        </div>
+    </div>
+    <div class='container padding-vertical-base shift2'>
+        <div class='span5 padding-around-large'>
+            <i class='face-icon fa fa-rocket lighten-success'></i>
+        </div>
+        <div class='span7 padding-around-large'>
+            <h2 class='lighten-default'>
+                Anything That Runs on Linux
+            </h2>
+            <p class='lighten-default'>
+                Unlike many other PaaS providers, we support all technologies that can run on Linux, including Java, Ruby, Go, Python, PHP, etc. Thanks to Docker, you have full control of your app configuration.
+            </p>
+        </div>
+    </div>
+</div>
+<div class='container lighten-background padding-around-large center'>
+    <div class='container padding-around-large'>
+        <a class='no-underline'>
+            <img class='teamed-button' src='teamed.svg'>
+        </a>
+        <p class='lighten-default'>
+            San Francisco
+            <br>
+            2014
+        </p>
+        <p class='double-lighten-default padding-around-large'>
+            <a class='no-underline' href='http://twitter.com/thindeck'>
+                <i class='fa fa-twitter large hover-warning'></i>
+            </a>
+        </p>
+    </div>
+</div>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1963507-30', 'auto');
+    ga('send', 'pageview');
+</script>
+</body>
+</html>
