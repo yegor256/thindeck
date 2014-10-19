@@ -29,62 +29,58 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.dynamo.Item;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
+import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.Region;
+import com.thindeck.api.Task;
 import com.thindeck.api.Tasks;
-import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import java.util.Map;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Dynamo implementation of {@link Repo}.
+ * Dynamo implementation of {@link Tasks}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Paul Polishchuk (ppol@yua.fm)
  * @version $Id$
- * @todo #373 Implement memo method.
+ * @since 0.5
+ * @todo #373 Implement get and open methods.
+ * @todo #373 Implement all and add methods.
  */
-public final class DyRepo implements Repo {
+@Immutable
+@ToString
+@EqualsAndHashCode
+@SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField" })
+public final class DyTasks implements Tasks {
     /**
-     * Table name.
+     * Region we're in.
      */
-    public static final String TBL = "repos";
+    private final transient Region region;
 
     /**
-     * URN attribute.
+     * Constructor.
+     * @param rgn Region
      */
-    public static final String ATTR_NAME = "name";
-
-    /**
-     * When updated.
-     */
-    public static final String ATTR_UPDATED = "updated";
-
-    /**
-     * Item.
-     */
-    private final transient Item item;
-
-    /**
-     * Ctor.
-     * @param itm Item
-     */
-    public DyRepo(@NotNull final Item itm) {
-        this.item = itm;
+    public DyTasks(final Region rgn) {
+        this.region = rgn;
     }
 
     @Override
-    public String name() {
-        return this.item.get(DyRepo.ATTR_NAME).getS();
+    public Task get(final long number) {
+        throw new UnsupportedOperationException("#get");
     }
 
     @Override
-    @NotNull
-    public Tasks tasks() {
-        return new DyTasks(this.item.frame().table().region());
+    public Iterable<Task> open() {
+        throw new UnsupportedOperationException("#open");
     }
 
     @Override
-    public Memo memo() throws IOException {
-        throw new UnsupportedOperationException("#memo");
+    public Iterable<Task> all() {
+        throw new UnsupportedOperationException("#all");
+    }
+
+    @Override
+    public Task add(final String command, final Map<String, String> args) {
+        throw new UnsupportedOperationException("#add");
     }
 }
