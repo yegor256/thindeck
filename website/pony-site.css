@@ -148,9 +148,9 @@
   color: #fff;
   box-shadow: inset 0px 0px 0px #8585a3; }
   .signup-email-field:hover {
-    background-color: #595b75; }
+    background-color: #5f627d; }
   .signup-email-field:focus {
-    background-color: #54576f; }
+    background-color: #595b75; }
   .signup-email-field::-webkit-input-placeholder {
     color: #fff; }
 
