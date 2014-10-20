@@ -66,11 +66,11 @@ import org.apache.commons.io.FileUtils;
  * @version $Id$
  * @todo #312 Handle case when given hosts is already in the load balancing
  *  group.
- * @todo #342 When a *hosts.conf file is created for a new host, it should be
+ * @todo #345 When a *hosts.conf file is created for a new host, it should be
  *  included in nginx.conf so that it can be loaded by the Nginx server. See
  *  the explanation in in https://github.com/yegor256/thindeck/issues/347
  *  for more details.
- * @todo #342 Let's handle the file *main.conf, which should contain the server
+ * @todo #345 Let's handle the file *main.conf, which should contain the server
  *  configuration for a given host. The file name is prefixed by the host name,
  *  e.g. the host "www.example.com" will have the file name
  *  "www.example.com.hosts.conf". If the file doesn't exist yet, we should
