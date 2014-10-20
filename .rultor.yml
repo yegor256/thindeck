@@ -1,13 +1,14 @@
 assets:
   settings.xml: "yegor256/home#assets/thindeck/settings.xml"
-  id_rsa: "yegor256/home#assets/thindeck/id_rsa"
-  id_rsa.pub: "yegor256/home#assets/thindeck/id_rsa.pub"
+  id_rsa: "yegor256/home#assets/heroku-key"
+  id_rsa.pub: "yegor256/home#assets/heroku-key.pub"
   s3cfg: "yegor256/home#assets/s3cfg"
 
 env:
   MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
 
 install: |
+  sudo apt-get update
   sudo apt-get install -y openjdk-6-jre
   wget --retry-connrefused http://yar.fruct.org/attachments/download/362/plantuml_7707-1_all.deb
   sudo dpkg -i plantuml_7707-1_all.deb

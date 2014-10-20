@@ -1,4 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,700);
+@import url(http://fonts.googleapis.com/css?family=Ubuntu+Condensed);
+@import url(http://fonts.googleapis.com/css?family=Inconsolata:400,700);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
 .text-field, .signup-email-field {
   position: relative;
@@ -16,38 +18,50 @@
   -webkit-transition: all 0.3s ease !important;
   font-family: "Open Sans";
   font-weight: 300;
-  color: black;
-  background-color: #484860;
+  color: #1d1d26;
+  background-color: #9393ae;
   cursor: text;
   font-size: 20px;
   padding: 11.11111px;
-  box-shadow: inset 0 1px 2px #3d3d52; }
+  box-shadow: inset 0 1px 2px #8585a3; }
   .text-field:hover, .signup-email-field:hover {
     transition: all .3s ease;
-    background-color: #4a4a63; }
+    background-color: #9696b0; }
   .text-field:focus, .signup-email-field:focus {
     transition: all .3s ease;
-    background-color: #53536f; }
+    background-color: #a2a2b9; }
 
 ::-webkit-input-placeholder {
-  color: #282835; }
+  color: #69698c; }
 
 ::-moz-placeholder {
-  color: #282835; }
+  color: #69698c; }
 
 :-ms-input-placeholder {
-  color: #282835; }
+  color: #69698c; }
 
 .brand {
   font-weight: 700;
   font-size: 80px;
-  color: #f0b659;
-  font-family: 'Roboto Slab', serif; }
+  font-family: 'Roboto Slab', serif;
+  text-shadow: 10px 7px 0px #3a3b4c; }
+
+.bolder {
+  font-weight: 400; }
 
 .number-slab {
   font-weight: 700;
   font-family: 'Roboto Slab', serif;
-  font-size: 100px; }
+  font-size: 140px; }
+
+.number-1 {
+  background-color: #eae3d7; }
+
+.number-2 {
+  background-color: #e6ded0; }
+
+.number-3 {
+  background-color: #dfd5c3; }
 
 .grad {
   background: #111117;
@@ -85,17 +99,35 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d5d5e8', endColorstr='#ffffff',GradientType=1 );
   /* IE6-9 fallback on horizontal gradient */ }
 
+.grad-light-brown {
+  background: #fcf3ea;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #fcf3ea 0%, white 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #fcf3ea), color-stop(100%, white));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, #fcf3ea 0%, white 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg, #fcf3ea 0%, white 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg, #fcf3ea 0%, white 100%);
+  /* IE10+ */
+  background: linear-gradient(135deg, #fcf3ea 0%, white 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcf3ea', endColorstr='#ffffff',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */ }
+
 .border-bottom {
-  border-bottom: 1px solid #1c1c26; }
+  border-bottom: 1px solid white; }
 
 .border-top {
   border-top: 1px solid white; }
 
 .sub-grad {
-  background-color: rgba(17, 17, 23, 0.1); }
+  background-color: rgba(255, 255, 255, 0.1); }
 
 .beta {
-  background-color: #bfbfcf; }
+  background-color: white; }
 
 .signup-element {
   width: 100%;
@@ -112,33 +144,56 @@
     padding: 20px; }
 
 .signup-email-field {
-  background-color: #21212c;
-  color: #53536f;
-  box-shadow: inset -3px 0px 3px #1e1e29; }
+  background-color: #5f627d;
+  color: #fff;
+  box-shadow: inset 0px 0px 0px #8585a3; }
   .signup-email-field:hover {
-    background-color: #272734; }
+    background-color: #5f627d; }
   .signup-email-field:focus {
-    background-color: #272734; }
+    background-color: #595b75; }
   .signup-email-field::-webkit-input-placeholder {
-    color: #484860; }
+    color: #fff; }
 
 .face-icon {
   font-size: 200px !important; }
 
 .teamed-button {
-  width: 200px; }
+  width: 300px; }
 
 .box-image {
   width: 100px; }
 
+.thindeck-logo {
+  width: 150px; }
+
+#signed-up-container {
+  display: none; }
+
+.black {
+  color: #000; }
+
+.new-slogan-background {
+  background-color: #504f6b; }
+
+.slab {
+  font-family: "Roboto Slab"; }
+
+.footer-font, .footer-link {
+  color: #80839f;
+  font-weight: 400;
+  text-shadow: 0px 1px 0px #3a3b4c; }
+
+.footer-link {
+  color: #c9cad6 !important;
+  border-bottom: 1px dotted #c9cad6; }
+  .footer-link:hover {
+    color: white !important; }
+
 #signed-up-container-success, #signed-up-container-failure {
-  display: none;
-  max-height: 130px;
+    display: none;
 }
 
-#signup-container {
-  max-height: 130px;
-}
-.signup-height {
-  min-height: 200px;
+#wait-icon {
+    font-size: 100px !important;
+    display: none;
 }
