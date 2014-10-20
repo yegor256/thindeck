@@ -19,10 +19,10 @@
         <div class='span11 right'>
             <nav class='controls-text-color menu animate-show-slow'>
                 <li class='hover-warning'>
-                    <a class='no-underline' href='#docs'>documentation</a>
+                    <a class='no-underline' onclick="scrollTo('#docs')">documentation</a>
                 </li>
                 <li class='hover-warning'>
-                    <a class='no-underline' href='#pricing'>pricing</a>
+                    <a class='no-underline' onclick="scrollTo('#pricing')">pricing</a>
                 </li>
                 <li class='hover-warning'>
                     <button class='button-modern-default base tooltip-bottom tooltip-default' tip="Oops, we're not ready yet">
@@ -129,8 +129,7 @@
         </div>
     </div>
 </div>
-<a name='pricing'></a>
-<div class='container background-controls-text-color padding-around-large border-top'>
+<div id="pricing" class='container background-controls-text-color padding-around-large border-top'>
     <div class='container shift2 lighten-default padding-vertical-large center'>
         <p class='lighten-info slab big'>
             <span class='number-slab'>&#162;0.0007</span>
@@ -144,8 +143,7 @@
         </p>
     </div>
 </div>
-<a name='docs'></a>
-<div class='container padding-around-large background-controls-text-color'>
+<div id="docs" class='container padding-around-large background-controls-text-color'>
     <div class='container padding-vertical-base shift2'>
         <div class='span7 padding-around-large'>
             <h1 class='success upper slab'>

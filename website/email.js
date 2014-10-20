@@ -50,3 +50,7 @@ $(
     });
   }
 );
+function scrollTo(element) {
+    var pos = $(element).offset();
+    $('body').animate({ scrollTop: pos.top });
+}
