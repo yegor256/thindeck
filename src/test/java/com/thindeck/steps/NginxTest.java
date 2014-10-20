@@ -30,6 +30,7 @@
 package com.thindeck.steps;
 
 import com.google.common.base.Joiner;
+import com.google.common.io.Files;
 import com.jcabi.aspects.Tv;
 import com.jcabi.manifests.Manifests;
 import com.jcabi.ssh.SSHD;
@@ -42,10 +43,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.AfterClass;
 import org.junit.Assume;
-import org.junit.Rule;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link Nginx}.
@@ -54,12 +55,28 @@ import org.junit.rules.TemporaryFolder;
  * @version $Id$
  */
 public final class NginxTest {
+
     /**
-     * Temp directory.
-     * @checkstyle VisibilityModifierCheck (5 lines)
+     * The temporary directory.
      */
-    @Rule
-    public final transient TemporaryFolder temp = new TemporaryFolder();
+    private static File temp;
+
+    /**
+     * Set up.
+     */
+    @BeforeClass
+    public static void setUp() {
+        temp = Files.createTempDir();
+    }
+
+    /**
+     * Tear down.
+     * @throws Exception If something goes wrong.
+     */
+    @AfterClass
+    public static void tearDown() throws Exception {
+        FileUtils.deleteDirectory(temp);
+    }
 
     /**
      * Ngnix can create host configuration.
@@ -69,16 +86,15 @@ public final class NginxTest {
     @Test
     public void createsHostsConfiguration() throws IOException {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-        final File path = this.temp.newFolder();
-        final SSHD sshd = new SSHD(path);
+        final SSHD sshd = new SSHD(temp);
         sshd.start();
-        final File key = this.temp.newFile();
+        final File key = File.createTempFile("ssh", "key", temp);
         FileUtils.write(key, sshd.key());
-        this.manifest(path, sshd.login(), sshd.port(), key);
+        this.manifest(temp, sshd.login(), sshd.port(), key);
         final String host = "host";
         final int sport = 567;
         final String server = "server";
-        final File fhosts = this.hosts(path, host);
+        final File fhosts = this.hosts(temp, host);
         // @checkstyle MagicNumber (1 line)
         new Nginx().update(host, 1234, server, sport);
         MatcherAssert.assertThat(
@@ -102,11 +118,11 @@ public final class NginxTest {
     @Test
     public void createsHostSpecificConfigurationFile() throws IOException {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-        final File path = this.temp.newFolder();
-        final SSHD sshd = new SSHD(path);
-        final File key = this.temp.newFile();
+        final SSHD sshd = new SSHD(temp);
+        sshd.start();
+        final File key = File.createTempFile("ssh", "key", temp);
         FileUtils.write(key, sshd.key());
-        this.manifest(path, sshd.login(), sshd.port(), key);
+        this.manifest(temp, sshd.login(), sshd.port(), key);
         final String host = "host2";
         final int sport = 456;
         final String server = "server2";
@@ -117,7 +133,7 @@ public final class NginxTest {
             sshd.stop();
         }
         MatcherAssert.assertThat(
-            FileUtils.readFileToString(new File(path, this.hostsConfig(host))),
+            FileUtils.readFileToString(new File(temp, this.hostsConfig(host))),
             Matchers.equalTo(
                 Joiner.on('\n').join(
                     String.format("upstream %s_servers {", host),
@@ -135,17 +151,16 @@ public final class NginxTest {
     @Test
     public void reloadsConfiguration() throws Exception {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-        final File path = this.temp.newFolder();
-        final SSHD sshd = new SSHD(path);
+        final SSHD sshd = new SSHD(temp);
         sshd.start();
-        final File key = this.temp.newFile();
+        final File key = File.createTempFile("ssh", "key", temp);
         FileUtils.write(key, sshd.key());
-        this.manifest(path, sshd.login(), sshd.port(), key);
+        this.manifest(temp, sshd.login(), sshd.port(), key);
         final String bin = String.format(
             "%s.sh", RandomStringUtils.randomAlphanumeric(128)
         );
-        final File script = this.temp.newFile(bin);
-        final File marker = this.temp.newFile();
+        final File script = File.createTempFile("script", bin, temp);
+        final File marker = File.createTempFile("marker", "temp", temp);
         FileUtils.writeStringToFile(
             script,
             Joiner.on("\n").join(
@@ -221,9 +236,7 @@ public final class NginxTest {
             ),
             StringUtils.EMPTY
         );
-        Manifests.append(
-            new ByteArrayInputStream(file.getBytes())
-        );
+        Manifests.append(new ByteArrayInputStream(file.getBytes()));
     }
 
     /**
