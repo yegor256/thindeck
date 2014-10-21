@@ -30,36 +30,53 @@
 package com.thindeck.steps;
 
 import com.google.common.base.Joiner;
+import com.google.common.io.Files;
+import com.jcabi.aspects.Tv;
 import com.jcabi.manifests.Manifests;
 import com.jcabi.ssh.SSHD;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.AfterClass;
 import org.junit.Assume;
-import org.junit.Rule;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link Nginx}.
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #312 Create a test to check that ngnix process receives HUP signal,
- *  after configuration update.
  */
 public final class NginxTest {
+
     /**
-     * Temp directory.
-     * @checkstyle VisibilityModifierCheck (5 lines)
+     * The temporary directory.
      */
-    @Rule
-    public final transient TemporaryFolder temp = new TemporaryFolder();
+    private static File temp;
+
+    /**
+     * Set up.
+     */
+    @BeforeClass
+    public static void setUp() {
+        temp = Files.createTempDir();
+    }
+
+    /**
+     * Tear down.
+     * @throws Exception If something goes wrong.
+     */
+    @AfterClass
+    public static void tearDown() throws Exception {
+        FileUtils.deleteDirectory(temp);
+    }
 
     /**
      * Ngnix can create host configuration.
@@ -69,18 +86,21 @@ public final class NginxTest {
     @Test
     public void createsHostsConfiguration() throws IOException {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-        final File path = this.temp.newFolder();
-        final SSHD sshd = new SSHD(path);
-        final int port = sshd.start();
-        final File key = this.temp.newFile();
+        final SSHD sshd = new SSHD(temp);
+        sshd.start();
+        final File key = File.createTempFile("ssh", "key", temp);
         FileUtils.write(key, sshd.key());
-        this.manifest(path, sshd.login(), port, key);
+        this.manifest(temp, sshd.login(), sshd.port(), key);
         final String host = "host";
         final int sport = 567;
         final String server = "server";
-        final File fhosts = this.hosts(path, host);
-        // @checkstyle MagicNumber (1 line)
-        new Nginx().update(host, 1234, server, sport);
+        final File fhosts = this.hosts(temp, host);
+        try {
+            // @checkstyle MagicNumber (1 line)
+            new Nginx().update(host, 1234, server, sport);
+        } finally {
+            sshd.stop();
+        }
         MatcherAssert.assertThat(
             FileUtils.readFileToString(fhosts),
             Matchers.equalTo(
@@ -96,7 +116,91 @@ public final class NginxTest {
     }
 
     /**
-     * Create host configuration file.
+     * Nginx can create server.hosts.conf file.
+     * @throws IOException If something goes wrong
+     */
+    @Test
+    public void createsHostSpecificConfigurationFile() throws IOException {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final SSHD sshd = new SSHD(temp);
+        sshd.start();
+        final File key = File.createTempFile("ssh", "key", temp);
+        FileUtils.write(key, sshd.key());
+        this.manifest(temp, sshd.login(), sshd.port(), key);
+        final String host = "host2";
+        final int sport = 456;
+        final String server = "server2";
+        sshd.start();
+        try {
+            new Nginx().update(host, Tv.THOUSAND, server, sport);
+        } finally {
+            sshd.stop();
+        }
+        MatcherAssert.assertThat(
+            FileUtils.readFileToString(new File(temp, this.hostsConfig(host))),
+            Matchers.equalTo(
+                Joiner.on('\n').join(
+                    String.format("upstream %s_servers {", host),
+                    String.format("    server %s:%d;", server, sport),
+                    "}"
+                )
+            )
+        );
+    }
+
+    /**
+     * Ngnix can reload configuration.
+     * @throws Exception In case of error.
+     * @checkstyle ExecutableStatementCountCheck (21 lines)
+     */
+    @Test
+    public void reloadsConfiguration() throws Exception {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final SSHD sshd = new SSHD(temp);
+        sshd.start();
+        final File key = File.createTempFile("ssh", "key", temp);
+        FileUtils.write(key, sshd.key());
+        this.manifest(temp, sshd.login(), sshd.port(), key);
+        final String bin = String.format(
+            "%s.sh", RandomStringUtils.randomAlphanumeric(128)
+        );
+        final File script = File.createTempFile("script", bin, temp);
+        final File marker = File.createTempFile("marker", "temp", temp);
+        FileUtils.writeStringToFile(
+            script,
+            Joiner.on("\n").join(
+                "#!/bin/bash",
+                "function sighup(){",
+                String.format("    echo restarted > %s", marker.toString()),
+                "    exit 0",
+                "}",
+                String.format("    echo running > %s", marker.toString()),
+                "trap 'sighup' HUP",
+                "sleep 30",
+                String.format("    echo stopped > %s", marker.toString())
+            )
+        );
+        final ProcessBuilder builder = new ProcessBuilder(
+            "/bin/bash", script.toString()
+        );
+        builder.redirectInput(new File("/dev/null"));
+        builder.redirectOutput(new File("/dev/null"));
+        builder.redirectError(new File("/dev/null"));
+        final Process process = builder.start();
+        try {
+            new Nginx(bin).update("", 1, "", 2);
+            process.waitFor();
+        } finally {
+            sshd.stop();
+        }
+        MatcherAssert.assertThat(
+            FileUtils.readFileToString(marker),
+            Matchers.equalTo("restarted\n")
+        );
+    }
+
+    /**
+     * Create hosts configuration file.
      * @param path Directory where to create file.
      * @param host Name of the host.
      * @return Location of created file.
@@ -104,7 +208,7 @@ public final class NginxTest {
      */
     private File hosts(final File path, final String host) throws IOException {
         final File fhosts = new File(
-            path, String.format("%s.hosts.conf", host)
+            path, this.hostsConfig(host)
         );
         FileUtils.writeStringToFile(
             fhosts,
@@ -141,8 +245,15 @@ public final class NginxTest {
             ),
             StringUtils.EMPTY
         );
-        Manifests.append(
-            new ByteArrayInputStream(file.getBytes())
-        );
+        Manifests.append(new ByteArrayInputStream(file.getBytes()));
+    }
+
+    /**
+     * File name for hosts config.
+     * @param host The host
+     * @return File name for hosts config.
+     */
+    private String hostsConfig(final String host) {
+        return String.format("%s.hosts.conf", host);
     }
 }

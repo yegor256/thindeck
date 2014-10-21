@@ -31,6 +31,7 @@ package com.thindeck.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.dynamo.Item;
+import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -52,7 +53,11 @@ public final class DyRepoTest {
         final Item item = Mockito.mock(Item.class);
         final AttributeValue value = Mockito.mock(AttributeValue.class);
         Mockito.when(value.getS()).thenReturn(name);
-        Mockito.when(item.get(DyRepo.ATTR_NAME)).thenReturn(value);
+        try {
+            Mockito.when(item.get(DyRepo.ATTR_NAME)).thenReturn(value);
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
         MatcherAssert.assertThat(
             new DyRepo(item).name(),
             Matchers.equalTo(name)
