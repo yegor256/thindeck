@@ -29,18 +29,22 @@
  */
 package com.thindeck.dynamo;
 
+import com.amazonaws.services.dynamodbv2.model.Select;
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
+import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Repos;
+import java.io.IOException;
 
 /**
  * Dynamo implementation of {@link Repos}.
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #322 Implement iterate method.
  * @todo #322 Create test for this class when jcabi/jcabi-dynamo#13 is done.
  */
 public final class DyRepos implements Repos {
@@ -63,8 +67,7 @@ public final class DyRepos implements Repos {
             this.region.table(DyRepo.TBL)
                 .frame()
                 .through(
-                    new QueryValve()
-                        .withLimit(1)
+                    new QueryValve().withLimit(1)
                 )
                 .where(DyRepo.ATTR_NAME, name)
                 .iterator().next()
@@ -76,24 +79,42 @@ public final class DyRepos implements Repos {
         if (this.region.table(DyRepo.TBL)
             .frame()
             .through(
-                new QueryValve()
-                    .withLimit(1)
+                new QueryValve().withLimit(1)
             )
             .where(DyRepo.ATTR_NAME, Conditions.equalTo(name))
             .iterator().hasNext()) {
             throw new IllegalArgumentException();
         }
-        return new DyRepo(
-            this.region.table(DyRepo.TBL).put(
-                new Attributes()
-                    .with(DyRepo.ATTR_NAME, name)
-                    .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
-            )
-        );
+        try {
+            return new DyRepo(
+                this.region.table(DyRepo.TBL).put(
+                    new Attributes()
+                        .with(DyRepo.ATTR_NAME, name)
+                        .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
+                )
+            );
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
     @Override
     public Iterable<Repo> iterate() {
-        throw new UnsupportedOperationException();
+        return Iterables.transform(
+            this.region.table(DyRepo.TBL)
+                .frame()
+                .through(
+                    new QueryValve()
+                        .withConsistentRead(false)
+                        .withSelect(Select.ALL_PROJECTED_ATTRIBUTES)
+                ),
+            new Function<Item, Repo>() {
+                @Override
+                public Repo apply(final Item input) {
+                    return new DyRepo(input);
+                }
+            }
+        );
     }
 }
+

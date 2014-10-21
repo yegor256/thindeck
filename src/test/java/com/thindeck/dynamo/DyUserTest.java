@@ -32,6 +32,7 @@ package com.thindeck.dynamo;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.dynamo.Item;
 import com.jcabi.urn.URN;
+import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -54,7 +55,11 @@ public final class DyUserTest {
         final Item item = Mockito.mock(Item.class);
         final AttributeValue value = Mockito.mock(AttributeValue.class);
         Mockito.when(value.getS()).thenReturn(urn.toString());
-        Mockito.when(item.get(DyUser.ATTR_URN)).thenReturn(value);
+        try {
+            Mockito.when(item.get(DyUser.ATTR_URN)).thenReturn(value);
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
         MatcherAssert.assertThat(
             new DyUser(item).urn(),
             Matchers.equalTo(urn)

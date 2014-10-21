@@ -73,7 +73,11 @@ public final class DyRepo implements Repo {
 
     @Override
     public String name() {
-        return this.item.get(DyRepo.ATTR_NAME).getS();
+        try {
+            return this.item.get(DyRepo.ATTR_NAME).getS();
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
     @Override
