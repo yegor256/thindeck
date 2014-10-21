@@ -95,8 +95,12 @@ public final class NginxTest {
         final int sport = 567;
         final String server = "server";
         final File fhosts = this.hosts(temp, host);
-        // @checkstyle MagicNumber (1 line)
-        new Nginx().update(host, 1234, server, sport);
+        try {
+            // @checkstyle MagicNumber (1 line)
+            new Nginx().update(host, 1234, server, sport);
+        } finally {
+            sshd.stop();
+        }
         MatcherAssert.assertThat(
             FileUtils.readFileToString(fhosts),
             Matchers.equalTo(
@@ -126,8 +130,8 @@ public final class NginxTest {
         final String host = "host2";
         final int sport = 456;
         final String server = "server2";
+        sshd.start();
         try {
-            sshd.start();
             new Nginx().update(host, Tv.THOUSAND, server, sport);
         } finally {
             sshd.stop();
@@ -183,8 +187,12 @@ public final class NginxTest {
         builder.redirectOutput(new File("/dev/null"));
         builder.redirectError(new File("/dev/null"));
         final Process process = builder.start();
-        new Nginx(bin).update("", 1, "", 2);
-        process.waitFor();
+        try {
+            new Nginx(bin).update("", 1, "", 2);
+            process.waitFor();
+        } finally {
+            sshd.stop();
+        }
         MatcherAssert.assertThat(
             FileUtils.readFileToString(marker),
             Matchers.equalTo("restarted\n")
