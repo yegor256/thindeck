@@ -62,22 +62,38 @@ public final class NginxTest {
     @Rule
     public final transient TemporaryFolder temp = new TemporaryFolder();
 
-    private File path;
-    private SSHD sshd;
+    /**
+     * A temporary folder.
+     */
+    private transient File tempfolder;
 
-	@Before
-	public void init() throws Exception {
-		Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-		path = this.temp.newFolder();
-		sshd = new SSHD(path);
-		sshd.start();
-	}
+    /**
+     * SSHD instance.
+     */
+    private transient SSHD sshd;
 
-	@After
-	public void shutdown() {
-		if (sshd != null)
-			sshd.stop();
-	}
+    /**
+     * Do common things to all tests.
+     *
+     * @throws Exception If anything goes wrong.
+     */
+    @Before
+    public void init() throws Exception {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        this.tempfolder = this.temp.newFolder();
+        this.sshd = new SSHD(this.tempfolder);
+        this.sshd.start();
+    }
+
+    /**
+     * After every tests, shudown the sshd.
+     */
+    @After
+    public void shutdown() {
+        if (this.sshd != null) {
+            this.sshd.stop();
+        }
+    }
 
     /**
      * Ngnix can create host configuration.
@@ -87,12 +103,17 @@ public final class NginxTest {
     @Test
     public void createsHostsConfiguration() throws IOException {
         final File key = this.temp.newFile();
-        FileUtils.write(key, sshd.key());
-        this.manifest(path, sshd.login(), sshd.port(), key);
+        FileUtils.write(key, this.sshd.key());
+        this.manifest(
+            this.tempfolder,
+            this.sshd.login(),
+            this.sshd.port(),
+            key
+        );
         final String host = "host";
         final int sport = 567;
         final String server = "server";
-        final File fhosts = this.hosts(path, host);
+        final File fhosts = this.hosts(this.tempfolder, host);
         // @checkstyle MagicNumber (1 line)
         new Nginx().update(host, 1234, server, sport);
         MatcherAssert.assertThat(
@@ -116,8 +137,13 @@ public final class NginxTest {
     @Test
     public void reloadsConfiguration() throws Exception {
         final File key = this.temp.newFile();
-        FileUtils.write(key, sshd.key());
-        this.manifest(path, sshd.login(), sshd.port(), key);
+        FileUtils.write(key, this.sshd.key());
+        this.manifest(
+            this.tempfolder,
+            this.sshd.login(),
+            this.sshd.port(),
+            key
+        );
         final String bin = String.format(
             "%s.sh", RandomStringUtils.randomAlphanumeric(128)
         );
