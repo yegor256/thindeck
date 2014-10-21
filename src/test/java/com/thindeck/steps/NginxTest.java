@@ -41,9 +41,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.After;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -63,119 +61,93 @@ public final class NginxTest {
     public final transient TemporaryFolder temp = new TemporaryFolder();
 
     /**
-     * A temporary folder.
-     */
-    private transient File tempfolder;
-
-    /**
-     * SSHD instance.
-     */
-    private transient SSHD sshd;
-
-    /**
-     * Do common things to all tests.
-     *
-     * @throws Exception If anything goes wrong.
-     */
-    @Before
-    public void init() throws Exception {
-        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-        this.tempfolder = this.temp.newFolder();
-        this.sshd = new SSHD(this.tempfolder);
-        this.sshd.start();
-    }
-
-    /**
-     * After every tests, shudown the sshd.
-     */
-    @After
-    public void shutdown() {
-        if (this.sshd != null) {
-            this.sshd.stop();
-        }
-    }
-
-    /**
      * Ngnix can create host configuration.
      * @throws IOException In case of error.
      * @checkstyle MultipleStringLiterals (120 lines)
      */
     @Test
     public void createsHostsConfiguration() throws IOException {
-        final File key = this.temp.newFile();
-        FileUtils.write(key, this.sshd.key());
-        this.manifest(
-            this.tempfolder,
-            this.sshd.login(),
-            this.sshd.port(),
-            key
-        );
-        final String host = "host";
-        final int sport = 567;
-        final String server = "server";
-        final File fhosts = this.hosts(this.tempfolder, host);
-        // @checkstyle MagicNumber (1 line)
-        new Nginx().update(host, 1234, server, sport);
-        MatcherAssert.assertThat(
-            FileUtils.readFileToString(fhosts),
-            Matchers.equalTo(
-                Joiner.on('\n').join(
-                    "upstream example_servers {",
-                    "    server 10.0.0.1:80;",
-                    "    server 10.0.0.2:80;",
-                    String.format("    server %s:%d;", server, sport),
-                    "}"
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final File path = this.temp.newFolder();
+        final SSHD sshd = new SSHD(path);
+        try {
+            sshd.start();
+            final File key = this.temp.newFile();
+            FileUtils.write(key, sshd.key());
+            this.manifest(path, sshd.login(), sshd.port(), key);
+            final String host = "host";
+            final int sport = 567;
+            final String server = "server";
+            final File fhosts = this.hosts(path, host);
+            // @checkstyle MagicNumber (1 line)
+            new Nginx().update(host, 1234, server, sport);
+            MatcherAssert.assertThat(
+                FileUtils.readFileToString(fhosts),
+                Matchers.equalTo(
+                    Joiner.on('\n').join(
+                        "upstream example_servers {",
+                        "    server 10.0.0.1:80;",
+                        "    server 10.0.0.2:80;",
+                        String.format("    server %s:%d;", server, sport),
+                        "}"
+                    )
                 )
-            )
-        );
+            );
+        } finally {
+            sshd.stop();
+        }
     }
 
     /**
      * Ngnix can reload configuration.
      * @throws Exception In case of error.
+     * @checkstyle ExecutableStatementCountCheck (21 lines)
      */
     @Test
     public void reloadsConfiguration() throws Exception {
-        final File key = this.temp.newFile();
-        FileUtils.write(key, this.sshd.key());
-        this.manifest(
-            this.tempfolder,
-            this.sshd.login(),
-            this.sshd.port(),
-            key
-        );
-        final String bin = String.format(
-            "%s.sh", RandomStringUtils.randomAlphanumeric(128)
-        );
-        final File script = this.temp.newFile(bin);
-        final File marker = this.temp.newFile();
-        FileUtils.writeStringToFile(
-            script,
-            Joiner.on("\n").join(
-                "#!/bin/bash",
-                "function sighup(){",
-                String.format("    echo restarted > %s", marker.toString()),
-                "    exit 0",
-                "}",
-                String.format("    echo running > %s", marker.toString()),
-                "trap 'sighup' HUP",
-                "sleep 30",
-                String.format("    echo stopped > %s", marker.toString())
-            )
-        );
-        final ProcessBuilder builder = new ProcessBuilder(
-            "/bin/bash", script.toString()
-        );
-        builder.redirectInput(new File("/dev/null"));
-        builder.redirectOutput(new File("/dev/null"));
-        builder.redirectError(new File("/dev/null"));
-        final Process process = builder.start();
-        new Nginx(bin).update("", 1, "", 2);
-        process.waitFor();
-        MatcherAssert.assertThat(
-            FileUtils.readFileToString(marker),
-            Matchers.equalTo("restarted\n")
-        );
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final File path = this.temp.newFolder();
+        final SSHD sshd = new SSHD(path);
+        try {
+            sshd.start();
+            final File key = this.temp.newFile();
+            FileUtils.write(key, sshd.key());
+            this.manifest(path, sshd.login(), sshd.port(), key);
+            final String bin = String.format(
+                "%s.sh", RandomStringUtils.randomAlphanumeric(128)
+            );
+            final File script = this.temp.newFile(bin);
+            final File marker = this.temp.newFile();
+            FileUtils.writeStringToFile(
+                script,
+                Joiner.on("\n").join(
+                    "#!/bin/bash",
+                    "function sighup(){",
+                    String.format("    echo restarted > %s", marker.toString()),
+                    "    exit 0",
+                    "}",
+                    String.format("    echo running > %s", marker.toString()),
+                    "trap 'sighup' HUP",
+                    "sleep 30",
+                    String.format("    echo stopped > %s", marker.toString())
+                )
+            );
+            final ProcessBuilder builder = new ProcessBuilder(
+                "/bin/bash", script.toString()
+            );
+            builder.redirectInput(new File("/dev/null"));
+            builder.redirectOutput(new File("/dev/null"));
+            builder.redirectError(new File("/dev/null"));
+            final Process process = builder.start();
+            new Nginx(bin).update("", 1, "", 2);
+            process.waitFor();
+            MatcherAssert.assertThat(
+                FileUtils.readFileToString(marker),
+                Matchers.equalTo("restarted\n")
+            );
+        } finally {
+            sshd.stop();
+        }
     }
 
     /**
