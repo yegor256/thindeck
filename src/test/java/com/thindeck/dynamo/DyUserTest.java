@@ -30,7 +30,10 @@
 package com.thindeck.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.jcabi.dynamo.Frame;
 import com.jcabi.dynamo.Item;
+import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.Table;
 import com.jcabi.urn.URN;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
@@ -63,6 +66,24 @@ public final class DyUserTest {
         MatcherAssert.assertThat(
             new DyUser(item).urn(),
             Matchers.equalTo(urn)
+        );
+    }
+
+    /**
+     * DyUser can obtain associated repos.
+     */
+    @Test
+    public void canGetRepos() {
+        final Item item = Mockito.mock(Item.class);
+        final Frame frame = Mockito.mock(Frame.class);
+        final Table table = Mockito.mock(Table.class);
+        final Region region = Mockito.mock(Region.class);
+        Mockito.when(item.frame()).thenReturn(frame);
+        Mockito.when(frame.table()).thenReturn(table);
+        Mockito.when(table.region()).thenReturn(region);
+        MatcherAssert.assertThat(
+            new DyUser(item).repos(),
+            Matchers.notNullValue()
         );
     }
 }
