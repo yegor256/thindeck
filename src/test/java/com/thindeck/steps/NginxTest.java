@@ -211,7 +211,7 @@ public final class NginxTest {
         final File key = File.createTempFile("ssh2", "key2", temp);
         FileUtils.write(key, sshd.key());
         this.manifest(temp, sshd.login(), sshd.port(), key);
-        final String host = "host";
+        final String host = "existing-host";
         final int sport = 80;
         final String server = "10.0.0.2";
         final File fhosts = this.hosts(temp, host);
