@@ -40,7 +40,6 @@ import java.util.Collections;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -54,16 +53,14 @@ public final class LifecycleTest {
 
     /**
      * Lifecycle will add base attribute with correct class.
-     * @todo #319 When jcabi-aspects#95 is fixed enable this test.
      */
     @Test
-    @Ignore
     public void initializedBaseAttribute() {
         final ServletContextEvent event = Mockito
             .mock(ServletContextEvent.class);
         final ServletContext context = Mockito.mock(ServletContext.class);
         Mockito.when(event.getServletContext()).thenReturn(context);
-        final Lifecycle lifecycle = new Lifecycle();
+        final Lifecycle lifecycle = new Lifecycle(false);
         lifecycle.contextInitialized(event);
         try {
             Mockito.verify(context).setAttribute(
