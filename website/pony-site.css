@@ -2,6 +2,7 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu+Condensed);
 @import url(http://fonts.googleapis.com/css?family=Inconsolata:400,700);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
+@import url(http://fonts.googleapis.com/css?family=Economica:400,700);
 .text-field, .signup-email-field {
   position: relative;
   border-radius: 0px;
@@ -42,8 +43,8 @@
 
 .brand {
   font-weight: 700;
-  font-size: 80px;
-  font-family: 'Roboto Slab', serif;
+  font-size: 90px;
+  font-family: 'Economica', serif;
   text-shadow: 10px 7px 0px #3a3b4c; }
 
 .bolder {
@@ -51,7 +52,7 @@
 
 .number-slab {
   font-weight: 700;
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Economica', serif;
   font-size: 140px; }
 
 .number-1 {
