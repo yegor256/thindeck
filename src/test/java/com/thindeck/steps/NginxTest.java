@@ -53,6 +53,7 @@ import org.junit.Test;
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
+ * @checkstyle MultipleStringLiterals (500 lines)
  */
 public final class NginxTest {
 
@@ -81,7 +82,6 @@ public final class NginxTest {
     /**
      * Ngnix can create host configuration.
      * @throws IOException In case of error.
-     * @checkstyle MultipleStringLiterals (120 lines)
      */
     @Test
     public void createsHostsConfiguration() throws IOException {
@@ -196,6 +196,42 @@ public final class NginxTest {
         MatcherAssert.assertThat(
             FileUtils.readFileToString(marker),
             Matchers.equalTo("restarted\n")
+        );
+    }
+
+    /**
+     * Ngnix retains host configuration if it already exists.
+     * @throws IOException In case of error.
+     */
+    @Test
+    @SuppressWarnings("PMD.AvoidUsingHardCodedIP")
+    public void retainsExistingHostsConfiguration() throws IOException {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final SSHD sshd = new SSHD(temp);
+        final File key = File.createTempFile("ssh2", "key2", temp);
+        FileUtils.write(key, sshd.key());
+        this.manifest(temp, sshd.login(), sshd.port(), key);
+        final String host = "existing-host";
+        final int sport = 80;
+        final String server = "10.0.0.2";
+        final File fhosts = this.hosts(temp, host);
+        sshd.start();
+        try {
+            // @checkstyle MagicNumber (1 line)
+            new Nginx().update(host, 1234, server, sport);
+        } finally {
+            sshd.stop();
+        }
+        MatcherAssert.assertThat(
+            FileUtils.readFileToString(fhosts),
+            Matchers.equalTo(
+                Joiner.on('\n').join(
+                    "upstream example_servers {",
+                    "    server 10.0.0.1:80;",
+                    "    server 10.0.0.2:80;",
+                    "}"
+                )
+            )
         );
     }
 

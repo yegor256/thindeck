@@ -64,8 +64,6 @@ import org.apache.commons.io.FileUtils;
  * those files are loaded from main ngnix.conf file using include directive.
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #312 Handle case when given hosts is already in the load balancing
- *  group.
  * @todo #345 When a *hosts.conf file is created for a new host, it should be
  *  included in nginx.conf so that it can be loaded by the Nginx server. See
  *  the explanation in in https://github.com/yegor256/thindeck/issues/347
@@ -77,6 +75,7 @@ import org.apache.commons.io.FileUtils;
  *  create it and include it in nginx.conf. If it already exists, we should
  *  update it. See the Javadoc above or the explanation in
  *  https://github.com/yegor256/thindeck/issues/347 for more details.
+ *  @checkstyle MultipleStringLiterals (300 lines)
  */
 public final class Nginx implements LoadBalancer {
 
@@ -131,25 +130,7 @@ public final class Nginx implements LoadBalancer {
                         "cd %s",
                         Manifests.read("Thindeck-LoadBalancer-Directory")
                     ),
-                    String.format("if [ -f %s.hosts.conf ]", host),
-                    String.format(
-                        // @checkstyle LineLength (1 line)
-                        "then sed -i.bak -r 's/}/    server %s:%d;\\n}/' %s.hosts.conf",
-                        server,
-                        sport,
-                        host
-                    ),
-                    String.format("rm %s.hosts.conf.bak", host),
-                    String.format(
-                        "else printf %s > %s.hosts.conf",
-                        Joiner.on("\\n").join(
-                            String.format("'upstream %s_servers {", host),
-                            String.format("    server %s:%d;", server, sport),
-                            "}'"
-                        ),
-                        host
-                    ),
-                    "fi",
+                    updateHostsConfigurationScript(host, server, sport),
                     String.format("pkill -HUP -f %s", this.binary)
                 )
             );
@@ -158,5 +139,45 @@ public final class Nginx implements LoadBalancer {
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
+    }
+
+    /**
+     * Script for updating the *hosts.conf file.
+     * @param host The host name indicated by requests
+     * @param server Server name to redirect requests to
+     * @param sport Server port to redirect requests to
+     * @return Commands for updating hosts configuration.
+     */
+    private static String updateHostsConfigurationScript(final String host,
+        final String server, final int sport) {
+        return Joiner.on(";").join(
+            String.format("if [ -f %s.hosts.conf ]", host),
+            String.format(
+                "then if [[ $(grep '%s:%d' %s.hosts.conf) != *%s:%d* ]]",
+                server,
+                sport,
+                host,
+                server,
+                sport
+            ),
+            String.format(
+                "then sed -i.bak -r 's/}/    server %s:%d;\\n}/' %s.hosts.conf",
+                server,
+                sport,
+                host
+            ),
+            String.format("fi"),
+            String.format("rm %s.hosts.conf.bak", host),
+            String.format(
+                "else printf %s > %s.hosts.conf",
+                Joiner.on("\\n").join(
+                    String.format("'upstream %s_servers {", host),
+                    String.format("    server %s:%d;", server, sport),
+                    "}'"
+                ),
+                host
+            ),
+            "fi"
+        );
     }
 }
