@@ -2,9 +2,10 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu+Condensed);
 @import url(http://fonts.googleapis.com/css?family=Inconsolata:400,700);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
+@import url(http://fonts.googleapis.com/css?family=Economica:400,700);
 .text-field, .signup-email-field {
   position: relative;
-  border-radius: 14px;
+  border-radius: 0px;
   cursor: pointer;
   border: 0;
   width: 100%;
@@ -42,8 +43,8 @@
 
 .brand {
   font-weight: 700;
-  font-size: 80px;
-  font-family: 'Roboto Slab', serif;
+  font-size: 90px;
+  font-family: 'Economica', serif;
   text-shadow: 10px 7px 0px #3a3b4c; }
 
 .bolder {
@@ -51,7 +52,7 @@
 
 .number-slab {
   font-weight: 700;
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Economica', serif;
   font-size: 140px; }
 
 .number-1 {
@@ -145,14 +146,14 @@
 
 .signup-email-field {
   background-color: #5f627d;
-  color: #fff;
+  color: #2e3042;
   box-shadow: inset 0px 0px 0px #8585a3; }
   .signup-email-field:hover {
     background-color: #5f627d; }
   .signup-email-field:focus {
     background-color: #595b75; }
   .signup-email-field::-webkit-input-placeholder {
-    color: #fff; }
+      color: #2e3042;}
 
 .face-icon {
   font-size: 200px !important; }
@@ -161,7 +162,7 @@
   width: 300px; }
 
 .box-image {
-  width: 100px; }
+  width: 120px; }
 
 .thindeck-logo {
   width: 150px; }
