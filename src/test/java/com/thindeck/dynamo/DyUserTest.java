@@ -49,6 +49,9 @@ import org.mockito.Mockito;
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
+ * @todo #374 We should create an integration test for DyUser. Let's call it
+ *  DyUserITCase. It should test whether DyUser can perform its operations on a
+ *  real (local) Dynamo server. When done, ensure that this puzzle is removed.
  */
 public final class DyUserTest {
 
