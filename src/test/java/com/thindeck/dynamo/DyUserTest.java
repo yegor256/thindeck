@@ -30,11 +30,14 @@
 package com.thindeck.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.jcabi.dynamo.Frame;
+import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
+import com.jcabi.dynamo.mock.H2Data;
+import com.jcabi.dynamo.mock.MkRegion;
 import com.jcabi.urn.URN;
+import com.thindeck.api.Repo;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -71,19 +74,26 @@ public final class DyUserTest {
 
     /**
      * DyUser can obtain associated repos.
+     * @throws Exception If something goes wrong.
      */
     @Test
-    public void canGetRepos() {
-        final Item item = Mockito.mock(Item.class);
-        final Frame frame = Mockito.mock(Frame.class);
-        final Table table = Mockito.mock(Table.class);
-        final Region region = Mockito.mock(Region.class);
-        Mockito.when(item.frame()).thenReturn(frame);
-        Mockito.when(frame.table()).thenReturn(table);
-        Mockito.when(table.region()).thenReturn(region);
+    public void canGetRepos() throws Exception {
+        final Region region = new MkRegion(
+            new H2Data().with(
+                    DyRepo.TBL,
+                new String[] {DyRepo.ATTR_NAME},
+                new String[] {DyRepo.ATTR_UPDATED}
+            )
+        );
+        final Table table = region.table(DyRepo.TBL);
+        table.put(
+            new Attributes()
+                .with(DyRepo.ATTR_NAME, "test-repo")
+                .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
+        );
         MatcherAssert.assertThat(
-            new DyUser(item).repos(),
-            Matchers.notNullValue()
+            new DyUser(table.frame().iterator().next()).repos().iterate(),
+            Matchers.<Repo>iterableWithSize(1)
         );
     }
 }
