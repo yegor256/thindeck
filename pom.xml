@@ -501,6 +501,10 @@
             <activation>
                 <property><name>!skipTests</name></property>
             </activation>
+            <properties>
+                <failsafe.dynamo.key>AAAAABBBBBAAAAABBBBB</failsafe.dynamo.key>
+                <failsafe.dynamo.secret>ABCDABCDABCDABCDABCDABCDABCDABCDABCDABCD</failsafe.dynamo.secret>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -552,13 +556,17 @@
                                 <id>dynamodb-integration-test</id>
                                 <goals>
                                     <goal>start</goal>
+                                    <goal>create-tables</goal>
                                     <goal>stop</goal>
                                 </goals>
                                 <configuration>
                                     <port>${dynamodblocal.port}</port>
                                     <dist>${project.build.directory}/dynamodb-dist</dist>
-                                    <key>AAAAABBBBBAAAAABBBBB</key>
-                                    <secret>ABCDABCDABCDABCDABCDABCDABCDABCDABCDABCD</secret>
+                                    <key>${failsafe.dynamo.key}</key>
+                                    <secret>${failsafe.dynamo.secret}</secret>
+                                    <tables>
+                                        <table>${basedir}/src/test/dynamodb/repos.json</table>
+                                    </tables>
                                 </configuration>
                             </execution>
                         </executions>

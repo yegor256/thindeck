@@ -46,6 +46,8 @@ import java.io.IOException;
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @todo #322 Create test for this class when jcabi/jcabi-dynamo#13 is done.
+ * @todo #341 Add ATTR_UPDATED during creation process and update repos.json
+ *  table definition with the new field.
  */
 public final class DyRepos implements Repos {
     /**
@@ -90,7 +92,6 @@ public final class DyRepos implements Repos {
                 this.region.table(DyRepo.TBL).put(
                     new Attributes()
                         .with(DyRepo.ATTR_NAME, name)
-                        .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
                 )
             );
         } catch (final IOException ex) {

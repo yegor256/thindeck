@@ -1,0 +1,5 @@
+Thindeck-GithubId: ${failsafe.github.id}
+Thindeck-GithubSecret: ${failsafe.github.secret}
+Thindeck-SecurityKey: ${failsafe.security.key}
+Thindeck-DynamoKey: ${failsafe.dynamo.key}
+Thindeck-DynamoSecret: ${failsafe.dynamo.secret}

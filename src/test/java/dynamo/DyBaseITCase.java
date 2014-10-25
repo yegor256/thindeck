@@ -31,6 +31,7 @@ package dynamo;
 
 import com.jcabi.dynamo.Credentials;
 import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.retry.ReRegion;
 import com.thindeck.dynamo.DyBase;
 import java.util.Collections;
 import org.hamcrest.MatcherAssert;
@@ -48,10 +49,8 @@ public final class DyBaseITCase {
     /**
      * DyBase can add a command.
      * @throws Exception If there is some problem inside
-     * @todo #321 DyBase should be implemented to make this test pass.
-     *  You should make sure the DynamoDB Local has all the required tables,
-     *  and all methods of all API-classes are implemented
-     *  in com.thinkdeck.dynamo package
+     * @todo #341 Add definition of tasks table to dynamoDb local and remove
+     *  Ignore annotation.
      */
     @Test
     @Ignore
@@ -71,14 +70,19 @@ public final class DyBaseITCase {
      * @return Region
      */
     private static Region region() {
-        return new Region.Simple(
-            new Credentials.Direct(
-                new Credentials.Simple(
-                    System.getProperty("dynamo.key"),
-                    System.getProperty("dynamo.secret")
-                ),
-                Integer.parseInt(System.getProperty("dynamo.port"))
-            )
+        return new Region.Prefixed(
+            new ReRegion(
+                new Region.Simple(
+                    new Credentials.Direct(
+                        new Credentials.Simple(
+                            System.getProperty("dynamo.key"),
+                            System.getProperty("dynamo.secret")
+                        ),
+                        Integer.parseInt(System.getProperty("dynamo.port"))
+                    )
+                )
+            ),
+            "td-"
         );
     }
 
