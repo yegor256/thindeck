@@ -30,8 +30,14 @@
 package com.thindeck.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Item;
+import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.Table;
+import com.jcabi.dynamo.mock.H2Data;
+import com.jcabi.dynamo.mock.MkRegion;
 import com.jcabi.urn.URN;
+import com.thindeck.api.Repo;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -43,6 +49,9 @@ import org.mockito.Mockito;
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
+ * @todo #374 We should create an integration test for DyUser. Let's call it
+ *  DyUserITCase. It should test whether DyUser can perform its operations on a
+ *  real (local) Dynamo server. When done, ensure that this puzzle is removed.
  */
 public final class DyUserTest {
 
@@ -63,6 +72,31 @@ public final class DyUserTest {
         MatcherAssert.assertThat(
             new DyUser(item).urn(),
             Matchers.equalTo(urn)
+        );
+    }
+
+    /**
+     * DyUser can obtain associated repos.
+     * @throws Exception If something goes wrong.
+     */
+    @Test
+    public void canGetRepos() throws Exception {
+        final Region region = new MkRegion(
+            new H2Data().with(
+                    DyRepo.TBL,
+                new String[] {DyRepo.ATTR_NAME},
+                new String[] {DyRepo.ATTR_UPDATED}
+            )
+        );
+        final Table table = region.table(DyRepo.TBL);
+        table.put(
+            new Attributes()
+                .with(DyRepo.ATTR_NAME, "test-repo")
+                .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
+        );
+        MatcherAssert.assertThat(
+            new DyUser(table.frame().iterator().next()).repos().iterate(),
+            Matchers.<Repo>iterableWithSize(1)
         );
     }
 }
