@@ -33,9 +33,7 @@ import com.jcabi.dynamo.Credentials;
 import com.jcabi.dynamo.Region;
 import com.jcabi.manifests.Manifests;
 import com.thindeck.dynamo.DyBase;
-
 import java.util.Collections;
-
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
