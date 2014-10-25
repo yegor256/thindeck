@@ -37,7 +37,6 @@ import com.jcabi.dynamo.Conditions;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
-import com.jcabi.dynamo.Table;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Repos;
 import java.io.IOException;

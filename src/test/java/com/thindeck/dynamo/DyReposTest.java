@@ -129,11 +129,15 @@ public final class DyReposTest {
         final Frame frame = Mockito.mock(Frame.class);
         Mockito.when(region.table(Mockito.eq(DyRepo.TBL))).thenReturn(table);
         Mockito.when(table.frame()).thenReturn(frame);
-        Mockito.when(frame.where(
-            Mockito.eq(DyRepo.ATTR_NAME), Mockito.any(String.class))
+        Mockito.when(
+            frame.where(
+                Mockito.eq(DyRepo.ATTR_NAME), Mockito.any(String.class)
+            )
         ).thenReturn(frame);
-        Mockito.when(frame.where(
-                Mockito.eq(DyRepo.ATTR_NAME), Mockito.any(Condition.class))
+        Mockito.when(
+            frame.where(
+                Mockito.eq(DyRepo.ATTR_NAME), Mockito.any(Condition.class)
+            )
         ).thenReturn(frame);
         Mockito.when(frame.through(Mockito.any(Valve.class))).thenReturn(frame);
         final Collection<Item> items = new LinkedList<Item>();
