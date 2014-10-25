@@ -37,6 +37,7 @@ import com.jcabi.dynamo.Conditions;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.Table;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Repos;
 import java.io.IOException;
@@ -45,7 +46,7 @@ import java.io.IOException;
  * Dynamo implementation of {@link Repos}.
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #322 Create test for this class when jcabi/jcabi-dynamo#13 is done.
+ * @todo #370 Create test for #add new repo
  */
 public final class DyRepos implements Repos {
     /**

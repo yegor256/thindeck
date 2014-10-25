@@ -30,12 +30,14 @@
 package com.thindeck.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.jcabi.dynamo.Frame;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
 import com.jcabi.dynamo.Valve;
 import com.thindeck.api.Repo;
+import com.thindeck.api.Repos;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -52,6 +54,30 @@ import org.mockito.Mockito;
  * @version $Id$
  */
 public final class DyReposTest {
+
+    /**
+     * DyRepos can get single repo by name.
+     * @throws IOException In case of error.
+     */
+    @Test
+    public void getRepoByName() throws IOException {
+        final String name = "repo_name";
+        final Repos repos = new DyRepos(this.region(name));
+        MatcherAssert.assertThat(
+            repos.get(name).name(), Matchers.is(name)
+        );
+    }
+
+    /**
+     * DyRepos throws exception on adding existing repo.
+     * @throws IOException In case of error.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void addExistingRepo() throws IOException {
+        final String name = "existing_repo_name";
+        final Repos repos = new DyRepos(this.region(name));
+        repos.add(name);
+    }
 
     /**
      * DyRepos can return single repos.
@@ -103,6 +129,12 @@ public final class DyReposTest {
         final Frame frame = Mockito.mock(Frame.class);
         Mockito.when(region.table(Mockito.eq(DyRepo.TBL))).thenReturn(table);
         Mockito.when(table.frame()).thenReturn(frame);
+        Mockito.when(frame.where(
+            Mockito.eq(DyRepo.ATTR_NAME), Mockito.any(String.class))
+        ).thenReturn(frame);
+        Mockito.when(frame.where(
+                Mockito.eq(DyRepo.ATTR_NAME), Mockito.any(Condition.class))
+        ).thenReturn(frame);
         Mockito.when(frame.through(Mockito.any(Valve.class))).thenReturn(frame);
         final Collection<Item> items = new LinkedList<Item>();
         for (final String name : names) {
