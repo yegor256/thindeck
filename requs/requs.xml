@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="10485" time="2014-10-03T13:28:24">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="6203" time="2014-10-26T10:21:02">
    <files>
       <file id="0" line="1">/home/r/repo/src/main/requs/acronyms.req</file>
       <file id="1" line="16">/home/r/repo/src/main/requs/anonymous.req</file>
-      <file id="2" line="32">/home/r/repo/src/main/requs/main.req</file>
-      <file id="3" line="140">/home/r/repo/src/main/requs/nfrs.req</file>
-      <file id="4" line="200">/home/r/repo/src/main/requs/vision.req</file>
+      <file id="2" line="33">/home/r/repo/src/main/requs/main.req</file>
+      <file id="3" line="141">/home/r/repo/src/main/requs/nfrs.req</file>
+      <file id="4" line="201">/home/r/repo/src/main/requs/vision.req</file>
    </files>
    <input>MTBF means "Mean Time Between Failures,
 which is time that System spends in continuous
@@ -29,9 +29,10 @@ Anonymous is "a person who is not identified in the system (not logged in).
 PublicData is "a collection of web pages with public information
   about Thindeck".
 
-RuntimeStatistics is "a graphical and textual information about
-  running servers, containers and deployments, available for the public,
-  similar to https://status.github.com/".
+RuntimeStatistics is "a graphical and textual information representing
+  average server availability per day, average server response time per day,
+  current number of running servers, current number of repositories,
+  current number of applications, similar to https://status.github.com/".
 
 :UC9.1 is implemented.
 UC9.1 where Anonymous (an anonymous) explores thindeck:
@@ -266,7 +267,7 @@ the MTTR target should be set at the lowest achievable number</informal>
          <mentioned>
             <where>1:1</where>
             <where>1:3</where>
-            <where>1:13</where>
+            <where>1:14</where>
          </mentioned>
          <info>
             <informal>a person who is not identified in the system (not logged in).
@@ -385,9 +386,10 @@ class PublicData {
             <where>1:8</where>
          </mentioned>
          <info>
-            <informal>a graphical and textual information about
-  running servers, containers and deployments, available for the public,
-  similar to https://status.github.com/</informal>
+            <informal>a graphical and textual information representing
+  average server availability per day, average server response time per day,
+  current number of running servers, current number of repositories,
+  current number of applications, similar to https://status.github.com/</informal>
          </info>
          <diagrams>
             <diagram>
@@ -1643,14 +1645,14 @@ class Application {
       </type>
    </types>
    <methods>
-      <method seal="e8196a">
+      <method seal="be53e1">
          <id>UC9.1</id>
          <attributes>
             <attribute seal="">implemented</attribute>
          </attributes>
          <mentioned>
-            <where>1:12</where>
             <where>1:13</where>
+            <where>1:14</where>
             <where>3:37</where>
          </mentioned>
          <bindings>
@@ -1677,7 +1679,7 @@ class Application {
             <step>
                <number>1</number>
                <mentioned>
-                  <where>1:14</where>
+                  <where>1:15</where>
                </mentioned>
                <object>anonymous</object>
                <signature>reads</signature>
@@ -1686,7 +1688,7 @@ class Application {
             <step>
                <number>2</number>
                <mentioned>
-                  <where>1:15</where>
+                  <where>1:16</where>
                </mentioned>
                <object>anonymous</object>
                <signature>reads</signature>
@@ -1765,7 +1767,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/tr&gt;
             &lt;tr&gt;
                &lt;td&gt;RuntimeStatistics&lt;/td&gt;
-               &lt;td&gt;"a graphical and textual information about running servers, containers and deployments, available for the public, similar to https://status.github.com/"&lt;/td&gt;
+               &lt;td&gt;"a graphical and textual information representing average server availability per day, average server response time per day, current number of running servers, current number of repositories, current number of applications, similar to https://status.github.com/"&lt;/td&gt;
             &lt;/tr&gt;
          &lt;/tbody&gt;
       &lt;/table&gt;
@@ -1831,7 +1833,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/tr&gt;
             &lt;tr&gt;
                &lt;td&gt;RuntimeStatistics&lt;/td&gt;
-               &lt;td&gt;"a graphical and textual information about running servers, containers and deployments, available for the public, similar to https://status.github.com/"&lt;/td&gt;
+               &lt;td&gt;"a graphical and textual information representing average server availability per day, average server response time per day, current number of running servers, current number of repositories, current number of applications, similar to https://status.github.com/"&lt;/td&gt;
             &lt;/tr&gt;
          &lt;/tbody&gt;
       &lt;/table&gt;
@@ -1994,7 +1996,7 @@ primary -&gt; main
             </diagram>
          </diagrams>
       </method>
-      <method seal="3a14c9">
+      <method seal="314e5b">
          <id>UC1</id>
          <attributes>
             <attribute seal="">implemented</attribute>
@@ -2574,7 +2576,7 @@ main ---&gt; UC6
             </diagram>
          </diagrams>
       </method>
-      <method seal="be39fe">
+      <method seal="e262e0">
          <id>UC2</id>
          <attributes>
             <attribute seal="">implemented</attribute>
@@ -3026,7 +3028,7 @@ main ---&gt; UC2.3
             </diagram>
          </diagrams>
       </method>
-      <method seal="69b834">
+      <method seal="a2c8d0">
          <id>UC2.3</id>
          <attributes>
             <attribute seal="">implemented</attribute>
@@ -3608,7 +3610,7 @@ main ---&gt; UC10.1
             </diagram>
          </diagrams>
       </method>
-      <method seal="732451">
+      <method seal="4a2c78">
          <id>UC6</id>
          <mentioned>
             <where>2:26</where>
@@ -4031,7 +4033,7 @@ primary -&gt; main
             </diagram>
          </diagrams>
       </method>
-      <method seal="2bf79c">
+      <method seal="76b9e7">
          <id>UC10.1</id>
          <attributes>
             <attribute seal="">implemented</attribute>
