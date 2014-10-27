@@ -29,23 +29,18 @@
  */
 package com.thindeck.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.Condition;
-import com.jcabi.dynamo.Frame;
-import com.jcabi.dynamo.Item;
+import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
-import com.jcabi.dynamo.Valve;
+import com.jcabi.dynamo.mock.H2Data;
+import com.jcabi.dynamo.mock.MkRegion;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Repos;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
  * Tests for {@link DyRepos}.
@@ -77,6 +72,20 @@ public final class DyReposTest {
         final String name = "existing_repo_name";
         final Repos repos = new DyRepos(this.region(name));
         repos.add(name);
+    }
+
+    /**
+     * DyRepos add new repo.
+     * @throws IOException In case of error.
+     */
+    @Test
+    public void addNewRepo() throws IOException {
+        final String name = "new_repo_name";
+        final Repos repos = new DyRepos(this.region());
+        repos.add(name);
+        MatcherAssert.assertThat(
+            repos.get(name).name(), Matchers.is(name)
+        );
     }
 
     /**
@@ -117,39 +126,29 @@ public final class DyReposTest {
         MatcherAssert.assertThat(repos.next().name(), Matchers.equalTo(second));
         MatcherAssert.assertThat(repos.hasNext(), Matchers.is(false));
     }
+
     /**
      * Create region with repos.
      * @param names Names of the repos.
      * @return Region created.
      * @throws IOException In case of error.
      */
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     private Region region(final String... names) throws IOException {
-        final Region region = Mockito.mock(Region.class);
-        final Table table = Mockito.mock(Table.class);
-        final Frame frame = Mockito.mock(Frame.class);
-        Mockito.when(region.table(Mockito.eq(DyRepo.TBL))).thenReturn(table);
-        Mockito.when(table.frame()).thenReturn(frame);
-        Mockito.when(
-            frame.where(
-                Mockito.eq(DyRepo.ATTR_NAME), Mockito.any(String.class)
+        final Region region = new MkRegion(
+            new H2Data().with(
+                DyRepo.TBL,
+                new String[] {DyRepo.ATTR_NAME},
+                new String[] {DyRepo.ATTR_UPDATED}
             )
-        ).thenReturn(frame);
-        Mockito.when(
-            frame.where(
-                Mockito.eq(DyRepo.ATTR_NAME), Mockito.any(Condition.class)
-            )
-        ).thenReturn(frame);
-        Mockito.when(frame.through(Mockito.any(Valve.class))).thenReturn(frame);
-        final Collection<Item> items = new LinkedList<Item>();
+        );
+        final Table table = region.table(DyRepo.TBL);
         for (final String name : names) {
-            final AttributeValue attr = Mockito.mock(AttributeValue.class);
-            Mockito.when(attr.getS()).thenReturn(name);
-            final Item item = Mockito.mock(Item.class);
-            Mockito.when(item.get(Mockito.eq(DyRepo.ATTR_NAME)))
-                .thenReturn(attr);
-            items.add(item);
+            table.put(
+                new Attributes().with(DyRepo.ATTR_NAME, name)
+                    .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
+            );
         }
-        Mockito.when(frame.iterator()).thenReturn(items.iterator());
         return region;
     }
 }
