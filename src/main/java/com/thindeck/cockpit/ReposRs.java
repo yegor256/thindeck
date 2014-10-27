@@ -90,7 +90,6 @@ public final class ReposRs extends BaseRs {
      * @param name Repo name
      * @param uri Repo URI
      * @return The JAX-RS response
-     * @todo #290 Add a CasperJS test for adding repositories by user.
      */
     @POST
     @Path("/add")
