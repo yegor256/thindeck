@@ -171,7 +171,6 @@ public final class Nginx implements LoadBalancer {
             ),
             String.format("fi"),
             String.format("rm %s.hosts.conf.bak", host),
-            this.updateNginxHttpConfigScript(host),
             String.format(
                 "else printf %s > %s.hosts.conf",
                 Joiner.on("\\n").join(
@@ -181,6 +180,7 @@ public final class Nginx implements LoadBalancer {
                 ),
                 host
             ),
+            this.updateNginxHttpConfigScript(host),
             "fi"
         );
     }
