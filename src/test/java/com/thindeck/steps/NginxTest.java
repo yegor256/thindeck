@@ -43,10 +43,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -65,43 +63,20 @@ public final class NginxTest {
     private static File temp;
 
     /**
-     * Dummy nginx configuraiton.
-     */
-    private transient File nginx;
-
-    /**
-     * Set up temp directory.
+     * Set up.
      */
     @BeforeClass
-    public static void setUpBeforeClass() {
+    public static void setUp() {
         temp = Files.createTempDir();
     }
 
     /**
-     * Tear down temp directory.
+     * Tear down.
      * @throws Exception If something goes wrong.
      */
     @AfterClass
-    public static void tearDownAfterClass() throws Exception {
+    public static void tearDown() throws Exception {
         FileUtils.deleteDirectory(temp);
-    }
-
-    /**
-     * Set up dummy nginx config file.
-     * @throws Exception If something goes wrong
-     */
-    @Before
-    public void setUp() throws Exception {
-        this.nginx = new File(temp, "nginx.conf");
-        FileUtils.writeStringToFile(this.nginx, "http {\n}");
-    }
-
-    /**
-     * Remove dummy nginx config.
-     */
-    @After
-    public void tearDown() {
-        this.nginx.delete();
     }
 
     /**
@@ -213,7 +188,7 @@ public final class NginxTest {
         builder.redirectError(new File("/dev/null"));
         final Process process = builder.start();
         try {
-            new Nginx(bin).update("", 1, "", 2);
+            new Nginx(bin, "nginx.conf").update("", 1, "", 2);
             process.waitFor();
         } finally {
             sshd.stop();
@@ -274,14 +249,17 @@ public final class NginxTest {
         final String host = "host3";
         final int sport = 456;
         final String server = "server3";
+        final File conf = File.createTempFile("nginx", ".conf", temp);
+        FileUtils.writeStringToFile(conf, "http {\n}");
         sshd.start();
         try {
-            new Nginx().update(host, Tv.THOUSAND, server, sport);
+            new Nginx("nginx", conf.getName())
+                .update(host, Tv.THOUSAND, server, sport);
         } finally {
             sshd.stop();
         }
         MatcherAssert.assertThat(
-            FileUtils.readFileToString(this.nginx),
+            FileUtils.readFileToString(conf),
             Matchers.containsString(
                 Joiner.on('\n').join(
                     String.format("http {", host),

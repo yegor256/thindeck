@@ -81,18 +81,25 @@ public final class Nginx implements LoadBalancer {
     private final transient String binary;
 
     /**
+     * Configuration file name.
+     */
+    private final transient String config;
+
+    /**
      * Constructor.
      * @param bin Nginx binary name.
+     * @param conf Config file name.
      */
-    public Nginx(final String bin) {
+    public Nginx(final String bin, final String conf) {
         this.binary = bin;
+        this.config = conf;
     }
 
     /**
      * Default constructor.
      */
     public Nginx() {
-        this("nginx");
+        this("nginx", "nginx.conf");
     }
 
     /**
@@ -126,7 +133,7 @@ public final class Nginx implements LoadBalancer {
                         "cd %s",
                         Manifests.read("Thindeck-LoadBalancer-Directory")
                     ),
-                    updateHostsConfigurationScript(host, server, sport),
+                    this.updateHostsConfigurationScript(host, server, sport),
                     String.format("pkill -HUP -f %s", this.binary)
                 )
             );
@@ -144,7 +151,7 @@ public final class Nginx implements LoadBalancer {
      * @param sport Server port to redirect requests to
      * @return Commands for updating hosts configuration.
      */
-    private static String updateHostsConfigurationScript(final String host,
+    private String updateHostsConfigurationScript(final String host,
         final String server, final int sport) {
         return Joiner.on(";").join(
             String.format("if [ -f %s.hosts.conf ]", host),
@@ -164,7 +171,7 @@ public final class Nginx implements LoadBalancer {
             ),
             String.format("fi"),
             String.format("rm %s.hosts.conf.bak", host),
-            updateNginxHttpConfigScript(host),
+            this.updateNginxHttpConfigScript(host),
             String.format(
                 "else printf %s > %s.hosts.conf",
                 Joiner.on("\\n").join(
@@ -180,21 +187,21 @@ public final class Nginx implements LoadBalancer {
 
     /**
      * Script for updating nginx.conf with host-specific HTTP include files.
-     * @param host The host file to update.
+     * @param host The host file to update
      * @return Script for updating nginx.conf
      */
-    private static String updateNginxHttpConfigScript(final String host) {
+    private String updateNginxHttpConfigScript(final String host) {
         final String hosts = String.format("%s.hosts.conf", host);
         return Joiner.on(";").join(
             String.format(
-                "if [[ $(grep '%1$s' nginx.conf) != *'%1$s'* ]]", hosts
+                "if [[ $(grep '%1$s' %2$s) != *%1$s* ]]", hosts, this.config
             ),
             String.format(
                 // @checkstyle LineLength (1 line)
-                "then sed -i.bak -r 's/http \\{/http \\{\\n    include %s;/' nginx.conf",
-                hosts
+                "then sed -i.bak -r 's/http \\{/http \\{\\n    include %s;/' %s",
+                hosts, this.config
             ),
-            "rm nginx.conf.bak",
+            String.format("rm %s", this.config),
             "fi"
         );
     }
