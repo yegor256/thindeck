@@ -64,10 +64,6 @@ import org.apache.commons.io.FileUtils;
  * those files are loaded from main ngnix.conf file using include directive.
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #345 When a *hosts.conf file is created for a new host, it should be
- *  included in nginx.conf so that it can be loaded by the Nginx server. See
- *  the explanation in in https://github.com/yegor256/thindeck/issues/347
- *  for more details.
  * @todo #345 Let's handle the file *main.conf, which should contain the server
  *  configuration for a given host. The file name is prefixed by the host name,
  *  e.g. the host "www.example.com" will have the file name
@@ -75,7 +71,7 @@ import org.apache.commons.io.FileUtils;
  *  create it and include it in nginx.conf. If it already exists, we should
  *  update it. See the Javadoc above or the explanation in
  *  https://github.com/yegor256/thindeck/issues/347 for more details.
- *  @checkstyle MultipleStringLiterals (300 lines)
+ * @checkstyle MultipleStringLiterals (300 lines)
  */
 public final class Nginx implements LoadBalancer {
 
