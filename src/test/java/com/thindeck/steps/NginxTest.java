@@ -43,8 +43,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -63,20 +65,43 @@ public final class NginxTest {
     private static File temp;
 
     /**
-     * Set up.
+     * Dummy nginx configuraiton.
+     */
+    private transient File nginx;
+
+    /**
+     * Set up temp directory.
      */
     @BeforeClass
-    public static void setUp() {
+    public static void setUpBeforeClass() {
         temp = Files.createTempDir();
     }
 
     /**
-     * Tear down.
+     * Tear down temp directory.
      * @throws Exception If something goes wrong.
      */
     @AfterClass
-    public static void tearDown() throws Exception {
+    public static void tearDownAfterClass() throws Exception {
         FileUtils.deleteDirectory(temp);
+    }
+
+    /**
+     * Set up dummy nginx config file.
+     * @throws Exception If something goes wrong
+     */
+    @Before
+    public void setUp() throws Exception {
+        this.nginx = new File(temp, "nginx.conf");
+        FileUtils.writeStringToFile(this.nginx, "http {\n}");
+    }
+
+    /**
+     * Remove dummy nginx config.
+     */
+    @After
+    public void tearDown() {
+        this.nginx.delete();
     }
 
     /**
@@ -229,6 +254,38 @@ public final class NginxTest {
                     "upstream example_servers {",
                     "    server 10.0.0.1:80;",
                     "    server 10.0.0.2:80;",
+                    "}"
+                )
+            )
+        );
+    }
+
+    /**
+     * Nginx can create server.hosts.conf file.
+     * @throws IOException If something goes wrong
+     */
+    @Test
+    public void canUpdateNginxHttpConfig() throws IOException {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final SSHD sshd = new SSHD(temp);
+        final File key = File.createTempFile("ssh3", "key3", temp);
+        FileUtils.write(key, sshd.key());
+        this.manifest(temp, sshd.login(), sshd.port(), key);
+        final String host = "host3";
+        final int sport = 456;
+        final String server = "server3";
+        sshd.start();
+        try {
+            new Nginx().update(host, Tv.THOUSAND, server, sport);
+        } finally {
+            sshd.stop();
+        }
+        MatcherAssert.assertThat(
+            FileUtils.readFileToString(this.nginx),
+            Matchers.containsString(
+                Joiner.on('\n').join(
+                    String.format("http {", host),
+                    String.format("    include %s;", this.hostsConfig(host)),
                     "}"
                 )
             )
