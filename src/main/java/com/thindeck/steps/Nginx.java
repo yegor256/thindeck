@@ -191,10 +191,10 @@ public final class Nginx implements LoadBalancer {
             ),
             String.format(
                 // @checkstyle LineLength (1 line)
-                "then sed -i.bak -r 's/http {\\n/http {\\n    include %s;\\n/' nginx.conf",
+                "then sed -i.bak -r 's/http \\{/http \\{\\n    include %s;/' nginx.conf",
                 hosts
             ),
-            "rm nginx.conf.bak", hosts,
+            "rm nginx.conf.bak",
             "fi"
         );
     }
