@@ -201,7 +201,7 @@ public final class Nginx implements LoadBalancer {
                 "then sed -i.bak -r 's/http \\{/http \\{\\n    include %s;/' %s",
                 hosts, this.config
             ),
-            String.format("rm %s", this.config),
+            String.format("rm %s.bak", this.config),
             "fi"
         );
     }
