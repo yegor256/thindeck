@@ -33,6 +33,10 @@ UC2/MTBF must "be 30 days".
 
 UC2/LOG must "be kept for 180 days since creation.
   Log is deleted once the 180 day mark is reached".
+  
+UC2/AVAIL must "be provided on deployment of an updated repository
+  by using the blue-green deployment approach to minimize
+  administrative downtime to less than 10 seconds".
 
 UC9.1/MTBF must "be 30 days".
 
