@@ -168,6 +168,7 @@ public final class Nginx implements LoadBalancer {
             ),
             String.format("fi"),
             String.format("rm %s.hosts.conf.bak", host),
+            updateNginxHttpConfigScript(host),
             String.format(
                 "else printf %s > %s.hosts.conf",
                 Joiner.on("\\n").join(
@@ -177,6 +178,27 @@ public final class Nginx implements LoadBalancer {
                 ),
                 host
             ),
+            "fi"
+        );
+    }
+
+    /**
+     * Script for updating nginx.conf with host-specific HTTP include files.
+     * @param host The host file to update.
+     * @return Script for updating nginx.conf
+     */
+    private static String updateNginxHttpConfigScript(final String host) {
+        final String hosts = String.format("%s.hosts.conf", host);
+        return Joiner.on(";").join(
+            String.format(
+                "if [[ $(grep '%1$s' nginx.conf) != *'%1$s'* ]]", hosts
+            ),
+            String.format(
+                // @checkstyle LineLength (1 line)
+                "then sed -i.bak -r 's/http {\\n/http {\\n    include %s;\\n/' nginx.conf",
+                hosts
+            ),
+            "rm nginx.conf.bak", hosts,
             "fi"
         );
     }
