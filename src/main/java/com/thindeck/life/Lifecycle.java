@@ -65,6 +65,26 @@ public final class Lifecycle implements ServletContextListener {
     private final transient Collection<Closeable> daemons =
         new LinkedList<Closeable>();
 
+    /**
+     * Enable daemons creation.
+     */
+    private final transient boolean denable;
+
+    /**
+     * Constructor.
+     */
+    public Lifecycle() {
+        this(true);
+    }
+
+    /**
+     * Constructor with optionally disabled daemons.
+     * @param dmns Enable daemons?
+     */
+    Lifecycle(final boolean dmns) {
+        this.denable = dmns;
+    }
+
     @Override
     public void contextInitialized(final ServletContextEvent event) {
         try {
@@ -80,7 +100,9 @@ public final class Lifecycle implements ServletContextListener {
             base = new DyBase(this.dynamo());
         }
         event.getServletContext().setAttribute(Base.class.getName(), base);
-        this.daemons.add(new RoutineTxns(base));
+        if (this.denable) {
+            this.daemons.add(new RoutineTxns(base));
+        }
     }
 
     @Override
