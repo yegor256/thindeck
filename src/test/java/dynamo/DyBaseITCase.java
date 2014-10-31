@@ -31,6 +31,7 @@ package dynamo;
 
 import com.jcabi.dynamo.Credentials;
 import com.jcabi.dynamo.Region;
+import com.jcabi.manifests.Manifests;
 import com.thindeck.dynamo.DyBase;
 import java.util.Collections;
 import org.hamcrest.MatcherAssert;
@@ -48,7 +49,7 @@ public final class DyBaseITCase {
     /**
      * DyBase can add a command.
      * @throws Exception If there is some problem inside
-     * @todo #321 DyBase should be implemented to make this test pass.
+     * @todo #341 DyBase should be implemented to make this test pass.
      *  You should make sure the DynamoDB Local has all the required tables,
      *  and all methods of all API-classes are implemented
      *  in com.thinkdeck.dynamo package
@@ -74,8 +75,8 @@ public final class DyBaseITCase {
         return new Region.Simple(
             new Credentials.Direct(
                 new Credentials.Simple(
-                    System.getProperty("dynamo.key"),
-                    System.getProperty("dynamo.secret")
+                    Manifests.read("Thindeck-DynamoKey"),
+                    Manifests.read("Thindeck-DynamoSecret")
                 ),
                 Integer.parseInt(System.getProperty("dynamo.port"))
             )
