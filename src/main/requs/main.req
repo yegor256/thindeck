@@ -14,6 +14,10 @@ UC2 where Repository (a repo) launches Application (an app):
   3. The repo deletes the deployment
     "every 5 minutes, if repository sources are updated".
 
+UC2/1 when "several domain-s and/or port-s are equal within repo":
+  1. "Notify the user via email about this";
+  2. Fail as "can't launch app with conflicts".
+
 :UC2.3 is implemented.
 UC2.3 where Deployment (a deployment) executes Application (an app):
   1. Cloud (a cloud) creates Server (a server);
