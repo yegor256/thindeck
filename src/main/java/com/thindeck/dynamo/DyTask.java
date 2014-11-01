@@ -29,66 +29,69 @@
  */
 package com.thindeck.dynamo;
 
+import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Item;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Tasks;
+import com.thindeck.api.Scenario;
+import com.thindeck.api.Task;
 import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Dynamo implementation of {@link Repo}.
+ * Dynamo implementation of {@link Task}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Paul Polishchuk (ppol@yua.fm)
  * @version $Id$
- * @todo #373 Implement memo method.
+ * @since 0.5
+ * @todo #406 Implement command method.
+ * @todo #406 Implement scenario method.
  */
-public final class DyRepo implements Repo {
+@Immutable
+@ToString
+@EqualsAndHashCode
+public final class DyTask implements Task {
     /**
      * Table name.
      */
-    public static final String TBL = "repos";
-
+    public static final String TBL = "tasks";
     /**
-     * URN attribute.
+     * Repo URN attribute.
      */
-    public static final String ATTR_NAME = "name";
-
+    public static final String ATTR_REPO_URN = "urn";
     /**
-     * When updated.
+     * Task attribute.
      */
-    public static final String ATTR_UPDATED = "updated";
-
+    public static final String ATTR_ID = "id";
     /**
      * Item.
      */
     private final transient Item item;
-
     /**
-     * Ctor.
+     * Constructor.
      * @param itm Item
      */
-    public DyRepo(@NotNull final Item itm) {
+    public DyTask(final Item itm) {
         this.item = itm;
     }
 
     @Override
-    public String name() {
+    public long number() {
         try {
-            return this.item.get(DyRepo.ATTR_NAME).getS();
+            return Long.valueOf(
+                this.item.get(DyTask.ATTR_ID).getS()
+            );
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
     }
 
     @Override
-    @NotNull
-    public Tasks tasks() {
-        return new DyTasks(this.item.frame().table().region(), this);
+    public String command() {
+        throw new UnsupportedOperationException("#command");
     }
 
     @Override
-    public Memo memo() throws IOException {
-        throw new UnsupportedOperationException("#memo");
+    public Scenario scenario() {
+        throw new UnsupportedOperationException("#scenario");
     }
 }

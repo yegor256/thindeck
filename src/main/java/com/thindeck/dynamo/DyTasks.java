@@ -30,7 +30,10 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.Conditions;
+import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
+import com.thindeck.api.Repo;
 import com.thindeck.api.Task;
 import com.thindeck.api.Tasks;
 import java.util.Map;
@@ -43,8 +46,8 @@ import lombok.ToString;
  * @author Paul Polishchuk (ppol@yua.fm)
  * @version $Id$
  * @since 0.5
- * @todo #373 Implement get and open methods.
  * @todo #373 Implement all and add methods.
+ * @todo #406 Implement open method.
  */
 @Immutable
 @ToString
@@ -55,18 +58,39 @@ public final class DyTasks implements Tasks {
      * Region we're in.
      */
     private final transient Region region;
+    /**
+     * Repo we're in.
+     */
+    private final transient Repo repo;
 
     /**
      * Constructor.
      * @param rgn Region
+     * @param rpo Repo
      */
-    public DyTasks(final Region rgn) {
+    public DyTasks(final Region rgn, final Repo rpo) {
         this.region = rgn;
+        this.repo = rpo;
     }
 
     @Override
     public Task get(final long number) {
-        throw new UnsupportedOperationException("#get");
+        return new DyTask(
+            this.region.table(DyTask.TBL)
+                .frame()
+                .through(
+                    new QueryValve().withLimit(1)
+                )
+                .where(
+                    new Conditions().with(
+                        DyTask.ATTR_ID,
+                        Conditions.equalTo(String.valueOf(number))
+                    ).with(
+                            DyTask.ATTR_REPO_URN,
+                            Conditions.equalTo(this.repo.name())
+                        )
+                ).iterator().next()
+        );
     }
 
     @Override
