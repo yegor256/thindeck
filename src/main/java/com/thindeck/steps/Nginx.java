@@ -194,7 +194,7 @@ public final class Nginx implements LoadBalancer {
         final String hosts = String.format("%s.hosts.conf", host);
         return Joiner.on(";").join(
             String.format(
-                "if [[ $(grep '%1$s' %2$s) != *%1$s* ]]", hosts, this.config
+                "if ! grep -q '%s' %s", hosts, this.config
             ),
             String.format(
                 // @checkstyle LineLength (1 line)
