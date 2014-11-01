@@ -52,7 +52,6 @@ import lombok.ToString;
 @Immutable
 @ToString
 @EqualsAndHashCode
-@SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField" })
 public final class DyTasks implements Tasks {
     /**
      * Region we're in.
