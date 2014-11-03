@@ -45,8 +45,6 @@ import java.io.IOException;
  * Dynamo implementation of {@link Repos}.
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #341 Add ATTR_UPDATED during creation process and update repos.json
- *  table definition with the new field.
  * @todo #370 Create test for #add new repo
  */
 public final class DyRepos implements Repos {
@@ -92,6 +90,7 @@ public final class DyRepos implements Repos {
                 this.region.table(DyRepo.TBL).put(
                     new Attributes()
                         .with(DyRepo.ATTR_NAME, name)
+                        .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
                 )
             );
         } catch (final IOException ex) {
