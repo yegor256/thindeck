@@ -30,80 +30,68 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Conditions;
-import com.jcabi.dynamo.QueryValve;
-import com.jcabi.dynamo.Region;
-import com.thindeck.api.Repo;
+import com.jcabi.dynamo.Item;
+import com.thindeck.api.Scenario;
 import com.thindeck.api.Task;
-import com.thindeck.api.Tasks;
-import java.util.Map;
+import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Dynamo implementation of {@link Tasks}.
+ * Dynamo implementation of {@link Task}.
  *
  * @author Paul Polishchuk (ppol@yua.fm)
  * @version $Id$
  * @since 0.5
- * @todo #373 Implement all and add methods.
- * @todo #406 Implement open method.
+ * @todo #406 Implement command method.
+ * @todo #406 Implement scenario method.
  */
 @Immutable
 @ToString
 @EqualsAndHashCode
-public final class DyTasks implements Tasks {
+public final class DyTask implements Task {
     /**
-     * Region we're in.
+     * Table name.
      */
-    private final transient Region region;
+    public static final String TBL = "tasks";
     /**
-     * Repo we're in.
+     * Repo URN attribute.
      */
-    private final transient Repo repo;
-
+    public static final String ATTR_REPO_URN = "urn";
+    /**
+     * Task attribute.
+     */
+    public static final String ATTR_ID = "id";
+    /**
+     * Item.
+     */
+    private final transient Item item;
     /**
      * Constructor.
-     * @param rgn Region
-     * @param rpo Repo
+     * @param itm Item
      */
-    public DyTasks(final Region rgn, final Repo rpo) {
-        this.region = rgn;
-        this.repo = rpo;
+    public DyTask(final Item itm) {
+        this.item = itm;
     }
 
     @Override
-    public Task get(final long number) {
-        return new DyTask(
-            this.region.table(DyTask.TBL)
-                .frame()
-                .through(
-                    new QueryValve().withLimit(1)
-                )
-                .where(
-                    new Conditions().with(
-                        DyTask.ATTR_ID,
-                        Conditions.equalTo(String.valueOf(number))
-                    ).with(
-                            DyTask.ATTR_REPO_URN,
-                            Conditions.equalTo(this.repo.name())
-                        )
-                ).iterator().next()
-        );
+    public long number() {
+        try {
+            return Long.valueOf(
+                this.item.get(DyTask.ATTR_ID).getS()
+            );
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
     @Override
-    public Iterable<Task> open() {
-        throw new UnsupportedOperationException("#open");
+    public String command() {
+        throw new UnsupportedOperationException("#command");
     }
 
     @Override
-    public Iterable<Task> all() {
-        throw new UnsupportedOperationException("#all");
-    }
-
-    @Override
-    public Task add(final String command, final Map<String, String> args) {
-        throw new UnsupportedOperationException("#add");
+    public Scenario scenario() {
+        throw new UnsupportedOperationException("#scenario");
     }
 }
