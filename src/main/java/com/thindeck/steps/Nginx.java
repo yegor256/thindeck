@@ -64,10 +64,6 @@ import org.apache.commons.io.FileUtils;
  * those files are loaded from main ngnix.conf file using include directive.
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #345 When a *hosts.conf file is created for a new host, it should be
- *  included in nginx.conf so that it can be loaded by the Nginx server. See
- *  the explanation in in https://github.com/yegor256/thindeck/issues/347
- *  for more details.
  * @todo #345 Let's handle the file *main.conf, which should contain the server
  *  configuration for a given host. The file name is prefixed by the host name,
  *  e.g. the host "www.example.com" will have the file name
@@ -75,7 +71,7 @@ import org.apache.commons.io.FileUtils;
  *  create it and include it in nginx.conf. If it already exists, we should
  *  update it. See the Javadoc above or the explanation in
  *  https://github.com/yegor256/thindeck/issues/347 for more details.
- *  @checkstyle MultipleStringLiterals (300 lines)
+ * @checkstyle MultipleStringLiterals (300 lines)
  */
 public final class Nginx implements LoadBalancer {
 
@@ -85,18 +81,25 @@ public final class Nginx implements LoadBalancer {
     private final transient String binary;
 
     /**
+     * Configuration file name.
+     */
+    private final transient String config;
+
+    /**
      * Constructor.
      * @param bin Nginx binary name.
+     * @param conf Config file name.
      */
-    public Nginx(final String bin) {
+    public Nginx(final String bin, final String conf) {
         this.binary = bin;
+        this.config = conf;
     }
 
     /**
      * Default constructor.
      */
     public Nginx() {
-        this("nginx");
+        this("nginx", "nginx.conf");
     }
 
     /**
@@ -130,7 +133,7 @@ public final class Nginx implements LoadBalancer {
                         "cd %s",
                         Manifests.read("Thindeck-LoadBalancer-Directory")
                     ),
-                    updateHostsConfigurationScript(host, server, sport),
+                    this.updateHostsConfigurationScript(host, server, sport),
                     String.format("pkill -HUP -f %s", this.binary)
                 )
             );
@@ -148,7 +151,7 @@ public final class Nginx implements LoadBalancer {
      * @param sport Server port to redirect requests to
      * @return Commands for updating hosts configuration.
      */
-    private static String updateHostsConfigurationScript(final String host,
+    private String updateHostsConfigurationScript(final String host,
         final String server, final int sport) {
         return Joiner.on(";").join(
             String.format("if [ -f %s.hosts.conf ]", host),
@@ -177,6 +180,28 @@ public final class Nginx implements LoadBalancer {
                 ),
                 host
             ),
+            this.updateNginxHttpConfigScript(host),
+            "fi"
+        );
+    }
+
+    /**
+     * Script for updating nginx.conf with host-specific HTTP include files.
+     * @param host The host file to update
+     * @return Script for updating nginx.conf
+     */
+    private String updateNginxHttpConfigScript(final String host) {
+        final String hosts = String.format("%s.hosts.conf", host);
+        return Joiner.on(";").join(
+            String.format(
+                "if ! grep -q '%s' %s", hosts, this.config
+            ),
+            String.format(
+                // @checkstyle LineLength (1 line)
+                "then sed -i.bak -r 's/http \\{/http \\{\\n    include %s;/' %s",
+                hosts, this.config
+            ),
+            String.format("rm %s.bak", this.config),
             "fi"
         );
     }

@@ -32,6 +32,7 @@ package dynamo;
 import com.jcabi.dynamo.Credentials;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.retry.ReRegion;
+import com.jcabi.manifests.Manifests;
 import com.thindeck.dynamo.DyBase;
 import java.util.Collections;
 import org.hamcrest.MatcherAssert;
@@ -75,8 +76,8 @@ public final class DyBaseITCase {
                 new Region.Simple(
                     new Credentials.Direct(
                         new Credentials.Simple(
-                            System.getProperty("dynamo.key"),
-                            System.getProperty("dynamo.secret")
+                            Manifests.read("Thindeck-DynamoKey"),
+                            Manifests.read("Thindeck-DynamoSecret")
                         ),
                         Integer.parseInt(System.getProperty("dynamo.port"))
                     )

@@ -29,66 +29,68 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.dynamo.Item;
-import com.thindeck.api.Memo;
+import com.jcabi.dynamo.Attributes;
+import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.Table;
+import com.jcabi.dynamo.mock.H2Data;
+import com.jcabi.dynamo.mock.MkRegion;
 import com.thindeck.api.Repo;
-import com.thindeck.api.Tasks;
+import com.thindeck.api.mock.MkRepo;
 import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Dynamo implementation of {@link Repo}.
+ * Test case for {@link DyTasks}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Paul Polishchuk (ppol@ua.fm)
  * @version $Id$
- * @todo #373 Implement memo method.
+ * @since 0.5
  */
-public final class DyRepo implements Repo {
-    /**
-     * Table name.
-     */
-    public static final String TBL = "repos";
+public final class DyTasksTest {
 
     /**
-     * URN attribute.
+     * DyTasks can retrieve Task by number.
+     * @throws Exception In case of error.
      */
-    public static final String ATTR_NAME = "name";
-
-    /**
-     * When updated.
-     */
-    public static final String ATTR_UPDATED = "updated";
-
-    /**
-     * Item.
-     */
-    private final transient Item item;
-
-    /**
-     * Ctor.
-     * @param itm Item
-     */
-    public DyRepo(@NotNull final Item itm) {
-        this.item = itm;
+    @Test
+    public void getTask() throws Exception {
+        final Repo repo = new MkRepo();
+        final long tid = 10L;
+        MatcherAssert.assertThat(
+            new DyTasks(
+                DyTasksTest.region(repo.name(), tid, 2L, 1L),
+                repo
+            ).get(tid).number(),
+            Matchers.equalTo(tid)
+        );
     }
 
-    @Override
-    public String name() {
-        try {
-            return this.item.get(DyRepo.ATTR_NAME).getS();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
+    /**
+     * Create region with one repo and multiple tasks.
+     * @param repo Repo urn
+     * @param ids Ids of tasks.
+     * @return Region created.
+     * @throws IOException In case of error.
+     */
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+    private static Region region(final String repo, final long... ids)
+        throws IOException {
+        final Region region = new MkRegion(
+            new H2Data().with(
+                DyTask.TBL,
+                new String[] {DyTask.ATTR_ID},
+                new String[] {DyTask.ATTR_REPO_URN}
+            )
+        );
+        final Table table = region.table(DyTask.TBL);
+        for (final long tid : ids) {
+            table.put(
+                new Attributes().with(DyTask.ATTR_ID, tid)
+                    .with(DyTask.ATTR_REPO_URN, repo)
+            );
         }
-    }
-
-    @Override
-    @NotNull
-    public Tasks tasks() {
-        return new DyTasks(this.item.frame().table().region(), this);
-    }
-
-    @Override
-    public Memo memo() throws IOException {
-        throw new UnsupportedOperationException("#memo");
+        return region;
     }
 }

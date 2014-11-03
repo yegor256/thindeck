@@ -188,7 +188,7 @@ public final class NginxTest {
         builder.redirectError(new File("/dev/null"));
         final Process process = builder.start();
         try {
-            new Nginx(bin).update("", 1, "", 2);
+            new Nginx(bin, "nginx.conf").update("", 1, "", 2);
             process.waitFor();
         } finally {
             sshd.stop();
@@ -229,6 +229,41 @@ public final class NginxTest {
                     "upstream example_servers {",
                     "    server 10.0.0.1:80;",
                     "    server 10.0.0.2:80;",
+                    "}"
+                )
+            )
+        );
+    }
+
+    /**
+     * Nginx can create server.hosts.conf file.
+     * @throws IOException If something goes wrong
+     */
+    @Test
+    public void canUpdateNginxHttpConfig() throws IOException {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final SSHD sshd = new SSHD(temp);
+        final File key = File.createTempFile("ssh3", "key3", temp);
+        FileUtils.write(key, sshd.key());
+        this.manifest(temp, sshd.login(), sshd.port(), key);
+        final String host = "host3";
+        final int sport = 456;
+        final String server = "server3";
+        final File conf = File.createTempFile("nginx", ".conf", temp);
+        FileUtils.writeStringToFile(conf, "http {\n}");
+        sshd.start();
+        try {
+            new Nginx("nginx", conf.getName())
+                .update(host, Tv.THOUSAND, server, sport);
+        } finally {
+            sshd.stop();
+        }
+        MatcherAssert.assertThat(
+            FileUtils.readFileToString(conf),
+            Matchers.containsString(
+                Joiner.on('\n').join(
+                    String.format("http {", host),
+                    String.format("    include %s;", this.hostsConfig(host)),
                     "}"
                 )
             )

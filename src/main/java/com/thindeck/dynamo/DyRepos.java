@@ -45,9 +45,9 @@ import java.io.IOException;
  * Dynamo implementation of {@link Repos}.
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #322 Create test for this class when jcabi/jcabi-dynamo#13 is done.
  * @todo #341 Add ATTR_UPDATED during creation process and update repos.json
  *  table definition with the new field.
+ * @todo #370 Create test for #add new repo
  */
 public final class DyRepos implements Repos {
     /**

@@ -29,16 +29,17 @@
  */
 package com.thindeck.dynamo;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.dynamo.Frame;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
 import com.jcabi.dynamo.Valve;
 import com.jcabi.urn.URN;
+import java.io.IOException;
 import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -52,11 +53,10 @@ public final class DyBaseTest {
 
     /**
      * DyBase can create DyUser.
-     * @todo #322 Enable this test when jcabi/jcabi-dynamo#13 is done.
+     * @throws IOException If something goes wrong.
      */
     @Test
-    @Ignore
-    public void createsDyUser() {
+    public void createsDyUser() throws IOException {
         final Region region = Mockito.mock(Region.class);
         final Table table = Mockito.mock(Table.class);
         final Frame frame = Mockito.mock(Frame.class);
@@ -70,6 +70,8 @@ public final class DyBaseTest {
             )
         ).thenReturn(frame);
         final Item item = Mockito.mock(Item.class);
+        Mockito.when(item.get(DyUser.ATTR_URN))
+            .thenReturn(new AttributeValue(urn.toString()));
         Mockito.when(frame.iterator())
             .thenReturn(Collections.singleton(item).iterator());
         MatcherAssert.assertThat(
