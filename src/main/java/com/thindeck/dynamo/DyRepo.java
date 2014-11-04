@@ -41,7 +41,6 @@ import javax.validation.constraints.NotNull;
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #373 Implement memo method.
  */
 public final class DyRepo implements Repo {
     /**
@@ -58,6 +57,11 @@ public final class DyRepo implements Repo {
      * When updated.
      */
     public static final String ATTR_UPDATED = "updated";
+
+    /**
+     * Memo.
+     */
+    public static final String ATTR_MEMO = "memo";
 
     /**
      * Item.
@@ -89,6 +93,6 @@ public final class DyRepo implements Repo {
 
     @Override
     public Memo memo() throws IOException {
-        throw new UnsupportedOperationException("#memo");
+        return new DyMemo(this.item.get(ATTR_MEMO).getS());
     }
 }
