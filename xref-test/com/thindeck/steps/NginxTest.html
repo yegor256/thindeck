@@ -196,7 +196,7 @@
 <a class="jxr_linenumber" name="L188" href="#L188">188</a>         builder.redirectError(<strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"/dev/null"</span>));
 <a class="jxr_linenumber" name="L189" href="#L189">189</a>         <strong class="jxr_keyword">final</strong> Process process = builder.start();
 <a class="jxr_linenumber" name="L190" href="#L190">190</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>             <strong class="jxr_keyword">new</strong> Nginx(bin).update(<span class="jxr_string">""</span>, 1, <span class="jxr_string">""</span>, 2);
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>             <strong class="jxr_keyword">new</strong> Nginx(bin, <span class="jxr_string">"nginx.conf"</span>).update(<span class="jxr_string">""</span>, 1, <span class="jxr_string">""</span>, 2);
 <a class="jxr_linenumber" name="L192" href="#L192">192</a>             process.waitFor();
 <a class="jxr_linenumber" name="L193" href="#L193">193</a>         } <strong class="jxr_keyword">finally</strong> {
 <a class="jxr_linenumber" name="L194" href="#L194">194</a>             sshd.stop();
@@ -244,63 +244,98 @@
 <a class="jxr_linenumber" name="L236" href="#L236">236</a>     }
 <a class="jxr_linenumber" name="L237" href="#L237">237</a> 
 <a class="jxr_linenumber" name="L238" href="#L238">238</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L239" href="#L239">239</a> <em class="jxr_javadoccomment">     * Create hosts configuration file.</em>
-<a class="jxr_linenumber" name="L240" href="#L240">240</a> <em class="jxr_javadoccomment">     * @param path Directory where to create file.</em>
-<a class="jxr_linenumber" name="L241" href="#L241">241</a> <em class="jxr_javadoccomment">     * @param host Name of the host.</em>
-<a class="jxr_linenumber" name="L242" href="#L242">242</a> <em class="jxr_javadoccomment">     * @return Location of created file.</em>
-<a class="jxr_linenumber" name="L243" href="#L243">243</a> <em class="jxr_javadoccomment">     * @throws IOException In case of error.</em>
-<a class="jxr_linenumber" name="L244" href="#L244">244</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L245" href="#L245">245</a>     <strong class="jxr_keyword">private</strong> File hosts(<strong class="jxr_keyword">final</strong> File path, <strong class="jxr_keyword">final</strong> String host) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L246" href="#L246">246</a>         <strong class="jxr_keyword">final</strong> File fhosts = <strong class="jxr_keyword">new</strong> File(
-<a class="jxr_linenumber" name="L247" href="#L247">247</a>             path, <strong class="jxr_keyword">this</strong>.hostsConfig(host)
-<a class="jxr_linenumber" name="L248" href="#L248">248</a>         );
-<a class="jxr_linenumber" name="L249" href="#L249">249</a>         FileUtils.writeStringToFile(
-<a class="jxr_linenumber" name="L250" href="#L250">250</a>             fhosts,
-<a class="jxr_linenumber" name="L251" href="#L251">251</a>             Joiner.on('\n').join(
-<a class="jxr_linenumber" name="L252" href="#L252">252</a>                 <span class="jxr_string">"upstream example_servers {"</span>,
-<a class="jxr_linenumber" name="L253" href="#L253">253</a>                 <span class="jxr_string">"    server 10.0.0.1:80;"</span>,
-<a class="jxr_linenumber" name="L254" href="#L254">254</a>                 <span class="jxr_string">"    server 10.0.0.2:80;"</span>,
-<a class="jxr_linenumber" name="L255" href="#L255">255</a>                 <span class="jxr_string">"}"</span>
-<a class="jxr_linenumber" name="L256" href="#L256">256</a>             )
-<a class="jxr_linenumber" name="L257" href="#L257">257</a>         );
-<a class="jxr_linenumber" name="L258" href="#L258">258</a>         <strong class="jxr_keyword">return</strong> fhosts;
-<a class="jxr_linenumber" name="L259" href="#L259">259</a>     }
-<a class="jxr_linenumber" name="L260" href="#L260">260</a> 
-<a class="jxr_linenumber" name="L261" href="#L261">261</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L262" href="#L262">262</a> <em class="jxr_javadoccomment">     * Create mock manifest.</em>
-<a class="jxr_linenumber" name="L263" href="#L263">263</a> <em class="jxr_javadoccomment">     * @param path Nginx directory.</em>
-<a class="jxr_linenumber" name="L264" href="#L264">264</a> <em class="jxr_javadoccomment">     * @param login User performing update.</em>
-<a class="jxr_linenumber" name="L265" href="#L265">265</a> <em class="jxr_javadoccomment">     * @param port SSH port to use.</em>
-<a class="jxr_linenumber" name="L266" href="#L266">266</a> <em class="jxr_javadoccomment">     * @param key User private key file.</em>
-<a class="jxr_linenumber" name="L267" href="#L267">267</a> <em class="jxr_javadoccomment">     * @throws IOException In case of error.</em>
-<a class="jxr_linenumber" name="L268" href="#L268">268</a> <em class="jxr_javadoccomment">     * @checkstyle ParameterNumber (3 lines)</em>
-<a class="jxr_linenumber" name="L269" href="#L269">269</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L270" href="#L270">270</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> manifest(<strong class="jxr_keyword">final</strong> File path, <strong class="jxr_keyword">final</strong> String login, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> port,
-<a class="jxr_linenumber" name="L271" href="#L271">271</a>         <strong class="jxr_keyword">final</strong> File key) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L272" href="#L272">272</a>         <strong class="jxr_keyword">final</strong> String file = Joiner.on('\n').join(
-<a class="jxr_linenumber" name="L273" href="#L273">273</a>             <span class="jxr_string">"Thindeck-LoadBalancer-Host: localhost"</span>,
-<a class="jxr_linenumber" name="L274" href="#L274">274</a>             String.format(<span class="jxr_string">"Thindeck-LoadBalancer-Port: %d"</span>, port),
-<a class="jxr_linenumber" name="L275" href="#L275">275</a>             String.format(<span class="jxr_string">"Thindeck-LoadBalancer-User: %s"</span>, login),
-<a class="jxr_linenumber" name="L276" href="#L276">276</a>             String.format(
-<a class="jxr_linenumber" name="L277" href="#L277">277</a>                 <span class="jxr_string">"Thindeck-LoadBalancer-Key-File: %s"</span>, key.toString()
-<a class="jxr_linenumber" name="L278" href="#L278">278</a>             ),
-<a class="jxr_linenumber" name="L279" href="#L279">279</a>             String.format(
-<a class="jxr_linenumber" name="L280" href="#L280">280</a>                 <span class="jxr_string">"Thindeck-LoadBalancer-Directory: %s"</span>, path.toString()
-<a class="jxr_linenumber" name="L281" href="#L281">281</a>             ),
-<a class="jxr_linenumber" name="L282" href="#L282">282</a>             StringUtils.EMPTY
+<a class="jxr_linenumber" name="L239" href="#L239">239</a> <em class="jxr_javadoccomment">     * Nginx can create server.hosts.conf file.</em>
+<a class="jxr_linenumber" name="L240" href="#L240">240</a> <em class="jxr_javadoccomment">     * @throws IOException If something goes wrong</em>
+<a class="jxr_linenumber" name="L241" href="#L241">241</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L242" href="#L242">242</a>     @Test
+<a class="jxr_linenumber" name="L243" href="#L243">243</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> canUpdateNginxHttpConfig() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L244" href="#L244">244</a>         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+<a class="jxr_linenumber" name="L245" href="#L245">245</a>         <strong class="jxr_keyword">final</strong> SSHD sshd = <strong class="jxr_keyword">new</strong> SSHD(temp);
+<a class="jxr_linenumber" name="L246" href="#L246">246</a>         <strong class="jxr_keyword">final</strong> File key = File.createTempFile(<span class="jxr_string">"ssh3"</span>, <span class="jxr_string">"key3"</span>, temp);
+<a class="jxr_linenumber" name="L247" href="#L247">247</a>         FileUtils.write(key, sshd.key());
+<a class="jxr_linenumber" name="L248" href="#L248">248</a>         <strong class="jxr_keyword">this</strong>.manifest(temp, sshd.login(), sshd.port(), key);
+<a class="jxr_linenumber" name="L249" href="#L249">249</a>         <strong class="jxr_keyword">final</strong> String host = <span class="jxr_string">"host3"</span>;
+<a class="jxr_linenumber" name="L250" href="#L250">250</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> sport = 456;
+<a class="jxr_linenumber" name="L251" href="#L251">251</a>         <strong class="jxr_keyword">final</strong> String server = <span class="jxr_string">"server3"</span>;
+<a class="jxr_linenumber" name="L252" href="#L252">252</a>         <strong class="jxr_keyword">final</strong> File conf = File.createTempFile(<span class="jxr_string">"nginx"</span>, <span class="jxr_string">".conf"</span>, temp);
+<a class="jxr_linenumber" name="L253" href="#L253">253</a>         FileUtils.writeStringToFile(conf, <span class="jxr_string">"http {\n}"</span>);
+<a class="jxr_linenumber" name="L254" href="#L254">254</a>         sshd.start();
+<a class="jxr_linenumber" name="L255" href="#L255">255</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L256" href="#L256">256</a>             <strong class="jxr_keyword">new</strong> Nginx(<span class="jxr_string">"nginx"</span>, conf.getName())
+<a class="jxr_linenumber" name="L257" href="#L257">257</a>                 .update(host, Tv.THOUSAND, server, sport);
+<a class="jxr_linenumber" name="L258" href="#L258">258</a>         } <strong class="jxr_keyword">finally</strong> {
+<a class="jxr_linenumber" name="L259" href="#L259">259</a>             sshd.stop();
+<a class="jxr_linenumber" name="L260" href="#L260">260</a>         }
+<a class="jxr_linenumber" name="L261" href="#L261">261</a>         MatcherAssert.assertThat(
+<a class="jxr_linenumber" name="L262" href="#L262">262</a>             FileUtils.readFileToString(conf),
+<a class="jxr_linenumber" name="L263" href="#L263">263</a>             Matchers.containsString(
+<a class="jxr_linenumber" name="L264" href="#L264">264</a>                 Joiner.on('\n').join(
+<a class="jxr_linenumber" name="L265" href="#L265">265</a>                     String.format(<span class="jxr_string">"http {"</span>, host),
+<a class="jxr_linenumber" name="L266" href="#L266">266</a>                     String.format(<span class="jxr_string">"    include %s;"</span>, <strong class="jxr_keyword">this</strong>.hostsConfig(host)),
+<a class="jxr_linenumber" name="L267" href="#L267">267</a>                     <span class="jxr_string">"}"</span>
+<a class="jxr_linenumber" name="L268" href="#L268">268</a>                 )
+<a class="jxr_linenumber" name="L269" href="#L269">269</a>             )
+<a class="jxr_linenumber" name="L270" href="#L270">270</a>         );
+<a class="jxr_linenumber" name="L271" href="#L271">271</a>     }
+<a class="jxr_linenumber" name="L272" href="#L272">272</a> 
+<a class="jxr_linenumber" name="L273" href="#L273">273</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L274" href="#L274">274</a> <em class="jxr_javadoccomment">     * Create hosts configuration file.</em>
+<a class="jxr_linenumber" name="L275" href="#L275">275</a> <em class="jxr_javadoccomment">     * @param path Directory where to create file.</em>
+<a class="jxr_linenumber" name="L276" href="#L276">276</a> <em class="jxr_javadoccomment">     * @param host Name of the host.</em>
+<a class="jxr_linenumber" name="L277" href="#L277">277</a> <em class="jxr_javadoccomment">     * @return Location of created file.</em>
+<a class="jxr_linenumber" name="L278" href="#L278">278</a> <em class="jxr_javadoccomment">     * @throws IOException In case of error.</em>
+<a class="jxr_linenumber" name="L279" href="#L279">279</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L280" href="#L280">280</a>     <strong class="jxr_keyword">private</strong> File hosts(<strong class="jxr_keyword">final</strong> File path, <strong class="jxr_keyword">final</strong> String host) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L281" href="#L281">281</a>         <strong class="jxr_keyword">final</strong> File fhosts = <strong class="jxr_keyword">new</strong> File(
+<a class="jxr_linenumber" name="L282" href="#L282">282</a>             path, <strong class="jxr_keyword">this</strong>.hostsConfig(host)
 <a class="jxr_linenumber" name="L283" href="#L283">283</a>         );
-<a class="jxr_linenumber" name="L284" href="#L284">284</a>         Manifests.append(<strong class="jxr_keyword">new</strong> ByteArrayInputStream(file.getBytes()));
-<a class="jxr_linenumber" name="L285" href="#L285">285</a>     }
-<a class="jxr_linenumber" name="L286" href="#L286">286</a> 
-<a class="jxr_linenumber" name="L287" href="#L287">287</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L288" href="#L288">288</a> <em class="jxr_javadoccomment">     * File name for hosts config.</em>
-<a class="jxr_linenumber" name="L289" href="#L289">289</a> <em class="jxr_javadoccomment">     * @param host The host</em>
-<a class="jxr_linenumber" name="L290" href="#L290">290</a> <em class="jxr_javadoccomment">     * @return File name for hosts config.</em>
-<a class="jxr_linenumber" name="L291" href="#L291">291</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L292" href="#L292">292</a>     <strong class="jxr_keyword">private</strong> String hostsConfig(<strong class="jxr_keyword">final</strong> String host) {
-<a class="jxr_linenumber" name="L293" href="#L293">293</a>         <strong class="jxr_keyword">return</strong> String.format(<span class="jxr_string">"%s.hosts.conf"</span>, host);
+<a class="jxr_linenumber" name="L284" href="#L284">284</a>         FileUtils.writeStringToFile(
+<a class="jxr_linenumber" name="L285" href="#L285">285</a>             fhosts,
+<a class="jxr_linenumber" name="L286" href="#L286">286</a>             Joiner.on('\n').join(
+<a class="jxr_linenumber" name="L287" href="#L287">287</a>                 <span class="jxr_string">"upstream example_servers {"</span>,
+<a class="jxr_linenumber" name="L288" href="#L288">288</a>                 <span class="jxr_string">"    server 10.0.0.1:80;"</span>,
+<a class="jxr_linenumber" name="L289" href="#L289">289</a>                 <span class="jxr_string">"    server 10.0.0.2:80;"</span>,
+<a class="jxr_linenumber" name="L290" href="#L290">290</a>                 <span class="jxr_string">"}"</span>
+<a class="jxr_linenumber" name="L291" href="#L291">291</a>             )
+<a class="jxr_linenumber" name="L292" href="#L292">292</a>         );
+<a class="jxr_linenumber" name="L293" href="#L293">293</a>         <strong class="jxr_keyword">return</strong> fhosts;
 <a class="jxr_linenumber" name="L294" href="#L294">294</a>     }
-<a class="jxr_linenumber" name="L295" href="#L295">295</a> }
+<a class="jxr_linenumber" name="L295" href="#L295">295</a> 
+<a class="jxr_linenumber" name="L296" href="#L296">296</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L297" href="#L297">297</a> <em class="jxr_javadoccomment">     * Create mock manifest.</em>
+<a class="jxr_linenumber" name="L298" href="#L298">298</a> <em class="jxr_javadoccomment">     * @param path Nginx directory.</em>
+<a class="jxr_linenumber" name="L299" href="#L299">299</a> <em class="jxr_javadoccomment">     * @param login User performing update.</em>
+<a class="jxr_linenumber" name="L300" href="#L300">300</a> <em class="jxr_javadoccomment">     * @param port SSH port to use.</em>
+<a class="jxr_linenumber" name="L301" href="#L301">301</a> <em class="jxr_javadoccomment">     * @param key User private key file.</em>
+<a class="jxr_linenumber" name="L302" href="#L302">302</a> <em class="jxr_javadoccomment">     * @throws IOException In case of error.</em>
+<a class="jxr_linenumber" name="L303" href="#L303">303</a> <em class="jxr_javadoccomment">     * @checkstyle ParameterNumber (3 lines)</em>
+<a class="jxr_linenumber" name="L304" href="#L304">304</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L305" href="#L305">305</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> manifest(<strong class="jxr_keyword">final</strong> File path, <strong class="jxr_keyword">final</strong> String login, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> port,
+<a class="jxr_linenumber" name="L306" href="#L306">306</a>         <strong class="jxr_keyword">final</strong> File key) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L307" href="#L307">307</a>         <strong class="jxr_keyword">final</strong> String file = Joiner.on('\n').join(
+<a class="jxr_linenumber" name="L308" href="#L308">308</a>             <span class="jxr_string">"Thindeck-LoadBalancer-Host: localhost"</span>,
+<a class="jxr_linenumber" name="L309" href="#L309">309</a>             String.format(<span class="jxr_string">"Thindeck-LoadBalancer-Port: %d"</span>, port),
+<a class="jxr_linenumber" name="L310" href="#L310">310</a>             String.format(<span class="jxr_string">"Thindeck-LoadBalancer-User: %s"</span>, login),
+<a class="jxr_linenumber" name="L311" href="#L311">311</a>             String.format(
+<a class="jxr_linenumber" name="L312" href="#L312">312</a>                 <span class="jxr_string">"Thindeck-LoadBalancer-Key-File: %s"</span>, key.toString()
+<a class="jxr_linenumber" name="L313" href="#L313">313</a>             ),
+<a class="jxr_linenumber" name="L314" href="#L314">314</a>             String.format(
+<a class="jxr_linenumber" name="L315" href="#L315">315</a>                 <span class="jxr_string">"Thindeck-LoadBalancer-Directory: %s"</span>, path.toString()
+<a class="jxr_linenumber" name="L316" href="#L316">316</a>             ),
+<a class="jxr_linenumber" name="L317" href="#L317">317</a>             StringUtils.EMPTY
+<a class="jxr_linenumber" name="L318" href="#L318">318</a>         );
+<a class="jxr_linenumber" name="L319" href="#L319">319</a>         Manifests.append(<strong class="jxr_keyword">new</strong> ByteArrayInputStream(file.getBytes()));
+<a class="jxr_linenumber" name="L320" href="#L320">320</a>     }
+<a class="jxr_linenumber" name="L321" href="#L321">321</a> 
+<a class="jxr_linenumber" name="L322" href="#L322">322</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L323" href="#L323">323</a> <em class="jxr_javadoccomment">     * File name for hosts config.</em>
+<a class="jxr_linenumber" name="L324" href="#L324">324</a> <em class="jxr_javadoccomment">     * @param host The host</em>
+<a class="jxr_linenumber" name="L325" href="#L325">325</a> <em class="jxr_javadoccomment">     * @return File name for hosts config.</em>
+<a class="jxr_linenumber" name="L326" href="#L326">326</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L327" href="#L327">327</a>     <strong class="jxr_keyword">private</strong> String hostsConfig(<strong class="jxr_keyword">final</strong> String host) {
+<a class="jxr_linenumber" name="L328" href="#L328">328</a>         <strong class="jxr_keyword">return</strong> String.format(<span class="jxr_string">"%s.hosts.conf"</span>, host);
+<a class="jxr_linenumber" name="L329" href="#L329">329</a>     }
+<a class="jxr_linenumber" name="L330" href="#L330">330</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2014 <a href="http://www.thindeck.com">Thindeck Inc.</a>. All rights reserved.</div>

@@ -98,33 +98,32 @@
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>  <em class="jxr_javadoccomment">     * @param name Repo name</em>
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>  <em class="jxr_javadoccomment">     * @param uri Repo URI</em>
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>  <em class="jxr_javadoccomment">     * @return The JAX-RS response</em>
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>  <em class="jxr_javadoccomment">     * @todo #290 Add a CasperJS test for adding repositories by user.</em>
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>      @POST
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>      @Path(<span class="jxr_string">"/add"</span>)
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>      <strong class="jxr_keyword">public</strong> Response add(@FormParam(<span class="jxr_string">"name"</span>) <strong class="jxr_keyword">final</strong> String name,
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>          @FormParam(<span class="jxr_string">"uri"</span>) <strong class="jxr_keyword">final</strong> String uri) {
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>          <strong class="jxr_keyword">final</strong> <a href="../../../com/thindeck/api/Repo.html">Repo</a> repo = <strong class="jxr_keyword">this</strong>.user().repos().add(name);
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>             repo.memo().update(
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>                 <strong class="jxr_keyword">new</strong> Directives().xpath(<span class="jxr_string">"/memo"</span>).addIf(<span class="jxr_string">"uri"</span>).set(uri)
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>             );
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> IOException ex) {
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(ex);
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>         }
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">this</strong>.flash().redirect(
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>             <strong class="jxr_keyword">this</strong>.uriInfo().getBaseUriBuilder()
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>                 .clone()
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>                 .path(ReposRs.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>                 .build(),
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>             String.format(
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>                 <span class="jxr_string">"repo %s added"</span>,
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>                 repo.name()
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>             ),
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>             Level.INFO
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>         );
-<a class="jxr_linenumber" name="L118" href="#L118">118</a>     }
-<a class="jxr_linenumber" name="L119" href="#L119">119</a> }
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>      @POST
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>      @Path(<span class="jxr_string">"/add"</span>)
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>      <strong class="jxr_keyword">public</strong> Response add(@FormParam(<span class="jxr_string">"name"</span>) <strong class="jxr_keyword">final</strong> String name,
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          @FormParam(<span class="jxr_string">"uri"</span>) <strong class="jxr_keyword">final</strong> String uri) {
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>          <strong class="jxr_keyword">final</strong> <a href="../../../com/thindeck/api/Repo.html">Repo</a> repo = <strong class="jxr_keyword">this</strong>.user().repos().add(name);
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>          <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>             repo.memo().update(
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>                 <strong class="jxr_keyword">new</strong> Directives().xpath(<span class="jxr_string">"/memo"</span>).addIf(<span class="jxr_string">"uri"</span>).set(uri)
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>             );
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> IOException ex) {
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(ex);
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>         }
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">this</strong>.flash().redirect(
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>             <strong class="jxr_keyword">this</strong>.uriInfo().getBaseUriBuilder()
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>                 .clone()
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>                 .path(ReposRs.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>                 .build(),
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>             String.format(
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>                 <span class="jxr_string">"repo %s added"</span>,
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>                 repo.name()
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>             ),
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>             Level.INFO
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>         );
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>     }
+<a class="jxr_linenumber" name="L118" href="#L118">118</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2014 <a href="http://www.thindeck.com">Thindeck Inc.</a>. All rights reserved.</div>

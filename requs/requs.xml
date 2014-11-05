@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="5770" time="2014-10-26T10:57:14">
+<?xml-stylesheet href='requs.xsl' type='text/xsl'?><spec msec="6461" time="2014-11-05T23:35:47">
    <files>
       <file id="0" line="1">/home/r/repo/src/main/requs/acronyms.req</file>
       <file id="1" line="16">/home/r/repo/src/main/requs/anonymous.req</file>
       <file id="2" line="33">/home/r/repo/src/main/requs/main.req</file>
-      <file id="3" line="141">/home/r/repo/src/main/requs/nfrs.req</file>
-      <file id="4" line="201">/home/r/repo/src/main/requs/vision.req</file>
+      <file id="3" line="145">/home/r/repo/src/main/requs/nfrs.req</file>
+      <file id="4" line="209">/home/r/repo/src/main/requs/vision.req</file>
    </files>
    <input>MTBF means "Mean Time Between Failures,
 which is time that System spends in continuous
@@ -54,6 +54,10 @@ UC2 where Repository (a repo) launches Application (an app):
   2. The deployment executes the app;
   3. The repo deletes the deployment
     "every 5 minutes, if repository sources are updated".
+
+UC2/1 when "several domain-s and/or port-s are equal within repo":
+  1. "Notify the user via email about this";
+  2. Fail as "can't launch app with conflicts".
 
 :UC2.3 is implemented.
 UC2.3 where Deployment (a deployment) executes Application (an app):
@@ -182,6 +186,10 @@ UC2/MTBF must "be 30 days".
 
 UC2/LOG must "be kept for 180 days since creation.
   Log is deleted once the 180 day mark is reached".
+
+UC2/AVAIL must "be provided on deployment of an updated repository
+  by using the blue-green deployment approach to minimize
+  administrative downtime to less than 10 seconds".
 
 UC9.1/MTBF must "be 30 days".
 
@@ -443,10 +451,10 @@ class RuntimeStatistics {
          <name>User</name>
          <mentioned>
             <where>2:2</where>
-            <where>2:26</where>
-            <where>2:43</where>
-            <where>2:44</where>
-            <where>2:44</where>
+            <where>2:30</where>
+            <where>2:47</where>
+            <where>2:48</where>
+            <where>2:48</where>
          </mentioned>
          <info>
             <informal>a person who uses or wants to use hosting and is identified
@@ -457,7 +465,7 @@ by the system (logged in)</informal>
             <slot>
                <name>repo</name>
                <mentioned>
-                  <where>2:45</where>
+                  <where>2:49</where>
                </mentioned>
                <arity>0..*</arity>
                <composition>true</composition>
@@ -466,7 +474,7 @@ by the system (logged in)</informal>
             <slot>
                <name>URN</name>
                <mentioned>
-                  <where>2:46</where>
+                  <where>2:50</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -477,7 +485,7 @@ by the system (logged in)</informal>
             <slot>
                <name>authTokens</name>
                <mentioned>
-                  <where>2:47</where>
+                  <where>2:51</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -489,7 +497,7 @@ by the system (logged in)</informal>
             <slot>
                <name>balance</name>
                <mentioned>
-                  <where>2:49</where>
+                  <where>2:53</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -596,8 +604,8 @@ User  *-- Repository: repo
          <name>Repository</name>
          <mentioned>
             <where>2:11</where>
-            <where>2:52</where>
-            <where>2:53</where>
+            <where>2:56</where>
+            <where>2:57</where>
          </mentioned>
          <info>
             <informal>a local copy of files and folders being pulled every
@@ -607,7 +615,7 @@ User  *-- Repository: repo
             <slot>
                <name>name</name>
                <mentioned>
-                  <where>2:54</where>
+                  <where>2:58</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -618,7 +626,7 @@ User  *-- Repository: repo
             <slot>
                <name>coordinates</name>
                <mentioned>
-                  <where>2:55</where>
+                  <where>2:59</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -629,7 +637,7 @@ User  *-- Repository: repo
             <slot>
                <name>deployment</name>
                <mentioned>
-                  <where>2:56</where>
+                  <where>2:60</where>
                </mentioned>
                <arity>0..*</arity>
                <composition>true</composition>
@@ -638,7 +646,7 @@ User  *-- Repository: repo
             <slot>
                <name>dockerFile</name>
                <mentioned>
-                  <where>2:57</where>
+                  <where>2:61</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -649,7 +657,7 @@ User  *-- Repository: repo
             <slot>
                <name>domain</name>
                <mentioned>
-                  <where>2:58</where>
+                  <where>2:62</where>
                </mentioned>
                <arity>1..*</arity>
                <composition>true</composition>
@@ -662,7 +670,7 @@ User  *-- Repository: repo
             <slot>
                <name>port</name>
                <mentioned>
-                  <where>2:61</where>
+                  <where>2:65</where>
                </mentioned>
                <arity>1..*</arity>
                <composition>true</composition>
@@ -780,9 +788,9 @@ Repository  *-- Deployment: deployment
       <type>
          <name>Deployment</name>
          <mentioned>
-            <where>2:18</where>
-            <where>2:64</where>
-            <where>2:65</where>
+            <where>2:22</where>
+            <where>2:68</where>
+            <where>2:69</where>
          </mentioned>
          <info>
             <informal>a deployed and working instance of Repository</informal>
@@ -791,7 +799,7 @@ Repository  *-- Deployment: deployment
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>2:66</where>
+                  <where>2:70</where>
                </mentioned>
                <arity>1..*</arity>
                <composition>true</composition>
@@ -881,7 +889,7 @@ Deployment  *-- Container: container
       <type>
          <name>Visitor</name>
          <mentioned>
-            <where>2:36</where>
+            <where>2:40</where>
          </mentioned>
          <diagrams>
             <diagram>
@@ -934,8 +942,8 @@ class Visitor {
       <type>
          <name>Container</name>
          <mentioned>
-            <where>2:70</where>
-            <where>2:75</where>
+            <where>2:74</where>
+            <where>2:79</where>
          </mentioned>
          <info>
             <informal>a virtual operating system running user's
@@ -949,7 +957,7 @@ class Visitor {
             <slot>
                <name>server</name>
                <mentioned>
-                  <where>2:76</where>
+                  <where>2:80</where>
                </mentioned>
                <arity>1</arity>
                <composition>false</composition>
@@ -958,7 +966,7 @@ class Visitor {
             <slot>
                <name>logs</name>
                <mentioned>
-                  <where>2:77</where>
+                  <where>2:81</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -969,7 +977,7 @@ class Visitor {
             <slot>
                <name>state</name>
                <mentioned>
-                  <where>2:78</where>
+                  <where>2:82</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -980,7 +988,7 @@ class Visitor {
             <slot>
                <name>invoice</name>
                <mentioned>
-                  <where>2:79</where>
+                  <where>2:83</where>
                </mentioned>
                <arity>0..*</arity>
                <composition>true</composition>
@@ -1104,8 +1112,8 @@ Container  *-- Invoice: invoice
       <type>
          <name>Server</name>
          <mentioned>
-            <where>2:81</where>
-            <where>2:82</where>
+            <where>2:85</where>
+            <where>2:86</where>
          </mentioned>
          <info>
             <informal>a physical (or virtual) machine provided on-demand by Cloud</informal>
@@ -1114,7 +1122,7 @@ Container  *-- Invoice: invoice
             <slot>
                <name>ip</name>
                <mentioned>
-                  <where>2:83</where>
+                  <where>2:87</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1125,7 +1133,7 @@ Container  *-- Invoice: invoice
             <slot>
                <name>state</name>
                <mentioned>
-                  <where>2:84</where>
+                  <where>2:88</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1136,7 +1144,7 @@ Container  *-- Invoice: invoice
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>2:85</where>
+                  <where>2:89</where>
                </mentioned>
                <arity>0..*</arity>
                <composition>true</composition>
@@ -1233,8 +1241,8 @@ Server  *-- Container: container
       <type>
          <name>Cloud</name>
          <mentioned>
-            <where>2:87</where>
-            <where>2:88</where>
+            <where>2:91</where>
+            <where>2:92</where>
          </mentioned>
          <info>
             <informal>a provider of on-demand virtual or physical servers, for example AWS</informal>
@@ -1243,7 +1251,7 @@ Server  *-- Container: container
             <slot>
                <name>credentials</name>
                <mentioned>
-                  <where>2:89</where>
+                  <where>2:93</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1254,7 +1262,7 @@ Server  *-- Container: container
             <slot>
                <name>server</name>
                <mentioned>
-                  <where>2:90</where>
+                  <where>2:94</where>
                </mentioned>
                <arity>0..*</arity>
                <composition>true</composition>
@@ -1345,8 +1353,8 @@ Cloud  *-- Server: server
       <type>
          <name>Invoice</name>
          <mentioned>
-            <where>2:92</where>
-            <where>2:93</where>
+            <where>2:96</where>
+            <where>2:97</where>
          </mentioned>
          <info>
             <informal>an atomic track record of the usage of resources,
@@ -1356,7 +1364,7 @@ Cloud  *-- Server: server
             <slot>
                <name>container</name>
                <mentioned>
-                  <where>2:94</where>
+                  <where>2:98</where>
                </mentioned>
                <arity>1</arity>
                <composition>false</composition>
@@ -1365,7 +1373,7 @@ Cloud  *-- Server: server
             <slot>
                <name>hour</name>
                <mentioned>
-                  <where>2:95</where>
+                  <where>2:99</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1376,7 +1384,7 @@ Cloud  *-- Server: server
             <slot>
                <name>cpuSeconds</name>
                <mentioned>
-                  <where>2:96</where>
+                  <where>2:100</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1389,7 +1397,7 @@ Cloud  *-- Server: server
             <slot>
                <name>bytesIn</name>
                <mentioned>
-                  <where>2:99</where>
+                  <where>2:103</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1400,7 +1408,7 @@ Cloud  *-- Server: server
             <slot>
                <name>bytesOut</name>
                <mentioned>
-                  <where>2:100</where>
+                  <where>2:104</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1511,9 +1519,9 @@ Invoice  o-- Container: container
       <type>
          <name>PayPal</name>
          <mentioned>
-            <where>2:102</where>
-            <where>2:102</where>
-            <where>2:103</where>
+            <where>2:106</where>
+            <where>2:106</where>
+            <where>2:107</where>
          </mentioned>
          <info>
             <informal>a payment processing system, at www.paypal.com</informal>
@@ -1523,7 +1531,7 @@ Invoice  o-- Container: container
             <slot>
                <name>credentials</name>
                <mentioned>
-                  <where>2:104</where>
+                  <where>2:108</where>
                </mentioned>
                <arity>1</arity>
                <composition>true</composition>
@@ -1589,7 +1597,7 @@ class PayPal {
       <type>
          <name>Application</name>
          <mentioned>
-            <where>2:106</where>
+            <where>2:110</where>
          </mentioned>
          <info>
             <informal>a custom sofware application packaged inside
@@ -1653,7 +1661,7 @@ class Application {
          <mentioned>
             <where>1:13</where>
             <where>1:14</where>
-            <where>3:37</where>
+            <where>3:41</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2576,7 +2584,7 @@ main ---&gt; UC6
             </diagram>
          </diagrams>
       </method>
-      <method seal="e262e0">
+      <method seal="11992c">
          <id>UC2</id>
          <attributes>
             <attribute seal="">implemented</attribute>
@@ -2584,9 +2592,11 @@ main ---&gt; UC6
          <mentioned>
             <where>2:10</where>
             <where>2:11</where>
+            <where>2:18</where>
             <where>3:30</where>
             <where>3:32</where>
             <where>3:35</where>
+            <where>3:39</where>
          </mentioned>
          <bindings>
             <binding>
@@ -2618,6 +2628,32 @@ main ---&gt; UC6
                <object>repo</object>
                <signature>creates</signature>
                <result>deployment</result>
+               <exceptions>
+                  <exception>
+                     <when>several domain-s and/or port-s are equal within repo</when>
+                     <steps>
+                        <step>
+                           <number>1</number>
+                           <mentioned>
+                              <where>2:18</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>"Notify the user via email about this"</signature>
+                        </step>
+                        <step>
+                           <number>2</number>
+                           <mentioned>
+                              <where>2:19</where>
+                           </mentioned>
+                           <object>_self</object>
+                           <signature>fail</signature>
+                           <info>
+                              <informal>can't launch app with conflicts</informal>
+                           </info>
+                        </step>
+                     </steps>
+                  </exception>
+               </exceptions>
             </step>
             <step>
                <number>2</number>
@@ -2663,6 +2699,14 @@ main ---&gt; UC6
   Log is deleted once the 180 day mark is reached</informal>
                </info>
             </nfr>
+            <nfr>
+               <id>AVAIL</id>
+               <info>
+                  <informal>be provided on deployment of an updated repository
+  by using the blue-green deployment approach to minimize
+  administrative downtime to less than 10 seconds</informal>
+               </info>
+            </nfr>
          </nfrs>
          <markdown>The following table describes all technical details of Use Case `UC2`:
 
@@ -2703,7 +2747,7 @@ main ---&gt; UC6
             &lt;/tr&gt;
             &lt;tr&gt;
                &lt;td&gt;NFRs&lt;/td&gt;
-               &lt;td&gt;PERF must  "each physical server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;br/&gt;MTBF must  "be 30 days"&lt;br/&gt;LOG must  "be kept for 180 days since creation. Log is deleted once the 180 day mark is reached"&lt;/td&gt;
+               &lt;td&gt;PERF must  "each physical server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;br/&gt;MTBF must  "be 30 days"&lt;br/&gt;LOG must  "be kept for 180 days since creation. Log is deleted once the 180 day mark is reached"&lt;br/&gt;AVAIL must  "be provided on deployment of an updated repository by using the blue-green deployment approach to minimize administrative downtime to less than 10 seconds"&lt;/td&gt;
             &lt;/tr&gt;
          &lt;/tbody&gt;
       &lt;/table&gt;
@@ -2792,7 +2836,7 @@ Actors taking participation in the Use Case have the following properties:
             &lt;/tr&gt;
             &lt;tr&gt;
                &lt;td&gt;NFRs&lt;/td&gt;
-               &lt;td&gt;PERF must  "each physical server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;br/&gt;MTBF must  "be 30 days"&lt;br/&gt;LOG must  "be kept for 180 days since creation. Log is deleted once the 180 day mark is reached"&lt;/td&gt;
+               &lt;td&gt;PERF must  "each physical server should be able to host 4 actively working containers inside it, altogether handling 3M hits and 200 Gb of traffic per month, or 100K and 6.6 Gb per day"&lt;br/&gt;MTBF must  "be 30 days"&lt;br/&gt;LOG must  "be kept for 180 days since creation. Log is deleted once the 180 day mark is reached"&lt;br/&gt;AVAIL must  "be provided on deployment of an updated repository by using the blue-green deployment approach to minimize administrative downtime to less than 10 seconds"&lt;/td&gt;
             &lt;/tr&gt;
          &lt;/tbody&gt;
       &lt;/table&gt;
@@ -3028,14 +3072,14 @@ main ---&gt; UC2.3
             </diagram>
          </diagrams>
       </method>
-      <method seal="a2c8d0">
+      <method seal="c8e81e">
          <id>UC2.3</id>
          <attributes>
             <attribute seal="">implemented</attribute>
          </attributes>
          <mentioned>
-            <where>2:17</where>
-            <where>2:18</where>
+            <where>2:21</where>
+            <where>2:22</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3074,7 +3118,7 @@ main ---&gt; UC2.3
             <step>
                <number>1</number>
                <mentioned>
-                  <where>2:19</where>
+                  <where>2:23</where>
                </mentioned>
                <object>cloud</object>
                <signature>creates</signature>
@@ -3083,7 +3127,7 @@ main ---&gt; UC2.3
             <step>
                <number>2</number>
                <mentioned>
-                  <where>2:20</where>
+                  <where>2:24</where>
                </mentioned>
                <object>server</object>
                <signature>creates</signature>
@@ -3092,7 +3136,7 @@ main ---&gt; UC2.3
             <step>
                <number>3</number>
                <mentioned>
-                  <where>2:21</where>
+                  <where>2:25</where>
                </mentioned>
                <object>container</object>
                <signature>creates</signature>
@@ -3101,7 +3145,7 @@ main ---&gt; UC2.3
             <step>
                <number>4</number>
                <mentioned>
-                  <where>2:22</where>
+                  <where>2:26</where>
                </mentioned>
                <object>visitor</object>
                <signature ref="UC10.1">utilizes</signature>
@@ -3110,7 +3154,7 @@ main ---&gt; UC2.3
             <step>
                <number>5</number>
                <mentioned>
-                  <where>2:23</where>
+                  <where>2:27</where>
                </mentioned>
                <object>server</object>
                <signature>deletes</signature>
@@ -3119,7 +3163,7 @@ main ---&gt; UC2.3
             <step>
                <number>6</number>
                <mentioned>
-                  <where>2:24</where>
+                  <where>2:28</where>
                </mentioned>
                <object>cloud</object>
                <signature>deletes</signature>
@@ -3610,10 +3654,10 @@ main ---&gt; UC10.1
             </diagram>
          </diagrams>
       </method>
-      <method seal="4a2c78">
+      <method seal="ca3c3d">
          <id>UC6</id>
          <mentioned>
-            <where>2:26</where>
+            <where>2:30</where>
          </mentioned>
          <bindings>
             <binding>
@@ -3640,7 +3684,7 @@ main ---&gt; UC10.1
             <step>
                <number>1</number>
                <mentioned>
-                  <where>2:27</where>
+                  <where>2:31</where>
                </mentioned>
                <object>repo</object>
                <signature>updates</signature>
@@ -3653,7 +3697,7 @@ main ---&gt; UC10.1
             <step>
                <number>2</number>
                <mentioned>
-                  <where>2:30</where>
+                  <where>2:34</where>
                </mentioned>
                <object>paypal</object>
                <signature>updates</signature>
@@ -3665,7 +3709,7 @@ main ---&gt; UC10.1
             <step>
                <number>3</number>
                <mentioned>
-                  <where>2:32</where>
+                  <where>2:36</where>
                </mentioned>
                <object>repo</object>
                <signature>updates</signature>
@@ -4033,17 +4077,17 @@ primary -&gt; main
             </diagram>
          </diagrams>
       </method>
-      <method seal="76b9e7">
+      <method seal="8b2665">
          <id>UC10.1</id>
          <attributes>
             <attribute seal="">implemented</attribute>
          </attributes>
          <mentioned>
-            <where>2:35</where>
-            <where>2:36</where>
-            <where>3:40</where>
-            <where>3:43</where>
+            <where>2:39</where>
+            <where>2:40</where>
+            <where>3:44</where>
             <where>3:47</where>
+            <where>3:51</where>
          </mentioned>
          <bindings>
             <binding>
@@ -4070,7 +4114,7 @@ primary -&gt; main
             <step>
                <number>1</number>
                <mentioned>
-                  <where>2:37</where>
+                  <where>2:41</where>
                </mentioned>
                <object>visitor</object>
                <signature>reads</signature>
@@ -4079,7 +4123,7 @@ primary -&gt; main
             <step>
                <number>2</number>
                <mentioned>
-                  <where>2:38</where>
+                  <where>2:42</where>
                </mentioned>
                <object>_self</object>
                <signature>fail</signature>
@@ -4091,7 +4135,7 @@ primary -&gt; main
             <step>
                <number>3</number>
                <mentioned>
-                  <where>2:39</where>
+                  <where>2:43</where>
                </mentioned>
                <object>visitor</object>
                <signature>creates</signature>
@@ -4100,7 +4144,7 @@ primary -&gt; main
             <step>
                <number>4</number>
                <mentioned>
-                  <where>2:40</where>
+                  <where>2:44</where>
                </mentioned>
                <object>visitor</object>
                <signature>updates</signature>
@@ -4520,7 +4564,7 @@ Key success factors are:
    </pages>
    <errors/>
    <metrics>
-      <metric id="ambiguity.total">0.000</metric>
+      <metric id="ambiguity.total">0.045</metric>
    </metrics>
    <tbds/>
    <requs>
