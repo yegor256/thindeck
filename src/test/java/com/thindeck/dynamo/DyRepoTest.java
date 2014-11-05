@@ -87,18 +87,18 @@ public final class DyRepoTest {
 
     /**
      * DyRepo #memo {@code Memo}.
+     * @throws IOException if fails
      */
     @Test
     public void memo() throws IOException {
-
-        final String aMemoXml = "<memo/>";
+        final String memo = "<memo/>";
         final Item item = Mockito.mock(Item.class);
         final AttributeValue value = Mockito.mock(AttributeValue.class);
-
-        Mockito.when(value.getS()).thenReturn(aMemoXml);
+        Mockito.when(value.getS()).thenReturn(memo);
         Mockito.when(item.get(DyRepo.ATTR_MEMO)).thenReturn(value);
-
-        MatcherAssert.assertThat(new DyRepo(item).memo(), Matchers.notNullValue());
+        MatcherAssert.assertThat(
+                new DyRepo(item).memo(), Matchers.notNullValue()
+        );
     }
 
 }
