@@ -34,8 +34,8 @@ import com.thindeck.api.mock.MkBase;
 import java.io.IOException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
-import org.junit.Test;
 import org.hamcrest.Matchers;
+import org.junit.Test;
 import org.mockito.Mockito;
 
 /**
