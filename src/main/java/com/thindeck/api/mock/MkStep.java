@@ -27,55 +27,53 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.life;
+package com.thindeck.api.mock;
 
-import com.thindeck.api.Base;
-import com.thindeck.api.mock.MkBase;
+import com.jcabi.aspects.Immutable;
+import com.thindeck.api.Context;
+import com.thindeck.api.Step;
 import java.io.IOException;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import org.junit.Test;
-import org.hamcrest.Matchers;
-import org.mockito.Mockito;
+import java.util.Random;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Tests for {@link Lifecycle}.
+ * Mock of {@link com.thindeck.api.Step}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Slava Semushin (slava.semushin@gmail.com)
  * @version $Id$
+ * @since 0.5
  */
-public final class LifecycleTest {
+@Immutable
+@ToString
+@EqualsAndHashCode
+public final class MkStep implements Step {
 
     /**
-     * Lifecycle will add base attribute with correct class.
+     * Step's name.
      */
-    @Test
-    public void initializedBaseAttribute() {
-        final ServletContextEvent event = Mockito
-            .mock(ServletContextEvent.class);
-        final ServletContext context = Mockito.mock(ServletContext.class);
-        Mockito.when(event.getServletContext()).thenReturn(context);
-        final Lifecycle lifecycle = new Lifecycle(false);
-        lifecycle.contextInitialized(event);
-        try {
-            Mockito.verify(context).setAttribute(
-                Mockito.eq(Base.class.getName()),
-                Mockito.argThat(Matchers.instanceOf(Base.class))
-            );
-        } finally {
-            lifecycle.contextDestroyed(event);
-        }
+    private final String name = String.format(
+        "Step #%d",
+        new Random().nextInt()
+    );
+
+    @Override
+    public String name() {
+        return this.name;
     }
 
-    /**
-     * RoutineTxn can increment transactions.
-     * @throws IOException In case of error.
-     */
-    @Test
-    public void incrementsTransactionCount() throws IOException {
-        final Base base = new MkBase();
-        final RoutineTxns routine = new RoutineTxns(base);
-        routine.close();
-        routine.run();
+    @Override
+    public void exec(final Context ctx) throws IOException {
+        // do nothing
+    }
+
+    @Override
+    public void commit(final Context ctx) throws IOException {
+        // do nothing
+    }
+
+    @Override
+    public void rollback(final Context ctx) throws IOException {
+        // do nothing
     }
 }
