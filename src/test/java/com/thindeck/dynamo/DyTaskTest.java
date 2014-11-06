@@ -29,68 +29,31 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
-import com.thindeck.api.Scenario;
-import com.thindeck.api.Task;
-import java.io.IOException;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.thindeck.api.mock.MkItem;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Dynamo implementation of {@link Task}.
+ * Test case for {@link DyTask}.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
- * @since 0.5
- * @todo #406 Implement command method.
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class DyTask implements Task {
+public final class DyTaskTest {
+
     /**
-     * Table name.
+     * DyTask returns a {@link com.thindeck.api.Scenario}.
+     * @throws Exception In case of error.
      */
-    public static final String TBL = "tasks";
-    /**
-     * Repo URN attribute.
-     */
-    public static final String ATTR_REPO_URN = "urn";
-    /**
-     * Task attribute.
-     */
-    public static final String ATTR_ID = "id";
-    /**
-     * Item.
-     */
-    private final transient Item item;
-    /**
-     * Constructor.
-     * @param itm Item
-     */
-    public DyTask(final Item itm) {
-        this.item = itm;
+    @Test
+    public void getTask() throws Exception {
+        MatcherAssert.assertThat(
+            new DyTask(
+                new MkItem()
+            ).scenario(),
+            Matchers.notNullValue()
+        );
     }
 
-    @Override
-    public long number() {
-        try {
-            return Long.valueOf(
-                this.item.get(DyTask.ATTR_ID).getS()
-            );
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-
-    @Override
-    public String command() {
-        throw new UnsupportedOperationException("#command");
-    }
-
-    @Override
-    public Scenario scenario() {
-        return new DyScenario(this.item);
-    }
 }
