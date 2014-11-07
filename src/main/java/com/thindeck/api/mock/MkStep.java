@@ -52,14 +52,14 @@ public final class MkStep implements Step {
     /**
      * Step's name.
      */
-    private final String name = String.format(
+    private final transient String step = String.format(
         "Step #%d",
         new Random().nextInt()
     );
 
     @Override
     public String name() {
-        return this.name;
+        return this.step;
     }
 
     @Override
