@@ -47,7 +47,7 @@ public final class DyTaskTest {
      * @throws Exception In case of error.
      */
     @Test
-    public void getTask() throws Exception {
+    public void scenarioIsNotNull() throws Exception {
         MatcherAssert.assertThat(
             new DyTask(
                 new MkItem()

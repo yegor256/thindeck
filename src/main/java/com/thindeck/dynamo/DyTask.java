@@ -89,8 +89,14 @@ public final class DyTask implements Task {
         throw new UnsupportedOperationException("#command");
     }
 
+    /**
+     * Return the task's scenario.
+     *
+     * @return The scenario.
+     * @todo #420 Determine if Item will be needed by scenario.
+     */
     @Override
     public Scenario scenario() {
-        return new DyScenario(this.item);
+        return new DyScenario();
     }
 }
