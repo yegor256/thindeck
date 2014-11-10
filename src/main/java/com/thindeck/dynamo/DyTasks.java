@@ -30,13 +30,16 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Task;
 import com.thindeck.api.Tasks;
+import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -104,6 +107,31 @@ public final class DyTasks implements Tasks {
 
     @Override
     public Task add(final String command, final Map<String, String> args) {
-        throw new UnsupportedOperationException("#add");
+        try {
+            return new DyTask(
+                this.region.table(DyTask.TBL)
+                    .put(new Attributes()
+                                    .with(DyTask.ATTR_ID, UUID.randomUUID())
+                                    .with(DyTask.ATTR_REPO_URN, this.repo.name())
+                                    .with(DyTask.ATTR_COMM, command)
+                                    .with(toAttributes(args))
+                    )
+            );
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    /**
+     * Map to {@link com.jcabi.dynamo.Attributes}.
+     * @param map Map
+     * @return {@link com.jcabi.dynamo.Attributes}
+     */
+    private Attributes toAttributes(final Map<String, String> map) {
+        Attributes attributes = new Attributes();
+        for (Map.Entry<String, String> e : map.entrySet()) {
+            attributes.with(e.getKey(), e.getValue());
+        }
+        return attributes;
     }
 }
