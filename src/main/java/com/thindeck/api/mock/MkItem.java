@@ -53,6 +53,7 @@ public final class MkItem implements Item {
     /**
      * Task number.
      */
+    @SuppressWarnings("unused")
     private final transient long numb;
 
     /**
