@@ -30,13 +30,8 @@
 package com.thindeck.life;
 
 import com.thindeck.api.Base;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Tasks;
-import com.thindeck.api.Txn;
+import com.thindeck.api.mock.MkBase;
 import java.io.IOException;
-import java.util.Collections;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import org.hamcrest.Matchers;
@@ -75,26 +70,12 @@ public final class LifecycleTest {
     /**
      * RoutineTxn can increment transactions.
      * @throws IOException In case of error.
-     * @todo #351 Implement MkScenario and MkStep.
-     *  Rewrite the test after that using mocks from
-     *  com.thindeck.api.mock package instead of mockito.
      */
     @Test
     public void incrementsTransactionCount() throws IOException {
-        final Base base = Mockito.mock(Base.class);
-        final Repos repos = Mockito.mock(Repos.class);
-        final Repo repo = Mockito.mock(Repo.class);
-        final Tasks tasks = Mockito.mock(Tasks.class);
-        final Task task = Mockito.mock(Task.class);
-        final Txn txn = Mockito.mock(Txn.class);
-        Mockito.when(base.repos()).thenReturn(repos);
-        Mockito.when(repos.iterate()).thenReturn(Collections.singleton(repo));
-        Mockito.when(repo.tasks()).thenReturn(tasks);
-        Mockito.when(tasks.open()).thenReturn(Collections.singleton(task));
-        Mockito.when(base.txn(Mockito.any(Task.class))).thenReturn(txn);
+        final Base base = new MkBase();
         final RoutineTxns routine = new RoutineTxns(base);
         routine.close();
         routine.run();
-        Mockito.verify(txn).increment();
     }
 }

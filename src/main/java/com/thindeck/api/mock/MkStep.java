@@ -30,55 +30,50 @@
 package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Scenario;
-import com.thindeck.api.Task;
+import com.thindeck.api.Context;
+import com.thindeck.api.Step;
+import java.io.IOException;
+import java.util.Random;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Mock of {@link Task}.
+ * Mock of {@link com.thindeck.api.Step}.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Slava Semushin (slava.semushin@gmail.com)
  * @version $Id$
  * @since 0.5
  */
 @Immutable
 @ToString
 @EqualsAndHashCode
-public final class MkTask implements Task {
+public final class MkStep implements Step {
 
     /**
-     * Task number.
+     * Step's name.
      */
-    private final transient long numb;
+    private final transient String step = String.format(
+        "Step #%d",
+        new Random().nextInt()
+    );
 
-    /**
-     * Default ctor.
-     */
-    public MkTask() {
-        this(0L);
-    }
-
-    /**
-     * Ctor.
-     * @param num Task number
-     */
-    public MkTask(final long num) {
-        this.numb = num;
+    @Override
+    public String name() {
+        return this.step;
     }
 
     @Override
-    public long number() {
-        return this.numb;
+    public void exec(final Context ctx) throws IOException {
+        // do nothing
     }
 
     @Override
-    public String command() {
-        return "some_command";
+    public void commit(final Context ctx) throws IOException {
+        // do nothing
     }
 
     @Override
-    public Scenario scenario() {
-        return new MkScenario();
+    public void rollback(final Context ctx) throws IOException {
+        // do nothing
     }
 }
