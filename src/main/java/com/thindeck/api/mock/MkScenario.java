@@ -31,54 +31,25 @@ package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Scenario;
-import com.thindeck.api.Task;
+import com.thindeck.api.Step;
+import java.util.Collections;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Mock of {@link Task}.
+ * Mock of {@link com.thindeck.api.Scenario}.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Slava Semushin (slava.semushin@gmail.com)
  * @version $Id$
  * @since 0.5
  */
 @Immutable
 @ToString
 @EqualsAndHashCode
-public final class MkTask implements Task {
-
-    /**
-     * Task number.
-     */
-    private final transient long numb;
-
-    /**
-     * Default ctor.
-     */
-    public MkTask() {
-        this(0L);
-    }
-
-    /**
-     * Ctor.
-     * @param num Task number
-     */
-    public MkTask(final long num) {
-        this.numb = num;
-    }
+public final class MkScenario implements Scenario {
 
     @Override
-    public long number() {
-        return this.numb;
-    }
-
-    @Override
-    public String command() {
-        return "some_command";
-    }
-
-    @Override
-    public Scenario scenario() {
-        return new MkScenario();
+    public Iterable<Step> steps() {
+        return Collections.<Step>singletonList(new MkStep());
     }
 }

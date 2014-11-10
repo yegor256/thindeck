@@ -123,7 +123,6 @@ public final class NginxTest {
     public void createsHostSpecificConfigurationFile() throws IOException {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final SSHD sshd = new SSHD(temp);
-        sshd.start();
         final File key = File.createTempFile("ssh", "key", temp);
         FileUtils.write(key, sshd.key());
         this.manifest(temp, sshd.login(), sshd.port(), key);

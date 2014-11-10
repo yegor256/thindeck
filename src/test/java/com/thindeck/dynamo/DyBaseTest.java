@@ -29,19 +29,15 @@
  */
 package com.thindeck.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.jcabi.dynamo.Frame;
-import com.jcabi.dynamo.Item;
+import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Region;
-import com.jcabi.dynamo.Table;
-import com.jcabi.dynamo.Valve;
+import com.jcabi.dynamo.mock.H2Data;
+import com.jcabi.dynamo.mock.MkRegion;
 import com.jcabi.urn.URN;
 import java.io.IOException;
-import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
  * Tests for {@link DyBase}.
@@ -52,31 +48,35 @@ import org.mockito.Mockito;
 public final class DyBaseTest {
 
     /**
-     * DyBase can create DyUser.
+     * DyBase can retrieve DyUser.
      * @throws IOException If something goes wrong.
      */
     @Test
-    public void createsDyUser() throws IOException {
-        final Region region = Mockito.mock(Region.class);
-        final Table table = Mockito.mock(Table.class);
-        final Frame frame = Mockito.mock(Frame.class);
+    public void retrievesDyUser() throws IOException {
         final URN urn = URN.create("urn:test:1");
-        Mockito.when(region.table(Mockito.eq(DyUser.TBL))).thenReturn(table);
-        Mockito.when(table.frame()).thenReturn(frame);
-        Mockito.when(frame.through(Mockito.any(Valve.class))).thenReturn(frame);
-        Mockito.when(
-            frame.where(
-                Mockito.eq(DyUser.ATTR_URN), Mockito.eq(urn.toString())
-            )
-        ).thenReturn(frame);
-        final Item item = Mockito.mock(Item.class);
-        Mockito.when(item.get(DyUser.ATTR_URN))
-            .thenReturn(new AttributeValue(urn.toString()));
-        Mockito.when(frame.iterator())
-            .thenReturn(Collections.singleton(item).iterator());
         MatcherAssert.assertThat(
-            new DyBase(region).user(urn).urn(),
+            new DyBase(DyBaseTest.region(urn)).user(urn).urn(),
             Matchers.equalTo(urn)
         );
+    }
+
+    /**
+     * Create region with single DyUser.
+     * @param urn URN of the user.
+     * @return Created region.
+     * @throws IOException In case of error.
+     */
+    private static Region region(final URN urn)
+        throws IOException {
+        final Region region = new MkRegion(
+            new H2Data().with(
+                DyUser.TBL,
+                new String[] {DyUser.ATTR_URN},
+                new String[0]
+            )
+        );
+        region.table(DyUser.TBL)
+            .put(new Attributes().with(DyUser.ATTR_URN, urn));
+        return region;
     }
 }
