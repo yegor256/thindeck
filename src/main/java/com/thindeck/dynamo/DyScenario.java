@@ -39,7 +39,7 @@ import lombok.ToString;
  *
  * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
- * @todo #420 Implement steps method.
+ * @todo #420 Implement steps method - example in OnDeploy. Task command will determine steps.
  */
 @ToString
 @EqualsAndHashCode

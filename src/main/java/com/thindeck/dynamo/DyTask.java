@@ -93,7 +93,6 @@ public final class DyTask implements Task {
      * Return the task's scenario.
      *
      * @return The scenario.
-     * @todo #420 Determine if Item will be needed by scenario.
      */
     @Override
     public Scenario scenario() {
