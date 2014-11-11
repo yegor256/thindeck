@@ -35,6 +35,7 @@ import com.jcabi.dynamo.Table;
 import com.jcabi.dynamo.mock.H2Data;
 import com.jcabi.dynamo.mock.MkRegion;
 import com.thindeck.api.Repo;
+import com.thindeck.api.Task;
 import com.thindeck.api.mock.MkRepo;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
@@ -81,7 +82,7 @@ public final class DyTasksTest {
             new H2Data().with(
                 DyTask.TBL,
                 new String[] {DyTask.ATTR_ID},
-                new String[] {DyTask.ATTR_REPO_URN}
+                new String[] {DyTask.ATTR_REPO_URN, DyTask.ATTR_OPEN}
             )
         );
         final Table table = region.table(DyTask.TBL);
@@ -89,8 +90,26 @@ public final class DyTasksTest {
             table.put(
                 new Attributes().with(DyTask.ATTR_ID, tid)
                     .with(DyTask.ATTR_REPO_URN, repo)
+                    .with(DyTask.ATTR_OPEN, tid == 3L)
             );
         }
         return region;
+    }
+    
+    /**
+     * DyTasks can retrieve tasks waiting processing.
+     * @throws Exception In case of error.
+     */
+    @Test
+    public void canRetrieveOpenTasks() throws Exception{
+        final Repo repo = new MkRepo();
+        final long tid = 3L;
+        MatcherAssert.assertThat(
+            new DyTasks(
+                DyTasksTest.region(repo.name(), tid, 2L, 1L),
+                repo
+            ).open(),
+            Matchers.<Task>iterableWithSize(1)
+        );
     }
 }
