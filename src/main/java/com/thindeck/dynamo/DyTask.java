@@ -63,6 +63,10 @@ public final class DyTask implements Task {
      */
     public static final String ATTR_ID = "id";
     /**
+     * Command attribute.
+     */
+    public static final String ATTR_COMM = "comm";
+	/**
      * Open attribute.
      */
     public static final String ATTR_OPEN = "open";
@@ -91,7 +95,13 @@ public final class DyTask implements Task {
 
     @Override
     public String command() {
-        throw new UnsupportedOperationException("#command");
+        try {
+            return String.valueOf(
+                this.item.get(DyTask.ATTR_COMM).getS()
+            );
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
     @Override
