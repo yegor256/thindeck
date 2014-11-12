@@ -111,10 +111,13 @@ public final class DyTasks implements Tasks {
             return new DyTask(
                 this.region.table(DyTask.TBL)
                     .put(new Attributes()
-                                    .with(DyTask.ATTR_ID, UUID.randomUUID())
-                                    .with(DyTask.ATTR_REPO_URN, this.repo.name())
-                                    .with(DyTask.ATTR_COMM, command)
-                                    .with(toAttributes(args))
+                        .with(DyTask.ATTR_ID, UUID.randomUUID())
+                        .with(
+                            DyTask.ATTR_REPO_URN,
+                            this.repo.name()
+                        )
+                        .with(DyTask.ATTR_COMM, command)
+                        .with(this.toAttributes(args))
                     )
             );
         } catch (final IOException ex) {
@@ -125,12 +128,12 @@ public final class DyTasks implements Tasks {
     /**
      * Map to {@link com.jcabi.dynamo.Attributes}.
      * @param map Map
-     * @return {@link com.jcabi.dynamo.Attributes}
+     * @return Attributes
      */
     private Attributes toAttributes(final Map<String, String> map) {
-        Attributes attributes = new Attributes();
-        for (Map.Entry<String, String> e : map.entrySet()) {
-            attributes.with(e.getKey(), e.getValue());
+        final Attributes attributes = new Attributes();
+        for (final Map.Entry<String, String> entry : map.entrySet()) {
+            attributes.with(entry.getKey(), entry.getValue());
         }
         return attributes;
     }
