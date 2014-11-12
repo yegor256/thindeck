@@ -112,8 +112,7 @@ public final class DyTasks implements Tasks {
                     DyTask.ATTR_REPO_URN,
                     Conditions.equalTo(this.repo.name())
                 )
-                )
-                ,
+            ),
             new Function<Item, Task>() {
                 @Override
                 public Task apply(final Item input) {
