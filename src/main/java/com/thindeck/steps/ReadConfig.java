@@ -50,9 +50,6 @@ import org.xembly.Directives;
  * @author Paul Polishchuk (ppol@ua.fm)
  * @version $Id$
  * @since 0.3
- * @todo #310 Add check if domains and ports are already in memo.
- *  Current implementation duplicates them if step is called several
- *  times on the same context.
  */
 @Immutable
 public final class ReadConfig implements Step {

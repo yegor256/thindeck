@@ -40,7 +40,7 @@ import com.thindeck.api.mock.MkContext;
 import javax.json.Json;
 import org.apache.commons.codec.binary.Base64;
 import org.hamcrest.MatcherAssert;
-import org.junit.Assert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.xembly.Directives;
 
@@ -56,7 +56,7 @@ public final class ReadConfigTest {
     /**
      * Fetch repo configuration and update memo accordingly.
      * @throws Exception If something goes wrong
-     * @todo Unit test for #369 should rather be extracted
+     * @todo #369 Unit test should rather be extracted
      */
     @Test
     public void fetchesRepoConfigAndUpdatesMemo() throws Exception {
@@ -101,11 +101,15 @@ public final class ReadConfigTest {
                 "//memo/ports/port[.='443']"
             )
         );
-        Assert.assertEquals(
-            2, ctx.memo().read().nodes("//memo/ports/port").size()
+        MatcherAssert.assertThat(
+            2, Matchers.equalTo(
+                ctx.memo().read().nodes("//memo/ports/port").size()
+            )
         );
-        Assert.assertEquals(
-            2, ctx.memo().read().nodes("//memo/domains/domain").size()
+        MatcherAssert.assertThat(
+            2, Matchers.equalTo(
+                ctx.memo().read().nodes("//memo/domains/domain").size()
+            )
         );
     }
 }
