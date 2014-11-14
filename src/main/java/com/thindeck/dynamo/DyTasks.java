@@ -110,10 +110,10 @@ public final class DyTasks implements Tasks {
             .where(
                 new Conditions().with(
                     DyTask.ATTR_OPEN,
-                    Conditions.equalTo(String.valueOf(true))
+                    String.valueOf(true)
                 ).with(
                     DyTask.ATTR_REPO_URN,
-                    Conditions.equalTo(this.repo.name())
+                    this.repo.name()
                 )
             ),
             new Function<Item, Task>() {
