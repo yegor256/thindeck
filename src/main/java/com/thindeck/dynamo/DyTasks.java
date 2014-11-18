@@ -67,7 +67,7 @@ public final class DyTasks implements Tasks {
      * Repo we're in.
      */
     private final transient Repo repo;
- 
+
     /**
      * Constructor.
      * @param rgn Region
@@ -102,20 +102,20 @@ public final class DyTasks implements Tasks {
     public Iterable<Task> open() {
         return Iterables.transform(
             this.region.table(DyTask.TBL)
-            .frame()
-            .through(
+                .frame()
+                .through(
                 new QueryValve()
-                .withSelect(Select.ALL_PROJECTED_ATTRIBUTES)
-            )
-            .where(
+                    .withSelect(Select.ALL_PROJECTED_ATTRIBUTES)
+                )
+                .where(
                 new Conditions().with(
                     DyTask.ATTR_OPEN,
                     String.valueOf(true)
                 ).with(
-                    DyTask.ATTR_REPO_URN,
-                    this.repo.name()
-                )
-            ),
+                        DyTask.ATTR_REPO_URN,
+                        this.repo.name()
+                    )
+                ),
             new Function<Item, Task>() {
                 @Override
                 public Task apply(final Item input) {

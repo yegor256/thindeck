@@ -90,23 +90,24 @@ public final class DyTasksTest {
             table.put(
                 new Attributes().with(DyTask.ATTR_ID, tid)
                     .with(DyTask.ATTR_REPO_URN, repo)
-                    .with(DyTask.ATTR_OPEN, tid == 3L)
+                    .with(DyTask.ATTR_OPEN, tid == 1L)
             );
         }
         return region;
     }
-    
+
     /**
      * DyTasks can retrieve tasks waiting processing.
      * @throws Exception In case of error.
+     * @checkstyle MethodsOrderCheck (2 lines)
      */
     @Test
-    public void canRetrieveOpenTasks() throws Exception{
+    public void getTasks() throws Exception {
         final Repo repo = new MkRepo();
-        final long tid = 3L;
+        final long tid = 1L;
         MatcherAssert.assertThat(
             new DyTasks(
-                DyTasksTest.region(repo.name(), tid, 2L, 1L),
+                DyTasksTest.region(repo.name(), tid, 2L, 0L),
                 repo
             ).open(),
             Matchers.<Task>iterableWithSize(1)
