@@ -258,6 +258,13 @@
         </pluginManagement>
         <plugins>
             <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.requs</groupId>
                 <artifactId>requs-maven-plugin</artifactId>
                 <version>${requs.version}</version>

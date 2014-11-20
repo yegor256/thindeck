@@ -30,6 +30,7 @@
 package com.thindeck.steps;
 
 import com.jcabi.aspects.Immutable;
+import java.io.IOException;
 
 /**
  * Load balancer representation.
@@ -47,10 +48,10 @@ public interface LoadBalancer {
      * @param hport Port corresponding to the host name
      * @param server Server name to redirect requests to
      * @param sport Server port to redirect requests to
+     * @throws IOException If fails
      * @checkstyle ParameterNumber (3 lines)
      */
-    void update(
-        final String host, final int hport, final String server, final int sport
-    );
+    void update(String host, int hport, String server, int sport)
+        throws IOException;
 
 }
