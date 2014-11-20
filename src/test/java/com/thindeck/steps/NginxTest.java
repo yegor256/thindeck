@@ -71,7 +71,6 @@ public final class NginxTest {
     @Test
     public void createsHostsConfiguration() throws IOException {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-        Assume.assumeFalse(SystemUtils.IS_OS_MAC);
         final File dir = this.temp.newFolder();
         final SSHD sshd = new SSHD(dir);
         sshd.start();
@@ -229,7 +228,6 @@ public final class NginxTest {
     @Test
     public void canUpdateNginxHttpConfig() throws IOException {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-        Assume.assumeFalse(SystemUtils.IS_OS_MAC);
         final File dir = this.temp.newFolder();
         final SSHD sshd = new SSHD(dir);
         final File key = new File(dir, "ssh.key");
