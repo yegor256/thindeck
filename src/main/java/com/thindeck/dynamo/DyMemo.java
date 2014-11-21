@@ -29,70 +29,50 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.dynamo.Item;
+import com.jcabi.aspects.Immutable;
+import com.jcabi.xml.StrictXML;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Tasks;
 import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.xembly.Directive;
 
 /**
- * Dynamo implementation of {@link Repo}.
+ * Dynamo implementation of {@link com.thindeck.api.Memo}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Rodrigo Gomez (rodrigo.gdea@gmail.com)
  * @version $Id$
  */
-public final class DyRepo implements Repo {
-    /**
-     * Table name.
-     */
-    public static final String TBL = "repos";
+@Immutable
+@ToString
+@EqualsAndHashCode
+
+public final class DyMemo implements Memo {
 
     /**
-     * URN attribute.
+     * The XML String memo representation.
      */
-    public static final String ATTR_NAME = "name";
-
-    /**
-     * When updated.
-     */
-    public static final String ATTR_UPDATED = "updated";
-
-    /**
-     * Memo.
-     */
-    public static final String ATTR_MEMO = "memo";
-
-    /**
-     * Item.
-     */
-    private final transient Item item;
-
+    private final transient String memo;
     /**
      * Ctor.
-     * @param itm Item
+     * @param amemo An XML string
      */
-    public DyRepo(@NotNull final Item itm) {
-        this.item = itm;
+    public DyMemo(final String amemo) {
+        this.memo = amemo;
     }
 
     @Override
-    public String name() {
-        try {
-            return this.item.get(DyRepo.ATTR_NAME).getS();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    public XML read() throws IOException {
+        return new StrictXML(
+                Memo.CLEANUP.transform(new XMLDocument(this.memo)),
+                Memo.SCHEMA
+        );
     }
 
     @Override
-    @NotNull
-    public Tasks tasks() {
-        return new DyTasks(this.item.frame().table().region(), this);
-    }
-
-    @Override
-    public Memo memo() throws IOException {
-        return new DyMemo(this.item.get(ATTR_MEMO).getS());
+    public void update(final Iterable<Directive> dirs) throws IOException {
+        throw new UnsupportedOperationException("#update");
     }
 }
