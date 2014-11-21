@@ -108,7 +108,7 @@ public final class Nginx implements LoadBalancer {
     // @checkstyle ParameterNumberCheck (5 lines)
     @Override
     public void update(@NotNull final String host, @NotNull final int hport,
-                       @NotNull final String server, @NotNull final int sport)
+        @NotNull final String server, @NotNull final int sport)
         throws IOException {
         new Shell.Plain(
             new SSH(
@@ -136,12 +136,12 @@ public final class Nginx implements LoadBalancer {
      * @return Commands for updating hosts configuration.
      */
     private String updateConfigScript(final String host, final String server,
-                                      final int sport) {
+        final int sport) {
         final ConcurrentHashMap<String, String> values =
             new ConcurrentHashMap<String, String>();
         values.put("host", host);
         values.put("server", server);
-        values.put("sport", new Integer(sport).toString());
+        values.put("sport", Integer.toString(sport));
         values.put("binary", this.binary);
         values.put("config", this.config);
         values.put(
@@ -176,7 +176,6 @@ public final class Nginx implements LoadBalancer {
             "fi",
             "pkill -HUP -f ${binary}"
         );
-        final StrSubstitutor sub = new StrSubstitutor(values);
-        return sub.replace(template);
+        return new StrSubstitutor(values).replace(template);
     }
 }
