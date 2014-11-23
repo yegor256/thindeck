@@ -83,4 +83,22 @@ public final class DyRepoTest {
             Matchers.notNullValue()
         );
     }
+
+    /**
+     * {@link DyRepo#memo}.
+     * @throws IOException transitively
+     */
+    @Test
+    public void memo() throws IOException {
+        final String memo = "<memo></memo>";
+        final AttributeValue value = Mockito.mock(AttributeValue.class);
+        final Item item = Mockito.mock(Item.class);
+        Mockito.when(value.getS()).thenReturn(memo);
+        Mockito.when(item.get(DyRepo.ATTR_MEMO)).thenReturn(value);
+        MatcherAssert.assertThat(
+                new DyRepo(item).memo(),
+                Matchers.instanceOf(DyMemo.class)
+        );
+    }
+
 }
