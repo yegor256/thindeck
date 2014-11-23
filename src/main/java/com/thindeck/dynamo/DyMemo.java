@@ -44,6 +44,7 @@ import org.xembly.Directive;
  *
  * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
+ * @todo #405 implement update.
  */
 @Immutable
 @ToString
