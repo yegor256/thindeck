@@ -32,7 +32,6 @@ package com.thindeck.dynamo;
 import com.jcabi.dynamo.Item;
 import com.thindeck.api.Txn;
 import java.io.IOException;
-import java.util.Iterator;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -51,34 +50,16 @@ public final class DyTxn implements Txn {
      */
     public static final String ATTR_ID = "id";
     /**
-     * Transaction action.
-     */
-    public static final String ATTR_ACT = "action";
-    /**
-     * Actions of the transaction's task.
-     */
-    private final transient Iterator<String> actions;
-    /**
      * Constructor.
      * @param itm Item
+     * @todo 372 Fetch actions from item which describe what
+     *  should be done next to finish the task.
      */
     public DyTxn(@NotNull final Item itm) {
-        try {
-            this.actions = itm.get(DyTxn.ATTR_ACT).getSS().iterator();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-    /**
-     * Transaction task's actions.
-     * @todo #372 Use actions field in increment() method.
-     *  Remove this method getActions().
-     * @return Actions
-     */
-    public Iterator<String> getActions() {
-        return this.actions;
+        throw new UnsupportedOperationException(itm.toString());
     }
 
+    // @todo #372 increment should use actions fetched from item.
     @Override
     public void increment() throws IOException {
         throw new UnsupportedOperationException("#increment");

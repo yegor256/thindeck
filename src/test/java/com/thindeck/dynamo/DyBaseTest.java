@@ -37,6 +37,7 @@ import com.jcabi.urn.URN;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -58,6 +59,16 @@ public final class DyBaseTest {
             new DyBase(DyBaseTest.region(urn)).user(urn).urn(),
             Matchers.equalTo(urn)
         );
+    }
+
+    /**
+     * DyBase can retrieve DyTxn.
+     * @todo #372 missing unit test.
+     */
+    @Test
+    @Ignore
+    public void retrievesDyTxn() {
+        MatcherAssert.assertThat("Missing test", false);
     }
 
     /**
