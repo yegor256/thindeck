@@ -44,6 +44,7 @@ import com.thindeck.api.User;
  * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @since 0.3
+ * @todo #322 Implement txn method to retrieve data from appropriate table.
  */
 public final class DyBase implements Base {
     /**
@@ -80,15 +81,6 @@ public final class DyBase implements Base {
 
     @Override
     public Txn txn(final Task task) {
-        return new DyTxn(
-            this.region.table(DyTxn.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyTxn.ATTR_ID, Long.toString(task.number()))
-                .iterator().next()
-        );
+        throw new UnsupportedOperationException();
     }
 }
