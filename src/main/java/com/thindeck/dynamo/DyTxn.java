@@ -29,66 +29,68 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.dynamo.QueryValve;
-import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Base;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
+import com.jcabi.dynamo.Item;
 import com.thindeck.api.Txn;
-import com.thindeck.api.User;
+import java.io.IOException;
+import java.util.Iterator;
+import javax.validation.constraints.NotNull;
 
 /**
- * Dynamo implementation of the {@link Base}.
+ * Dynamo implementation of the {@link com.thindeck.api.Txn}.
  *
- * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * @author Piotr Kotlicki (Piotr.Kotlicki@gmail.com)
  * @version $Id$
- * @since 0.3
  */
-public final class DyBase implements Base {
+public final class DyTxn implements Txn {
     /**
-     * Region we're in.
+     * Table name.
      */
-    private final transient Region region;
-
+    public static final String TBL = "txns";
+    /**
+     * Transaction attribute.
+     */
+    public static final String ATTR_ID = "id";
+    /**
+     * Transaction action.
+     */
+    public static final String ATTR_ACT = "action";
+    /**
+     * Actions of the transaction's task.
+     */
+    private final transient Iterator<String> actions;
     /**
      * Constructor.
-     * @param rgn Region
+     * @param itm Item
      */
-    public DyBase(final Region rgn) {
-        this.region = rgn;
+    public DyTxn(@NotNull final Item itm) {
+        try {
+            this.actions = itm.get(DyTxn.ATTR_ACT).getSS().iterator();
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+    /**
+     * Transaction task's actions.
+     * @todo #372 Use actions field in increment() method.
+     *  Remove this method getActions().
+     * @return Actions
+     */
+    public Iterator<String> getActions() {
+        return this.actions;
     }
 
     @Override
-    public User user(final URN urn) {
-        return new DyUser(
-            this.region.table(DyUser.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyUser.ATTR_URN, urn.toString())
-                .iterator().next()
-        );
+    public void increment() throws IOException {
+        throw new UnsupportedOperationException("#increment");
     }
 
     @Override
-    public Repos repos() {
-        return new DyRepos(this.region);
+    public void log(final String text) throws IOException {
+        throw new UnsupportedOperationException("#log-text");
     }
 
     @Override
-    public Txn txn(final Task task) {
-        return new DyTxn(
-            this.region.table(DyTxn.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyTxn.ATTR_ID, Long.toString(task.number()))
-                .iterator().next()
-        );
+    public Iterable<String> log() throws IOException {
+        throw new UnsupportedOperationException("#log");
     }
 }
