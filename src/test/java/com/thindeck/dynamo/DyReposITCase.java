@@ -44,14 +44,14 @@ import org.junit.Test;
  * @author Carlos Alexandro Becker (caarlos0@gmail.com)
  * @version $Id$
  */
-public class DyReposITCase {
+public final class DyReposITCase {
 
     /**
      * DyRepos can retrieve DyRepo.
      * @throws Exception If something goes wrong.
      */
     @Test
-    public final void testRetrieveRepo() throws Exception {
+    public void testRetrieveRepo() throws Exception {
         final String name = "reponame";
         MatcherAssert.assertThat(
             new DyRepos(this.region(name)).get(name).name(),
