@@ -153,6 +153,7 @@ public final class Nginx implements LoadBalancer {
                 sport
             ),
             String.format(
+                // @checkstyle LineLengthCheck (1 line)
                 "then perl -i.bak -pe 's/}/    server %s:%d;\\n}/' %s.hosts.conf",
                 server,
                 sport,
