@@ -31,6 +31,7 @@ package com.thindeck.steps;
 
 import com.google.common.base.Joiner;
 import com.jcabi.aspects.Tv;
+import com.jcabi.log.VerboseProcess;
 import com.jcabi.manifests.Manifests;
 import com.jcabi.ssh.SSHD;
 import java.io.ByteArrayInputStream;
@@ -167,16 +168,12 @@ public final class NginxTest {
                 String.format("    echo stopped > %s", marker.toString())
             )
         );
-        final ProcessBuilder builder = new ProcessBuilder(
-            "/bin/bash", script.toString()
+        final VerboseProcess process = new VerboseProcess(
+            new ProcessBuilder("/bin/bash", script.toString())
         );
-        builder.redirectInput(new File("/dev/null"));
-        builder.redirectOutput(new File("/dev/null"));
-        builder.redirectError(new File("/dev/null"));
-        final Process process = builder.start();
         try {
             new Nginx(bin, "nginx.conf").update("", 1, "", 2);
-            process.waitFor();
+            process.stdout();
         } finally {
             sshd.stop();
         }
