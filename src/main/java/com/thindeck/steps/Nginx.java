@@ -153,7 +153,8 @@ public final class Nginx implements LoadBalancer {
                 sport
             ),
             String.format(
-                "then sed -i.bak -r 's/}/    server %s:%d;\\n}/' %s.hosts.conf",
+                // @checkstyle LineLengthCheck (1 line)
+                "then perl -i.bak -pe 's/}/    server %s:%d;\\n}/' %s.hosts.conf",
                 server,
                 sport,
                 host
@@ -187,7 +188,7 @@ public final class Nginx implements LoadBalancer {
             ),
             String.format(
                 // @checkstyle LineLength (1 line)
-                "then sed -i.bak -r 's/http \\{/http \\{\\n    include %s;/' %s",
+                "then perl -i.bak -pe 's/http \\{/http \\{\\n    include %s;/' %s",
                 hosts, this.config
             ),
             String.format("rm %s.bak", this.config),
