@@ -30,67 +30,48 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Tasks;
-import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import org.hamcrest.CustomTypeSafeMatcher;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Rule;
+import org.junit.Test;
 
 /**
- * Dynamo implementation of {@link Repo}.
+ * Test for immutability.
+ * Checks that all classes in package {@code com.thindeck.dynamo }
+ * have {@code @Immutable} annotation.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Piotr Kotlicki (Piotr.Kotlicki@gmail.com)
  * @version $Id$
- * @todo #373 Implement memo method.
  */
-@Immutable
-public final class DyRepo implements Repo {
-    /**
-     * Table name.
-     */
-    public static final String TBL = "repos";
+public final class ImmutabilityTest {
 
     /**
-     * URN attribute.
+     * ClasspathRule.
+     * @checkstyle VisibilityModifierCheck (3 lines)
      */
-    public static final String ATTR_NAME = "name";
+    @Rule
+    public final transient ClasspathRule classpath = new ClasspathRule();
 
     /**
-     * When updated.
+     * Test for immutability.
+     * Checks that all classes in package {@code com.thindeck.dynamo }
+     * have {@code @Immutable} annotation.
+     *
+     * @throws Exception If some problem inside
      */
-    public static final String ATTR_UPDATED = "updated";
-
-    /**
-     * Item.
-     */
-    private final transient Item item;
-
-    /**
-     * Ctor.
-     * @param itm Item
-     */
-    public DyRepo(@NotNull final Item itm) {
-        this.item = itm;
-    }
-
-    @Override
-    public String name() {
-        try {
-            return this.item.get(DyRepo.ATTR_NAME).getS();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-
-    @Override
-    @NotNull
-    public Tasks tasks() {
-        return new DyTasks(this.item.frame().table().region(), this);
-    }
-
-    @Override
-    public Memo memo() throws IOException {
-        throw new UnsupportedOperationException("#memo");
+    @Test
+    public void checkImmutability() throws Exception {
+        MatcherAssert.assertThat(
+            this.classpath.allTypes(),
+            Matchers.everyItem(
+                new CustomTypeSafeMatcher<Class<?>>("annotated type") {
+                    @Override
+                    protected boolean matchesSafely(final Class<?> item) {
+                        return item.isAnnotationPresent(Immutable.class);
+                    }
+                }
+            )
+        );
     }
 }

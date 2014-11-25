@@ -29,6 +29,7 @@
  */
 package com.thindeck.dynamo;
 
+import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
 import com.jcabi.urn.URN;
@@ -45,6 +46,7 @@ import com.thindeck.api.User;
  * @version $Id$
  * @since 0.3
  */
+@Immutable
 public final class DyBase implements Base {
     /**
      * Region we're in.
