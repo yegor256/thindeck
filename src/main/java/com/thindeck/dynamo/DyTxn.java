@@ -29,65 +29,47 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.dynamo.Attributes;
-import com.jcabi.dynamo.Region;
-import com.jcabi.dynamo.mock.H2Data;
-import com.jcabi.dynamo.mock.MkRegion;
-import com.jcabi.urn.URN;
+import com.jcabi.dynamo.Item;
+import com.thindeck.api.Txn;
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Ignore;
-import org.junit.Test;
+import javax.validation.constraints.NotNull;
 
 /**
- * Tests for {@link DyBase}.
+ * Dynamo implementation of the {@link com.thindeck.api.Txn}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Piotr Kotlicki (Piotr.Kotlicki@gmail.com)
  * @version $Id$
  */
-public final class DyBaseTest {
-
+public final class DyTxn implements Txn {
     /**
-     * DyBase can retrieve DyUser.
-     * @throws IOException If something goes wrong.
+     * Table name.
      */
-    @Test
-    public void retrievesDyUser() throws IOException {
-        final URN urn = URN.create("urn:test:1");
-        MatcherAssert.assertThat(
-            new DyBase(DyBaseTest.region(urn)).user(urn).urn(),
-            Matchers.equalTo(urn)
-        );
+    public static final String TBL = "txns";
+    /**
+     * Transaction attribute.
+     */
+    public static final String ATTR_ID = "id";
+    /**
+     * Constructor.
+     * @param itm Item
+     */
+    public DyTxn(@NotNull final Item itm) {
+        throw new UnsupportedOperationException(itm.toString());
     }
 
-    /**
-     * DyBase can retrieve DyTxn.
-     * @todo #372 should retrieve DyTxn.
-     */
-    @Test
-    @Ignore
-    public void retrievesDyTxn() {
-        MatcherAssert.assertThat("Missing test", false);
+    // @todo #372 increment should use actions fetched from item.
+    @Override
+    public void increment() throws IOException {
+        throw new UnsupportedOperationException("#increment");
     }
 
-    /**
-     * Create region with single DyUser.
-     * @param urn URN of the user.
-     * @return Created region.
-     * @throws IOException In case of error.
-     */
-    private static Region region(final URN urn)
-        throws IOException {
-        final Region region = new MkRegion(
-            new H2Data().with(
-                DyUser.TBL,
-                new String[] {DyUser.ATTR_URN},
-                new String[0]
-            )
-        );
-        region.table(DyUser.TBL)
-            .put(new Attributes().with(DyUser.ATTR_URN, urn));
-        return region;
+    @Override
+    public void log(final String text) throws IOException {
+        throw new UnsupportedOperationException("#log-text");
+    }
+
+    @Override
+    public Iterable<String> log() throws IOException {
+        throw new UnsupportedOperationException("#log");
     }
 }
