@@ -52,8 +52,6 @@ public final class DyTxn implements Txn {
     /**
      * Constructor.
      * @param itm Item
-     * @todo 372 Fetch actions from item which describe what
-     *  should be done next to finish the task.
      */
     public DyTxn(@NotNull final Item itm) {
         throw new UnsupportedOperationException(itm.toString());

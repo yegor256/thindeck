@@ -63,7 +63,7 @@ public final class DyBaseTest {
 
     /**
      * DyBase can retrieve DyTxn.
-     * @todo #372 missing unit test.
+     * @todo #372 should retrieve DyTxn.
      */
     @Test
     @Ignore
