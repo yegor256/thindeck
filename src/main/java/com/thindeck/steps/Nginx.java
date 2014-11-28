@@ -156,7 +156,7 @@ public final class Nginx implements LoadBalancer {
                 "${host}.hosts.conf) != *${server}:${sport}* ]]"
             ),
             Joiner.on(' ').join(
-                "then sed -i.bak -r 's/}/    server",
+                "then perl -i.bak -pe 's/}/    server",
                 "${server}:${sport};\\n}/' ${host}.hosts.conf"
             ),
             "fi",
@@ -168,7 +168,7 @@ public final class Nginx implements LoadBalancer {
             ),
             "if ! grep -q '${host}.hosts.conf' ${config}",
             Joiner.on(' ').join(
-                "then sed -i.bak -r 's/http \\{/http \\{\\n   ",
+                "then perl -i.bak -pe 's/http \\{/http \\{\\n   ",
                 "include ${host}.hosts.conf;/' ${config}"
             ),
             "rm ${config}.bak",
