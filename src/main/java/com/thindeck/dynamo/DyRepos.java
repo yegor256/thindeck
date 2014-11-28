@@ -45,7 +45,6 @@ import java.io.IOException;
  * Dynamo implementation of {@link Repos}.
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #370 Create test for #add new repo
  */
 public final class DyRepos implements Repos {
     /**
