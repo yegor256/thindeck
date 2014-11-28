@@ -164,7 +164,7 @@ public final class Nginx implements LoadBalancer {
             Joiner.on("\\n").join(
                 "else printf 'upstream ${host}_servers {",
                 "    server ${server}:${sport};",
-                "} > ${host}.hosts.conf"
+                "}' > ${host}.hosts.conf"
             ),
             "if ! grep -q '${host}.hosts.conf' ${config}",
             Joiner.on(' ').join(
