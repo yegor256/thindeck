@@ -101,10 +101,11 @@ public final class UpdateLB implements Step {
      * @param tank Container to use.
      * @param port Input port.
      * @param outports Output ports.
+     * @throws IOException If fails
      * @checkstyle ParameterNumber (3 lines)
      */
     private void updates(final List<String> domains, final String tank,
-        final String port, final List<String> outports) {
+        final String port, final List<String> outports) throws IOException {
         for (final String domain : domains) {
             for (final String outport : outports) {
                 this.balancer.update(

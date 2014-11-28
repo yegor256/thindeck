@@ -27,31 +27,53 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.steps;
+package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
+import com.thindeck.api.Context;
+import com.thindeck.api.Step;
 import java.io.IOException;
+import java.util.Random;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Load balancer representation.
+ * Mock of {@link com.thindeck.api.Step}.
  *
- * @author Carlos Miranda (miranda.cma@gmail.com)
+ * @author Slava Semushin (slava.semushin@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.5
  */
 @Immutable
-public interface LoadBalancer {
+@ToString
+@EqualsAndHashCode
+public final class MkStep implements Step {
 
     /**
-     * Update load balancer configuration with the given mapping.
-     * @param host The host name indicated by requests
-     * @param hport Port corresponding to the host name
-     * @param server Server name to redirect requests to
-     * @param sport Server port to redirect requests to
-     * @throws IOException If fails
-     * @checkstyle ParameterNumber (3 lines)
+     * Step's name.
      */
-    void update(String host, int hport, String server, int sport)
-        throws IOException;
+    private final transient String step = String.format(
+        "Step #%d",
+        new Random().nextInt()
+    );
 
+    @Override
+    public String name() {
+        return this.step;
+    }
+
+    @Override
+    public void exec(final Context ctx) throws IOException {
+        // do nothing
+    }
+
+    @Override
+    public void commit(final Context ctx) throws IOException {
+        // do nothing
+    }
+
+    @Override
+    public void rollback(final Context ctx) throws IOException {
+        // do nothing
+    }
 }

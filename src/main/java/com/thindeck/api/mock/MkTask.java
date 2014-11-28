@@ -79,6 +79,6 @@ public final class MkTask implements Task {
 
     @Override
     public Scenario scenario() {
-        throw new UnsupportedOperationException("MkTask#scenario");
+        return new MkScenario();
     }
 }

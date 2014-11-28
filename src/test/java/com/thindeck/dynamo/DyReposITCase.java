@@ -27,31 +27,55 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.steps;
+package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.Attributes;
+import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.mock.H2Data;
+import com.jcabi.dynamo.mock.MkRegion;
 import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Load balancer representation.
+ * Tests for {@link DyRepos}.
  *
- * @author Carlos Miranda (miranda.cma@gmail.com)
+ * @author Carlos Alexandro Becker (caarlos0@gmail.com)
  * @version $Id$
- * @since 0.3
  */
-@Immutable
-public interface LoadBalancer {
+public final class DyReposITCase {
 
     /**
-     * Update load balancer configuration with the given mapping.
-     * @param host The host name indicated by requests
-     * @param hport Port corresponding to the host name
-     * @param server Server name to redirect requests to
-     * @param sport Server port to redirect requests to
-     * @throws IOException If fails
-     * @checkstyle ParameterNumber (3 lines)
+     * DyRepos can retrieve DyRepo.
+     * @throws Exception If something goes wrong.
      */
-    void update(String host, int hport, String server, int sport)
-        throws IOException;
+    @Test
+    public void testRetrieveRepo() throws Exception {
+        final String name = "reponame";
+        MatcherAssert.assertThat(
+            new DyRepos(this.region(name)).get(name).name(),
+            Matchers.equalTo(name)
+        );
+    }
 
+    /**
+     * Create region with single DyRepo.
+     * @param name Name of the Repo
+     * @return Created region.
+     * @throws IOException In case of error.
+     */
+    private Region region(final String name)
+        throws IOException {
+        final Region region = new MkRegion(
+            new H2Data().with(
+                DyRepo.TBL,
+                new String[] {DyRepo.ATTR_NAME},
+                new String[0]
+            )
+        );
+        region.table(DyRepo.TBL)
+            .put(new Attributes().with(DyRepo.ATTR_NAME, name));
+        return region;
+    }
 }
