@@ -66,7 +66,7 @@ public final class ClasspathRule implements TestRule {
     }
 
     /**
-     * Provides all classes in package 'com.thindeck.dynamo'.
+     * Provides all classes in prefix.
      * @return Classes
      */
     public Iterable<Class<?>> allTypes() {
@@ -117,8 +117,7 @@ public final class ClasspathRule implements TestRule {
     }
 
     /**
-     * Provides all public methods from classes in package
-     *  'com.thindeck.dynamo'.
+     * Provides all public methods from classes in prefix.
      * @return Methods
      */
     public Iterable<Method> allPublicMethods() {
