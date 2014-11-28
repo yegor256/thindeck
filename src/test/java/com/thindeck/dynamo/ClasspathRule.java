@@ -52,6 +52,18 @@ import org.reflections.util.FilterBuilder;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class ClasspathRule implements TestRule {
+    /**
+     * Package prefix.
+     **/
+    private final transient String prefix;
+
+    /**
+     * Constructor.
+     * @param pfx Prefix.
+     */
+    public ClasspathRule(final String pfx) {
+        this.prefix = pfx;
+    }
 
     /**
      * Provides all classes in package 'com.thindeck.dynamo'.
@@ -72,7 +84,7 @@ public final class ClasspathRule implements TestRule {
                         )
                     ).filterInputsBy(
                         new FilterBuilder().include(
-                            FilterBuilder.prefix("com.thindeck.dynamo")
+                            FilterBuilder.prefix(this.prefix)
                         )
                     )
             ).getSubTypesOf(Object.class),

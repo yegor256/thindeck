@@ -51,7 +51,8 @@ public final class ImmutabilityTest {
      * @checkstyle VisibilityModifierCheck (3 lines)
      */
     @Rule
-    public final transient ClasspathRule classpath = new ClasspathRule();
+    public final transient ClasspathRule classpath =
+        new ClasspathRule("com.thindeck.dynamo");
 
     /**
      * Test for immutability.
