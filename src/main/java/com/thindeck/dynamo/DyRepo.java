@@ -29,6 +29,7 @@
  */
 package com.thindeck.dynamo;
 
+import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Item;
 import com.thindeck.api.Memo;
 import com.thindeck.api.Repo;
@@ -42,6 +43,7 @@ import javax.validation.constraints.NotNull;
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  */
+@Immutable
 public final class DyRepo implements Repo {
     /**
      * Table name.

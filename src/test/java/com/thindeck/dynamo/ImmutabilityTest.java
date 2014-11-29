@@ -30,67 +30,49 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.QueryValve;
-import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Base;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
-import com.thindeck.api.User;
+import org.hamcrest.CustomTypeSafeMatcher;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Rule;
+import org.junit.Test;
 
 /**
- * Dynamo implementation of the {@link Base}.
+ * Test for immutability.
+ * Checks that all classes in package {@code com.thindeck.dynamo }
+ * have {@code @Immutable} annotation.
  *
- * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * @author Piotr Kotlicki (Piotr.Kotlicki@gmail.com)
  * @version $Id$
- * @since 0.3
  */
-@Immutable
-public final class DyBase implements Base {
-    /**
-     * Region we're in.
-     */
-    private final transient Region region;
+public final class ImmutabilityTest {
 
     /**
-     * Constructor.
-     * @param rgn Region
+     * ClasspathRule.
+     * @checkstyle VisibilityModifierCheck (3 lines)
      */
-    public DyBase(final Region rgn) {
-        this.region = rgn;
-    }
+    @Rule
+    public final transient ClasspathRule classpath =
+        new ClasspathRule("com.thindeck.dynamo");
 
-    @Override
-    public User user(final URN urn) {
-        return new DyUser(
-            this.region.table(DyUser.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyUser.ATTR_URN, urn.toString())
-                .iterator().next()
-        );
-    }
-
-    @Override
-    public Repos repos() {
-        return new DyRepos(this.region);
-    }
-
-    @Override
-    public Txn txn(final Task task) {
-        return new DyTxn(
-            this.region.table(DyTxn.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyTxn.ATTR_ID, Long.toString(task.number()))
-                .iterator().next()
+    /**
+     * Test for immutability.
+     * Checks that all classes in package {@code com.thindeck.dynamo }
+     * have {@code @Immutable} annotation.
+     *
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void checkImmutability() throws Exception {
+        MatcherAssert.assertThat(
+            this.classpath.allTypes(),
+            Matchers.everyItem(
+                new CustomTypeSafeMatcher<Class<?>>("annotated type") {
+                    @Override
+                    protected boolean matchesSafely(final Class<?> item) {
+                        return item.isAnnotationPresent(Immutable.class);
+                    }
+                }
+            )
         );
     }
 }

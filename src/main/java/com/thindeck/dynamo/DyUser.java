@@ -29,6 +29,7 @@
  */
 package com.thindeck.dynamo;
 
+import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Item;
 import com.jcabi.urn.URN;
 import com.thindeck.api.Repos;
@@ -52,6 +53,7 @@ import java.io.IOException;
  *  DyUsage that implements the Usage interface. This will obtain the usage
  *  associated to this user from Dynamo DB.
  */
+@Immutable
 public final class DyUser implements User {
     /**
      * Table name.

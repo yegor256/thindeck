@@ -32,6 +32,7 @@ package com.thindeck.dynamo;
 import com.amazonaws.services.dynamodbv2.model.Select;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
+import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
 import com.jcabi.dynamo.Item;
@@ -46,6 +47,7 @@ import java.io.IOException;
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  */
+@Immutable
 public final class DyRepos implements Repos {
     /**
      * Region we're in.
