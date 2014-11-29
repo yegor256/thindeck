@@ -29,70 +29,31 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.dynamo.Item;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Tasks;
+import com.jcabi.xml.XML;
 import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Dynamo implementation of {@link Repo}.
+ * Test {@link DyMemo}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
  */
-public final class DyRepo implements Repo {
-    /**
-     * Table name.
-     */
-    public static final String TBL = "repos";
+public final class DyMemoTest {
 
     /**
-     * URN attribute.
+     * Test {@link DyMemo#read}.
+     * @throws IOException transitively
      */
-    public static final String ATTR_NAME = "name";
-
-    /**
-     * When updated.
-     */
-    public static final String ATTR_UPDATED = "updated";
-
-    /**
-     * Memo.
-     */
-    public static final String ATTR_MEMO = "memo";
-
-    /**
-     * Item.
-     */
-    private final transient Item item;
-
-    /**
-     * Ctor.
-     * @param itm Item
-     */
-    public DyRepo(@NotNull final Item itm) {
-        this.item = itm;
-    }
-
-    @Override
-    public String name() {
-        try {
-            return this.item.get(DyRepo.ATTR_NAME).getS();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-
-    @Override
-    @NotNull
-    public Tasks tasks() {
-        return new DyTasks(this.item.frame().table().region(), this);
-    }
-
-    @Override
-    public Memo memo() throws IOException {
-        return new DyMemo(this.item.get(ATTR_MEMO).getS());
+    @Test
+    public void read() throws IOException {
+        final DyMemo memo = new DyMemo("<memo/>");
+        final XML xml = memo.read();
+        MatcherAssert.assertThat(
+            xml.node().getFirstChild().getLocalName(),
+            Matchers.equalTo("memo")
+        );
     }
 }

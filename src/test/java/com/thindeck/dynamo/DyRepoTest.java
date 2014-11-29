@@ -30,10 +30,13 @@
 package com.thindeck.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Frame;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
+import com.jcabi.dynamo.mock.H2Data;
+import com.jcabi.dynamo.mock.MkRegion;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -81,6 +84,31 @@ public final class DyRepoTest {
         MatcherAssert.assertThat(
             new DyRepo(item).tasks(),
             Matchers.notNullValue()
+        );
+    }
+
+    /**
+     * {@link DyRepo#memo}.
+     * @throws IOException transitively
+     */
+    @Test
+    public void memo() throws IOException {
+        final Region region = new MkRegion(
+            new H2Data().with(
+                    DyRepo.TBL,
+                new String[] {DyRepo.ATTR_MEMO},
+                new String[] {DyRepo.ATTR_UPDATED}
+            )
+        );
+        final Table table = region.table(DyRepo.TBL);
+        table.put(
+            new Attributes()
+                .with(DyRepo.ATTR_MEMO, "<memo></memo>")
+                .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
+        );
+        MatcherAssert.assertThat(
+            new DyRepo(table.frame().iterator().next()).memo(),
+            Matchers.instanceOf(DyMemo.class)
         );
     }
 }
