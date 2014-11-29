@@ -54,12 +54,18 @@
                 <section itemscope="" itemtype="http://schema.org/WebApplication">
                     <nav role="navigation" class="menu">
                         <xsl:if test="not(identity)">
-                            <span>
-                                <a href="{links/link[@rel='rexsl:github']/@href}" title="login via Github">
-                                    <xsl:text>login</xsl:text>
-                                </a>
-                            </span>
+                            <a href="{links/link[@rel='rexsl:github']/@href}" title="login via Github">
+                                <xsl:text>login</xsl:text>
+                            </a>
+                            <xsl:text>|</xsl:text>
                         </xsl:if>
+                        <a href="{links/link[@rel='home']/@href}">
+                            <xsl:text>home</xsl:text>
+                        </a>
+                        <xsl:text>|</xsl:text>
+                        <a href="http://doc.thindeck.com">
+                            <xsl:text>documentation</xsl:text>
+                        </a>
                         <xsl:apply-templates select="identity"/>
                     </nav>
                 </section>
@@ -68,16 +74,6 @@
                         style="position: absolute;right:0;top:0;width:128px;height:128px;"
                         alt="fork me in github"/>
                 </a>
-                <p>
-                    <a href="{links/link[@rel='home']/@href}">
-                        <img src="//img.thindeck.com/logo.svg" style="width:128px;"/>
-                    </a>
-                </p>
-                <p>
-                    <a href="http://doc.thindeck.com">
-                        <xsl:text>documentation</xsl:text>
-                    </a>
-                </p>
                 <p style="color:red;">
                     <xsl:text>pre-alpha testing version, be careful</xsl:text>
                 </p>
@@ -88,13 +84,13 @@
         </html>
     </xsl:template>
     <xsl:template match="identity">
-        <span title="Github account logged in: {urn}">
+        <xsl:text>|</xsl:text>
+        <a href="{/page/links/link[@rel='account']/@href}">
             <xsl:value-of select="name"/>
-        </span>
-        <span>
-            <a title="log out" href="{/page/links/link[@rel='rexsl:logout']/@href}">
-                <xsl:text>logout</xsl:text>
-            </a>
-        </span>
+        </a>
+        <xsl:text>|</xsl:text>
+        <a title="log out" href="{/page/links/link[@rel='rexsl:logout']/@href}">
+            <xsl:text>logout</xsl:text>
+        </a>
     </xsl:template>
 </xsl:stylesheet>

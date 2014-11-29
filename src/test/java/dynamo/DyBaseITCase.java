@@ -37,7 +37,6 @@ import com.thindeck.dynamo.DyBase;
 import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -50,11 +49,8 @@ public final class DyBaseITCase {
     /**
      * DyBase can add a command.
      * @throws Exception If there is some problem inside
-     * @todo #341 Add definition of tasks table to dynamoDb local and remove
-     *  Ignore annotation.
      */
     @Test
-    @Ignore
     public void canAddCommand() throws Exception {
         final String command = "command";
         MatcherAssert.assertThat(

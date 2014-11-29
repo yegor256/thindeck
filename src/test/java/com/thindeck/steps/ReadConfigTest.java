@@ -40,6 +40,7 @@ import com.thindeck.api.mock.MkContext;
 import javax.json.Json;
 import org.apache.commons.codec.binary.Base64;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.xembly.Directives;
 
@@ -55,6 +56,9 @@ public final class ReadConfigTest {
     /**
      * Fetch repo configuration and update memo accordingly.
      * @throws Exception If something goes wrong
+     * @todo #369 This unit test additionally checks if step called on the
+     *  same context does not duplicate domains and ports. It should be put
+     *  into another unit test, instead.
      */
     @Test
     public void fetchesRepoConfigAndUpdatesMemo() throws Exception {
@@ -89,6 +93,7 @@ public final class ReadConfigTest {
         );
         final Step step = new ReadConfig(ghub);
         step.exec(ctx);
+        step.exec(ctx);
         MatcherAssert.assertThat(
             ctx.memo().read(),
             XhtmlMatchers.hasXPaths(
@@ -96,6 +101,16 @@ public final class ReadConfigTest {
                 "//memo/domains/domain[.='test.example.com']",
                 "//memo/ports/port[.='80']",
                 "//memo/ports/port[.='443']"
+            )
+        );
+        MatcherAssert.assertThat(
+            2, Matchers.equalTo(
+                ctx.memo().read().nodes("//memo/ports/port").size()
+            )
+        );
+        MatcherAssert.assertThat(
+            2, Matchers.equalTo(
+                ctx.memo().read().nodes("//memo/domains/domain").size()
             )
         );
     }

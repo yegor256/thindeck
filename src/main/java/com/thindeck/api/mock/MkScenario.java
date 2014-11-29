@@ -27,31 +27,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.steps;
+package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
-import java.io.IOException;
+import com.thindeck.api.Scenario;
+import com.thindeck.api.Step;
+import java.util.Collections;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Load balancer representation.
+ * Mock of {@link com.thindeck.api.Scenario}.
  *
- * @author Carlos Miranda (miranda.cma@gmail.com)
+ * @author Slava Semushin (slava.semushin@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.5
  */
 @Immutable
-public interface LoadBalancer {
+@ToString
+@EqualsAndHashCode
+public final class MkScenario implements Scenario {
 
-    /**
-     * Update load balancer configuration with the given mapping.
-     * @param host The host name indicated by requests
-     * @param hport Port corresponding to the host name
-     * @param server Server name to redirect requests to
-     * @param sport Server port to redirect requests to
-     * @throws IOException If fails
-     * @checkstyle ParameterNumber (3 lines)
-     */
-    void update(String host, int hport, String server, int sport)
-        throws IOException;
-
+    @Override
+    public Iterable<Step> steps() {
+        return Collections.<Step>singletonList(new MkStep());
+    }
 }

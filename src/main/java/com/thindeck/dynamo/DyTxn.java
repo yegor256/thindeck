@@ -27,31 +27,49 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.steps;
+package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.Item;
+import com.thindeck.api.Txn;
 import java.io.IOException;
+import javax.validation.constraints.NotNull;
 
 /**
- * Load balancer representation.
+ * Dynamo implementation of the {@link com.thindeck.api.Txn}.
  *
- * @author Carlos Miranda (miranda.cma@gmail.com)
+ * @author Piotr Kotlicki (Piotr.Kotlicki@gmail.com)
  * @version $Id$
- * @since 0.3
  */
-@Immutable
-public interface LoadBalancer {
-
+public final class DyTxn implements Txn {
     /**
-     * Update load balancer configuration with the given mapping.
-     * @param host The host name indicated by requests
-     * @param hport Port corresponding to the host name
-     * @param server Server name to redirect requests to
-     * @param sport Server port to redirect requests to
-     * @throws IOException If fails
-     * @checkstyle ParameterNumber (3 lines)
+     * Table name.
      */
-    void update(String host, int hport, String server, int sport)
-        throws IOException;
+    public static final String TBL = "txns";
+    /**
+     * Transaction attribute.
+     */
+    public static final String ATTR_ID = "id";
+    /**
+     * Constructor.
+     * @param itm Item
+     */
+    public DyTxn(@NotNull final Item itm) {
+        throw new UnsupportedOperationException(itm.toString());
+    }
 
+    // @todo #372 increment should use actions fetched from item.
+    @Override
+    public void increment() throws IOException {
+        throw new UnsupportedOperationException("#increment");
+    }
+
+    @Override
+    public void log(final String text) throws IOException {
+        throw new UnsupportedOperationException("#log-text");
+    }
+
+    @Override
+    public Iterable<String> log() throws IOException {
+        throw new UnsupportedOperationException("#log");
+    }
 }

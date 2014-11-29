@@ -50,9 +50,6 @@ import org.xembly.Directives;
  * @author Paul Polishchuk (ppol@ua.fm)
  * @version $Id$
  * @since 0.3
- * @todo #310 Add check if domains and ports are already in memo.
- *  Current implementation duplicates them if step is called several
- *  times on the same context.
  */
 @Immutable
 public final class ReadConfig implements Step {
@@ -94,11 +91,15 @@ public final class ReadConfig implements Step {
             .xpath("/memo").addIf("domains");
         for (final String domain
             : content.xpath("//entry[@key='domains']/item/text()")) {
+            dirs.xpath(String.format("/memo/domains/domain[.='%s']", domain))
+                .remove();
             dirs.xpath("/memo/domains").add("domain").set(domain);
         }
         dirs.up().up().addIf("ports");
         for (final String port
             : content.xpath("//entry[@key='ports']/item/text()")) {
+            dirs.xpath(String.format("/memo/ports/port[.='%s']", port))
+                .remove();
             dirs.xpath("/memo/ports").add("port").set(port);
         }
         ctx.memo().update(dirs);

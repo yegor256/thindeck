@@ -35,33 +35,36 @@ import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
 import java.io.File;
 import java.io.IOException;
-import java.net.UnknownHostException;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.text.StrSubstitutor;
 
 /**
  * Nginx load balancer.
- * Assumption is that ngnix configuration loaded from ngnix.conf and each host
- * has a conf file named www.example.com.hosts.conf which will contain load
- * balancing group e.g:
- * <pre>
- * upstream example_servers {
+ *
+ * <p>Assumption is that ngnix configuration loaded from ngnix.conf
+ * and each host has a conf file named www.example.com.hosts.conf,
+ * which will contain load balancing group e.g:
+ *
+ * <pre> upstream example_servers {
  *     server 10.0.0.1:80;
  *     server 10.0.0.2:80;
- * }
- * </pre>
- * and a www.example.com.main.conf which will contain server configuration e.g.:
- * <pre>
+ * }</pre>
  *
- * server {
+ * <p>and a www.example.com.main.conf, which will
+ * contain server configuration e.g.:
+ *
+ * <pre> server {
  *     listen 80;
  *     server_name www.example.com;
  *     location / {
  *         proxy_pass http://example_servers;
  *     }
- * }
- * </pre>
- * those files are loaded from main ngnix.conf file using include directive.
+ * }</pre>
+ *
+ * <p>those files are loaded from main ngnix.conf file using include directive.
+ *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @todo #345 Let's handle the file *main.conf, which should contain the server
@@ -102,46 +105,27 @@ public final class Nginx implements LoadBalancer {
         this("nginx", "nginx.conf");
     }
 
-    /**
-     * See {@link LoadBalancer#update(String, int, String, int)}.
-     * @param host The host name indicated by requests
-     * @param hport Port corresponding to the host name
-     * @param server Server name to redirect requests to
-     * @param sport Server port to redirect requests to
-     * @checkstyle ParameterNumber (4 lines)
-     */
+    // @checkstyle ParameterNumberCheck (5 lines)
     @Override
     public void update(@NotNull final String host, @NotNull final int hport,
-        @NotNull final String server, @NotNull final int sport) {
-        try {
-            new Shell.Plain(
-                new SSH(
-                    Manifests.read("Thindeck-LoadBalancer-Host"),
-                    Integer.parseInt(
-                        Manifests.read("Thindeck-LoadBalancer-Port")
-                    ),
-                    Manifests.read("Thindeck-LoadBalancer-User"),
-                    FileUtils.readFileToString(
-                        new File(
-                            Manifests.read("Thindeck-LoadBalancer-Key-File")
-                        )
+        @NotNull final String server, @NotNull final int sport)
+        throws IOException {
+        new Shell.Plain(
+            new SSH(
+                Manifests.read("Thindeck-LoadBalancer-Host"),
+                Integer.parseInt(
+                    Manifests.read("Thindeck-LoadBalancer-Port")
+                ),
+                Manifests.read("Thindeck-LoadBalancer-User"),
+                FileUtils.readFileToString(
+                    new File(
+                        Manifests.read("Thindeck-LoadBalancer-Key-File")
                     )
                 )
-            ).exec(
-                Joiner.on(";").join(
-                    String.format(
-                        "cd %s",
-                        Manifests.read("Thindeck-LoadBalancer-Directory")
-                    ),
-                    this.updateHostsConfigurationScript(host, server, sport),
-                    String.format("pkill -HUP -f %s", this.binary)
-                )
-            );
-        } catch (final UnknownHostException ex) {
-            throw new IllegalStateException(ex);
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+            )
+        ).exec(
+            this.updateConfigScript(host, server, sport)
+        );
     }
 
     /**
@@ -151,58 +135,47 @@ public final class Nginx implements LoadBalancer {
      * @param sport Server port to redirect requests to
      * @return Commands for updating hosts configuration.
      */
-    private String updateHostsConfigurationScript(final String host,
-        final String server, final int sport) {
-        return Joiner.on(";").join(
-            String.format("if [ -f %s.hosts.conf ]", host),
-            String.format(
-                "then if [[ $(grep '%s:%d' %s.hosts.conf) != *%s:%d* ]]",
-                server,
-                sport,
-                host,
-                server,
-                sport
-            ),
-            String.format(
-                "then sed -i.bak -r 's/}/    server %s:%d;\\n}/' %s.hosts.conf",
-                server,
-                sport,
-                host
-            ),
-            String.format("fi"),
-            String.format("rm %s.hosts.conf.bak", host),
-            String.format(
-                "else printf %s > %s.hosts.conf",
-                Joiner.on("\\n").join(
-                    String.format("'upstream %s_servers {", host),
-                    String.format("    server %s:%d;", server, sport),
-                    "}'"
-                ),
-                host
-            ),
-            this.updateNginxHttpConfigScript(host),
-            "fi"
+    private String updateConfigScript(final String host, final String server,
+        final int sport) {
+        final ConcurrentHashMap<String, String> values =
+            new ConcurrentHashMap<String, String>();
+        values.put("host", host);
+        values.put("server", server);
+        values.put("sport", Integer.toString(sport));
+        values.put("binary", this.binary);
+        values.put("config", this.config);
+        values.put(
+            "LoadBalancerDir",
+            Manifests.read("Thindeck-LoadBalancer-Directory")
         );
-    }
-
-    /**
-     * Script for updating nginx.conf with host-specific HTTP include files.
-     * @param host The host file to update
-     * @return Script for updating nginx.conf
-     */
-    private String updateNginxHttpConfigScript(final String host) {
-        final String hosts = String.format("%s.hosts.conf", host);
-        return Joiner.on(";").join(
-            String.format(
-                "if ! grep -q '%s' %s", hosts, this.config
+        final String template = Joiner.on(';').join(
+            "cd ${LoadBalancerDir}",
+            "if [ -f ${host}.hosts.conf ]",
+            Joiner.on(' ').join(
+                "then if [[ $(grep '${server}:${sport}'",
+                "${host}.hosts.conf) != *${server}:${sport}* ]]"
             ),
-            String.format(
-                // @checkstyle LineLength (1 line)
-                "then sed -i.bak -r 's/http \\{/http \\{\\n    include %s;/' %s",
-                hosts, this.config
+            Joiner.on(' ').join(
+                "then sed -i.bak -r 's/}/    server",
+                "${server}:${sport};\\n}/' ${host}.hosts.conf"
             ),
-            String.format("rm %s.bak", this.config),
-            "fi"
+            "fi",
+            "rm ${host}.hosts.conf.bak",
+            Joiner.on("\\n").join(
+                "else printf 'upstream ${host}_servers {",
+                "    server ${server}:${sport};",
+                "} > ${host}.hosts.conf"
+            ),
+            "if ! grep -q '${host}.hosts.conf' ${config}",
+            Joiner.on(' ').join(
+                "then sed -i.bak -r 's/http \\{/http \\{\\n   ",
+                "include ${host}.hosts.conf;/' ${config}"
+            ),
+            "rm ${config}.bak",
+            "fi",
+            "fi",
+            "pkill -HUP -f ${binary}"
         );
+        return new StrSubstitutor(values).replace(template);
     }
 }
