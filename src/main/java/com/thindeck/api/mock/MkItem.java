@@ -53,7 +53,7 @@ public final class MkItem implements Item {
     /**
      * Task number.
      */
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "PMD.SingularField"})
     private final transient long numb;
 
     /**
