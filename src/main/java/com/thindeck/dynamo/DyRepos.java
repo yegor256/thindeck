@@ -40,6 +40,8 @@ import com.jcabi.dynamo.Region;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Repos;
 import java.io.IOException;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * Dynamo implementation of {@link Repos}.
@@ -47,6 +49,8 @@ import java.io.IOException;
  * @version $Id$
  * @todo #370 Create test for #add new repo
  */
+@EqualsAndHashCode
+@ToString
 public final class DyRepos implements Repos {
     /**
      * Region we're in.

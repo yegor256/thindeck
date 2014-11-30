@@ -37,6 +37,8 @@ import com.thindeck.api.Repos;
 import com.thindeck.api.Task;
 import com.thindeck.api.Txn;
 import com.thindeck.api.User;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * Dynamo implementation of the {@link Base}.
@@ -45,6 +47,8 @@ import com.thindeck.api.User;
  * @version $Id$
  * @since 0.3
  */
+@EqualsAndHashCode
+@ToString
 public final class DyBase implements Base {
     /**
      * Region we're in.
