@@ -29,13 +29,19 @@
  */
 package com.thindeck;
 
+import com.thindeck.dynamo.DyBase;
+import com.thindeck.dynamo.DyRepo;
+import com.thindeck.dynamo.DyRepos;
+import com.thindeck.dynamo.DyTask;
+import com.thindeck.dynamo.DyTasks;
+import com.thindeck.dynamo.DyUser;
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
 import lombok.EqualsAndHashCode;
 import org.hamcrest.CustomTypeSafeMatcher;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -44,13 +50,14 @@ import org.junit.Test;
  */
 public class BasicAnnotationsTest {
 
-    @Rule
-    public final transient ClasspathRule classpathRule = new ClasspathRule();
-
     @Test
     public void checkForEqualsAndHashCode() throws Exception {
         MatcherAssert.assertThat(
-            classpathRule.allTypes(),
+            Arrays.asList(
+                DyTask.class,DyTasks.class, DyBase.class,
+                DyRepo.class, DyRepos.class, DyUser.class
+
+            ),
             Matchers.everyItem(
                 isAnnotatedWith(EqualsAndHashCode.class)
             )
