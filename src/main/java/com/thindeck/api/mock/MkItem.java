@@ -27,85 +27,75 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.dynamo;
+package com.thindeck.api.mock;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.Frame;
 import com.jcabi.dynamo.Item;
-import com.thindeck.api.Scenario;
-import com.thindeck.api.Task;
 import java.io.IOException;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Dynamo implementation of {@link Task}.
+ * Mock of {@link Item}.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
- * @since 0.5
- * @todo #406 Implement command method.
  */
 @Immutable
 @ToString
 @EqualsAndHashCode
-public final class DyTask implements Task {
+public final class MkItem implements Item {
+
     /**
-     * Table name.
+     * Task number.
      */
-    public static final String TBL = "tasks";
+    @SuppressWarnings({ "unused", "PMD.SingularField" })
+    private final transient long numb;
+
     /**
-     * Repo URN attribute.
+     * Default constructor.
      */
-    public static final String ATTR_REPO_URN = "urn";
-    /**
-     * Task attribute.
-     */
-    public static final String ATTR_ID = "id";
-    /**
-     * Command attribute.
-     */
-    public static final String ATTR_COMM = "comm";
-    /**
-     * Item.
-     */
-    private final transient Item item;
+    public MkItem() {
+        this(0L);
+    }
+
     /**
      * Constructor.
-     * @param itm Item
-     */
-    public DyTask(final Item itm) {
-        this.item = itm;
-    }
-
-    @Override
-    public long number() {
-        try {
-            return Long.valueOf(
-                this.item.get(DyTask.ATTR_ID).getS()
-            );
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-
-    @Override
-    public String command() {
-        try {
-            return String.valueOf(
-                this.item.get(DyTask.ATTR_COMM).getS()
-            );
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-
-    /**
-     * Return the task's scenario.
      *
-     * @return The scenario.
+     * @param num Task number
      */
+    public MkItem(final long num) {
+        this.numb = num;
+    }
+
     @Override
-    public Scenario scenario() {
-        return new DyScenario();
+    public AttributeValue get(final String str) throws IOException {
+        throw new UnsupportedOperationException("#get");
+    }
+
+    @Override
+    public boolean has(final String str) throws IOException {
+        throw new UnsupportedOperationException("#has");
+    }
+
+    @Override
+    public Map<String, AttributeValue> put(final String str,
+            final AttributeValueUpdate value) throws IOException {
+        throw new UnsupportedOperationException("#put");
+    }
+
+    @Override
+    public Map<String, AttributeValue> put(
+            final Map<String, AttributeValueUpdate> map) throws IOException {
+        throw new UnsupportedOperationException("#put(map)");
+    }
+
+    @Override
+    public Frame frame() {
+        throw new UnsupportedOperationException("#frame");
     }
 }

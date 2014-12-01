@@ -29,83 +29,24 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
 import com.thindeck.api.Scenario;
-import com.thindeck.api.Task;
-import java.io.IOException;
+import com.thindeck.api.Step;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Dynamo implementation of {@link Task}.
+ * Scenario stub.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
- * @since 0.5
- * @todo #406 Implement command method.
+ * @todo #420 Implement steps method - example in OnDeploy. Task command will determine steps.
  */
-@Immutable
 @ToString
 @EqualsAndHashCode
-public final class DyTask implements Task {
-    /**
-     * Table name.
-     */
-    public static final String TBL = "tasks";
-    /**
-     * Repo URN attribute.
-     */
-    public static final String ATTR_REPO_URN = "urn";
-    /**
-     * Task attribute.
-     */
-    public static final String ATTR_ID = "id";
-    /**
-     * Command attribute.
-     */
-    public static final String ATTR_COMM = "comm";
-    /**
-     * Item.
-     */
-    private final transient Item item;
-    /**
-     * Constructor.
-     * @param itm Item
-     */
-    public DyTask(final Item itm) {
-        this.item = itm;
-    }
+public final class DyScenario implements Scenario {
 
     @Override
-    public long number() {
-        try {
-            return Long.valueOf(
-                this.item.get(DyTask.ATTR_ID).getS()
-            );
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-
-    @Override
-    public String command() {
-        try {
-            return String.valueOf(
-                this.item.get(DyTask.ATTR_COMM).getS()
-            );
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-
-    /**
-     * Return the task's scenario.
-     *
-     * @return The scenario.
-     */
-    @Override
-    public Scenario scenario() {
-        return new DyScenario();
+    public Iterable<Step> steps() {
+        throw new UnsupportedOperationException("#steps");
     }
 }
