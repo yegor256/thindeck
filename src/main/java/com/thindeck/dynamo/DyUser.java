@@ -54,7 +54,7 @@ import lombok.ToString;
  *  DyUsage that implements the Usage interface. This will obtain the usage
  *  associated to this user from Dynamo DB.
  */
-@EqualsAndHashCode(of = "region")
+@EqualsAndHashCode
 @ToString
 public final class DyUser implements User {
     /**
