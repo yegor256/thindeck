@@ -49,7 +49,7 @@ import lombok.ToString;
  * @version $Id$
  * @todo #370 Create test for #add new repo
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "region")
 @ToString
 public final class DyRepos implements Repos {
     /**

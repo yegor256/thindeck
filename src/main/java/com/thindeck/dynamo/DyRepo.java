@@ -45,7 +45,7 @@ import lombok.ToString;
  * @version $Id$
  * @todo #373 Implement memo method.
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "region")
 @ToString
 public final class DyRepo implements Repo {
     /**

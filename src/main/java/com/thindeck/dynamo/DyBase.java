@@ -47,7 +47,7 @@ import lombok.ToString;
  * @version $Id$
  * @since 0.3
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "region")
 @ToString
 public final class DyBase implements Base {
     /**
