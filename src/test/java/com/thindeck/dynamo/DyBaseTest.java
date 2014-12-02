@@ -49,14 +49,13 @@ import org.junit.Test;
  * @version $Id$
  */
 public final class DyBaseTest {
-
     /**
      * DyBase can retrieve DyUser.
      * @throws IOException If something goes wrong.
      */
     @Test
     public void retrievesDyUser() throws IOException {
-        final URN urn = URN.create("urn:test:1");
+        final URN urn = URN.create("urn:test:2");
         MatcherAssert.assertThat(
             new DyBase(DyBaseTest.region(urn)).user(urn).urn(),
             Matchers.equalTo(urn)
@@ -88,13 +87,11 @@ public final class DyBaseTest {
     private static Region region(final URN urn)
         throws IOException {
         final Region region = new MkRegion(
-            new H2Data()
-                .with(
+            new H2Data().with(
                     DyUser.TBL,
                     new String[] {DyUser.ATTR_URN},
                     new String[0]
-                )
-                .with(
+                ).with(
                     DyTxn.TBL,
                     new String[] {DyTxn.ATTR_ID},
                     new String[0]
