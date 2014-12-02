@@ -87,16 +87,15 @@ public final class DyBaseTest {
     private static Region region(final URN urn)
         throws IOException {
         final Region region = new MkRegion(
-            new H2Data()
-                .with(
-                    DyUser.TBL,
-                    new String[] {DyUser.ATTR_URN},
-                    new String[0]
-                ).with(
-                    DyTxn.TBL,
-                    new String[] {DyTxn.ATTR_ID},
-                    new String[0]
-                )
+            new H2Data().with(
+                DyUser.TBL,
+                new String[] {DyUser.ATTR_URN},
+                new String[0]
+            ).with(
+                DyTxn.TBL,
+                new String[] {DyTxn.ATTR_ID},
+                new String[0]
+            )
         );
         region.table(DyUser.TBL)
             .put(new Attributes().with(DyUser.ATTR_URN, urn));
