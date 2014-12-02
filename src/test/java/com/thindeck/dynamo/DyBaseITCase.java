@@ -27,12 +27,59 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.thindeck.dynamo;
+
+import com.jcabi.dynamo.Credentials;
+import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.retry.ReRegion;
+import com.jcabi.manifests.Manifests;
+import java.util.Collections;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Dynamo, tests.
- *
+ * Integration case for {@link DyBase}.
  * @author Paul Polishchuk (ppol@ua.fm)
  * @version $Id$
- * @since 0.1
  */
-package dynamo;
+public final class DyBaseITCase {
+
+    /**
+     * DyBase can add a command.
+     * @throws Exception If there is some problem inside
+     */
+    @Test
+    public void canAddCommand() throws Exception {
+        final String command = "command";
+        MatcherAssert.assertThat(
+            new DyBase(DyBaseITCase.region())
+                .repos().add("test").tasks()
+                .add(command, Collections.<String, String>emptyMap())
+                .command(),
+            Matchers.equalTo(command)
+        );
+    }
+
+    /**
+     * Create Region for tests.
+     * @return Region
+     */
+    private static Region region() {
+        return new Region.Prefixed(
+            new ReRegion(
+                new Region.Simple(
+                    new Credentials.Direct(
+                        new Credentials.Simple(
+                            Manifests.read("Thindeck-DynamoKey"),
+                            Manifests.read("Thindeck-DynamoSecret")
+                        ),
+                        Integer.parseInt(System.getProperty("dynamo.port"))
+                    )
+                )
+            ),
+            "td-"
+        );
+    }
+
+}
