@@ -56,9 +56,6 @@ public final class ReadConfigTest {
     /**
      * Fetch repo configuration and update memo accordingly.
      * @throws Exception If something goes wrong
-     * @todo #369 This unit test additionally checks if step called on the
-     *  same context does not duplicate domains and ports. It should be put
-     *  into another unit test, instead.
      */
     @Test
     public void fetchesRepoConfigAndUpdatesMemo() throws Exception {
@@ -93,25 +90,60 @@ public final class ReadConfigTest {
         );
         final Step step = new ReadConfig(ghub);
         step.exec(ctx);
-        step.exec(ctx);
         MatcherAssert.assertThat(
             ctx.memo().read(),
             XhtmlMatchers.hasXPaths(
-                "//memo/domains/domain[.='example.com']",
-                "//memo/domains/domain[.='test.example.com']",
-                "//memo/ports/port[.='80']",
-                "//memo/ports/port[.='443']"
+                    "//memo/domains/domain[.='example.com']",
+                    "//memo/domains/domain[.='test.example.com']",
+                    "//memo/ports/port[.='80']",
+                    "//memo/ports/port[.='443']"
             )
         );
+    }
+
+    @Test
+    public void multipleExecDoesNotDuplicate() throws Exception {
+        final Github ghub = new MkGithub("thindeck");
+        final Repo repo = ghub.repos().create(
+            Json.createObjectBuilder()
+                .add("name", "test")
+                .build()
+        );
+        final String config = Joiner.on('\n').join(
+            "domains: [\"example.net\"]",
+            "ports: [80, 8080, 9080]"
+        );
+        repo.contents().create(
+            Json.createObjectBuilder()
+                .add("path", ".thindeck.yml")
+                .add("message", "Thindeck config")
+                .add(
+                    "content",
+                    new String(
+                        Base64.encodeBase64(
+                            config.getBytes()
+                        )
+                    )
+                ).build()
+        );
+        final Context ctx = new MkContext();
+        ctx.memo().update(
+            new Directives()
+                .xpath("/memo")
+                .add("uri").set("git://github.com/thindeck/test.git")
+        );
+        final Step step = new ReadConfig(ghub);
+        step.exec(ctx);
+        step.exec(ctx); // second exec
         MatcherAssert.assertThat(
-            2, Matchers.equalTo(
-                ctx.memo().read().nodes("//memo/ports/port").size()
-            )
+                3, Matchers.equalTo(
+                        ctx.memo().read().nodes("//memo/ports/port").size()
+                )
         );
         MatcherAssert.assertThat(
-            2, Matchers.equalTo(
-                ctx.memo().read().nodes("//memo/domains/domain").size()
-            )
+                1, Matchers.equalTo(
+                        ctx.memo().read().nodes("//memo/domains/domain").size()
+                )
         );
     }
 }
