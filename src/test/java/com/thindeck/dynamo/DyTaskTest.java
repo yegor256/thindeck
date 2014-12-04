@@ -29,68 +29,31 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.QueryValve;
-import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Base;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
-import com.thindeck.api.User;
+import com.thindeck.api.mock.MkItem;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Dynamo implementation of the {@link Base}.
+ * Test case for {@link DyTask}.
  *
- * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
- * @since 0.3
  */
-@Immutable
-public final class DyBase implements Base {
-    /**
-     * Region we're in.
-     */
-    private final transient Region region;
+public final class DyTaskTest {
 
     /**
-     * Constructor.
-     * @param rgn Region
+     * DyTask returns a {@link com.thindeck.api.Scenario}.
+     * @throws Exception In case of error.
      */
-    public DyBase(final Region rgn) {
-        this.region = rgn;
-    }
-
-    @Override
-    public User user(final URN urn) {
-        return new DyUser(
-            this.region.table(DyUser.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyUser.ATTR_URN, urn.toString())
-                .iterator().next()
+    @Test
+    public void scenarioIsNotNull() throws Exception {
+        MatcherAssert.assertThat(
+            new DyTask(
+                new MkItem()
+            ).scenario(),
+            Matchers.notNullValue()
         );
     }
 
-    @Override
-    public Repos repos() {
-        return new DyRepos(this.region);
-    }
-
-    @Override
-    public Txn txn(final Task task) {
-        return new DyTxn(
-            this.region.table(DyTxn.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyTxn.ATTR_ID, Long.toString(task.number()))
-                .iterator().next()
-        );
-    }
 }

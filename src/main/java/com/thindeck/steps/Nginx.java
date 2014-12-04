@@ -35,8 +35,10 @@ import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.text.StrSubstitutor;
 
 /**
  * Nginx load balancer.
@@ -122,14 +124,7 @@ public final class Nginx implements LoadBalancer {
                 )
             )
         ).exec(
-            Joiner.on(";").join(
-                String.format(
-                    "cd %s",
-                    Manifests.read("Thindeck-LoadBalancer-Directory")
-                ),
-                this.updateHostsConfigurationScript(host, server, sport),
-                String.format("pkill -HUP -f %s", this.binary)
-            )
+            this.updateConfigScript(host, server, sport)
         );
     }
 
@@ -140,58 +135,47 @@ public final class Nginx implements LoadBalancer {
      * @param sport Server port to redirect requests to
      * @return Commands for updating hosts configuration.
      */
-    private String updateHostsConfigurationScript(final String host,
-        final String server, final int sport) {
-        return Joiner.on(";").join(
-            String.format("if [ -f %s.hosts.conf ]", host),
-            String.format(
-                "then if [[ $(grep '%s:%d' %s.hosts.conf) != *%s:%d* ]]",
-                server,
-                sport,
-                host,
-                server,
-                sport
+    private String updateConfigScript(final String host, final String server,
+        final int sport) {
+        final ConcurrentHashMap<String, String> values =
+            new ConcurrentHashMap<String, String>();
+        values.put("host", host);
+        values.put("server", server);
+        values.put("sport", Integer.toString(sport));
+        values.put("binary", this.binary);
+        values.put("config", this.config);
+        values.put(
+            "LoadBalancerDir",
+            Manifests.read("Thindeck-LoadBalancer-Directory")
+        );
+        final String template = Joiner.on(';').join(
+            "cd ${LoadBalancerDir}",
+            "if [ -f ${host}.hosts.conf ]",
+            Joiner.on(' ').join(
+                "then if [[ $(grep '${server}:${sport}'",
+                "${host}.hosts.conf) != *${server}:${sport}* ]]"
             ),
-            String.format(
-                "then sed -i.bak -r 's/}/    server %s:%d;\\n}/' %s.hosts.conf",
-                server,
-                sport,
-                host
+            Joiner.on(' ').join(
+                "then perl -i.bak -pe 's/}/    server",
+                "${server}:${sport};\\n}/' ${host}.hosts.conf"
             ),
             "fi",
-            String.format("rm %s.hosts.conf.bak", host),
-            String.format(
-                "else printf %s > %s.hosts.conf",
-                Joiner.on("\\n").join(
-                    String.format("'upstream %s_servers {", host),
-                    String.format("    server %s:%d;", server, sport),
-                    "}'"
-                ),
-                host
+            "rm ${host}.hosts.conf.bak",
+            Joiner.on("\\n").join(
+                "else printf 'upstream ${host}_servers {",
+                "    server ${server}:${sport};",
+                "}' > ${host}.hosts.conf"
             ),
-            this.updateNginxHttpConfigScript(host),
-            "fi"
+            "if ! grep -q '${host}.hosts.conf' ${config}",
+            Joiner.on(' ').join(
+                "then perl -i.bak -pe 's/http \\{/http \\{\\n   ",
+                "include ${host}.hosts.conf;/' ${config}"
+            ),
+            "rm ${config}.bak",
+            "fi",
+            "fi",
+            "pkill -HUP -f ${binary}"
         );
-    }
-
-    /**
-     * Script for updating nginx.conf with host-specific HTTP include files.
-     * @param host The host file to update
-     * @return Script for updating nginx.conf
-     */
-    private String updateNginxHttpConfigScript(final String host) {
-        final String hosts = String.format("%s.hosts.conf", host);
-        return Joiner.on(";").join(
-            String.format(
-                "if ! grep -q '%s' %s", hosts, this.config
-            ),
-            String.format(
-                // @checkstyle LineLength (1 line)
-                "then sed -i.bak -r 's/http \\{/http \\{\\n    include %s;/' %s",
-                hosts, this.config
-            ),
-            String.format("rm %s.bak", this.config),
-            "fi"
-        );
+        return new StrSubstitutor(values).replace(template);
     }
 }

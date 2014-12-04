@@ -44,7 +44,6 @@ import lombok.ToString;
  * @version $Id$
  * @since 0.5
  * @todo #406 Implement command method.
- * @todo #406 Implement scenario method.
  */
 @Immutable
 @ToString
@@ -100,8 +99,13 @@ public final class DyTask implements Task {
         }
     }
 
+    /**
+     * Return the task's scenario.
+     *
+     * @return The scenario.
+     */
     @Override
     public Scenario scenario() {
-        throw new UnsupportedOperationException("#scenario");
+        return new DyScenario();
     }
 }

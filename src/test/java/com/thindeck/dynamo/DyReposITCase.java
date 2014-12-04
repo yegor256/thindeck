@@ -29,86 +29,53 @@
  */
 package com.thindeck.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.dynamo.Attributes;
-import com.jcabi.dynamo.Frame;
-import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
-import com.jcabi.dynamo.Table;
 import com.jcabi.dynamo.mock.H2Data;
 import com.jcabi.dynamo.mock.MkRegion;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
- * Tests for {@link DyRepo}.
+ * Tests for {@link DyRepos}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Carlos Alexandro Becker (caarlos0@gmail.com)
  * @version $Id$
  */
-public final class DyRepoTest {
+public final class DyReposITCase {
+
     /**
-     * DyRepo can create repo with provided name.
+     * DyRepos can retrieve DyRepo.
+     * @throws Exception If something goes wrong.
      */
     @Test
-    public void createsRepoWithName() {
-        final String name = "some name";
-        final Item item = Mockito.mock(Item.class);
-        final AttributeValue value = Mockito.mock(AttributeValue.class);
-        Mockito.when(value.getS()).thenReturn(name);
-        try {
-            Mockito.when(item.get(DyRepo.ATTR_NAME)).thenReturn(value);
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    public void testRetrieveRepo() throws Exception {
+        final String name = "reponame";
         MatcherAssert.assertThat(
-            new DyRepo(item).name(),
+            new DyRepos(this.region(name)).get(name).name(),
             Matchers.equalTo(name)
         );
     }
-    /**
-     * DyRepo can get {@code Tasks}.
-     */
-    @Test
-    public void getTasks() {
-        final Item item = Mockito.mock(Item.class);
-        final Frame frame = Mockito.mock(Frame.class);
-        final Table table = Mockito.mock(Table.class);
-        final Region region = Mockito.mock(Region.class);
-        Mockito.when(item.frame()).thenReturn(frame);
-        Mockito.when(frame.table()).thenReturn(table);
-        Mockito.when(table.region()).thenReturn(region);
-        MatcherAssert.assertThat(
-            new DyRepo(item).tasks(),
-            Matchers.notNullValue()
-        );
-    }
 
     /**
-     * {@link DyRepo#memo}.
-     * @throws IOException transitively
+     * Create region with single DyRepo.
+     * @param name Name of the Repo
+     * @return Created region.
+     * @throws IOException In case of error.
      */
-    @Test
-    public void memo() throws IOException {
+    private Region region(final String name)
+        throws IOException {
         final Region region = new MkRegion(
             new H2Data().with(
-                    DyRepo.TBL,
-                new String[] {DyRepo.ATTR_MEMO},
-                new String[] {DyRepo.ATTR_UPDATED}
+                DyRepo.TBL,
+                new String[] {DyRepo.ATTR_NAME},
+                new String[0]
             )
         );
-        final Table table = region.table(DyRepo.TBL);
-        table.put(
-            new Attributes()
-                .with(DyRepo.ATTR_MEMO, "<memo></memo>")
-                .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
-        );
-        MatcherAssert.assertThat(
-            new DyRepo(table.frame().iterator().next()).memo(),
-            Matchers.instanceOf(DyMemo.class)
-        );
+        region.table(DyRepo.TBL)
+            .put(new Attributes().with(DyRepo.ATTR_NAME, name));
+        return region;
     }
 }

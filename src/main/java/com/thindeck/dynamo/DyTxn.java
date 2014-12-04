@@ -31,69 +31,47 @@ package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Item;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Usage;
-import com.thindeck.api.User;
+import com.thindeck.api.Txn;
 import java.io.IOException;
+import javax.validation.constraints.NotNull;
 
 /**
- * Dynamo implementation of the {@link User}.
+ * Dynamo implementation of the {@link com.thindeck.api.Txn}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Piotr Kotlicki (Piotr.Kotlicki@gmail.com)
  * @version $Id$
- * @todo #374 At the moment, the repos() method returns all Repos associated
- *  with the Dynamo region, and this is definitely incorrect. I think we need to
- *  refactor DyRepos in order to include a user criteria (probably URN) in its
- *  constructor, and have DyUser pass it so that it will only return the
- *  associated criteria. I'm not completely sure about this design, feel free to
- *  implement something else if you think it's wrong. The intuition behind it is
- *  that we should only get the repos associated with the current user.
- * @todo #374 Implement usage method. To do this we need to implement a class
- *  DyUsage that implements the Usage interface. This will obtain the usage
- *  associated to this user from Dynamo DB.
  */
 @Immutable
-public final class DyUser implements User {
+public final class DyTxn implements Txn {
     /**
      * Table name.
      */
-    public static final String TBL = "users";
-
+    public static final String TBL = "txns";
     /**
-     * URN attribute.
+     * Transaction attribute.
      */
-    public static final String ATTR_URN = "urn";
-
+    public static final String ATTR_ID = "id";
     /**
-     * Item.
-     */
-    private final transient Item item;
-
-    /**
-     * Ctor.
+     * Constructor.
      * @param itm Item
      */
-    DyUser(final Item itm) {
-        this.item = itm;
+    public DyTxn(@NotNull final Item itm) {
+        throw new UnsupportedOperationException(itm.toString());
+    }
+
+    // @todo #372 increment should use actions fetched from item.
+    @Override
+    public void increment() throws IOException {
+        throw new UnsupportedOperationException("#increment");
     }
 
     @Override
-    public URN urn() {
-        try {
-            return URN.create(this.item.get(DyUser.ATTR_URN).getS());
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    public void log(final String text) throws IOException {
+        throw new UnsupportedOperationException("#log-text");
     }
 
     @Override
-    public Repos repos() {
-        return new DyRepos(this.item.frame().table().region());
-    }
-
-    @Override
-    public Usage usage() {
-        throw new UnsupportedOperationException();
+    public Iterable<String> log() throws IOException {
+        throw new UnsupportedOperationException("#log");
     }
 }

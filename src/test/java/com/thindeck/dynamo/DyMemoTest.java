@@ -27,12 +27,33 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.thindeck.dynamo;
+
+import com.jcabi.xml.XML;
+import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Dynamo, tests.
+ * Test {@link DyMemo}.
  *
- * @author Paul Polishchuk (ppol@ua.fm)
+ * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
- * @since 0.1
  */
-package dynamo;
+public final class DyMemoTest {
+
+    /**
+     * Test {@link DyMemo#read}.
+     * @throws IOException transitively
+     */
+    @Test
+    public void read() throws IOException {
+        final DyMemo memo = new DyMemo("<memo/>");
+        final XML xml = memo.read();
+        MatcherAssert.assertThat(
+            xml.node().getFirstChild().getLocalName(),
+            Matchers.equalTo("memo")
+        );
+    }
+}

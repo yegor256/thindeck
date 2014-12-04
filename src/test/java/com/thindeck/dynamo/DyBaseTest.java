@@ -34,9 +34,12 @@ import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.mock.H2Data;
 import com.jcabi.dynamo.mock.MkRegion;
 import com.jcabi.urn.URN;
+import com.thindeck.api.Task;
+import com.thindeck.api.mock.MkTask;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -46,17 +49,32 @@ import org.junit.Test;
  * @version $Id$
  */
 public final class DyBaseTest {
-
     /**
      * DyBase can retrieve DyUser.
      * @throws IOException If something goes wrong.
      */
     @Test
     public void retrievesDyUser() throws IOException {
-        final URN urn = URN.create("urn:test:1");
+        final URN urn = URN.create("urn:test:2");
         MatcherAssert.assertThat(
             new DyBase(DyBaseTest.region(urn)).user(urn).urn(),
             Matchers.equalTo(urn)
+        );
+    }
+
+    /**
+     * DyBase can retrieve DyTxn.
+     * @throws IOException If something goes wrong.
+     * @todo #464 Remove the @Ignore this when DyTxn is fully implemented.
+     */
+    @Test
+    @Ignore
+    public void retrievesDyTxn() throws IOException {
+        final URN urn = URN.create("urn:test:1");
+        final Task task = new MkTask();
+        MatcherAssert.assertThat(
+            new DyBase(DyBaseTest.region(urn)).txn(task),
+            Matchers.notNullValue()
         );
     }
 
@@ -73,10 +91,16 @@ public final class DyBaseTest {
                 DyUser.TBL,
                 new String[] {DyUser.ATTR_URN},
                 new String[0]
-            )
+            ).with(
+                    DyTxn.TBL,
+                    new String[] {DyTxn.ATTR_ID},
+                    new String[0]
+                )
         );
         region.table(DyUser.TBL)
             .put(new Attributes().with(DyUser.ATTR_URN, urn));
+        region.table(DyTxn.TBL)
+            .put(new Attributes().with(DyTxn.ATTR_ID, 0));
         return region;
     }
 }

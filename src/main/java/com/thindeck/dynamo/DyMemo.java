@@ -30,70 +30,51 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Usage;
-import com.thindeck.api.User;
+import com.jcabi.xml.StrictXML;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
+import com.thindeck.api.Memo;
 import java.io.IOException;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.xembly.Directive;
 
 /**
- * Dynamo implementation of the {@link User}.
+ * Dynamo implementation of {@code Memo}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
- * @todo #374 At the moment, the repos() method returns all Repos associated
- *  with the Dynamo region, and this is definitely incorrect. I think we need to
- *  refactor DyRepos in order to include a user criteria (probably URN) in its
- *  constructor, and have DyUser pass it so that it will only return the
- *  associated criteria. I'm not completely sure about this design, feel free to
- *  implement something else if you think it's wrong. The intuition behind it is
- *  that we should only get the repos associated with the current user.
- * @todo #374 Implement usage method. To do this we need to implement a class
- *  DyUsage that implements the Usage interface. This will obtain the usage
- *  associated to this user from Dynamo DB.
+ * @todo #405 implement update.
  */
 @Immutable
-public final class DyUser implements User {
-    /**
-     * Table name.
-     */
-    public static final String TBL = "users";
+@ToString
+@EqualsAndHashCode
+public final class DyMemo implements Memo {
 
     /**
-     * URN attribute.
+     * The memo.
      */
-    public static final String ATTR_URN = "urn";
-
+    private final transient String memo;
     /**
-     * Item.
+     * Constructor.
+     * @param xml An XML string
      */
-    private final transient Item item;
-
-    /**
-     * Ctor.
-     * @param itm Item
-     */
-    DyUser(final Item itm) {
-        this.item = itm;
+    public DyMemo(final String xml) {
+        this.memo = xml;
     }
 
     @Override
-    public URN urn() {
-        try {
-            return URN.create(this.item.get(DyUser.ATTR_URN).getS());
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    public XML read() throws IOException {
+        return new StrictXML(
+            Memo.CLEANUP.transform(
+                new XMLDocument(this.memo)
+            ),
+            Memo.SCHEMA
+        );
     }
 
     @Override
-    public Repos repos() {
-        return new DyRepos(this.item.frame().table().region());
-    }
-
-    @Override
-    public Usage usage() {
-        throw new UnsupportedOperationException();
+    public void update(final Iterable<Directive> dirs) throws IOException {
+        throw new UnsupportedOperationException("#update");
     }
 }
