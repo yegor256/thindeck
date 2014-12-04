@@ -29,6 +29,7 @@
  */
 package com.thindeck.dynamo;
 
+import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Item;
 import com.thindeck.api.Txn;
 import java.io.IOException;
@@ -40,6 +41,7 @@ import javax.validation.constraints.NotNull;
  * @author Piotr Kotlicki (Piotr.Kotlicki@gmail.com)
  * @version $Id$
  */
+@Immutable
 public final class DyTxn implements Txn {
     /**
      * Table name.

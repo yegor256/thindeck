@@ -29,76 +29,31 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Tasks;
-import java.io.IOException;
-import javax.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.thindeck.api.mock.MkItem;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Dynamo implementation of {@link Repo}.
+ * Test case for {@link DyTask}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
  */
-@EqualsAndHashCode
-@ToString
-@Immutable
-public final class DyRepo implements Repo {
-    /**
-     * Table name.
-     */
-    public static final String TBL = "repos";
+public final class DyTaskTest {
 
     /**
-     * URN attribute.
+     * DyTask returns a {@link com.thindeck.api.Scenario}.
+     * @throws Exception In case of error.
      */
-    public static final String ATTR_NAME = "name";
-
-    /**
-     * When updated.
-     */
-    public static final String ATTR_UPDATED = "updated";
-
-    /**
-     * Memo.
-     */
-    public static final String ATTR_MEMO = "memo";
-
-    /**
-     * Item.
-     */
-    private final transient Item item;
-
-    /**
-     * Ctor.
-     * @param itm Item
-     */
-    public DyRepo(@NotNull final Item itm) {
-        this.item = itm;
+    @Test
+    public void scenarioIsNotNull() throws Exception {
+        MatcherAssert.assertThat(
+            new DyTask(
+                new MkItem()
+            ).scenario(),
+            Matchers.notNullValue()
+        );
     }
 
-    @Override
-    public String name() {
-        try {
-            return this.item.get(DyRepo.ATTR_NAME).getS();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-
-    @Override
-    @NotNull
-    public Tasks tasks() {
-        return new DyTasks(this.item.frame().table().region(), this);
-    }
-
-    @Override
-    public Memo memo() throws IOException {
-        return new DyMemo(this.item.get(ATTR_MEMO).getS());
-    }
 }

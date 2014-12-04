@@ -29,76 +29,24 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Tasks;
-import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import com.thindeck.api.Scenario;
+import com.thindeck.api.Step;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Dynamo implementation of {@link Repo}.
+ * Scenario stub.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
+ * @todo #420 Implement steps method - example in OnDeploy. Task command will determine steps.
  */
-@EqualsAndHashCode
 @ToString
-@Immutable
-public final class DyRepo implements Repo {
-    /**
-     * Table name.
-     */
-    public static final String TBL = "repos";
-
-    /**
-     * URN attribute.
-     */
-    public static final String ATTR_NAME = "name";
-
-    /**
-     * When updated.
-     */
-    public static final String ATTR_UPDATED = "updated";
-
-    /**
-     * Memo.
-     */
-    public static final String ATTR_MEMO = "memo";
-
-    /**
-     * Item.
-     */
-    private final transient Item item;
-
-    /**
-     * Ctor.
-     * @param itm Item
-     */
-    public DyRepo(@NotNull final Item itm) {
-        this.item = itm;
-    }
+@EqualsAndHashCode
+public final class DyScenario implements Scenario {
 
     @Override
-    public String name() {
-        try {
-            return this.item.get(DyRepo.ATTR_NAME).getS();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-
-    @Override
-    @NotNull
-    public Tasks tasks() {
-        return new DyTasks(this.item.frame().table().region(), this);
-    }
-
-    @Override
-    public Memo memo() throws IOException {
-        return new DyMemo(this.item.get(ATTR_MEMO).getS());
+    public Iterable<Step> steps() {
+        throw new UnsupportedOperationException("#steps");
     }
 }

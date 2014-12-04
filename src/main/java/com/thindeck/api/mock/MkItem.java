@@ -27,78 +27,75 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.dynamo;
+package com.thindeck.api.mock;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.Frame;
 import com.jcabi.dynamo.Item;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Tasks;
 import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Dynamo implementation of {@link Repo}.
+ * Mock of {@link Item}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
  */
-@EqualsAndHashCode
-@ToString
 @Immutable
-public final class DyRepo implements Repo {
-    /**
-     * Table name.
-     */
-    public static final String TBL = "repos";
+@ToString
+@EqualsAndHashCode
+public final class MkItem implements Item {
 
     /**
-     * URN attribute.
+     * Task number.
      */
-    public static final String ATTR_NAME = "name";
+    @SuppressWarnings({ "unused", "PMD.SingularField" })
+    private final transient long numb;
 
     /**
-     * When updated.
+     * Default constructor.
      */
-    public static final String ATTR_UPDATED = "updated";
+    public MkItem() {
+        this(0L);
+    }
 
     /**
-     * Memo.
+     * Constructor.
+     *
+     * @param num Task number
      */
-    public static final String ATTR_MEMO = "memo";
-
-    /**
-     * Item.
-     */
-    private final transient Item item;
-
-    /**
-     * Ctor.
-     * @param itm Item
-     */
-    public DyRepo(@NotNull final Item itm) {
-        this.item = itm;
+    public MkItem(final long num) {
+        this.numb = num;
     }
 
     @Override
-    public String name() {
-        try {
-            return this.item.get(DyRepo.ATTR_NAME).getS();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    public AttributeValue get(final String str) throws IOException {
+        throw new UnsupportedOperationException("#get");
     }
 
     @Override
-    @NotNull
-    public Tasks tasks() {
-        return new DyTasks(this.item.frame().table().region(), this);
+    public boolean has(final String str) throws IOException {
+        throw new UnsupportedOperationException("#has");
     }
 
     @Override
-    public Memo memo() throws IOException {
-        return new DyMemo(this.item.get(ATTR_MEMO).getS());
+    public Map<String, AttributeValue> put(final String str,
+            final AttributeValueUpdate value) throws IOException {
+        throw new UnsupportedOperationException("#put");
+    }
+
+    @Override
+    public Map<String, AttributeValue> put(
+            final Map<String, AttributeValueUpdate> map) throws IOException {
+        throw new UnsupportedOperationException("#put(map)");
+    }
+
+    @Override
+    public Frame frame() {
+        throw new UnsupportedOperationException("#frame");
     }
 }

@@ -29,6 +29,7 @@
  */
 package com.thindeck.dynamo;
 
+import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Item;
 import com.jcabi.urn.URN;
 import com.thindeck.api.Repos;
@@ -56,6 +57,7 @@ import lombok.ToString;
  */
 @EqualsAndHashCode
 @ToString
+@Immutable
 public final class DyUser implements User {
     /**
      * Table name.
