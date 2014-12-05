@@ -39,7 +39,7 @@ merge:
     mvn clean install -Ptomcat-test -Pqulice --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
     mvn clean
-    pdd --source=$(pwd) --verbose --file=/dev/null
+    pdd --source=$(pwd) --verbose --file=/dev/null --rule min-words:2 --rule min-estimate:15
 
 release:
   script: |

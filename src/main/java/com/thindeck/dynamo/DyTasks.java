@@ -49,8 +49,8 @@ import lombok.ToString;
  * @author Paul Polishchuk (ppol@yua.fm)
  * @version $Id$
  * @since 0.5
- * @todo #373 Implement all and add methods.
- * @todo #406 Implement open method.
+ * @todo #373:30min Implement all and add methods.
+ * @todo #406:30min Implement open method.
  */
 @Immutable
 @ToString

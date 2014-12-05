@@ -56,7 +56,7 @@ public final class ReadConfigTest {
     /**
      * Fetch repo configuration and update memo accordingly.
      * @throws Exception If something goes wrong
-     * @todo #369 This unit test additionally checks if step called on the
+     * @todo #369:30min This unit test additionally checks if step called on the
      *  same context does not duplicate domains and ports. It should be put
      *  into another unit test, instead.
      */

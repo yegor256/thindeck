@@ -65,7 +65,7 @@ public final class DyBaseTest {
     /**
      * DyBase can retrieve DyTxn.
      * @throws IOException If something goes wrong.
-     * @todo #464 Remove the @Ignore this when DyTxn is fully implemented.
+     * @todo #464:30min Remove the @Ignore this when DyTxn is fully implemented.
      */
     @Test
     @Ignore
