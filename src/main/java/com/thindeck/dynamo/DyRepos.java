@@ -41,12 +41,16 @@ import com.jcabi.dynamo.Region;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Repos;
 import java.io.IOException;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * Dynamo implementation of {@link Repos}.
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  */
+@EqualsAndHashCode(of = "region")
+@ToString
 @Immutable
 public final class DyRepos implements Repos {
     /**

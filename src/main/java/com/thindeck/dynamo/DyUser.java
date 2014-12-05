@@ -36,6 +36,8 @@ import com.thindeck.api.Repos;
 import com.thindeck.api.Usage;
 import com.thindeck.api.User;
 import java.io.IOException;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * Dynamo implementation of the {@link User}.
@@ -53,6 +55,8 @@ import java.io.IOException;
  *  DyUsage that implements the Usage interface. This will obtain the usage
  *  associated to this user from Dynamo DB.
  */
+@EqualsAndHashCode
+@ToString
 @Immutable
 public final class DyUser implements User {
     /**

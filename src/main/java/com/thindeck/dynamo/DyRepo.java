@@ -36,6 +36,8 @@ import com.thindeck.api.Repo;
 import com.thindeck.api.Tasks;
 import java.io.IOException;
 import javax.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * Dynamo implementation of {@link Repo}.
@@ -43,6 +45,8 @@ import javax.validation.constraints.NotNull;
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  */
+@EqualsAndHashCode
+@ToString
 @Immutable
 public final class DyRepo implements Repo {
     /**
