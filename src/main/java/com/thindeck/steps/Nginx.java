@@ -67,7 +67,7 @@ import org.apache.commons.lang3.text.StrSubstitutor;
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #345 Let's handle the file *main.conf, which should contain the server
+ * @todo #345:30min Let's handle the file *main.conf, which should contain the server
  *  configuration for a given host. The file name is prefixed by the host name,
  *  e.g. the host "www.example.com" will have the file name
  *  "www.example.com.hosts.conf". If the file doesn't exist yet, we should

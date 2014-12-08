@@ -43,7 +43,7 @@ import lombok.ToString;
  * @author Paul Polishchuk (ppol@yua.fm)
  * @version $Id$
  * @since 0.5
- * @todo #406 Implement command method.
+ * @todo #406:30min Implement command method.
  */
 @Immutable
 @ToString
