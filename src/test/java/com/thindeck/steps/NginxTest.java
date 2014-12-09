@@ -74,21 +74,17 @@ public final class NginxTest {
     @Ignore
     public void createsHostsConfiguration() throws IOException {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-        final File dir = this.temp.newFolder();
-        final SSHD sshd = new SSHD(dir);
-        sshd.start();
-        final File key = new File(dir, "ssh-1.key");
-        FileUtils.write(key, sshd.key());
-        this.manifest(dir, sshd.login(), sshd.port(), key);
         final String host = "host";
         final int sport = 567;
         final String server = "server";
+        final File dir = this.temp.newFolder();
         final File fhosts = this.hosts(dir, host);
-        try {
+        try (final SSHD sshd = new SSHD(dir)) {
+            final File key = new File(dir, "ssh-1.key");
+            FileUtils.write(key, sshd.key());
+            this.manifest(dir, sshd.login(), sshd.port(), key);
             // @checkstyle MagicNumber (1 line)
             new Nginx().update(host, 1234, server, sport);
-        } finally {
-            sshd.stop();
         }
         MatcherAssert.assertThat(
             FileUtils.readFileToString(fhosts),
@@ -112,19 +108,15 @@ public final class NginxTest {
     @Ignore
     public void createsHostSpecificConfigurationFile() throws IOException {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-        final File dir = this.temp.newFolder();
-        final SSHD sshd = new SSHD(dir);
-        final File key = new File(dir, "ssh-2.key");
-        FileUtils.write(key, sshd.key());
-        this.manifest(dir, sshd.login(), sshd.port(), key);
-        sshd.start();
         final String host = "host2";
         final int sport = 456;
         final String server = "server2";
-        try {
+        final File dir = this.temp.newFolder();
+        try (final SSHD sshd = new SSHD(dir)) {
+            final File key = new File(dir, "ssh-2.key");
+            FileUtils.write(key, sshd.key());
+            this.manifest(dir, sshd.login(), sshd.port(), key);
             new Nginx().update(host, Tv.THOUSAND, server, sport);
-        } finally {
-            sshd.stop();
         }
         MatcherAssert.assertThat(
             FileUtils.readFileToString(new File(dir, this.hostsConfig(host))),
@@ -148,38 +140,34 @@ public final class NginxTest {
     public void reloadsConfiguration() throws Exception {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final File dir = this.temp.newFolder();
-        final SSHD sshd = new SSHD(dir);
-        sshd.start();
-        final File key = new File(dir, "ssh-3.key");
-        FileUtils.write(key, sshd.key());
-        this.manifest(dir, sshd.login(), sshd.port(), key);
         final String bin = String.format(
             "%s.sh", RandomStringUtils.randomAlphanumeric(128)
         );
         final File script = File.createTempFile("script", bin, dir);
         final File marker = File.createTempFile("marker", "temp", dir);
-        FileUtils.writeStringToFile(
-            script,
-            Joiner.on("\n").join(
-                "#!/bin/bash",
-                "function sighup(){",
-                String.format("    echo restarted > %s", marker.toString()),
-                "    exit 0",
-                "}",
-                String.format("    echo running > %s", marker.toString()),
-                "trap 'sighup' HUP",
-                "sleep 30",
-                String.format("    echo stopped > %s", marker.toString())
-            )
-        );
-        final VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder("/bin/bash", script.toString())
-        );
-        try {
+        try (final SSHD sshd = new SSHD(dir)) {
+            final File key = new File(dir, "ssh-3.key");
+            FileUtils.write(key, sshd.key());
+            this.manifest(dir, sshd.login(), sshd.port(), key);
+            FileUtils.writeStringToFile(
+                script,
+                Joiner.on("\n").join(
+                    "#!/bin/bash",
+                    "function sighup(){",
+                    String.format("    echo restarted > %s", marker.toString()),
+                    "    exit 0",
+                    "}",
+                    String.format("    echo running > %s", marker.toString()),
+                    "trap 'sighup' HUP",
+                    "sleep 30",
+                    String.format("    echo stopped > %s", marker.toString())
+                )
+            );
+            final VerboseProcess process = new VerboseProcess(
+                new ProcessBuilder("/bin/bash", script.toString())
+            );
             new Nginx(bin, "nginx.conf").update("", 1, "", 2);
             process.stdout();
-        } finally {
-            sshd.stop();
         }
         MatcherAssert.assertThat(
             FileUtils.readFileToString(marker),
@@ -196,19 +184,15 @@ public final class NginxTest {
     @SuppressWarnings("PMD.AvoidUsingHardCodedIP")
     public void retainsExistingHostsConfiguration() throws IOException {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-        final File dir = this.temp.newFolder();
-        final SSHD sshd = new SSHD(dir);
-        final File key = new File(dir, "ssh.key");
-        FileUtils.write(key, sshd.key());
-        this.manifest(dir, sshd.login(), sshd.port(), key);
         final String host = "existing-host";
+        final File dir = this.temp.newFolder();
         final File fhosts = this.hosts(dir, host);
-        sshd.start();
-        try {
+        try (final SSHD sshd = new SSHD(dir)) {
+            final File key = new File(dir, "ssh.key");
+            FileUtils.write(key, sshd.key());
+            this.manifest(dir, sshd.login(), sshd.port(), key);
             // @checkstyle MagicNumber (1 line)
             new Nginx().update(host, 1234, "10.0.0.2", 80);
-        } finally {
-            sshd.stop();
         }
         MatcherAssert.assertThat(
             FileUtils.readFileToString(fhosts),
@@ -231,22 +215,19 @@ public final class NginxTest {
     @Ignore
     public void canUpdateNginxHttpConfig() throws IOException {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-        final File dir = this.temp.newFolder();
-        final SSHD sshd = new SSHD(dir);
-        final File key = new File(dir, "ssh.key");
-        FileUtils.write(key, sshd.key());
-        this.manifest(dir, sshd.login(), sshd.port(), key);
-        final File conf = new File(dir, "nginx.conf");
-        FileUtils.writeStringToFile(conf, "http {\n}");
-        sshd.start();
         final String host = "host3";
-        try {
-            final int sport = 456;
-            final String server = "server3";
-            new Nginx("nginx", conf.getName())
-                .update(host, Tv.THOUSAND, server, sport);
-        } finally {
-            sshd.stop();
+        final int sport = 456;
+        final String server = "server3";
+        final File dir = this.temp.newFolder();
+        final File conf = new File(dir, "nginx.conf");
+        try (final SSHD sshd = new SSHD(dir)) {
+            final File key = new File(dir, "ssh.key");
+            FileUtils.write(key, sshd.key());
+            this.manifest(dir, sshd.login(), sshd.port(), key);
+            FileUtils.writeStringToFile(conf, "http {\n}");
+            new Nginx("nginx", conf.getName()).update(
+                host, Tv.THOUSAND, server, sport
+            );
         }
         MatcherAssert.assertThat(
             FileUtils.readFileToString(conf),
