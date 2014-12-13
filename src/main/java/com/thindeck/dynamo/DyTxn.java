@@ -76,7 +76,9 @@ public final class DyTxn implements Txn {
 
     @Override
     public void increment() throws IOException {
-        this.actions.next();
+        if (this.actions.hasNext()) {
+            this.actions.next();
+        }
     }
 
     @Override
