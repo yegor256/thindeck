@@ -34,10 +34,24 @@ Our unique advantages are:
  1. We fully automate blue/green deployments, pulling your sources
  2. We charge per second of CPU load, not per calendar hour
 
-Known issues:
+## How to contribute
 
- 1. Because of maven issue (http://jira.codehaus.org/browse/MNG-5478)
-    command "mvn clean install -Pqulice -Psite site" is not working properly.
-    Please, use these two commands instead:
-    - "mvn clean install -Pqulice"
-    - "mvn clean site -Psite"
+Fork repository, make changes, send us a pull request. We will review
+your changes and apply them to the `master` branch shortly, provided
+they don't violate our quality standards. To avoid frustration, before
+sending us your pull request please run full Maven build:
+
+```
+$ mvn clean install -Pqulice
+```
+
+To avoid build errors use Maven 3.2+ and Java 7.
+
+Because of Maven issue (http://jira.codehaus.org/browse/MNG-5478)
+command `mvn clean install -Pqulice -Psite site` is not working properly.
+Please, use these two commands instead: `mvn clean install -Pqulice && mvn clean site -Psite`
+
+## Got questions?
+
+If you have questions or general suggestions, don't hesitate to submit
+a new [Github issue](https://github.com/yegor256/thindeck/issues/new).
