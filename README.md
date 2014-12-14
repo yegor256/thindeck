@@ -47,7 +47,7 @@ $ mvn clean install -Pqulice
 
 To avoid build errors use Maven 3.2+ and Java 7.
 
-Because of Maven issue (http://jira.codehaus.org/browse/MNG-5478)
+Because of [MNG-5478](http://jira.codehaus.org/browse/MNG-5478)
 command `mvn clean install -Pqulice -Psite site` is not working properly.
 Please, use these two commands instead: `mvn clean install -Pqulice && mvn clean site -Psite`
 
