@@ -69,15 +69,12 @@ public final class UpdateLB implements Step {
         final XML memo = ctx.memo().read();
         final List<String> domains = memo.xpath("/memo/domains/domain/text()");
         final List<String> ports = memo.xpath("/memo/ports/port/text()");
-        final List<XML> containers = memo.nodes("/memo/containers/container");
-        for (final XML container : containers) {
-            final String tank = container
-                .xpath("/container/tank/text()").get(0);
+        for (final XML container : memo.nodes("/memo/containers/container")) {
+            final String tank = container.xpath("tank/text()").get(0);
             for (final String port : ports) {
                 final List<String> outports = container.xpath(
                     String.format(
-                        "/container/ports/port[in/text()='%s']/out/text()",
-                        port
+                        "ports/port[in/text()='%s']/out/text()", port
                     )
                 );
                 this.updates(domains, tank, port, outports);
@@ -100,17 +97,17 @@ public final class UpdateLB implements Step {
      * @param domains Domains to balance.
      * @param tank Container to use.
      * @param port Input port.
-     * @param outports Output ports.
+     * @param outs Output ports.
      * @throws IOException If fails
      * @checkstyle ParameterNumber (3 lines)
      */
-    private void updates(final List<String> domains, final String tank,
-        final String port, final List<String> outports) throws IOException {
+    private void updates(final Iterable<String> domains, final String tank,
+        final String port, final Iterable<String> outs) throws IOException {
         for (final String domain : domains) {
-            for (final String outport : outports) {
+            for (final String out : outs) {
                 this.balancer.update(
                     domain, Integer.parseInt(port),
-                    tank, Integer.parseInt(outport)
+                    tank, Integer.parseInt(out)
                 );
             }
         }

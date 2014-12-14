@@ -50,8 +50,8 @@ public final class UpdateLBTest {
      * FindTanks can update load balancer configuration from memo.
      * @throws IOException If fails
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void updatesLoadBalancerConfig() throws IOException {
         final LoadBalancer balancer = Mockito.mock(LoadBalancer.class);
         final Step step = new UpdateLB(balancer);
