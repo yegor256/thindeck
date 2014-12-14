@@ -1,4 +1,4 @@
-<img src="http://www.thindeck.com/logo-512x512.png" width="128px" height="128px" />
+<img src="http://www.thindeck.com/logo-512x512.png" width="100px" height="100px" />
 
 [![Made By Teamed.io](http://img.teamed.io/btn.svg)](http://www.teamed.io)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/thindeck)](http://www.rultor.com/p/yegor256/thindeck)
