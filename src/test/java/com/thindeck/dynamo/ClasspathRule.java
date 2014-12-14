@@ -106,7 +106,7 @@ public final class ClasspathRule implements TestRule {
 
     @Override
     public Statement apply(final Statement statement,
-                           final Description description) {
+        final Description description) {
         return new Statement() {
             @Override
             // @checkstyle IllegalThrowsCheck (1 line)
