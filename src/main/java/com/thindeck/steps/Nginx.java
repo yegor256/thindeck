@@ -30,14 +30,10 @@
 package com.thindeck.steps;
 
 import com.google.common.base.Joiner;
-import com.jcabi.manifests.Manifests;
-import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.validation.constraints.NotNull;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.text.StrSubstitutor;
 
 /**
@@ -89,20 +85,38 @@ public final class Nginx implements LoadBalancer {
     private final transient String config;
 
     /**
+     * Nginx directory.
+     */
+    private final transient String directory;
+
+    /**
+     * Shell.
+     */
+    private final transient Shell shell;
+
+    /**
      * Constructor.
      * @param bin Nginx binary name.
      * @param conf Config file name.
+     * @param dir Nginx directory.
+     * @param shl Shell.
+     * @checkstyle ParameterNumber (3 lines)
      */
-    public Nginx(final String bin, final String conf) {
+    public Nginx(final String bin, final String conf, final String dir,
+        final Shell shl) {
         this.binary = bin;
         this.config = conf;
+        this.directory = dir;
+        this.shell = shl;
     }
 
     /**
      * Default constructor.
+     * @param dir Nginx directory.
+     * @param shl Shell.
      */
-    public Nginx() {
-        this("nginx", "nginx.conf");
+    public Nginx(final String dir, final Shell shl) {
+        this("nginx", "nginx.conf", dir, shl);
     }
 
     // @checkstyle ParameterNumberCheck (5 lines)
@@ -110,20 +124,7 @@ public final class Nginx implements LoadBalancer {
     public void update(@NotNull final String host, @NotNull final int hport,
         @NotNull final String server, @NotNull final int sport)
         throws IOException {
-        new Shell.Plain(
-            new SSH(
-                Manifests.read("Thindeck-LoadBalancer-Host"),
-                Integer.parseInt(
-                    Manifests.read("Thindeck-LoadBalancer-Port")
-                ),
-                Manifests.read("Thindeck-LoadBalancer-User"),
-                FileUtils.readFileToString(
-                    new File(
-                        Manifests.read("Thindeck-LoadBalancer-Key-File")
-                    )
-                )
-            )
-        ).exec(
+        new Shell.Plain(this.shell).exec(
             this.updateConfigScript(host, server, sport)
         );
     }
@@ -144,10 +145,7 @@ public final class Nginx implements LoadBalancer {
         values.put("sport", Integer.toString(sport));
         values.put("binary", this.binary);
         values.put("config", this.config);
-        values.put(
-            "LoadBalancerDir",
-            Manifests.read("Thindeck-LoadBalancer-Directory")
-        );
+        values.put("LoadBalancerDir", this.directory);
         final String template = Joiner.on(';').join(
             "cd ${LoadBalancerDir}",
             "if [ -f ${host}.hosts.conf ]",

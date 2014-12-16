@@ -32,14 +32,11 @@ package com.thindeck.steps;
 import com.google.common.base.Joiner;
 import com.jcabi.aspects.Tv;
 import com.jcabi.log.VerboseProcess;
-import com.jcabi.manifests.Manifests;
 import com.jcabi.ssh.SSHD;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -80,11 +77,9 @@ public final class NginxTest {
         final File dir = this.temp.newFolder();
         final File fhosts = this.hosts(dir, host);
         try (final SSHD sshd = new SSHD(dir)) {
-            final File key = new File(dir, "ssh-1.key");
-            FileUtils.write(key, sshd.key());
-            this.manifest(dir, sshd.login(), sshd.port(), key);
-            // @checkstyle MagicNumber (1 line)
-            new Nginx().update(host, 1234, server, sport);
+            // @checkstyle MagicNumber (2 line)
+            new Nginx(dir.toString(), sshd.connect())
+                .update(host, 1234, server, sport);
         }
         MatcherAssert.assertThat(
             FileUtils.readFileToString(fhosts),
@@ -113,10 +108,8 @@ public final class NginxTest {
         final String server = "server2";
         final File dir = this.temp.newFolder();
         try (final SSHD sshd = new SSHD(dir)) {
-            final File key = new File(dir, "ssh-2.key");
-            FileUtils.write(key, sshd.key());
-            this.manifest(dir, sshd.login(), sshd.port(), key);
-            new Nginx().update(host, Tv.THOUSAND, server, sport);
+            new Nginx(dir.toString(), sshd.connect())
+                .update(host, Tv.THOUSAND, server, sport);
         }
         MatcherAssert.assertThat(
             FileUtils.readFileToString(new File(dir, this.hostsConfig(host))),
@@ -146,9 +139,6 @@ public final class NginxTest {
         final File script = File.createTempFile("script", bin, dir);
         final File marker = File.createTempFile("marker", "temp", dir);
         try (final SSHD sshd = new SSHD(dir)) {
-            final File key = new File(dir, "ssh-3.key");
-            FileUtils.write(key, sshd.key());
-            this.manifest(dir, sshd.login(), sshd.port(), key);
             FileUtils.writeStringToFile(
                 script,
                 Joiner.on("\n").join(
@@ -166,7 +156,8 @@ public final class NginxTest {
             final VerboseProcess process = new VerboseProcess(
                 new ProcessBuilder("/bin/bash", script.toString())
             );
-            new Nginx(bin, "nginx.conf").update("", 1, "", 2);
+            new Nginx(bin, "nginx.conf", dir.toString(), sshd.connect())
+                .update("", 1, "", 2);
             process.stdout();
         }
         MatcherAssert.assertThat(
@@ -188,11 +179,9 @@ public final class NginxTest {
         final File dir = this.temp.newFolder();
         final File fhosts = this.hosts(dir, host);
         try (final SSHD sshd = new SSHD(dir)) {
-            final File key = new File(dir, "ssh.key");
-            FileUtils.write(key, sshd.key());
-            this.manifest(dir, sshd.login(), sshd.port(), key);
-            // @checkstyle MagicNumber (1 line)
-            new Nginx().update(host, 1234, "10.0.0.2", 80);
+            // @checkstyle MagicNumber (2 lines)
+            new Nginx(dir.toString(), sshd.connect())
+                .update(host, 1234, "10.0.0.2", 80);
         }
         MatcherAssert.assertThat(
             FileUtils.readFileToString(fhosts),
@@ -221,13 +210,9 @@ public final class NginxTest {
         final File dir = this.temp.newFolder();
         final File conf = new File(dir, "nginx.conf");
         try (final SSHD sshd = new SSHD(dir)) {
-            final File key = new File(dir, "ssh.key");
-            FileUtils.write(key, sshd.key());
-            this.manifest(dir, sshd.login(), sshd.port(), key);
             FileUtils.writeStringToFile(conf, "http {\n}");
-            new Nginx("nginx", conf.getName()).update(
-                host, Tv.THOUSAND, server, sport
-            );
+            new Nginx("nginx", conf.getName(), dir.toString(), sshd.connect())
+                .update(host, Tv.THOUSAND, server, sport);
         }
         MatcherAssert.assertThat(
             FileUtils.readFileToString(conf),
@@ -262,32 +247,6 @@ public final class NginxTest {
             )
         );
         return fhosts;
-    }
-
-    /**
-     * Create mock manifest.
-     * @param path Nginx directory.
-     * @param login User performing update.
-     * @param port SSH port to use.
-     * @param key User private key file.
-     * @throws IOException In case of error.
-     * @checkstyle ParameterNumber (3 lines)
-     */
-    private void manifest(final File path, final String login, final int port,
-        final File key) throws IOException {
-        final String file = Joiner.on('\n').join(
-            "Thindeck-LoadBalancer-Host: localhost",
-            String.format("Thindeck-LoadBalancer-Port: %d", port),
-            String.format("Thindeck-LoadBalancer-User: %s", login),
-            String.format(
-                "Thindeck-LoadBalancer-Key-File: %s", key.toString()
-            ),
-            String.format(
-                "Thindeck-LoadBalancer-Directory: %s", path.toString()
-            ),
-            StringUtils.EMPTY
-        );
-        Manifests.append(new ByteArrayInputStream(file.getBytes()));
     }
 
     /**
