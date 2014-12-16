@@ -7,6 +7,9 @@ assets:
 env:
   MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
 
+architect:
+  - yegor256
+
 install: |
   sudo apt-get update
   sudo apt-get install -y openjdk-6-jre
