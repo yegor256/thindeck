@@ -48,7 +48,7 @@ import org.junit.Test;
 public final class DyRepoTest {
     /**
      * DyRepo can create repo with provided name.
-     * @throws IOException transitively
+     * @throws IOException In case of error.
      */
     @Test
     public void createsRepoWithName() throws IOException {
@@ -74,7 +74,7 @@ public final class DyRepoTest {
 
     /**
      * DyRepo can get {@code Tasks}.
-     * @throws IOException transitively
+     * @throws IOException In case of error.
      */
     @Test
     public void getTasks() throws IOException {
@@ -99,7 +99,7 @@ public final class DyRepoTest {
 
     /**
      * {@link DyRepo#memo}.
-     * @throws IOException transitively
+     * @throws IOException In case of error.
      */
     @Test
     public void memo() throws IOException {
