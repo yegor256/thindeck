@@ -9,6 +9,7 @@ env:
 
 architect:
   - yegor256
+  - davvd
 
 install: |
   sudo apt-get update
