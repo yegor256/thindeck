@@ -29,10 +29,7 @@
  */
 package com.thindeck.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.dynamo.Attributes;
-import com.jcabi.dynamo.Frame;
-import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
 import com.jcabi.dynamo.mock.H2Data;
@@ -41,7 +38,6 @@ import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
  * Tests for {@link DyRepo}.
@@ -52,44 +48,58 @@ import org.mockito.Mockito;
 public final class DyRepoTest {
     /**
      * DyRepo can create repo with provided name.
+     * @throws IOException In case of error.
      */
     @Test
-    public void createsRepoWithName() {
+    public void createsRepoWithName() throws IOException {
         final String name = "some name";
-        final Item item = Mockito.mock(Item.class);
-        final AttributeValue value = Mockito.mock(AttributeValue.class);
-        Mockito.when(value.getS()).thenReturn(name);
-        try {
-            Mockito.when(item.get(DyRepo.ATTR_NAME)).thenReturn(value);
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+        final Region region = new MkRegion(
+            new H2Data().with(
+                DyRepo.TBL,
+                new String[] {DyRepo.ATTR_NAME},
+                new String[] {DyRepo.ATTR_UPDATED}
+            )
+        );
+        region.table(DyRepo.TBL).put(
+            new Attributes()
+                .with(DyRepo.ATTR_NAME, name)
+                .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
+        );
         MatcherAssert.assertThat(
-            new DyRepo(item).name(),
+            new DyRepo(region.table(DyRepo.TBL).frame().iterator().next())
+                .name(),
             Matchers.equalTo(name)
         );
     }
+
     /**
      * DyRepo can get {@code Tasks}.
+     * @throws IOException In case of error.
      */
     @Test
-    public void getTasks() {
-        final Item item = Mockito.mock(Item.class);
-        final Frame frame = Mockito.mock(Frame.class);
-        final Table table = Mockito.mock(Table.class);
-        final Region region = Mockito.mock(Region.class);
-        Mockito.when(item.frame()).thenReturn(frame);
-        Mockito.when(frame.table()).thenReturn(table);
-        Mockito.when(table.region()).thenReturn(region);
+    public void getTasks() throws IOException {
+        final Region region = new MkRegion(
+            new H2Data().with(
+                DyRepo.TBL,
+                new String[] {DyRepo.ATTR_NAME},
+                new String[] {DyRepo.ATTR_UPDATED}
+            )
+        );
+        region.table(DyRepo.TBL).put(
+            new Attributes()
+                .with(DyRepo.ATTR_NAME, "name")
+                .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
+        );
         MatcherAssert.assertThat(
-            new DyRepo(item).tasks(),
+            new DyRepo(region.table(DyRepo.TBL).frame().iterator().next())
+                .tasks(),
             Matchers.notNullValue()
         );
     }
 
     /**
      * {@link DyRepo#memo}.
-     * @throws IOException transitively
+     * @throws IOException In case of error.
      */
     @Test
     public void memo() throws IOException {
