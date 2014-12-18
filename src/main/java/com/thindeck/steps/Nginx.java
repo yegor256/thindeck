@@ -150,8 +150,8 @@ public final class Nginx implements LoadBalancer {
             "cd ${LoadBalancerDir}",
             "if [ -f ${host}.hosts.conf ]",
             Joiner.on(' ').join(
-                "then if [[ $(grep '${server}:${sport}'",
-                "${host}.hosts.conf) != *${server}:${sport}* ]]"
+                "then if ! ( grep -q '${server}:${sport}'",
+                "${host}.hosts.conf )"
             ),
             Joiner.on(' ').join(
                 "then perl -i.bak -pe 's/}/    server",
