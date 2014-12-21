@@ -30,9 +30,12 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
+import com.thindeck.api.Context;
+import com.thindeck.api.Scenario;
+import com.thindeck.api.Step;
 import com.thindeck.api.Txn;
 import java.io.IOException;
+import java.util.Iterator;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -52,17 +55,28 @@ public final class DyTxn implements Txn {
      */
     public static final String ATTR_ID = "id";
     /**
-     * Constructor.
-     * @param itm Item
+     * Steps taken from scenario.
      */
-    public DyTxn(@NotNull final Item itm) {
-        throw new UnsupportedOperationException(itm.toString());
+    private final transient Iterator<Step> steps;
+    /**
+     * Transaction context. Should be created.
+     */
+    private transient Context context;
+
+    /**
+     * Constructor.
+     * @todo #462:30min DyContext should be created with DyTxn.
+     * @param scn Scenario
+     */
+    public DyTxn(@NotNull final Scenario scn) {
+        this.steps = scn.steps().iterator();
     }
 
-    // @todo #372:30min increment should use actions fetched from item.
     @Override
     public void increment() throws IOException {
-        throw new UnsupportedOperationException("#increment");
+        if (this.steps.hasNext()) {
+            this.steps.next().exec(this.context);
+        }
     }
 
     @Override
