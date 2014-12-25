@@ -59,7 +59,7 @@ public final class DyTxn implements Txn {
      */
     private final transient Iterator<Step> steps;
     /**
-     * Transaction context. Should be created.
+     * Transaction context.
      */
     private final transient Context context;
 
