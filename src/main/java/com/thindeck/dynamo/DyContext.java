@@ -29,62 +29,35 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
 import com.thindeck.api.Context;
-import com.thindeck.api.Step;
-import com.thindeck.api.Txn;
+import com.thindeck.api.Memo;
+
 import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import java.util.logging.Level;
 
 /**
- * Dynamo implementation of the {@link com.thindeck.api.Txn}.
+ * Dynamo implementation of {@code Context}.
  *
- * @author Piotr Kotlicki (Piotr.Kotlicki@gmail.com)
+ * @author Petar Andreev (petarandreev@gmail.com)
  * @version $Id$
  */
-@Immutable
-public final class DyTxn implements Txn {
-    /**
-     * Item.
-     */
-    private final transient Item item;
-    /**
-     * Table name.
-     */
-    public static final String TBL = "txns";
-    /**
-     * Transaction attribute.
-     */
-    public static final String ATTR_ID = "id";
+public class DyContext implements Context{
 
     /**
-     * Constructor.
-     *
-     * @param itm Item
+     * Ctor.
+     * @param memo Memo to encapsulate
      */
-    public DyTxn(@NotNull final Item itm) {
-        this.item = itm;
-    }
-
-    // @todo #372:30min increment should use actions fetched from item.
-    @Override
-    public void increment() throws IOException {
-        final String action = this.item.get(ATTR_ID).getS();
-        final Context ctx = new DyContext(new DyMemo(action));
-        final DyTask task = new DyTask(item);
-        for (final Step step : task.scenario().steps()) {
-            step.exec(ctx);
-        }
+    public DyContext(final Memo memo) {
+        throw new UnsupportedOperationException(memo.toString());
     }
 
     @Override
-    public void log(final String text) throws IOException {
-        throw new UnsupportedOperationException("#log-text");
+    public Memo memo() throws IOException {
+        throw new UnsupportedOperationException("memo");
     }
 
     @Override
-    public Iterable<String> log() throws IOException {
-        throw new UnsupportedOperationException("#log");
+    public void log(Level level, String text, Object... args) {
+        throw new UnsupportedOperationException("log");
     }
 }
