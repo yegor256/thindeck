@@ -66,7 +66,7 @@ import org.apache.commons.lang3.text.StrSubstitutor;
  * @todo #345:30min Let's handle the file *main.conf, which should contain the server
  *  configuration for a given host. The file name is prefixed by the host name,
  *  e.g. the host "www.example.com" will have the file name
- *  "www.example.com.hosts.conf". If the file doesn't exist yet, we should
+ *  "www.example.com.main.conf". If the file doesn't exist yet, we should
  *  create it and include it in nginx.conf. If it already exists, we should
  *  update it. See the Javadoc above or the explanation in
  *  https://github.com/yegor256/thindeck/issues/347 for more details.
@@ -125,7 +125,7 @@ public final class Nginx implements LoadBalancer {
         @NotNull final String server, @NotNull final int sport)
         throws IOException {
         new Shell.Plain(this.shell).exec(
-            this.updateConfigScript(host, server, sport)
+            this.loadBalancingScript(host, server, sport)
         );
     }
 
@@ -136,7 +136,7 @@ public final class Nginx implements LoadBalancer {
      * @param sport Server port to redirect requests to
      * @return Commands for updating hosts configuration.
      */
-    private String updateConfigScript(final String host, final String server,
+    private String loadBalancingScript(final String host, final String server,
         final int sport) {
         final ConcurrentHashMap<String, String> values =
             new ConcurrentHashMap<String, String>();
