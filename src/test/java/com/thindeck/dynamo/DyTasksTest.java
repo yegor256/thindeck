@@ -35,8 +35,14 @@ import com.jcabi.dynamo.Table;
 import com.jcabi.dynamo.mock.H2Data;
 import com.jcabi.dynamo.mock.MkRegion;
 import com.thindeck.api.Repo;
+import com.thindeck.api.Task;
 import com.thindeck.api.mock.MkRepo;
+
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -66,7 +72,108 @@ public final class DyTasksTest {
             Matchers.equalTo(tid)
         );
     }
+    
+    /**
+     * Test that validate the add method with attributes in NULL
+     * @throws Exception In case of error
+     */
+    @Test
+    public void addTaskNullAttributes() throws Exception{
+    	final Repo repo = new MkRepo();
+    	final Region region = DyTasksTest.region(repo.name());
+    	final String command = "command";
+    	
+    	DyTasks tasks = new DyTasks(region, repo);
+    	Task task = tasks.add(command,null);
+    	
+    	MatcherAssert.assertThat(task.command(),Matchers.equalTo(command));   	
+    }
 
+    /**
+     * Test that validate the add method with empty attributes
+     * @throws Exception In case of error
+     */
+    @Test
+    public void addTaskWithoutAttributes() throws Exception{
+    	final Repo repo = new MkRepo();
+    	final Region region = DyTasksTest.region(repo.name());
+    	final String command = "command";
+    	
+    	DyTasks tasks = new DyTasks(region, repo);
+    	Map <String,String> map = new HashMap<String,String>();
+    	Task task = tasks.add(command,map);
+    	
+    	MatcherAssert.assertThat(task.command(),Matchers.equalTo(command));
+    }
+    
+    /**
+     * Test that validate the add method with attributes
+     * @throws Exception In case of error
+     */
+    @Test
+    public void addTaskWithAttributes() throws Exception{
+    	final Repo repo = new MkRepo();
+    	final Region region = DyTasksTest.region(repo.name());
+    	final String command = "command";
+    	
+    	DyTasks tasks = new DyTasks(region, repo);
+    	Map <String,String> map = new HashMap<String,String>();
+    	map.put("key", "value");
+    	Task task = tasks.add(command,map);
+    	
+    	MatcherAssert.assertThat(task.command(),Matchers.equalTo(command));
+    }
+    
+    /**
+     * Test that validate the all method without tasks
+     * @throws Exception In case of error
+     */
+    @Test
+    public void allWithoutTask() throws Exception{
+    	final Repo repo = new MkRepo();
+    	final Region region = DyTasksTest.region(repo.name());
+    	
+    	DyTasks tasks = new DyTasks(region, repo);
+    	
+    	MatcherAssert.assertThat(tasks.all().iterator().hasNext(),Matchers.equalTo(false));
+    }
+    
+    /**
+     * Test that validate the all method with one task
+     * @throws Exception In case of error
+     */
+    @Test
+    public void allWithOneTask() throws Exception{
+    	final Repo repo = new MkRepo();
+    	final Region region = DyTasksTest.region(repo.name(),10L);
+    	
+    	DyTasks tasks = new DyTasks(region, repo);
+    	
+    	Iterator<Task> iteTask = tasks.all().iterator();
+    	MatcherAssert.assertThat(iteTask.hasNext(),Matchers.equalTo(true));
+    	iteTask.next();
+    	MatcherAssert.assertThat(iteTask.hasNext(),Matchers.equalTo(false));
+    }
+    
+    /**
+     * Test that validate the all method with more than one task
+     * @throws Exception In case of error
+     */
+    @Test
+    public void allWithMoreThatOneTask() throws Exception{
+    	final Repo repo = new MkRepo();
+    	final Region region = DyTasksTest.region(repo.name(),10L,20L);
+    	
+    	DyTasks tasks = new DyTasks(region, repo);
+    	
+    	Iterator<Task> iteTask = tasks.all().iterator();
+    	MatcherAssert.assertThat(iteTask.hasNext(),Matchers.equalTo(true));
+    	iteTask.next();
+    	MatcherAssert.assertThat(iteTask.hasNext(),Matchers.equalTo(true));
+    	iteTask.next();
+    	MatcherAssert.assertThat(iteTask.hasNext(),Matchers.equalTo(false));
+    }
+    
     /**
      * Create region with one repo and multiple tasks.
      * @param repo Repo urn
