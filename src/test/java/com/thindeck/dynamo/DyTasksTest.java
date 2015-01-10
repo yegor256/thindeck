@@ -105,6 +105,7 @@ public final class DyTasksTest {
     	DyTasks tasks = new DyTasks(region, repo);
     	Map <String,String> map = new HashMap<String,String>();
     	Task task = tasks.add(command,map);
+
     	
     	MatcherAssert.assertThat(task.command(),Matchers.equalTo(command));
     }
@@ -133,7 +134,6 @@ public final class DyTasksTest {
      * @throws Exception In case of error
      */
     @Test
-    @Ignore
     public void allWithoutTask() throws Exception{
     	final Repo repo = new MkRepo();
     	final Region region = DyTasksTest.region(repo.name());
@@ -148,7 +148,6 @@ public final class DyTasksTest {
      * @throws Exception In case of error
      */
     @Test
-    @Ignore
     public void allWithOneTask() throws Exception{
     	final Repo repo = new MkRepo();
     	final Region region = DyTasksTest.region(repo.name(),10L);
@@ -163,7 +162,6 @@ public final class DyTasksTest {
      * @throws Exception In case of error
      */
     @Test
-    @Ignore
     public void allWithMoreThatOneTask() throws Exception{
     	final Repo repo = new MkRepo();
     	final Region region = DyTasksTest.region(repo.name(),10L,20L);
