@@ -83,8 +83,10 @@ public final class DyTasksTest {
     @Ignore
     public void addTaskNullAttributes() throws Exception {
         final Repo repo = new MkRepo();
-        final Region region = DyTasksTest.region(repo.name());
-        final DyTasks tasks = new DyTasks(region, repo);
+        final DyTasks tasks = new DyTasks(
+            DyTasksTest.region(repo.name()),
+            repo
+        );
         final Task task = tasks.add(DyTasksTest.CMD, null);
         MatcherAssert.assertThat(
             task.command(),
@@ -100,8 +102,10 @@ public final class DyTasksTest {
     @Ignore
     public void addTaskWithoutAttributes() throws Exception {
         final Repo repo = new MkRepo();
-        final Region region = DyTasksTest.region(repo.name());
-        final DyTasks tasks = new DyTasks(region, repo);
+        final DyTasks tasks = new DyTasks(
+            DyTasksTest.region(repo.name()),
+            repo
+        );
         final ConcurrentHashMap<String, String> map =
             new ConcurrentHashMap<String, String>();
         final Task task = tasks.add(DyTasksTest.CMD, map);
@@ -119,8 +123,10 @@ public final class DyTasksTest {
     @Ignore
     public void addTaskWithAttributes() throws Exception {
         final Repo repo = new MkRepo();
-        final Region region = DyTasksTest.region(repo.name());
-        final DyTasks tasks = new DyTasks(region, repo);
+        final DyTasks tasks = new DyTasks(
+            DyTasksTest.region(repo.name()),
+            repo
+        );
         final ConcurrentHashMap<String, String> map =
             new ConcurrentHashMap<String, String>();
         map.put("key", "value");
@@ -138,8 +144,10 @@ public final class DyTasksTest {
     @Test
     public void allWithoutTask() throws Exception {
         final Repo repo = new MkRepo();
-        final Region region = DyTasksTest.region(repo.name());
-        final DyTasks tasks = new DyTasks(region, repo);
+        final DyTasks tasks = new DyTasks(
+            DyTasksTest.region(repo.name()),
+            repo
+        );
         MatcherAssert.assertThat(tasks.all(), Matchers.emptyIterable());
     }
 
@@ -150,8 +158,10 @@ public final class DyTasksTest {
     @Test
     public void allWithOneTask() throws Exception {
         final Repo repo = new MkRepo();
-        final Region region = DyTasksTest.region(repo.name(), 10L);
-        final DyTasks tasks = new DyTasks(region, repo);
+        final DyTasks tasks = new DyTasks(
+            DyTasksTest.region(repo.name(), 10L),
+            repo
+        );
         MatcherAssert.assertThat(
             tasks.all(),
             Matchers.<Task>iterableWithSize(1)
@@ -165,8 +175,10 @@ public final class DyTasksTest {
     @Test
     public void allWithMoreThatOneTask() throws Exception {
         final Repo repo = new MkRepo();
-        final Region region = DyTasksTest.region(repo.name(), 10L, 20L);
-        final DyTasks tasks = new DyTasks(region, repo);
+        final DyTasks tasks = new DyTasks(
+            DyTasksTest.region(repo.name(), 10L, 20L),
+            repo
+        );
         MatcherAssert.assertThat(
             tasks.all(),
             Matchers.<Task>iterableWithSize(2)
