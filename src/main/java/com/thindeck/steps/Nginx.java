@@ -127,6 +127,47 @@ public final class Nginx implements LoadBalancer {
         new Shell.Plain(this.shell).exec(
             this.loadBalancingScript(host, server, sport)
         );
+        new Shell.Plain(this.shell).exec(
+            this.mainScript(host, hport)
+        );
+    }
+
+    /**
+     * Script for update *.main.conf file.
+     * @param host Host name
+     * @param hport Host port
+     * @return Command for update *.main.conf file.
+     */
+    private String mainScript(@NotNull final String host,
+        @NotNull final int hport) {
+        final ConcurrentHashMap<String, String> values =
+            new ConcurrentHashMap<String, String>();
+        values.put("host", host);
+        values.put("hport", Integer.toString(hport));
+        values.put("binary", this.binary);
+        values.put("config", this.config);
+        values.put("LoadBalancerDir", this.directory);
+        final String template = Joiner.on(';').join(
+            "cd ${LoadBalancerDir}",
+            Joiner.on("\\n").join(
+                "printf 'server {",
+                "    listen ${hport};",
+                "    server_name ${host};",
+                "    location / {",
+                "        proxy_pass http://${host}_servers;",
+                "    }",
+                "}' > ${host}.main.conf"
+            ),
+            "if ! grep -q '${host}.main.conf' ${config}",
+            Joiner.on(' ').join(
+                "then perl -i.bak -pe 's/http \\{/http \\{\\n   ",
+                "include ${host}.main.conf;/' ${config}"
+            ),
+            "rm ${config}.bak",
+            "fi",
+            "pkill -HUP -f ${binary}"
+        );
+        return new StrSubstitutor(values).replace(template);
     }
 
     /**
