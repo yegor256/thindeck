@@ -29,9 +29,13 @@
  */
 package com.thindeck.dynamo;
 
+import com.amazonaws.services.dynamodbv2.model.Select;
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
+import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
 import com.thindeck.api.Repo;
@@ -49,7 +53,6 @@ import lombok.ToString;
  * @author Paul Polishchuk (ppol@yua.fm)
  * @version $Id$
  * @since 0.5
- * @todo #373:30min Implement all and add methods.
  * @todo #406:30min Implement open method.
  */
 @Immutable
@@ -102,7 +105,20 @@ public final class DyTasks implements Tasks {
 
     @Override
     public Iterable<Task> all() {
-        throw new UnsupportedOperationException("#all");
+        return Iterables.transform(
+            this.region.table(DyTask.TBL)
+                .frame()
+                .through(
+                    new QueryValve().withConsistentRead(false)
+                        .withSelect(Select.ALL_PROJECTED_ATTRIBUTES)
+                ),
+                new Function<Item, Task>() {
+                @Override
+                public Task apply(final Item input) {
+                    return new DyTask(input);
+                }
+            }
+        );
     }
 
     @Override

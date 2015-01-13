@@ -35,10 +35,13 @@ import com.jcabi.dynamo.Table;
 import com.jcabi.dynamo.mock.H2Data;
 import com.jcabi.dynamo.mock.MkRegion;
 import com.thindeck.api.Repo;
+import com.thindeck.api.Task;
 import com.thindeck.api.mock.MkRepo;
 import java.io.IOException;
+import java.util.concurrent.ConcurrentHashMap;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -49,6 +52,11 @@ import org.junit.Test;
  * @since 0.5
  */
 public final class DyTasksTest {
+
+    /**
+     * The custom command.
+     */
+    private static final transient String CMD = "command";
 
     /**
      * DyTasks can retrieve Task by number.
@@ -68,8 +76,118 @@ public final class DyTasksTest {
     }
 
     /**
+     * DyTask can add a task with attributes in NULL.
+     * @throws Exception In case of error.
+     */
+    @Test
+    @Ignore
+    public void addTaskNullAttributes() throws Exception {
+        final Repo repo = new MkRepo();
+        final DyTasks tasks = new DyTasks(
+            DyTasksTest.region(repo.name()),
+            repo
+        );
+        final Task task = tasks.add(DyTasksTest.CMD, null);
+        MatcherAssert.assertThat(
+            task.command(),
+            Matchers.equalTo(DyTasksTest.CMD)
+        );
+    }
+
+    /**
+     * DyTask can add a task without attributes.
+     * @throws Exception In case of error.
+     */
+    @Test
+    @Ignore
+    public void addTaskWithoutAttributes() throws Exception {
+        final Repo repo = new MkRepo();
+        final DyTasks tasks = new DyTasks(
+            DyTasksTest.region(repo.name()),
+            repo
+        );
+        final ConcurrentHashMap<String, String> map =
+            new ConcurrentHashMap<String, String>();
+        final Task task = tasks.add(DyTasksTest.CMD, map);
+        MatcherAssert.assertThat(
+            task.command(),
+            Matchers.equalTo(DyTasksTest.CMD)
+        );
+    }
+
+    /**
+     * DyTask can add a task with attributes.
+     * @throws Exception In case of error.
+     */
+    @Test
+    @Ignore
+    public void addTaskWithAttributes() throws Exception {
+        final Repo repo = new MkRepo();
+        final DyTasks tasks = new DyTasks(
+            DyTasksTest.region(repo.name()),
+            repo
+        );
+        final ConcurrentHashMap<String, String> map =
+            new ConcurrentHashMap<String, String>();
+        map.put("key", "value");
+        final Task task = tasks.add(DyTasksTest.CMD, map);
+        MatcherAssert.assertThat(
+            task.command(),
+            Matchers.equalTo(DyTasksTest.CMD)
+        );
+    }
+
+    /**
+     * DyTasks can get all task empty.
+     * @throws Exception In case of error.
+     */
+    @Test
+    public void allWithoutTask() throws Exception {
+        final Repo repo = new MkRepo();
+        final DyTasks tasks = new DyTasks(
+            DyTasksTest.region(repo.name()),
+            repo
+        );
+        MatcherAssert.assertThat(tasks.all(), Matchers.emptyIterable());
+    }
+
+    /**
+     * DyTasks can get the only one task.
+     * @throws Exception In case of error.
+     */
+    @Test
+    public void allWithOneTask() throws Exception {
+        final Repo repo = new MkRepo();
+        final DyTasks tasks = new DyTasks(
+            DyTasksTest.region(repo.name(), 10L),
+            repo
+        );
+        MatcherAssert.assertThat(
+            tasks.all(),
+            Matchers.<Task>iterableWithSize(1)
+        );
+    }
+
+    /**
+     * DyTasks can get the all the tasks.
+     * @throws Exception In case of error.
+     */
+    @Test
+    public void allWithMoreThatOneTask() throws Exception {
+        final Repo repo = new MkRepo();
+        final DyTasks tasks = new DyTasks(
+            DyTasksTest.region(repo.name(), 10L, 20L),
+            repo
+        );
+        MatcherAssert.assertThat(
+            tasks.all(),
+            Matchers.<Task>iterableWithSize(2)
+        );
+    }
+
+    /**
      * Create region with one repo and multiple tasks.
-     * @param repo Repo urn
+     * @param repo Repo urn.
      * @param ids Ids of tasks.
      * @return Region created.
      * @throws IOException In case of error.
