@@ -31,6 +31,12 @@ package com.thindeck.dynamo;
 
 import com.thindeck.api.Scenario;
 import com.thindeck.api.Step;
+import com.thindeck.steps.DockerRun;
+import com.thindeck.steps.DockerStop;
+import com.thindeck.steps.FindTanks;
+import com.thindeck.steps.Swap;
+import java.util.Arrays;
+import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -39,15 +45,20 @@ import lombok.ToString;
  *
  * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
- * @todo #420:30min Implement steps method - example in OnDeploy.
- *  Task command will determine steps.
  */
 @ToString
 @EqualsAndHashCode
 public final class DyScenario implements Scenario {
 
     @Override
+    @NotNull
     public Iterable<Step> steps() {
-        throw new UnsupportedOperationException("#steps");
+        return Arrays.asList(
+            new FindTanks(),
+            new DockerRun(),
+            new Swap(),
+            new DockerStop()
+        );
     }
+
 }
