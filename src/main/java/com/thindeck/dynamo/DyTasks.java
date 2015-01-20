@@ -148,8 +148,10 @@ public final class DyTasks implements Tasks {
      */
     private Attributes toAttributes(final Map<String, String> map) {
         final Attributes attributes = new Attributes();
-        for (final Map.Entry<String, String> entry : map.entrySet()) {
-            attributes.with(entry.getKey(), entry.getValue());
+        if (map != null) {
+            for (final Map.Entry<String, String> entry : map.entrySet()) {
+                attributes.with(entry.getKey(), entry.getValue());
+            }
         }
         return attributes;
     }
