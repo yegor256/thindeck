@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2015, Thindeck.com
+ * Copyright (c) 2014, Thindeck.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,63 +29,27 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Context;
-import com.thindeck.api.Scenario;
-import com.thindeck.api.Step;
-import com.thindeck.api.Txn;
+import com.thindeck.api.Memo;
 import java.io.IOException;
-import java.util.Iterator;
-import javax.validation.constraints.NotNull;
+import java.util.logging.Level;
 
 /**
- * Dynamo implementation of the {@link com.thindeck.api.Txn}.
- *
- * @author Piotr Kotlicki (Piotr.Kotlicki@gmail.com)
+ * Dynamo implementation of the {@link com.thindeck.api.Context}.
+ * @author Aleksey Popov (alopen@yandex.ru)
  * @version $Id$
  */
-@Immutable
-public final class DyTxn implements Txn {
-    /**
-     * Table name.
-     */
-    public static final String TBL = "txns";
-    /**
-     * Transaction attribute.
-     */
-    public static final String ATTR_ID = "id";
-    /**
-     * Steps taken from scenario.
-     */
-    private final transient Iterator<Step> steps;
-    /**
-     * Transaction context.
-     */
-    private final transient Context context;
-
-    /**
-     * Constructor.
-     * @param scn Scenario
-     */
-    public DyTxn(@NotNull final Scenario scn) {
-        this.steps = scn.steps().iterator();
-        this.context = new DyContext();
+public class DyContext implements Context {
+    // @todo #462:30min  DyContext.memo() should be implemented
+    @Override
+    public final Memo memo() throws IOException {
+        throw new UnsupportedOperationException("#memo");
     }
 
+    // @todo #462:30min DyContext.log() should be implemented
     @Override
-    public void increment() throws IOException {
-        if (this.steps.hasNext()) {
-            this.steps.next().exec(this.context);
-        }
-    }
-
-    @Override
-    public void log(final String text) throws IOException {
-        throw new UnsupportedOperationException("#log-text");
-    }
-
-    @Override
-    public Iterable<String> log() throws IOException {
+    public final void log(final Level level, final String text,
+        final Object... args) {
         throw new UnsupportedOperationException("#log");
     }
 }

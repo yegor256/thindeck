@@ -87,14 +87,7 @@ public final class DyBase implements Base {
     @Override
     public Txn txn(final Task task) {
         return new DyTxn(
-            this.region.table(DyTxn.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyTxn.ATTR_ID, Long.toString(task.number()))
-                .iterator().next()
+            task.scenario()
         );
     }
 }
