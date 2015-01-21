@@ -38,7 +38,6 @@ import com.thindeck.api.Repo;
 import com.thindeck.api.Task;
 import com.thindeck.api.mock.MkRepo;
 import java.io.IOException;
-import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -74,21 +73,6 @@ public final class DyTasksTest {
             ).get(tid).number(),
             Matchers.equalTo(tid)
         );
-    }
-
-    /**
-     * DyTasks retrieve Task by number fails with exception if wrong Task
-     * number is passed.
-     * @throws Exception In case of error.
-     */
-    @Test(expected = NoSuchElementException.class)
-    public void getInvalidTask() throws Exception {
-        final Repo repo = new MkRepo();
-        final long tid = 10L;
-        new DyTasks(
-            DyTasksTest.region(repo.name(), tid, 2L, 1L),
-            repo
-        ).get(0L);
     }
 
     /**
