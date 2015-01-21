@@ -77,8 +77,9 @@ public final class DyTasksTest {
     }
 
     /**
-     * DyTasks retrieve Task by number fails with exception if wrong Task
-     * number is passed.
+     * DyTasks retrieve Task by number fails with
+     * {@link NoSuchElementException} if wrong (non-existing) Task number is
+     * passed.
      * @throws Exception In case of error.
      */
     @Test(expected = NoSuchElementException.class)
