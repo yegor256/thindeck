@@ -78,7 +78,8 @@ public final class DyTasksTest {
     /**
      * DyTask can add a task with attributes in NULL.
      * @throws Exception In case of error.
-     * @todo uncomment when github.com/yegor256/thindeck/issues/492 is done
+     * @todo #491:15min Unignore following test when #492 is finished and
+     *  check the test passes
      */
     @Test
     @Ignore
