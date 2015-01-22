@@ -30,9 +30,14 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
+import com.thindeck.api.Context;
+import com.thindeck.api.Scenario;
+import com.thindeck.api.Step;
 import com.thindeck.api.Txn;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -43,26 +48,48 @@ import javax.validation.constraints.NotNull;
  */
 @Immutable
 public final class DyTxn implements Txn {
+
     /**
      * Table name.
      */
     public static final String TBL = "txns";
+
     /**
      * Transaction attribute.
      */
     public static final String ATTR_ID = "id";
+
+    /**
+     * Steps taken from scenario.
+     */
+    @Immutable.Array
+    private final transient Step[] steps;
+
+    /**
+     * Transaction context.
+     */
+    private final transient Context context;
+
     /**
      * Constructor.
-     * @param itm Item
+     * @param scn The Scenario.
      */
-    public DyTxn(@NotNull final Item itm) {
-        throw new UnsupportedOperationException(itm.toString());
+    public DyTxn(@NotNull final Scenario scn) {
+        final Collection<Step> stepList = new ArrayList<Step>(0);
+        final Iterator<Step> ite = scn.steps().iterator();
+        while (ite.hasNext()) {
+            stepList.add(ite.next());
+        }
+        this.steps = stepList.toArray(new Step[stepList.size()]);
+        this.context = new DyContext();
     }
 
-    // @todo #372:30min increment should use actions fetched from item.
     @Override
     public void increment() throws IOException {
-        throw new UnsupportedOperationException("#increment");
+        if (this.steps.length > 0) {
+            this.steps[0].exec(this.context);
+            this.removeUsedStep();
+        }
     }
 
     @Override
@@ -73,5 +100,30 @@ public final class DyTxn implements Txn {
     @Override
     public Iterable<String> log() throws IOException {
         throw new UnsupportedOperationException("#log");
+    }
+
+    /**
+     * Method that return the steps array attribute.
+     * @return The array of steps.
+     */
+    public Step[] getSteps() {
+        return this.steps.clone();
+    }
+
+    /**
+     * Method that return the context attribute.
+     * @return The context.
+     */
+    public Context getContext() {
+        return this.context;
+    }
+
+    /**
+     * Method that remove the executed step.
+     */
+    private void removeUsedStep() {
+        for (int index = 0; index < this.steps.length - 1; index += 1) {
+            this.steps[index] = this.steps[index + 1];
+        }
     }
 }
