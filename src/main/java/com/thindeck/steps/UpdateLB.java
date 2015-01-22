@@ -82,16 +82,6 @@ public final class UpdateLB implements Step {
         }
     }
 
-    @Override
-    public void commit(final Context ctx) throws IOException {
-        // nothing to commit
-    }
-
-    @Override
-    public void rollback(final Context ctx) throws IOException {
-        // nothing to rollback
-    }
-
     /**
      * Perform LB updates for given list of domains, containers and ports.
      * @param domains Domains to balance.

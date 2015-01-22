@@ -27,42 +27,51 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.steps;
+package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Context;
-import com.thindeck.api.Step;
 import java.io.IOException;
-import java.util.logging.Level;
-import org.xembly.Directives;
 
 /**
- * Swap BLUE and GREEN containers.
+ * Transactional step in a {@link Task}.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * <p>A step is called by {@link Txn}, when it has control of a task. A
+ * call is made either to {@link #exec(Context)}, {@link #commit(Context)}
+ * or {@link #rollback(Context)}. This depends on the situation with
+ * the transaction. This decision is made only by the transaction. The step
+ * is a passive component in this sense.
+ *
+ * <p>A step should try to finish its execution as soon as possible, preferably
+ * in less than a few milliseconds. If more time is required, it should
+ * throw {@link com.thindeck.api.Txn.ReRunException} and expect
+ * a new call in a few minutes.
+ *
+ * <p>Read more about our two-phase commit protocol in {@link Txn}.
+ *
+ * @author Marton Horvath (marton.horvath@m323.org)
  * @version $Id$
- * @since 0.1
  */
 @Immutable
-public final class Swap implements Step {
+public interface TransactionalStep extends Step {
+    /**
+     * Commit.
+     *
+     * <p>The method should throw {@link com.thindeck.api.Txn.ReRunException}
+     * if it needs to be called again, a bit later.
+     *
+     * @param ctx Execution context
+     * @throws IOException If fails
+     */
+    void commit(Context ctx) throws IOException;
 
-    @Override
-    public String name() {
-        return "swap";
-    }
-
-    @Override
-    public void exec(final Context ctx) throws IOException {
-        ctx.memo().update(
-            new Directives()
-                .xpath("/memo/containers/container[@type='green']")
-                .push()
-                .xpath("/memo/containers/container[@type='blue']")
-                // @checkstyle MultipleStringLiteralsCheck (1 line)
-                .attr("type", "green")
-                .pop()
-                .attr("type", "blue")
-        );
-        ctx.log(Level.INFO, "swapped blue vs green containers");
-    }
+    /**
+     * Rollback.
+     *
+     * <p>The method should throw {@link com.thindeck.api.Txn.ReRunException}
+     * if it needs to be called again, a bit later.
+     *
+     * @param ctx Execution context
+     * @throws IOException If fails
+     */
+    void rollback(Context ctx) throws IOException;
 }

@@ -37,10 +37,8 @@ import javax.validation.constraints.NotNull;
  * Step in a {@link Task}.
  *
  * <p>A step is called by {@link Txn}, when it has control of a task. A
- * call is made either to {@link #exec(Context)}, {@link #commit(Context)}
- * or {@link #rollback(Context)}. This depends on the situation with
- * the transaction. This decision is made only by the transaction. The step
- * is a passive component in this sense.
+ * call is made to {@link #exec(Context)}. The step is a passive component in
+ * this sense.
  *
  * <p>A step should try to finish its execution as soon as possible, preferably
  * in less than a few milliseconds. If more time is required, it should
@@ -73,27 +71,4 @@ public interface Step {
      * @throws IOException If fails
      */
     void exec(Context ctx) throws IOException;
-
-    /**
-     * Commit.
-     *
-     * <p>The method should throw {@link com.thindeck.api.Txn.ReRunException}
-     * if it needs to be called again, a bit later.
-     *
-     * @param ctx Execution context
-     * @throws IOException If fails
-     */
-    void commit(Context ctx) throws IOException;
-
-    /**
-     * Rollback.
-     *
-     * <p>The method should throw {@link com.thindeck.api.Txn.ReRunException}
-     * if it needs to be called again, a bit later.
-     *
-     * @param ctx Execution context
-     * @throws IOException If fails
-     */
-    void rollback(Context ctx) throws IOException;
-
 }

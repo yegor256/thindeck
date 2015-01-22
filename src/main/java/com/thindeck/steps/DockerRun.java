@@ -70,16 +70,6 @@ public final class DockerRun implements Step {
         ctx.log(Level.INFO, "containers started in %d tanks", tanks.size());
     }
 
-    @Override
-    public void commit(final Context ctx) {
-        // nothing to commit
-    }
-
-    @Override
-    public void rollback(final Context ctx) {
-        // nothing to rollback
-    }
-
     /**
      * Run docker in this tank.
      * @param ctx Context
