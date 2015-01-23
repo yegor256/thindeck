@@ -29,14 +29,11 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Context;
 import com.thindeck.api.Scenario;
 import com.thindeck.api.Step;
 import com.thindeck.api.Txn;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import javax.validation.constraints.NotNull;
 
@@ -46,7 +43,6 @@ import javax.validation.constraints.NotNull;
  * @author Piotr Kotlicki (Piotr.Kotlicki@gmail.com)
  * @version $Id$
  */
-@Immutable
 public final class DyTxn implements Txn {
 
     /**
@@ -62,8 +58,7 @@ public final class DyTxn implements Txn {
     /**
      * Steps taken from scenario.
      */
-    @Immutable.Array
-    private final transient Step[] steps;
+    private final transient Iterator<Step> steps;
 
     /**
      * Transaction context.
@@ -75,20 +70,14 @@ public final class DyTxn implements Txn {
      * @param scn The Scenario.
      */
     public DyTxn(@NotNull final Scenario scn) {
-        final Collection<Step> stepList = new ArrayList<Step>(0);
-        final Iterator<Step> ite = scn.steps().iterator();
-        while (ite.hasNext()) {
-            stepList.add(ite.next());
-        }
-        this.steps = stepList.toArray(new Step[stepList.size()]);
+        this.steps = scn.steps().iterator();
         this.context = new DyContext();
     }
 
     @Override
     public void increment() throws IOException {
-        if (this.steps.length > 0) {
-            this.steps[0].exec(this.context);
-            this.removeUsedStep();
+        if (this.steps.hasNext()) {
+            this.steps.next().exec(this.context);
         }
     }
 
@@ -100,30 +89,5 @@ public final class DyTxn implements Txn {
     @Override
     public Iterable<String> log() throws IOException {
         throw new UnsupportedOperationException("#log");
-    }
-
-    /**
-     * Method that return the steps array attribute.
-     * @return The array of steps.
-     */
-    public Step[] getSteps() {
-        return this.steps.clone();
-    }
-
-    /**
-     * Method that return the context attribute.
-     * @return The context.
-     */
-    public Context getContext() {
-        return this.context;
-    }
-
-    /**
-     * Method that remove the executed step.
-     */
-    private void removeUsedStep() {
-        for (int index = 0; index < this.steps.length - 1; index += 1) {
-            this.steps[index] = this.steps[index + 1];
-        }
     }
 }

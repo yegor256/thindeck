@@ -29,7 +29,10 @@
  */
 package com.thindeck.dynamo;
 
+import com.thindeck.api.Scenario;
+import com.thindeck.api.Step;
 import com.thindeck.api.mock.MkScenario;
+import java.util.Iterator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -49,11 +52,7 @@ public final class DyTxnTest {
     @Test
     public void getDyTxn() throws Exception {
         final DyTxn txn = new DyTxn(new MkScenario());
-        MatcherAssert.assertThat(txn.getContext(), Matchers.notNullValue());
-        MatcherAssert.assertThat(
-            txn.getSteps(),
-            Matchers.arrayWithSize(1)
-        );
+        MatcherAssert.assertThat(txn, Matchers.notNullValue());
     }
 
     /**
@@ -62,15 +61,18 @@ public final class DyTxnTest {
      */
     @Test
     public void incrementDyTxn() throws Exception {
-        final DyTxn txn = new DyTxn(new MkScenario());
-        int index = txn.getSteps().length;
-        while (index < txn.getSteps().length) {
+        final Scenario scn = new MkScenario();
+        final DyTxn txn = new DyTxn(scn);
+        final Iterator<Step> iter = scn.steps().iterator();
+        int count = 0;
+        while (iter.hasNext()) {
             txn.increment();
-            index = index + 1;
+            iter.next();
+            count += 1;
         }
         MatcherAssert.assertThat(
-            txn.getSteps(),
-            Matchers.arrayWithSize(1)
+            count,
+            Matchers.equalTo(1)
         );
     }
 }
