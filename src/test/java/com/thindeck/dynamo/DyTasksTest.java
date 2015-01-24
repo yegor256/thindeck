@@ -218,13 +218,15 @@ public final class DyTasksTest {
             new H2Data().with(
                 DyTask.TBL,
                 new String[] {DyTask.ATTR_ID},
-                new String[] {DyTask.ATTR_REPO_URN}
+                new String[] {DyTask.ATTR_COMM, DyTask.ATTR_REPO_URN}
             )
         );
         final Table table = region.table(DyTask.TBL);
         for (final long tid : ids) {
             table.put(
-                new Attributes().with(DyTask.ATTR_ID, tid)
+                new Attributes()
+                    .with(DyTask.ATTR_ID, tid)
+                    .with(DyTask.ATTR_COMM, DyTasksTest.CMD)
                     .with(DyTask.ATTR_REPO_URN, repo)
             );
         }
