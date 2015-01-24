@@ -40,6 +40,7 @@ import java.io.IOException;
  * or {@link #rollback(Context)}. This depends on the situation with
  * the transaction. This decision is made only by the transaction. The step
  * is a passive component in this sense.
+ * <p>Read more about our two-phase commit protocol in {@link Txn}.
  *
  * @see Step
  *
