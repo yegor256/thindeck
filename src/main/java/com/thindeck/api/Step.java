@@ -45,8 +45,6 @@ import javax.validation.constraints.NotNull;
  * throw {@link com.thindeck.api.Txn.ReRunException} and expect
  * a new call in a few minutes.
  *
- * <p>Read more about our two-phase commit protocol in {@link Txn}.
- *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1

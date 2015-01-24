@@ -41,12 +41,7 @@ import java.io.IOException;
  * the transaction. This decision is made only by the transaction. The step
  * is a passive component in this sense.
  *
- * <p>A step should try to finish its execution as soon as possible, preferably
- * in less than a few milliseconds. If more time is required, it should
- * throw {@link com.thindeck.api.Txn.ReRunException} and expect
- * a new call in a few minutes.
- *
- * <p>Read more about our two-phase commit protocol in {@link Txn}.
+ * @see Step
  *
  * @author Marton Horvath (marton.horvath@m323.org)
  * @version $Id$
