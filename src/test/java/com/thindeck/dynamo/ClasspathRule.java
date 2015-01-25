@@ -78,7 +78,7 @@ public final class ClasspathRule implements TestRule {
                         new ResourcesScanner()
                 )
                     .setUrls(
-                        ClasspathHelper.forPackage(prefix)
+                        ClasspathHelper.forPackage(this.prefix)
                     ).filterInputsBy(
                         new FilterBuilder().include(
                             FilterBuilder.prefix(this.prefix)
