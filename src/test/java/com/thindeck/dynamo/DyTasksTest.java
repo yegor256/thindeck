@@ -38,6 +38,7 @@ import com.thindeck.api.Repo;
 import com.thindeck.api.Task;
 import com.thindeck.api.mock.MkRepo;
 import java.io.IOException;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
 import org.hamcrest.MatcherAssert;
@@ -118,15 +119,13 @@ public final class DyTasksTest {
      * @throws Exception In case of error.
      */
     @Test
-    @Ignore
     public void addTaskWithoutAttributes() throws Exception {
         final Repo repo = new MkRepo();
         final DyTasks tasks = new DyTasks(
             DyTasksTest.region(repo.name()),
             repo
         );
-        final ConcurrentHashMap<String, String> map =
-            new ConcurrentHashMap<String, String>();
+        final Map<String, String> map = new ConcurrentHashMap<>(0);
         final Task task = tasks.add(DyTasksTest.CMD, map);
         MatcherAssert.assertThat(
             task.command(),
@@ -139,15 +138,13 @@ public final class DyTasksTest {
      * @throws Exception In case of error.
      */
     @Test
-    @Ignore
     public void addTaskWithAttributes() throws Exception {
         final Repo repo = new MkRepo();
         final DyTasks tasks = new DyTasks(
             DyTasksTest.region(repo.name()),
             repo
         );
-        final ConcurrentHashMap<String, String> map =
-            new ConcurrentHashMap<String, String>();
+        final Map<String, String> map = new ConcurrentHashMap<>(0);
         map.put("key", "value");
         final Task task = tasks.add(DyTasksTest.CMD, map);
         MatcherAssert.assertThat(
