@@ -118,7 +118,6 @@ public final class DyTasksTest {
      * @throws Exception In case of error.
      */
     @Test
-    @Ignore
     public void addTaskWithoutAttributes() throws Exception {
         final Repo repo = new MkRepo();
         final DyTasks tasks = new DyTasks(
@@ -126,7 +125,7 @@ public final class DyTasksTest {
             repo
         );
         final ConcurrentHashMap<String, String> map =
-            new ConcurrentHashMap<String, String>();
+            new ConcurrentHashMap<>(0);
         final Task task = tasks.add(DyTasksTest.CMD, map);
         MatcherAssert.assertThat(
             task.command(),
@@ -139,7 +138,6 @@ public final class DyTasksTest {
      * @throws Exception In case of error.
      */
     @Test
-    @Ignore
     public void addTaskWithAttributes() throws Exception {
         final Repo repo = new MkRepo();
         final DyTasks tasks = new DyTasks(
@@ -147,7 +145,7 @@ public final class DyTasksTest {
             repo
         );
         final ConcurrentHashMap<String, String> map =
-            new ConcurrentHashMap<String, String>();
+            new ConcurrentHashMap<>(1);
         map.put("key", "value");
         final Task task = tasks.add(DyTasksTest.CMD, map);
         MatcherAssert.assertThat(
@@ -218,13 +216,15 @@ public final class DyTasksTest {
             new H2Data().with(
                 DyTask.TBL,
                 new String[] {DyTask.ATTR_ID},
-                new String[] {DyTask.ATTR_REPO_URN}
+                new String[] {DyTask.ATTR_COMM, DyTask.ATTR_REPO_URN}
             )
         );
         final Table table = region.table(DyTask.TBL);
         for (final long tid : ids) {
             table.put(
-                new Attributes().with(DyTask.ATTR_ID, tid)
+                new Attributes()
+                    .with(DyTask.ATTR_ID, tid)
+                    .with(DyTask.ATTR_COMM, DyTasksTest.CMD)
                     .with(DyTask.ATTR_REPO_URN, repo)
             );
         }
