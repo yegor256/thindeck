@@ -40,13 +40,15 @@ import java.util.logging.Level;
  * @version $Id$
  */
 public class DyContext implements Context {
-    // @todo #462:30min  DyContext.memo() should be implemented
+    // @todo #462:30min  DyContext.memo() should be implemented. This method
+    // should  return the Memo object that will use in this context.
     @Override
     public final Memo memo() throws IOException {
         throw new UnsupportedOperationException("#memo");
     }
 
-    // @todo #462:30min DyContext.log() should be implemented
+    // @todo #462:30min DyContext.log() should be implemented. This method
+    // should add a new line in the log.
     @Override
     public final void log(final Level level, final String text,
         final Object... args) {
