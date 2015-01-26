@@ -144,7 +144,7 @@ public final class DyTasksTest {
             DyTasksTest.region(repo.name()),
             repo
         );
-        final Map<String, String> map = new ConcurrentHashMap<>(0);
+        final Map<String, String> map = new ConcurrentHashMap<>(1);
         map.put("key", "value");
         final Task task = tasks.add(DyTasksTest.CMD, map);
         MatcherAssert.assertThat(
