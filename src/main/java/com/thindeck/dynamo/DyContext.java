@@ -29,6 +29,7 @@
  */
 package com.thindeck.dynamo;
 
+import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Context;
 import com.thindeck.api.Memo;
 import java.io.IOException;
@@ -39,6 +40,7 @@ import java.util.logging.Level;
  * @author Mauricio Herrera (oruam85@gmail.com)
  * @version $Id$
  */
+@Immutable
 public class DyContext implements Context {
     // @todo #462:30min  DyContext.memo() should be implemented. This method
     // should  return the Memo object that will use in this context.

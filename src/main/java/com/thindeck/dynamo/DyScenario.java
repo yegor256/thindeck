@@ -29,6 +29,7 @@
  */
 package com.thindeck.dynamo;
 
+import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Scenario;
 import com.thindeck.api.Step;
 import lombok.EqualsAndHashCode;
@@ -44,6 +45,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode
+@Immutable
 public final class DyScenario implements Scenario {
 
     @Override
