@@ -32,7 +32,6 @@ package com.thindeck.dynamo;
 import com.thindeck.api.Scenario;
 import com.thindeck.api.Step;
 import com.thindeck.api.mock.MkScenario;
-import java.util.Iterator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -63,11 +62,9 @@ public final class DyTxnTest {
     public void incrementDyTxn() throws Exception {
         final Scenario scn = new MkScenario();
         final DyTxn txn = new DyTxn(scn);
-        final Iterator<Step> iter = scn.steps().iterator();
         int count = 0;
-        while (iter.hasNext()) {
+        for (@SuppressWarnings("unused") final Step step : scn.steps()) {
             txn.increment();
-            iter.next();
             count += 1;
         }
         MatcherAssert.assertThat(
