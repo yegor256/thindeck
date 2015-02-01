@@ -42,7 +42,6 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -95,11 +94,8 @@ public final class DyTasksTest {
     /**
      * DyTask can add a task with attributes in NULL.
      * @throws Exception In case of error.
-     * @todo #491:15min Unignore following test when #492 is finished and
-     *  check the test passes
      */
     @Test
-    @Ignore
     public void addTaskNullAttributes() throws Exception {
         final Repo repo = new MkRepo();
         final DyTasks tasks = new DyTasks(
