@@ -99,6 +99,6 @@ public final class DyRepo implements Repo {
 
     @Override
     public Memo memo() throws IOException {
-        return new DyMemo(this.item.get(ATTR_MEMO).getS());
+        return new DyMemo(this.item);
     }
 }
