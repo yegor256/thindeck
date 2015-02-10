@@ -29,32 +29,41 @@
  */
 package com.thindeck.dynamo;
 
-import java.util.Collections;
+import com.jcabi.dynamo.Attributes;
+import com.jcabi.dynamo.Table;
+import com.jcabi.urn.URN;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Integration case for {@link DyBase}.
- * @author Paul Polishchuk (ppol@ua.fm)
+ * Integration tests for {@link com.thindeck.dynamo.DyUser}
+ * using a real (local) DynamoDB server.
+ *
+ * @author Adam Siemion (adam.siemion.null@lemonsoftware.pl)
  * @version $Id$
+ * @todo Implement a test mthod for user repos
  */
-public final class DyBaseITCase {
+public class DyUserTestITCase {
+    /**
+     * Sample user URN.
+     */
+    private static final String USER_URN = "urn:test:1";
 
     /**
-     * DyBase can add a command.
-     * @throws Exception If there is some problem inside
+     * DyUser should return user URN.
+     * @throws Exception Exception thrown during the test
      */
     @Test
-    public void canAddCommand() throws Exception {
-        final String command = "command";
+    public final void returnUserUrn() throws Exception {
+        final Table table = new RegionLocalDynamo().table(DyUser.TBL);
+        table.put(
+            new Attributes()
+                .with(DyUser.ATTR_URN, USER_URN)
+        );
         MatcherAssert.assertThat(
-            new DyBase(new RegionLocalDynamo())
-                .repos().add("test").tasks()
-                .add(command, Collections.<String, String>emptyMap())
-                .command(),
-            Matchers.equalTo(command)
+            new DyUser(table.frame().iterator().next()).urn(),
+            Matchers.equalTo(URN.create(USER_URN))
         );
     }
-
 }
