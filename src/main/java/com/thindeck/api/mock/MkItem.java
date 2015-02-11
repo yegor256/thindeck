@@ -36,6 +36,7 @@ import com.jcabi.dynamo.Item;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -58,7 +59,7 @@ public final class MkItem implements Item {
     /**
      * Map with updates.
      */
-    private final transient ConcurrentHashMap<String,
+    private final transient ConcurrentMap<String,
         AttributeValueUpdate> updatemap = new ConcurrentHashMap<>();
 
     /**
@@ -95,14 +96,14 @@ public final class MkItem implements Item {
     public Map<String, AttributeValue> put(final String str,
             final AttributeValueUpdate value) throws IOException {
         this.updatemap.put(str, value);
-        return this.updateMapDefenseCopy();
+        return this.updates();
     }
 
     @Override
     public Map<String, AttributeValue> put(
             final Map<String, AttributeValueUpdate> map) throws IOException {
         this.updatemap.putAll(map);
-        return this.updateMapDefenseCopy();
+        return this.updates();
     }
 
     @Override
@@ -114,8 +115,8 @@ public final class MkItem implements Item {
      * Returns a copy of {@link com.thindeck.api.mock.MkItem#updatemap}.
      * @return Map instance
      */
-    private Map<String, AttributeValue> updateMapDefenseCopy() {
-        final ConcurrentHashMap<String,
+    private Map<String, AttributeValue> updates() {
+        final ConcurrentMap<String,
             AttributeValue> map = new ConcurrentHashMap<>();
         for (final Map.Entry<String, AttributeValue> entry : map.entrySet()) {
             map.put(entry.getKey(), entry.getValue());

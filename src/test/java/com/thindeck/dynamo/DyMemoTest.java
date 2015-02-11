@@ -54,8 +54,7 @@ public final class DyMemoTest {
      */
     @Test
     public void read() throws IOException {
-        final MkItem item = this.emptyMkItemWithMemo();
-        final DyMemo memo = new DyMemo(item);
+        final DyMemo memo = new DyMemo(this.emptyMkItemWithMemo());
         final XML xml = memo.read();
         MatcherAssert.assertThat(
             xml.node().getFirstChild().getLocalName(),
@@ -64,13 +63,12 @@ public final class DyMemoTest {
     }
 
     /**
-     * Test {@link com.thindeck.dynamo.DyMemo#update(Iterable)}.
-     * @throws Exception transitively
+     * DyMemo can update its content.
+     * @throws Exception If test fails
      */
     @Test
-    public void update() throws Exception {
-        final MkItem item = this.emptyMkItemWithMemo();
-        final DyMemo memo = new DyMemo(item);
+    public void returnsItsUpdatedContent() throws Exception {
+        final DyMemo memo = new DyMemo(this.emptyMkItemWithMemo());
         memo.update(
             new Directives()
                 .xpath("/memo")
