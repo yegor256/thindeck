@@ -30,6 +30,7 @@
 package com.thindeck.dynamo;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Credentials;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
@@ -42,6 +43,7 @@ import com.jcabi.manifests.Manifests;
  * @author Adam Siemion (adam.siemion.null@lemonsoftware.pl)
  * @version $Id$
  */
+@Immutable
 public class RegionLocalDynamo implements Region {
 
     /**
@@ -69,17 +71,11 @@ public class RegionLocalDynamo implements Region {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final AmazonDynamoDB aws() {
         return this.region.aws();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Table table(final String name) {
         return this.region.table(name);

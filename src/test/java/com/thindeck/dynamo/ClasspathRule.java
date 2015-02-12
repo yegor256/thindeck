@@ -94,7 +94,6 @@ public final class ClasspathRule implements TestRule {
                         && !name.endsWith("ITCase")
                         && !name.endsWith("ClasspathRule")
                         && !name.endsWith("RepoRule")
-                        && !name.equals(RegionLocalDynamo.class.getName())
                         && (input.getEnclosingClass() == null
                         || name.endsWith("Smart"));
                 }

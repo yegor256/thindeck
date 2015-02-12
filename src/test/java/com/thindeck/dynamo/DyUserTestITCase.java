@@ -42,28 +42,24 @@ import org.junit.Test;
  *
  * @author Adam Siemion (adam.siemion.null@lemonsoftware.pl)
  * @version $Id$
- * @todo Implement a test mthod for user repos
+ * @todo Implement a test method for user repos
  */
 public class DyUserTestITCase {
-    /**
-     * Sample user URN.
-     */
-    private static final String USER_URN = "urn:test:1";
-
     /**
      * DyUser should return user URN.
      * @throws Exception Exception thrown during the test
      */
     @Test
     public final void returnUserUrn() throws Exception {
+        final String urn = "urn:test:1";
         final Table table = new RegionLocalDynamo().table(DyUser.TBL);
         table.put(
             new Attributes()
-                .with(DyUser.ATTR_URN, USER_URN)
+                .with(DyUser.ATTR_URN, urn)
         );
         MatcherAssert.assertThat(
             new DyUser(table.frame().iterator().next()).urn(),
-            Matchers.equalTo(URN.create(USER_URN))
+            Matchers.equalTo(URN.create(urn))
         );
     }
 }
