@@ -69,10 +69,9 @@ public final class DyMemo implements Memo {
 
     @Override
     public XML read() throws IOException {
-        final String memo = this.item.get(DyRepo.ATTR_MEMO).getS();
         return new StrictXML(
             Memo.CLEANUP.transform(
-                new XMLDocument(memo)
+                new XMLDocument(this.item.get(DyRepo.ATTR_MEMO).getS())
             ),
             Memo.SCHEMA
         );
@@ -80,11 +79,13 @@ public final class DyMemo implements Memo {
 
     @Override
     public void update(final Iterable<Directive> dirs) throws IOException {
-        final XMLDocument xml = new XMLDocument(
-            new Xembler(dirs).applyQuietly(this.read().node())
-        );
         this.item.put(
-            new AttributeUpdates().with(DyRepo.ATTR_MEMO, xml.toString())
+            new AttributeUpdates().with(
+                DyRepo.ATTR_MEMO,
+                new XMLDocument(
+                    new Xembler(dirs).applyQuietly(this.read().node())
+                ).toString()
+            )
         );
     }
 }

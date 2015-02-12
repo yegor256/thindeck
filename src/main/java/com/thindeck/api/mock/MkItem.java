@@ -80,11 +80,10 @@ public final class MkItem implements Item {
 
     @Override
     public AttributeValue get(final String str) throws IOException {
-        AttributeValue value = null;
-        if (this.updatemap.containsKey(str)) {
-            value = this.updatemap.get(str).getValue();
+        if (!this.updatemap.containsKey(str)) {
+            throw new IllegalArgumentException();
         }
-        return value;
+        return this.updatemap.get(str).getValue();
     }
 
     @Override

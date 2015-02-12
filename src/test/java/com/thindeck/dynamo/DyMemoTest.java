@@ -74,9 +74,8 @@ public final class DyMemoTest {
                 .xpath("/memo")
                 .add("uri").set("sample.uri")
         );
-        final XML xml = memo.read();
         MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(xml.toString()),
+            XhtmlMatchers.xhtml(memo.read().toString()),
             XhtmlMatchers.hasXPaths(
                 "//memo/uri[text()=\"sample.uri\"]"
             )
