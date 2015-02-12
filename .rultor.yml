@@ -8,6 +8,7 @@ env:
   MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
 
 architect:
+  - carlosmiranda
   - yegor256
   - davvd
 
@@ -46,6 +47,8 @@ merge:
     pdd --source=$(pwd) --verbose --file=/dev/null --rule min-words:2 --rule min-estimate:15
 
 release:
+  commanders:
+    - carlosmiranda
   script: |
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
