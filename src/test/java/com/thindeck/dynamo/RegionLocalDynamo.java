@@ -29,32 +29,55 @@
  */
 package com.thindeck.dynamo;
 
-import java.util.Collections;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.Credentials;
+import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.Table;
+import com.jcabi.dynamo.retry.ReRegion;
+import com.jcabi.manifests.Manifests;
 
 /**
- * Integration case for {@link DyBase}.
- * @author Paul Polishchuk (ppol@ua.fm)
+ * Region for tests.
+ *
+ * @author Adam Siemion (adam.siemion.null@lemonsoftware.pl)
  * @version $Id$
  */
-public final class DyBaseITCase {
+@Immutable
+public final class RegionLocalDynamo implements Region {
 
     /**
-     * DyBase can add a command.
-     * @throws Exception If there is some problem inside
+     * Region.
      */
-    @Test
-    public void canAddCommand() throws Exception {
-        final String command = "command";
-        MatcherAssert.assertThat(
-            new DyBase(new RegionLocalDynamo())
-                .repos().add("test").tasks()
-                .add(command, Collections.<String, String>emptyMap())
-                .command(),
-            Matchers.equalTo(command)
+    private final transient Region region;
+
+    /**
+     * Public constructor.
+     */
+    public RegionLocalDynamo() {
+        this.region = new Region.Prefixed(
+            new ReRegion(
+                new Region.Simple(
+                    new Credentials.Direct(
+                        new Credentials.Simple(
+                            Manifests.read("Thindeck-DynamoKey"),
+                            Manifests.read("Thindeck-DynamoSecret")
+                        ),
+                        Integer.parseInt(System.getProperty("dynamo.port"))
+                    )
+                )
+            ),
+            "td-"
         );
     }
 
+    @Override
+    public AmazonDynamoDB aws() {
+        return this.region.aws();
+    }
+
+    @Override
+    public Table table(final String name) {
+        return this.region.table(name);
+    }
 }
