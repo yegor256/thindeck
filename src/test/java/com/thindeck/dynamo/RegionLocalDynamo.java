@@ -44,7 +44,7 @@ import com.jcabi.manifests.Manifests;
  * @version $Id$
  */
 @Immutable
-public class RegionLocalDynamo implements Region {
+public final class RegionLocalDynamo implements Region {
 
     /**
      * Region.
@@ -72,12 +72,12 @@ public class RegionLocalDynamo implements Region {
     }
 
     @Override
-    public final AmazonDynamoDB aws() {
+    public AmazonDynamoDB aws() {
         return this.region.aws();
     }
 
     @Override
-    public final Table table(final String name) {
+    public Table table(final String name) {
         return this.region.table(name);
     }
 }

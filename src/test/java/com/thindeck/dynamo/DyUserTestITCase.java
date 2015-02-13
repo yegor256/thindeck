@@ -42,15 +42,15 @@ import org.junit.Test;
  *
  * @author Adam Siemion (adam.siemion.null@lemonsoftware.pl)
  * @version $Id$
- * @todo Implement a test method for user repos
+ * @todo #410:30min Implement an integration test for DyUser.repos()
  */
-public class DyUserTestITCase {
+public final class DyUserTestITCase {
     /**
      * DyUser should return user URN.
      * @throws Exception Exception thrown during the test
      */
     @Test
-    public final void returnUserUrn() throws Exception {
+    public void returnUserUrn() throws Exception {
         final String urn = "urn:test:1";
         final Table table = new RegionLocalDynamo().table(DyUser.TBL);
         table.put(
