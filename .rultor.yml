@@ -1,3 +1,7 @@
+architect: 
+- carlosmiranda
+- yegor256
+- davvd
 install: |-
    sudo apt-get update
    sudo apt-get install -y openjdk-6-jre
@@ -11,10 +15,6 @@ install: |-
    cd ../../..
    git clone --depth=1 https://github.com/n1k0/casperjs.git /tmp/casperjs
    export PATH=$PATH:/tmp/casperjs/bin
-architect: 
-- carlosmiranda
-- yegor256
-- davvd
 assets: 
    id_rsa: yegor256/home#assets/heroku-key
    settings.xml: yegor256/home#assets/thindeck/settings.xml
