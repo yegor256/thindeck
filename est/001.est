@@ -1,0 +1,20 @@
+date: 24-02-2015
+author: Carlos Miranda
+method: champions.pert
+scope:
+  1: Website UI design
+  2: API design 
+  3: User addition, modification, and deletion of repos
+  4: Automatic deployment of user repos
+  5: Billing of resource usage
+  6: Resource scaling functionality
+  7: Integration testing
+champions:
+  2:
+    worst-case: 40
+    best-case: 18
+    most-likely: 24
+  7:
+    worst-case: 80
+    best-case: 30
+    most-likely: 48
