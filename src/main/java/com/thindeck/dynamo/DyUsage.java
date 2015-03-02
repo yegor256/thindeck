@@ -66,21 +66,29 @@ public final class DyUsage implements Usage {
         return this.usr;
     }
 
+    // @todo #408:30min Let's implement the add() method. This method should
+    //  add the supplied Value to the usage info of the current user. Make sure
+    //  to include unit tests for this method in DyUsageTest.
     @Override
     public void add(final Value value) {
         throw new UnsupportedOperationException("add not yet implemented");
     }
 
+    // @todo #408:30min Let's implement the select() method. This method should
+    //  return the values that fit the given criteria (user and date range).
+    //  Make sure to include unit tests for this method in DyUsageTest.
     @Override
     public Iterable<Value> select(final Date start, final Date end) {
         throw new UnsupportedOperationException("select not yet implemented");
     }
 
+    // @todo #408:30min Let's implement the sum() method. This method should
+    //  return the aggregate sum of values that fit the given criteria. Make
+    //  sure to include unit tests for this method in DyUsageTest.
     // @checkstyle ParameterNumber (3 lines)
     @Override
     public double sum(final Date start, final Date end, final Type type,
         final Map<String, String> dims) {
         throw new UnsupportedOperationException("sum not yet implemented");
     }
-
 }
