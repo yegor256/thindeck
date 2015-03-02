@@ -38,6 +38,8 @@ import com.jcabi.dynamo.mock.H2Data;
 import com.jcabi.dynamo.mock.MkRegion;
 import com.jcabi.urn.URN;
 import com.thindeck.api.Repo;
+import com.thindeck.api.Usage;
+import com.thindeck.api.User;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -94,6 +96,22 @@ public final class DyUserTest {
         MatcherAssert.assertThat(
             new DyUser(table.frame().iterator().next()).repos().iterate(),
             Matchers.<Repo>iterableWithSize(1)
+        );
+    }
+
+    /**
+     * DyUser can return usage associated with the user info.
+     * @throws Exception If something goes wrong.
+     */
+    @Test
+    public void returnsUsageInfo() throws Exception {
+        final User user = new DyUser(Mockito.mock(Item.class));
+        final Usage usage = user.usage();
+        MatcherAssert.assertThat(
+            usage, Matchers.notNullValue()
+        );
+        MatcherAssert.assertThat(
+            usage.user(), Matchers.is(user)
         );
     }
 }
