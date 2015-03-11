@@ -1,62 +1,62 @@
 install: |-
-   sudo apt-get update
-   sudo apt-get install -y openjdk-6-jre
-   wget --retry-connrefused http://yar.fruct.org/attachments/download/362/plantuml_7707-1_all.deb
-   sudo dpkg -i plantuml_7707-1_all.deb
-   wget --retry-connrefused https://oss.sonatype.org/content/repositories/releases/net/sourceforge/plantuml/plantuml/8000/plantuml-8000.jar
-   sudo mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar
-   sudo gem install pdd
-   cd src/main/bundler
-   sudo bundle install
-   cd ../../..
-   git clone --depth=1 https://github.com/n1k0/casperjs.git /tmp/casperjs
-   export PATH=$PATH:/tmp/casperjs/bin
-architect: 
+  sudo apt-get update
+  sudo apt-get install -y openjdk-6-jre
+  wget --retry-connrefused http://yar.fruct.org/attachments/download/362/plantuml_7707-1_all.deb
+  sudo dpkg -i plantuml_7707-1_all.deb
+  wget --retry-connrefused https://oss.sonatype.org/content/repositories/releases/net/sourceforge/plantuml/plantuml/8000/plantuml-8000.jar
+  sudo mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar
+  sudo gem install pdd
+  cd src/main/bundler
+  sudo bundle install
+  cd ../../..
+  git clone --depth=1 https://github.com/n1k0/casperjs.git /tmp/casperjs
+  export PATH=$PATH:/tmp/casperjs/bin
+architect:
 - carlosmiranda
-- yegor256
 - davvd
-assets: 
-   id_rsa: yegor256/home#assets/heroku-key
-   settings.xml: yegor256/home#assets/thindeck/settings.xml
-   id_rsa.pub: yegor256/home#assets/heroku-key.pub
-   s3cfg: yegor256/home#assets/s3cfg
-merge: 
-   commanders: 
-   - carlosmiranda
-   - krzyk
-   - longtimeago
-   script: |-
-      export PATH=$PATH:/tmp/casperjs/bin
-      mvn clean install -Ptomcat-test -Pqulice --errors --settings ../settings.xml
-      mvn clean site -Psite --errors --settings ../settings.xml
-      mvn clean
-      pdd --source=$(pwd) --verbose --file=/dev/null --rule min-words:2 --rule min-estimate:15
-deploy: 
-   script: |-
-      mvn clean install -Prultor --settings ../settings.xml
-      s3cmd --no-progress put target/requs/requs.xml --config=../s3cfg s3://requs.teamed.io/thideck.xml
-      mvn clean
-      pdd --source=$(pwd) --verbose --file=thindeck.xml
-      s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml
-env: 
-   MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
-release: 
-   commanders: 
-   - carlosmiranda
-   script: |-
-      mvn versions:set "-DnewVersion=${tag}"
-      git commit -am "${tag}"
-      mv ../settings.xml settings.xml
-      mvn clean install -Ptomcat-test -Pqulice --errors
-      git remote add heroku git@heroku.com:thindeck.git
-      mkdir ~/.ssh
-      mv ../id_rsa ../id_rsa.pub ~/.ssh
-      chmod -R 600 ~/.ssh/*
-      echo -e "Host *\n  StrictHostKeyChecking no\n  UserKnownHostsFile=/dev/null" > ~/.ssh/config
-      git add settings.xml
-      git commit -m 'settings.xml'
-      git fetch --unshallow
-      git push -f heroku $(git symbolic-ref --short HEAD):master
-      git reset HEAD~1
-      curl -f --connect-timeout 15 --retry 5 --retry-delay 30 http://thindeck.herokuapp.com
-      mvn clean site-deploy -Psite --settings settings.xml
+- yegor256
+assets:
+  id_rsa: yegor256/home#assets/heroku-key
+  settings.xml: yegor256/home#assets/thindeck/settings.xml
+  id_rsa.pub: yegor256/home#assets/heroku-key.pub
+  s3cfg: yegor256/home#assets/s3cfg
+merge:
+  commanders:
+  - carlosmiranda
+  - krzyk
+  - longtimeago
+  script: |-
+    export PATH=$PATH:/tmp/casperjs/bin
+    mvn clean install -Ptomcat-test -Pqulice --errors --settings ../settings.xml
+    mvn clean site -Psite --errors --settings ../settings.xml
+    mvn clean
+    pdd --source=$(pwd) --verbose --file=/dev/null --rule min-words:2 --rule min-estimate:15
+deploy:
+  script: |-
+    mvn clean install -Prultor --settings ../settings.xml
+    s3cmd --no-progress put target/requs/requs.xml --config=../s3cfg s3://requs.teamed.io/thideck.xml
+    mvn clean
+    pdd --source=$(pwd) --verbose --file=thindeck.xml
+    s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml
+env:
+  MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
+release:
+  commanders:
+  - carlosmiranda
+  script: |-
+    mvn versions:set "-DnewVersion=${tag}"
+    git commit -am "${tag}"
+    mv ../settings.xml settings.xml
+    mvn clean install -Ptomcat-test -Pqulice --errors
+    git remote add heroku git@heroku.com:thindeck.git
+    mkdir ~/.ssh
+    mv ../id_rsa ../id_rsa.pub ~/.ssh
+    chmod -R 600 ~/.ssh/*
+    echo -e "Host *\n  StrictHostKeyChecking no\n  UserKnownHostsFile=/dev/null" > ~/.ssh/config
+    git add settings.xml
+    git commit -m 'settings.xml'
+    git fetch --unshallow
+    git push -f heroku $(git symbolic-ref --short HEAD):master
+    git reset HEAD~1
+    curl -f --connect-timeout 15 --retry 5 --retry-delay 30 http://thindeck.herokuapp.com
+    mvn clean site-deploy -Psite --settings settings.xml
