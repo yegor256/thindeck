@@ -51,9 +51,6 @@ import lombok.ToString;
  *  associated criteria. I'm not completely sure about this design, feel free to
  *  implement something else if you think it's wrong. The intuition behind it is
  *  that we should only get the repos associated with the current user.
- * @todo #374:30min Implement usage method. To do this we need to implement a class
- *  DyUsage that implements the Usage interface. This will obtain the usage
- *  associated to this user from Dynamo DB.
  */
 @EqualsAndHashCode
 @ToString
