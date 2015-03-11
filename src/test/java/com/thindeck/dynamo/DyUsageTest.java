@@ -44,7 +44,7 @@ import org.mockito.Mockito;
  */
 public final class DyUsageTest {
     /**
-     * DyUsage can return its associated user.
+     * DyUsage can return its user.
      * @throws Exception If something goes wrong.
      */
     @Test
