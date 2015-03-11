@@ -48,6 +48,7 @@ env:
 release:
   commanders:
   - carlosmiranda
+  - yegor256
   script: |-
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
