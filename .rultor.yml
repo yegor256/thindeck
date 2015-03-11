@@ -23,8 +23,10 @@ assets:
 merge:
   commanders:
   - carlosmiranda
+  - ggajos
   - krzyk
   - longtimeago
+  - pinaf
   script: |-
     export PATH=$PATH:/tmp/casperjs/bin
     mvn clean install -Ptomcat-test -Pqulice --errors --settings ../settings.xml
