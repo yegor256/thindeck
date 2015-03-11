@@ -100,7 +100,7 @@ public final class DyUserTest {
     }
 
     /**
-     * DyUser can return usage associated with the user info.
+     * DyUser can return usage info.
      * @throws Exception If something goes wrong.
      */
     @Test
