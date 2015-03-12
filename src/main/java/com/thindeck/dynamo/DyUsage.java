@@ -30,71 +30,65 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Repos;
 import com.thindeck.api.Usage;
 import com.thindeck.api.User;
-import java.io.IOException;
+import java.util.Date;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Dynamo implementation of the {@link User}.
+ * Dynamo implementation of {@link Usage}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
- * @todo #374:30min At the moment, the repos() method returns all Repos associated
- *  with the Dynamo region, and this is definitely incorrect. I think we need to
- *  refactor DyRepos in order to include a user criteria (probably URN) in its
- *  constructor, and have DyUser pass it so that it will only return the
- *  associated criteria. I'm not completely sure about this design, feel free to
- *  implement something else if you think it's wrong. The intuition behind it is
- *  that we should only get the repos associated with the current user.
+ * @since 0.5
  */
-@EqualsAndHashCode
-@ToString
 @Immutable
-public final class DyUser implements User {
+@ToString
+@EqualsAndHashCode (of = "usr")
+public final class DyUsage implements Usage {
     /**
-     * Table name.
+     * User.
      */
-    public static final String TBL = "users";
-
-    /**
-     * URN attribute.
-     */
-    public static final String ATTR_URN = "urn";
-
-    /**
-     * Item.
-     */
-    private final transient Item item;
+    private final transient User usr;
 
     /**
      * Ctor.
-     * @param itm Item
+     * @param user The user
      */
-    DyUser(final Item itm) {
-        this.item = itm;
+    DyUsage(final User user) {
+        this.usr = user;
     }
 
     @Override
-    public URN urn() {
-        try {
-            return URN.create(this.item.get(DyUser.ATTR_URN).getS());
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    public User user() {
+        return this.usr;
     }
 
+    // @todo #408:30min Let's implement the add() method. This method should
+    //  add the supplied Value to the usage info of the current user. Make sure
+    //  to include unit tests for this method in DyUsageTest.
     @Override
-    public Repos repos() {
-        return new DyRepos(this.item.frame().table().region());
+    public void add(final Value value) {
+        throw new UnsupportedOperationException("add not yet implemented");
     }
 
+    // @todo #408:30min Let's implement the select() method. This method should
+    //  return the values that fit the given criteria (user and date range).
+    //  Make sure to include unit tests for this method in DyUsageTest.
     @Override
-    public Usage usage() {
-        return new DyUsage(this);
+    public Iterable<Value> select(final Date start, final Date end) {
+        throw new UnsupportedOperationException("select not yet implemented");
+    }
+
+    // @todo #408:30min Let's implement the sum() method. This method should
+    //  return the aggregate sum of values that fit the given criteria. Make
+    //  sure to include unit tests for this method in DyUsageTest.
+    // @checkstyle ParameterNumber (3 lines)
+    @Override
+    public double sum(final Date start, final Date end, final Type type,
+        final Map<String, String> dims) {
+        throw new UnsupportedOperationException("sum not yet implemented");
     }
 }
