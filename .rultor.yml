@@ -13,8 +13,8 @@ install: |-
   export PATH=$PATH:/tmp/casperjs/bin
 architect:
 - carlosmiranda
-- davvd
 - yegor256
+- davvd
 assets:
   id_rsa: yegor256/home#assets/heroku-key
   settings.xml: yegor256/home#assets/thindeck/settings.xml
