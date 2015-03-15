@@ -191,6 +191,9 @@
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-github</artifactId>
+            <!-- Parent version contains immutability bug, see 
+                https://github.com/jcabi/jcabi-github/issues/934 -->
+            <version>0.21.3</version>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
