@@ -13,7 +13,6 @@ install: |-
   export PATH=$PATH:/tmp/casperjs/bin
 architect:
 - carlosmiranda
-- yegor256
 - davvd
 assets:
   id_rsa: yegor256/home#assets/heroku-key
