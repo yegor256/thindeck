@@ -34,6 +34,7 @@ import com.jcabi.dynamo.Credentials;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.retry.ReRegion;
 import com.jcabi.manifests.Manifests;
+import com.jcabi.manifests.ServletMfs;
 import com.thindeck.MnBase;
 import com.thindeck.api.Base;
 import com.thindeck.dynamo.DyBase;
@@ -53,6 +54,7 @@ import org.apache.commons.io.IOUtils;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle ClassDataAbstractionCoupling (300 lines)
  */
 @ToString
 @EqualsAndHashCode
@@ -88,7 +90,7 @@ public final class Lifecycle implements ServletContextListener {
     @Override
     public void contextInitialized(final ServletContextEvent event) {
         try {
-            Manifests.append(event.getServletContext());
+            Manifests.DEFAULT.append(new ServletMfs(event.getServletContext()));
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
