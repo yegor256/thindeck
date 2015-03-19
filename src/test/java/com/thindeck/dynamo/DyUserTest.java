@@ -104,7 +104,7 @@ public final class DyUserTest {
      * @throws Exception If something goes wrong
      */
     @Test
-    public void getsReposForItself() throws Exception {
+    public void getsItselfFromRepos() throws Exception {
         final Region region = new MkRegion(
             new H2Data().with(
                     DyRepo.TBL,
