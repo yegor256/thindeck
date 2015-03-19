@@ -100,6 +100,32 @@ public final class DyUserTest {
     }
 
     /**
+     * DyUser can get itself from the Repos that it returns.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void getsReposForItself() throws Exception {
+        final Region region = new MkRegion(
+            new H2Data().with(
+                    DyRepo.TBL,
+                new String[] {DyRepo.ATTR_NAME},
+                new String[] {DyRepo.ATTR_UPDATED}
+            )
+        );
+        final Table table = region.table(DyRepo.TBL);
+        table.put(
+            new Attributes()
+                .with(DyRepo.ATTR_NAME, "test-user-repo")
+                .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
+        );
+        final User user = new DyUser(table.frame().iterator().next());
+        MatcherAssert.assertThat(
+            user.repos().user(),
+            Matchers.is(user)
+        );
+    }
+
+    /**
      * DyUser can return usage info.
      * @throws Exception If something goes wrong.
      */
