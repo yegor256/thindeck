@@ -36,11 +36,13 @@ import com.jcabi.dynamo.mock.H2Data;
 import com.jcabi.dynamo.mock.MkRegion;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Repos;
+import com.thindeck.api.User;
 import java.io.IOException;
 import java.util.Iterator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * Tests for {@link DyRepos}.
@@ -125,6 +127,31 @@ public final class DyReposTest {
         MatcherAssert.assertThat(repos.next().name(), Matchers.equalTo(first));
         MatcherAssert.assertThat(repos.next().name(), Matchers.equalTo(second));
         MatcherAssert.assertThat(repos.hasNext(), Matchers.is(false));
+    }
+
+    /**
+     * DyRepos can return the default user if the user was not specified.
+     * @throws Exception If something goes wrong.
+     */
+    @Test
+    public void returnsDefaultUser() throws Exception {
+        MatcherAssert.assertThat(
+            new DyRepos(Mockito.mock(Region.class)).user(),
+            Matchers.is(User.DEFAULT)
+        );
+    }
+
+    /**
+     * DyRepos can return the specified user if the user was not specified.
+     * @throws Exception If something goes wrong.
+     */
+    @Test
+    public void returnsSpecifiedUser() throws Exception {
+        final User user = Mockito.mock(User.class);
+        MatcherAssert.assertThat(
+            new DyRepos(Mockito.mock(Region.class), user).user(),
+            Matchers.is(user)
+        );
     }
 
     /**

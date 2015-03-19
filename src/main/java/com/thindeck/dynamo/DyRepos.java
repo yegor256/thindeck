@@ -39,6 +39,7 @@ import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Repos;
+import com.thindeck.api.User;
 import java.io.IOException;
 import java.util.Iterator;
 import lombok.EqualsAndHashCode;
@@ -59,11 +60,26 @@ public final class DyRepos implements Repos {
     private final transient Region region;
 
     /**
+     * Owner of these.
+     */
+    private final transient User owner;
+
+    /**
      * Constructor.
      * @param rgn Region
      */
     public DyRepos(final Region rgn) {
+        this(rgn, User.DEFAULT);
+    }
+
+    /**
+     * Constructor.
+     * @param rgn Region
+     * @param usr The user of the Repos
+     */
+    public DyRepos(final Region rgn, final User usr) {
         this.region = rgn;
+        this.owner = usr;
     }
 
     @Override
@@ -106,6 +122,11 @@ public final class DyRepos implements Repos {
                 }
             }
         );
+    }
+
+    @Override
+    public User user() {
+        return this.owner;
     }
 
     /**

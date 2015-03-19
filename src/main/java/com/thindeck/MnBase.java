@@ -138,6 +138,10 @@ public final class MnBase implements Base {
         public Iterable<Repo> iterate() {
             return Collections.<Repo>singleton(new MnBase.FakeRepo());
         }
+        @Override
+        public User user() {
+            throw new UnsupportedOperationException("#user()");
+        }
     }
 
     /**
