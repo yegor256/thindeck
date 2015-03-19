@@ -105,6 +105,10 @@ public final class DyRepos implements Repos {
         }
     }
 
+    //@todo #409:30min We should include the User as a filter to the repos that
+    // will be fetched. If the Default user is specified, we should return all
+    // repos. Otherwise, only the repos of that specific user should be
+    // contained in the Iterable.
     @Override
     public Iterable<Repo> iterate() {
         return Iterables.transform(

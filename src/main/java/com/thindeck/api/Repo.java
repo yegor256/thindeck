@@ -43,6 +43,9 @@ import javax.validation.constraints.NotNull;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
+ * @todo #409:30min Let's add a new method User user(). It should return the
+ *  User whom the Repo is associated to. Let's also add implementations in the
+ *  classes that implement this interface.
  */
 @Immutable
 public interface Repo {
