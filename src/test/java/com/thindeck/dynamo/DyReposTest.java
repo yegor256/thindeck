@@ -142,7 +142,7 @@ public final class DyReposTest {
     }
 
     /**
-     * DyRepos can return the specified user if the user was not specified.
+     * DyRepos can return the specified user.
      * @throws Exception If something goes wrong.
      */
     @Test
