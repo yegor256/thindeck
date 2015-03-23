@@ -65,6 +65,10 @@ public final class DyTask implements Task {
      */
     public static final String ATTR_COMM = "comm";
     /**
+     * Open attribute.
+     */
+    public static final String ATTR_OPEN = "open";
+    /**
      * Item.
      */
     private final transient Item item;
