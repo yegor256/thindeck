@@ -207,9 +207,9 @@ public final class DyTasksTest {
     @Test
     public void fetchesOpenTasks() throws Exception {
         final Repo repo = new MkRepo();
-        final long[] closed = new long[]{0L, 1L, 2L};
+        final Region region =
+            DyTasksTest.region(repo.name(), new long[]{0L, 1L, 2L});
         final long[] open = new long[]{3L, 4L};
-        final Region region = DyTasksTest.region(repo.name(), closed);
         final Table table = region.table(DyTask.TBL);
         for (final long tid : open) {
             table.put(task(repo.name(), tid, true));
