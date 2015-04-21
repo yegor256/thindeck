@@ -47,7 +47,6 @@ env:
   MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
 release:
   commanders:
-  - carlosmiranda
   - yegor256
   script: |-
     mvn versions:set "-DnewVersion=${tag}"
