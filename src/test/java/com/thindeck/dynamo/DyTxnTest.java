@@ -45,21 +45,11 @@ import org.junit.Test;
 public final class DyTxnTest {
 
     /**
-     * DyTxn can be build with a scenario with one task.
-     * @throws Exception In case of error.
-     */
-    @Test
-    public void getDyTxn() throws Exception {
-        final DyTxn txn = new DyTxn(new MkScenario());
-        MatcherAssert.assertThat(txn, Matchers.notNullValue());
-    }
-
-    /**
      * DyTxn can increment using steps of the scenario.
      * @throws Exception In case of error.
      */
     @Test
-    public void incrementDyTxn() throws Exception {
+    public void incrementsUsingScenarioSteps() throws Exception {
         final Scenario scn = new MkScenario();
         final DyTxn txn = new DyTxn(scn);
         int count = 0;
