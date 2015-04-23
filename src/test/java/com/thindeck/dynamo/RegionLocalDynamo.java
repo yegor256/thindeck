@@ -27,46 +27,57 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api;
+package com.thindeck.dynamo;
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.jcabi.aspects.Immutable;
-import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import com.jcabi.dynamo.Credentials;
+import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.Table;
+import com.jcabi.dynamo.retry.ReRegion;
+import com.jcabi.manifests.Manifests;
 
 /**
- * Step in a {@link Task}.
+ * Region for tests.
  *
- * <p>A step is called by {@link Txn}, when it has control of a task. A
- * call is made to {@link #exec(Context)}. The step is a passive component in
- * this sense.
- *
- * <p>A step should try to finish its execution as soon as possible, preferably
- * in less than a few milliseconds. If more time is required, it should
- * throw {@link com.thindeck.api.Txn.ReRunException} and expect
- * a new call in a few minutes.
- *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Adam Siemion (adam.siemion.null@lemonsoftware.pl)
  * @version $Id$
- * @since 0.1
  */
 @Immutable
-public interface Step {
+public final class RegionLocalDynamo implements Region {
 
     /**
-     * Unique name inside the task.
-     * @return Name
+     * Region.
      */
-    @NotNull(message = "step name can't be null")
-    String name();
+    private final transient Region region;
 
     /**
-     * Exec.
-     *
-     * <p>The method should throw {@link com.thindeck.api.Txn.ReRunException}
-     * if it needs to be called again, a bit later.
-     *
-     * @param ctx Execution context
-     * @throws IOException If fails
+     * Public constructor.
      */
-    void exec(Context ctx) throws IOException;
+    public RegionLocalDynamo() {
+        this.region = new Region.Prefixed(
+            new ReRegion(
+                new Region.Simple(
+                    new Credentials.Direct(
+                        new Credentials.Simple(
+                            Manifests.read("Thindeck-DynamoKey"),
+                            Manifests.read("Thindeck-DynamoSecret")
+                        ),
+                        Integer.parseInt(System.getProperty("dynamo.port"))
+                    )
+                )
+            ),
+            "td-"
+        );
+    }
+
+    @Override
+    public AmazonDynamoDB aws() {
+        return this.region.aws();
+    }
+
+    @Override
+    public Table table(final String name) {
+        return this.region.table(name);
+    }
 }

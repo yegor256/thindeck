@@ -29,11 +29,16 @@
  */
 package com.thindeck.dynamo;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
+import com.jcabi.matchers.XhtmlMatchers;
 import com.jcabi.xml.XML;
+import com.thindeck.api.mock.MkItem;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.xembly.Directives;
 
 /**
  * Test {@link DyMemo}.
@@ -49,11 +54,46 @@ public final class DyMemoTest {
      */
     @Test
     public void read() throws IOException {
-        final DyMemo memo = new DyMemo("<memo/>");
+        final DyMemo memo = new DyMemo(this.emptyMkItemWithMemo());
         final XML xml = memo.read();
         MatcherAssert.assertThat(
             xml.node().getFirstChild().getLocalName(),
             Matchers.equalTo("memo")
         );
+    }
+
+    /**
+     * DyMemo can update its content.
+     * @throws Exception If test fails
+     */
+    @Test
+    public void returnsItsUpdatedContent() throws Exception {
+        final DyMemo memo = new DyMemo(this.emptyMkItemWithMemo());
+        memo.update(
+            new Directives()
+                .xpath("/memo")
+                .add("uri").set("sample.uri")
+        );
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(memo.read().toString()),
+            XhtmlMatchers.hasXPaths(
+                "//memo/uri[text()=\"sample.uri\"]"
+            )
+        );
+    }
+
+    /**
+     * Returns a new {@link com.thindeck.api.mock.MkItem} instance with memo.
+     * @return MkItem instance
+     * @throws IOException transitively
+     */
+    private MkItem emptyMkItemWithMemo() throws IOException {
+        final MkItem item = new MkItem();
+        item.put(
+            DyRepo.ATTR_MEMO, new AttributeValueUpdate().withValue(
+                new AttributeValue("<memo/>")
+            )
+        );
+        return item;
     }
 }

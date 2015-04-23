@@ -1,17 +1,4 @@
-assets:
-  settings.xml: "yegor256/home#assets/thindeck/settings.xml"
-  id_rsa: "yegor256/home#assets/heroku-key"
-  id_rsa.pub: "yegor256/home#assets/heroku-key.pub"
-  s3cfg: "yegor256/home#assets/s3cfg"
-
-env:
-  MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
-
-architect:
-  - yegor256
-  - davvd
-
-install: |
+install: |-
   sudo apt-get update
   sudo apt-get install -y openjdk-6-jre
   wget --retry-connrefused http://yar.fruct.org/attachments/download/362/plantuml_7707-1_all.deb
@@ -19,34 +6,49 @@ install: |
   wget --retry-connrefused https://oss.sonatype.org/content/repositories/releases/net/sourceforge/plantuml/plantuml/8000/plantuml-8000.jar
   sudo mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar
   sudo gem install pdd
+  sudo gem install est
   cd src/main/bundler
   sudo bundle install
   cd ../../..
   git clone --depth=1 https://github.com/n1k0/casperjs.git /tmp/casperjs
   export PATH=$PATH:/tmp/casperjs/bin
-
-deploy:
-  script: |
-    mvn clean install -Prultor --settings ../settings.xml
-    s3cmd --no-progress put target/requs/requs.xml --config=../s3cfg s3://requs.teamed.io/thideck.xml
-    mvn clean
-    pdd --source=$(pwd) --verbose --file=thindeck.xml
-    s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml
-
+architect:
+- davvd
+assets:
+  id_rsa: yegor256/home#assets/heroku-key
+  settings.xml: yegor256/home#assets/thindeck/settings.xml
+  id_rsa.pub: yegor256/home#assets/heroku-key.pub
+  s3cfg: yegor256/home#assets/s3cfg
 merge:
   commanders:
-    - carlosmiranda
-    - krzyk
-    - longtimeago
-  script: |
+  - darkled
+  - ggajos
+  - krzyk
+  - longtimeago
+  - pinaf
+  script: |-
     export PATH=$PATH:/tmp/casperjs/bin
     mvn clean install -Ptomcat-test -Pqulice --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
     mvn clean
     pdd --source=$(pwd) --verbose --file=/dev/null --rule min-words:2 --rule min-estimate:15
-
+deploy:
+  script: |-
+    mvn clean install -Prultor --settings ../settings.xml
+    s3cmd --no-progress put target/requs/requs.xml --config=../s3cfg s3://requs.teamed.io/thideck.xml
+    mvn clean
+    pdd --source=$(pwd) --verbose --file=thindeck.xml
+    s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml
+    est --dir=$(pwd)/est --verbose --file=thindeck.xml --format=xml
+    s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://est.teamed.io/thindeck.xml
+  commanders:
+  - yegor256
+env:
+  MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
 release:
-  script: |
+  commanders:
+  - yegor256
+  script: |-
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mv ../settings.xml settings.xml

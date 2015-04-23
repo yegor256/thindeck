@@ -104,13 +104,4 @@ public final class ReadConfig implements Step {
         }
         ctx.memo().update(dirs);
     }
-    @Override
-    public void commit(final Context ctx) {
-        // nothing to commit
-    }
-
-    @Override
-    public void rollback(final Context ctx) {
-        // nothing to rollback
-    }
 }

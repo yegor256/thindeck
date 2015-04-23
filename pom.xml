@@ -26,7 +26,7 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>parent</artifactId>
-        <version>0.29</version>
+        <version>0.32.1</version>
     </parent>
     <groupId>com.thindeck</groupId>
     <artifactId>thindeck</artifactId>
@@ -191,6 +191,9 @@
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-github</artifactId>
+            <!-- Parent version contains immutability bug, see 
+                https://github.com/jcabi/jcabi-github/issues/934 -->
+            <version>0.21.3</version>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -591,6 +594,7 @@
                                     <secret>${failsafe.dynamo.secret}</secret>
                                     <tables>
                                         <table>${basedir}/src/test/dynamodb/repos.json</table>
+                                        <table>${basedir}/src/test/dynamodb/users.json</table>
                                         <table>${basedir}/src/test/dynamodb/tasks.json</table>
                                     </tables>
                                 </configuration>

@@ -29,10 +29,6 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.dynamo.Credentials;
-import com.jcabi.dynamo.Region;
-import com.jcabi.dynamo.retry.ReRegion;
-import com.jcabi.manifests.Manifests;
 import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -53,32 +49,11 @@ public final class DyBaseITCase {
     public void canAddCommand() throws Exception {
         final String command = "command";
         MatcherAssert.assertThat(
-            new DyBase(DyBaseITCase.region())
+            new DyBase(new RegionLocalDynamo())
                 .repos().add("test").tasks()
                 .add(command, Collections.<String, String>emptyMap())
                 .command(),
             Matchers.equalTo(command)
-        );
-    }
-
-    /**
-     * Create Region for tests.
-     * @return Region
-     */
-    private static Region region() {
-        return new Region.Prefixed(
-            new ReRegion(
-                new Region.Simple(
-                    new Credentials.Direct(
-                        new Credentials.Simple(
-                            Manifests.read("Thindeck-DynamoKey"),
-                            Manifests.read("Thindeck-DynamoSecret")
-                        ),
-                        Integer.parseInt(System.getProperty("dynamo.port"))
-                    )
-                )
-            ),
-            "td-"
         );
     }
 

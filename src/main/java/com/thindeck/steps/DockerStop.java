@@ -68,16 +68,6 @@ public final class DockerStop implements Step {
         ctx.log(Level.INFO, "%d blue containers stopped", blue.size());
     }
 
-    @Override
-    public void commit(final Context ctx) {
-        // nothing to commit
-    }
-
-    @Override
-    public void rollback(final Context ctx) {
-        // nothing to rollback
-    }
-
     /**
      * Stop docker container.
      * @param ctx Context

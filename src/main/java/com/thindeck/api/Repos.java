@@ -74,4 +74,11 @@ public interface Repos {
     @NotNull(message = "iterable of repos can't be null")
     Iterable<Repo> iterate();
 
+    /**
+     * The owner of this.
+     * @return Owner of the repos.
+     */
+    @NotNull(message = "user of repos can't be null")
+    User user();
+
 }

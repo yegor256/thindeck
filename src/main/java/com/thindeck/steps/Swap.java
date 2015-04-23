@@ -65,15 +65,4 @@ public final class Swap implements Step {
         );
         ctx.log(Level.INFO, "swapped blue vs green containers");
     }
-
-    @Override
-    public void commit(final Context ctx) {
-        // nothing to commit
-    }
-
-    @Override
-    public void rollback(final Context ctx) {
-        // nothing to rollback
-    }
-
 }

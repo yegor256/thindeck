@@ -27,46 +27,32 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api;
+package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
-import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import com.thindeck.api.User;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
- * Step in a {@link Task}.
+ * Test case for {@link DyUsage}.
  *
- * <p>A step is called by {@link Txn}, when it has control of a task. A
- * call is made to {@link #exec(Context)}. The step is a passive component in
- * this sense.
- *
- * <p>A step should try to finish its execution as soon as possible, preferably
- * in less than a few milliseconds. If more time is required, it should
- * throw {@link com.thindeck.api.Txn.ReRunException} and expect
- * a new call in a few minutes.
- *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.5
  */
-@Immutable
-public interface Step {
-
+public final class DyUsageTest {
     /**
-     * Unique name inside the task.
-     * @return Name
+     * DyUsage can return its user.
+     * @throws Exception If something goes wrong.
      */
-    @NotNull(message = "step name can't be null")
-    String name();
-
-    /**
-     * Exec.
-     *
-     * <p>The method should throw {@link com.thindeck.api.Txn.ReRunException}
-     * if it needs to be called again, a bit later.
-     *
-     * @param ctx Execution context
-     * @throws IOException If fails
-     */
-    void exec(Context ctx) throws IOException;
+    @Test
+    public void returnsUser() throws Exception {
+        final User user = Mockito.mock(User.class);
+        MatcherAssert.assertThat(
+            new DyUsage(user).user(),
+            Matchers.is(user)
+        );
+    }
 }

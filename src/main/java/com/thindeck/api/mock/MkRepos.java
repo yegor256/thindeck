@@ -32,6 +32,7 @@ package com.thindeck.api.mock;
 import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Repos;
+import com.thindeck.api.User;
 import java.util.Collections;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -61,5 +62,10 @@ public final class MkRepos implements Repos {
     @Override
     public Iterable<Repo> iterate() {
         return Collections.<Repo>singleton(new MkRepo());
+    }
+
+    @Override
+    public User user() {
+        return new MkUser();
     }
 }

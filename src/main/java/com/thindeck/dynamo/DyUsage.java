@@ -30,75 +30,65 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Tasks;
-import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import com.thindeck.api.Usage;
+import com.thindeck.api.User;
+import java.util.Date;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Dynamo implementation of {@link Repo}.
+ * Dynamo implementation of {@link Usage}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
+ * @since 0.5
  */
-@EqualsAndHashCode
-@ToString
 @Immutable
-public final class DyRepo implements Repo {
+@ToString
+@EqualsAndHashCode (of = "usr")
+public final class DyUsage implements Usage {
     /**
-     * Table name.
+     * User.
      */
-    public static final String TBL = "repos";
-
-    /**
-     * URN attribute.
-     */
-    public static final String ATTR_NAME = "name";
-
-    /**
-     * When updated.
-     */
-    public static final String ATTR_UPDATED = "updated";
-
-    /**
-     * Memo.
-     */
-    public static final String ATTR_MEMO = "memo";
-
-    /**
-     * Item.
-     */
-    private final transient Item item;
+    private final transient User usr;
 
     /**
      * Ctor.
-     * @param itm Item
+     * @param user The user
      */
-    public DyRepo(@NotNull final Item itm) {
-        this.item = itm;
+    DyUsage(final User user) {
+        this.usr = user;
     }
 
     @Override
-    public String name() {
-        try {
-            return this.item.get(DyRepo.ATTR_NAME).getS();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    public User user() {
+        return this.usr;
     }
 
+    // @todo #408:30min Let's implement the add() method. This method should
+    //  add the supplied Value to the usage info of the current user. Make sure
+    //  to include unit tests for this method in DyUsageTest.
     @Override
-    @NotNull
-    public Tasks tasks() {
-        return new DyTasks(this.item.frame().table().region(), this);
+    public void add(final Value value) {
+        throw new UnsupportedOperationException("add not yet implemented");
     }
 
+    // @todo #408:30min Let's implement the select() method. This method should
+    //  return the values that fit the given criteria (user and date range).
+    //  Make sure to include unit tests for this method in DyUsageTest.
     @Override
-    public Memo memo() throws IOException {
-        return new DyMemo(this.item);
+    public Iterable<Value> select(final Date start, final Date end) {
+        throw new UnsupportedOperationException("select not yet implemented");
+    }
+
+    // @todo #408:30min Let's implement the sum() method. This method should
+    //  return the aggregate sum of values that fit the given criteria. Make
+    //  sure to include unit tests for this method in DyUsageTest.
+    // @checkstyle ParameterNumber (3 lines)
+    @Override
+    public double sum(final Date start, final Date end, final Type type,
+        final Map<String, String> dims) {
+        throw new UnsupportedOperationException("sum not yet implemented");
     }
 }

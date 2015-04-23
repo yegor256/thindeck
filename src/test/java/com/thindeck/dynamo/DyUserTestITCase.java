@@ -27,46 +27,39 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api;
+package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
-import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import com.jcabi.dynamo.Attributes;
+import com.jcabi.dynamo.Table;
+import com.jcabi.urn.URN;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Step in a {@link Task}.
+ * Integration tests for {@link com.thindeck.dynamo.DyUser}
+ * using a real (local) DynamoDB server.
  *
- * <p>A step is called by {@link Txn}, when it has control of a task. A
- * call is made to {@link #exec(Context)}. The step is a passive component in
- * this sense.
- *
- * <p>A step should try to finish its execution as soon as possible, preferably
- * in less than a few milliseconds. If more time is required, it should
- * throw {@link com.thindeck.api.Txn.ReRunException} and expect
- * a new call in a few minutes.
- *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Adam Siemion (adam.siemion.null@lemonsoftware.pl)
  * @version $Id$
- * @since 0.1
+ * @todo #410:30min Implement an integration test for DyUser.repos()
  */
-@Immutable
-public interface Step {
-
+public final class DyUserTestITCase {
     /**
-     * Unique name inside the task.
-     * @return Name
+     * DyUser should return user URN.
+     * @throws Exception Exception thrown during the test
      */
-    @NotNull(message = "step name can't be null")
-    String name();
-
-    /**
-     * Exec.
-     *
-     * <p>The method should throw {@link com.thindeck.api.Txn.ReRunException}
-     * if it needs to be called again, a bit later.
-     *
-     * @param ctx Execution context
-     * @throws IOException If fails
-     */
-    void exec(Context ctx) throws IOException;
+    @Test
+    public void returnUserUrn() throws Exception {
+        final String urn = "urn:test:1";
+        final Table table = new RegionLocalDynamo().table(DyUser.TBL);
+        table.put(
+            new Attributes()
+                .with(DyUser.ATTR_URN, urn)
+        );
+        MatcherAssert.assertThat(
+            new DyUser(table.frame().iterator().next()).urn(),
+            Matchers.equalTo(URN.create(urn))
+        );
+    }
 }

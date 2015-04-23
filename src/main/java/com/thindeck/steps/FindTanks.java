@@ -61,14 +61,4 @@ public final class FindTanks implements Step {
         );
         ctx.log(Level.INFO, "one tank t1.thindeck.com found");
     }
-
-    @Override
-    public void commit(final Context ctx) {
-        // nothing to commit
-    }
-
-    @Override
-    public void rollback(final Context ctx) {
-        // nothing to rollback
-    }
 }

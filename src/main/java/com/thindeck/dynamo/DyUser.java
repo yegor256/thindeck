@@ -44,16 +44,6 @@ import lombok.ToString;
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #374:30min At the moment, the repos() method returns all Repos associated
- *  with the Dynamo region, and this is definitely incorrect. I think we need to
- *  refactor DyRepos in order to include a user criteria (probably URN) in its
- *  constructor, and have DyUser pass it so that it will only return the
- *  associated criteria. I'm not completely sure about this design, feel free to
- *  implement something else if you think it's wrong. The intuition behind it is
- *  that we should only get the repos associated with the current user.
- * @todo #374:30min Implement usage method. To do this we need to implement a class
- *  DyUsage that implements the Usage interface. This will obtain the usage
- *  associated to this user from Dynamo DB.
  */
 @EqualsAndHashCode
 @ToString
@@ -93,11 +83,11 @@ public final class DyUser implements User {
 
     @Override
     public Repos repos() {
-        return new DyRepos(this.item.frame().table().region());
+        return new DyRepos(this.item.frame().table().region(), this);
     }
 
     @Override
     public Usage usage() {
-        throw new UnsupportedOperationException();
+        return new DyUsage(this);
     }
 }

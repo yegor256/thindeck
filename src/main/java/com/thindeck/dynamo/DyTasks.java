@@ -53,7 +53,6 @@ import lombok.ToString;
  * @author Paul Polishchuk (ppol@yua.fm)
  * @version $Id$
  * @since 0.5
- * @todo #406:30min Implement open method.
  */
 @Immutable
 @ToString
@@ -100,7 +99,29 @@ public final class DyTasks implements Tasks {
 
     @Override
     public Iterable<Task> open() {
-        throw new UnsupportedOperationException("#open");
+        return Iterables.transform(
+            this.region.table(DyTask.TBL)
+                .frame()
+                .through(
+                new QueryValve()
+                    .withSelect(Select.ALL_PROJECTED_ATTRIBUTES)
+                )
+                .where(
+                new Conditions().with(
+                    DyTask.ATTR_OPEN,
+                    String.valueOf(true)
+                ).with(
+                        DyTask.ATTR_REPO_URN,
+                        this.repo.name()
+                    )
+                ),
+            new Function<Item, Task>() {
+                @Override
+                public Task apply(final Item input) {
+                    return new DyTask(input);
+                }
+            }
+        );
     }
 
     @Override

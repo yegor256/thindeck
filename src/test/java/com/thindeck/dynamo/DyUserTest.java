@@ -38,6 +38,8 @@ import com.jcabi.dynamo.mock.H2Data;
 import com.jcabi.dynamo.mock.MkRegion;
 import com.jcabi.urn.URN;
 import com.thindeck.api.Repo;
+import com.thindeck.api.Usage;
+import com.thindeck.api.User;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -49,9 +51,6 @@ import org.mockito.Mockito;
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @todo #374:30min We should create an integration test for DyUser. Let's call it
- *  DyUserITCase. It should test whether DyUser can perform its operations on a
- *  real (local) Dynamo server. When done, ensure that this puzzle is removed.
  */
 public final class DyUserTest {
 
@@ -97,6 +96,48 @@ public final class DyUserTest {
         MatcherAssert.assertThat(
             new DyUser(table.frame().iterator().next()).repos().iterate(),
             Matchers.<Repo>iterableWithSize(1)
+        );
+    }
+
+    /**
+     * DyUser can get itself from the Repos that it returns.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void getsItselfFromRepos() throws Exception {
+        final Region region = new MkRegion(
+            new H2Data().with(
+                    DyRepo.TBL,
+                new String[] {DyRepo.ATTR_NAME},
+                new String[] {DyRepo.ATTR_UPDATED}
+            )
+        );
+        final Table table = region.table(DyRepo.TBL);
+        table.put(
+            new Attributes()
+                .with(DyRepo.ATTR_NAME, "test-user-repo")
+                .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
+        );
+        final User user = new DyUser(table.frame().iterator().next());
+        MatcherAssert.assertThat(
+            user.repos().user(),
+            Matchers.is(user)
+        );
+    }
+
+    /**
+     * DyUser can return usage info.
+     * @throws Exception If something goes wrong.
+     */
+    @Test
+    public void returnsUsageInfo() throws Exception {
+        final User user = new DyUser(Mockito.mock(Item.class));
+        final Usage usage = user.usage();
+        MatcherAssert.assertThat(
+            usage, Matchers.notNullValue()
+        );
+        MatcherAssert.assertThat(
+            usage.user(), Matchers.is(user)
         );
     }
 }

@@ -31,36 +31,26 @@ package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
 import java.io.IOException;
-import javax.validation.constraints.NotNull;
 
 /**
- * Step in a {@link Task}.
+ * Transactional step in a {@link Task}.
  *
  * <p>A step is called by {@link Txn}, when it has control of a task. A
- * call is made to {@link #exec(Context)}. The step is a passive component in
- * this sense.
+ * call is made either to {@link #exec(Context)}, {@link #commit(Context)}
+ * or {@link #rollback(Context)}. This depends on the situation with
+ * the transaction. This decision is made only by the transaction. The step
+ * is a passive component in this sense.
+ * <p>Read more about our two-phase commit protocol in {@link Txn}.
  *
- * <p>A step should try to finish its execution as soon as possible, preferably
- * in less than a few milliseconds. If more time is required, it should
- * throw {@link com.thindeck.api.Txn.ReRunException} and expect
- * a new call in a few minutes.
+ * @see Step
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Marton Horvath (marton.horvath@m323.org)
  * @version $Id$
- * @since 0.1
  */
 @Immutable
-public interface Step {
-
+public interface TransactionalStep extends Step {
     /**
-     * Unique name inside the task.
-     * @return Name
-     */
-    @NotNull(message = "step name can't be null")
-    String name();
-
-    /**
-     * Exec.
+     * Commit.
      *
      * <p>The method should throw {@link com.thindeck.api.Txn.ReRunException}
      * if it needs to be called again, a bit later.
@@ -68,5 +58,16 @@ public interface Step {
      * @param ctx Execution context
      * @throws IOException If fails
      */
-    void exec(Context ctx) throws IOException;
+    void commit(Context ctx) throws IOException;
+
+    /**
+     * Rollback.
+     *
+     * <p>The method should throw {@link com.thindeck.api.Txn.ReRunException}
+     * if it needs to be called again, a bit later.
+     *
+     * @param ctx Execution context
+     * @throws IOException If fails
+     */
+    void rollback(Context ctx) throws IOException;
 }

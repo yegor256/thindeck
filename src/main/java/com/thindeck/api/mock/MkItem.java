@@ -31,11 +31,12 @@ package com.thindeck.api.mock;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
-import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Frame;
 import com.jcabi.dynamo.Item;
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -45,7 +46,6 @@ import lombok.ToString;
  * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
  */
-@Immutable
 @ToString
 @EqualsAndHashCode
 public final class MkItem implements Item {
@@ -55,6 +55,12 @@ public final class MkItem implements Item {
      */
     @SuppressWarnings({ "unused", "PMD.SingularField" })
     private final transient long numb;
+
+    /**
+     * Map with updates.
+     */
+    private final transient ConcurrentMap<String,
+        AttributeValueUpdate> updatemap = new ConcurrentHashMap<>();
 
     /**
      * Default constructor.
@@ -74,28 +80,46 @@ public final class MkItem implements Item {
 
     @Override
     public AttributeValue get(final String str) throws IOException {
-        throw new UnsupportedOperationException("#get");
+        if (!this.updatemap.containsKey(str)) {
+            throw new IllegalArgumentException();
+        }
+        return this.updatemap.get(str).getValue();
     }
 
     @Override
     public boolean has(final String str) throws IOException {
-        throw new UnsupportedOperationException("#has");
+        return this.updatemap.containsKey(str);
     }
 
     @Override
     public Map<String, AttributeValue> put(final String str,
             final AttributeValueUpdate value) throws IOException {
-        throw new UnsupportedOperationException("#put");
+        this.updatemap.put(str, value);
+        return this.updates();
     }
 
     @Override
     public Map<String, AttributeValue> put(
             final Map<String, AttributeValueUpdate> map) throws IOException {
-        throw new UnsupportedOperationException("#put(map)");
+        this.updatemap.putAll(map);
+        return this.updates();
     }
 
     @Override
     public Frame frame() {
         throw new UnsupportedOperationException("#frame");
+    }
+
+    /**
+     * Returns a copy of {@link com.thindeck.api.mock.MkItem#updatemap}.
+     * @return Map instance
+     */
+    private Map<String, AttributeValue> updates() {
+        final ConcurrentMap<String,
+            AttributeValue> map = new ConcurrentHashMap<>();
+        for (final Map.Entry<String, AttributeValue> entry : map.entrySet()) {
+            map.put(entry.getKey(), entry.getValue());
+        }
+        return map;
     }
 }

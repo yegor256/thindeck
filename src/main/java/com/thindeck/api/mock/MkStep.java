@@ -66,14 +66,4 @@ public final class MkStep implements Step {
     public void exec(final Context ctx) throws IOException {
         // do nothing
     }
-
-    @Override
-    public void commit(final Context ctx) throws IOException {
-        // do nothing
-    }
-
-    @Override
-    public void rollback(final Context ctx) throws IOException {
-        // do nothing
-    }
 }

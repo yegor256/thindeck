@@ -30,21 +30,24 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.AttributeUpdates;
+import com.jcabi.dynamo.Item;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import com.thindeck.api.Memo;
 import java.io.IOException;
+import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.xembly.Directive;
+import org.xembly.Xembler;
 
 /**
  * Dynamo implementation of {@code Memo}.
  *
  * @author Nathan Green (ngreen@inco5.com)
  * @version $Id$
- * @todo #405:30min implement update.
  */
 @Immutable
 @ToString
@@ -52,22 +55,23 @@ import org.xembly.Directive;
 public final class DyMemo implements Memo {
 
     /**
-     * The memo.
+     * Item.
      */
-    private final transient String memo;
+    private final transient Item item;
+
     /**
      * Constructor.
-     * @param xml An XML string
+     * @param itm Item
      */
-    public DyMemo(final String xml) {
-        this.memo = xml;
+    public DyMemo(@NotNull final Item itm) {
+        this.item = itm;
     }
 
     @Override
     public XML read() throws IOException {
         return new StrictXML(
             Memo.CLEANUP.transform(
-                new XMLDocument(this.memo)
+                new XMLDocument(this.item.get(DyRepo.ATTR_MEMO).getS())
             ),
             Memo.SCHEMA
         );
@@ -75,6 +79,13 @@ public final class DyMemo implements Memo {
 
     @Override
     public void update(final Iterable<Directive> dirs) throws IOException {
-        throw new UnsupportedOperationException("#update");
+        this.item.put(
+            new AttributeUpdates().with(
+                DyRepo.ATTR_MEMO,
+                new XMLDocument(
+                    new Xembler(dirs).applyQuietly(this.read().node())
+                ).toString()
+            )
+        );
     }
 }

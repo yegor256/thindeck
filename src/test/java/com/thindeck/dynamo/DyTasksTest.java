@@ -38,11 +38,12 @@ import com.thindeck.api.Repo;
 import com.thindeck.api.Task;
 import com.thindeck.api.mock.MkRepo;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
+import org.apache.commons.lang3.ArrayUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -95,11 +96,8 @@ public final class DyTasksTest {
     /**
      * DyTask can add a task with attributes in NULL.
      * @throws Exception In case of error.
-     * @todo #491:15min Unignore following test when #492 is finished and
-     *  check the test passes
      */
     @Test
-    @Ignore
     public void addTaskNullAttributes() throws Exception {
         final Repo repo = new MkRepo();
         final DyTasks tasks = new DyTasks(
@@ -118,7 +116,6 @@ public final class DyTasksTest {
      * @throws Exception In case of error.
      */
     @Test
-    @Ignore
     public void addTaskWithoutAttributes() throws Exception {
         final Repo repo = new MkRepo();
         final DyTasks tasks = new DyTasks(
@@ -126,7 +123,7 @@ public final class DyTasksTest {
             repo
         );
         final ConcurrentHashMap<String, String> map =
-            new ConcurrentHashMap<String, String>();
+            new ConcurrentHashMap<>(0);
         final Task task = tasks.add(DyTasksTest.CMD, map);
         MatcherAssert.assertThat(
             task.command(),
@@ -139,7 +136,6 @@ public final class DyTasksTest {
      * @throws Exception In case of error.
      */
     @Test
-    @Ignore
     public void addTaskWithAttributes() throws Exception {
         final Repo repo = new MkRepo();
         final DyTasks tasks = new DyTasks(
@@ -147,7 +143,7 @@ public final class DyTasksTest {
             repo
         );
         final ConcurrentHashMap<String, String> map =
-            new ConcurrentHashMap<String, String>();
+            new ConcurrentHashMap<>(1);
         map.put("key", "value");
         final Task task = tasks.add(DyTasksTest.CMD, map);
         MatcherAssert.assertThat(
@@ -205,7 +201,34 @@ public final class DyTasksTest {
     }
 
     /**
-     * Create region with one repo and multiple tasks.
+     * DyTasks can retrieve open tasks.
+     * @throws Exception In case of error.
+     */
+    @Test
+    public void fetchesOpenTasks() throws Exception {
+        final Repo repo = new MkRepo();
+        final Region region =
+            DyTasksTest.region(repo.name(), new long[]{0L, 1L, 2L});
+        final long[] open = new long[]{3L, 4L};
+        final Table table = region.table(DyTask.TBL);
+        for (final long tid : open) {
+            table.put(task(repo.name(), tid, true));
+        }
+        final Iterable<Task> tasks = new DyTasks(region, repo).open();
+        MatcherAssert.assertThat(
+            tasks,
+            Matchers.<Task>iterableWithSize(open.length)
+        );
+        for (final Task task : tasks) {
+            MatcherAssert.assertThat(
+                task.number(),
+                Matchers.isIn(Arrays.asList(ArrayUtils.toObject(open)))
+            );
+        }
+    }
+
+    /**
+     * Create region with one repo and multiple closed tasks.
      * @param repo Repo urn.
      * @param ids Ids of tasks.
      * @return Region created.
@@ -218,16 +241,32 @@ public final class DyTasksTest {
             new H2Data().with(
                 DyTask.TBL,
                 new String[] {DyTask.ATTR_ID},
-                new String[] {DyTask.ATTR_REPO_URN}
+                new String[] {
+                    DyTask.ATTR_COMM, DyTask.ATTR_REPO_URN, DyTask.ATTR_OPEN,
+                }
             )
         );
         final Table table = region.table(DyTask.TBL);
         for (final long tid : ids) {
-            table.put(
-                new Attributes().with(DyTask.ATTR_ID, tid)
-                    .with(DyTask.ATTR_REPO_URN, repo)
-            );
+            table.put(task(repo, tid, false));
         }
         return region;
+    }
+
+    /**
+     * Attributes for task.
+     * @param repo Repo URN.
+     * @param tid Task ID.
+     * @param open Is this task open?
+     * @throws IOException If an IO exception occurs.
+     * @return Attributes corresponding to a Task
+     */
+    private static Attributes task(final String repo,
+        final long tid, final boolean open) throws IOException {
+        return new Attributes()
+            .with(DyTask.ATTR_ID, tid)
+            .with(DyTask.ATTR_COMM, DyTasksTest.CMD)
+            .with(DyTask.ATTR_REPO_URN, repo)
+            .with(DyTask.ATTR_OPEN, open);
     }
 }
