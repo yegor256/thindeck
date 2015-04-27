@@ -13,6 +13,7 @@ install: |-
   git clone --depth=1 https://github.com/n1k0/casperjs.git /tmp/casperjs
   export PATH=$PATH:/tmp/casperjs/bin
 architect:
+- yegor256
 - davvd
 assets:
   id_rsa: yegor256/home#assets/heroku-key
