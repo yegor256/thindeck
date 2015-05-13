@@ -29,63 +29,37 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.QueryValve;
-import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Base;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
-import com.thindeck.api.User;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.thindeck.api.Scenario;
+import com.thindeck.api.Step;
+import com.thindeck.api.mock.MkScenario;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Dynamo implementation of the {@link Base}.
+ * Test case for {@link DyTxn}.
  *
- * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * @author Mauricio Herrera (oruam85@gmail.com)
  * @version $Id$
- * @since 0.3
  */
-@EqualsAndHashCode(of = "region")
-@ToString
-@Immutable
-public final class DyBase implements Base {
-    /**
-     * Region we're in.
-     */
-    private final transient Region region;
+public final class DyTxnTest {
 
     /**
-     * Constructor.
-     * @param rgn Region
+     * DyTxn can increment using steps of the scenario.
+     * @throws Exception In case of error.
      */
-    public DyBase(final Region rgn) {
-        this.region = rgn;
-    }
-
-    @Override
-    public User user(final URN urn) {
-        return new DyUser(
-            this.region.table(DyUser.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyUser.ATTR_URN, urn.toString())
-                .iterator().next()
+    @Test
+    public void incrementsUsingScenarioSteps() throws Exception {
+        final Scenario scn = new MkScenario();
+        final DyTxn txn = new DyTxn(scn);
+        int count = 0;
+        for (@SuppressWarnings("unused") final Step step : scn.steps()) {
+            txn.increment();
+            count += 1;
+        }
+        MatcherAssert.assertThat(
+            count,
+            Matchers.equalTo(1)
         );
-    }
-
-    @Override
-    public Repos repos() {
-        return new DyRepos(this.region);
-    }
-
-    @Override
-    public Txn txn(final Task task) {
-        return new DyTxn(task.scenario());
     }
 }

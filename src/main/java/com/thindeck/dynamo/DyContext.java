@@ -30,62 +30,30 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.QueryValve;
-import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Base;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
-import com.thindeck.api.User;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.thindeck.api.Context;
+import com.thindeck.api.Memo;
+import java.io.IOException;
+import java.util.logging.Level;
 
 /**
- * Dynamo implementation of the {@link Base}.
- *
- * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * Dynamo implementation of the {@link com.thindeck.api.Context}.
+ * @author Mauricio Herrera (oruam85@gmail.com)
  * @version $Id$
- * @since 0.3
  */
-@EqualsAndHashCode(of = "region")
-@ToString
 @Immutable
-public final class DyBase implements Base {
-    /**
-     * Region we're in.
-     */
-    private final transient Region region;
-
-    /**
-     * Constructor.
-     * @param rgn Region
-     */
-    public DyBase(final Region rgn) {
-        this.region = rgn;
+public final class DyContext implements Context {
+    // @todo #462:30min  DyContext.memo() should be implemented. This method
+    //  should return the Memo object that will use in this context.
+    @Override
+    public Memo memo() throws IOException {
+        throw new UnsupportedOperationException("#memo");
     }
 
+    // @todo #462:30min DyContext.log() should be implemented. This method
+    //  should add a new line in the log.
     @Override
-    public User user(final URN urn) {
-        return new DyUser(
-            this.region.table(DyUser.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyUser.ATTR_URN, urn.toString())
-                .iterator().next()
-        );
-    }
-
-    @Override
-    public Repos repos() {
-        return new DyRepos(this.region);
-    }
-
-    @Override
-    public Txn txn(final Task task) {
-        return new DyTxn(task.scenario());
+    public void log(final Level level, final String text,
+        final Object... args) {
+        throw new UnsupportedOperationException("#log");
     }
 }
