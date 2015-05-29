@@ -57,6 +57,7 @@
                             </li>
                             <li>
                                 <a href="{links/link[@rel='account']/@href}">
+                                    <xsl:text>@</xsl:text>
                                     <xsl:value-of select="identity/login"/>
                                 </a>
                             </li>
