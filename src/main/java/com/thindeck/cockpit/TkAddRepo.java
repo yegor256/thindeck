@@ -27,45 +27,63 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.cockpit;
 
-import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Task;
-import com.thindeck.api.Tasks;
-import java.util.Collections;
-import java.util.Map;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.thindeck.api.Base;
+import com.thindeck.api.Repo;
+import java.io.IOException;
+import org.takes.Request;
+import org.takes.Response;
+import org.takes.Take;
+import org.takes.facets.flash.RsFlash;
+import org.takes.facets.forward.RsForward;
+import org.takes.rq.RqForm;
+import org.xembly.Directives;
 
 /**
- * Mock of {@link Tasks}.
+ * Add repo.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.5
+ * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkTasks implements Tasks {
+public final class TkAddRepo implements Take {
 
-    @Override
-    public Task get(final long number) {
-        return new MkTask(number);
+    /**
+     * Base.
+     */
+    private final transient Base base;
+
+    /**
+     * Ctor.
+     * @param bse Base
+     */
+    TkAddRepo(final Base bse) {
+        this.base = bse;
     }
 
     @Override
-    public Iterable<Task> open() {
-        return Collections.<Task>singleton(new MkTask());
+    public Response act(final Request req) throws IOException {
+        final RqForm.Smart form = new RqForm.Smart(new RqForm.Base(req));
+        final String name = form.single("name");
+        final String uri = form.single("uri");
+        final Repo repo = new RqUser(req, this.base).get().repos().add(name);
+        try {
+            repo.memo().update(
+                new Directives().xpath("/memo").addIf("uri").set(uri)
+            );
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+        return new RsForward(
+            new RsFlash(
+                String.format(
+                    "repo \"%s\" added with URI=\"%s\"",
+                    name, uri
+                )
+            )
+        );
     }
 
-    @Override
-    public Iterable<Task> all() {
-        return Collections.<Task>singleton(new MkTask());
-    }
-
-    @Override
-    public Task add(final String command, final Map<String, String> args) {
-        return new MkTask();
-    }
 }

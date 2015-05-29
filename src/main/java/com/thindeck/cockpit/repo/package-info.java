@@ -27,45 +27,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
-
-import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Task;
-import com.thindeck.api.Tasks;
-import java.util.Collections;
-import java.util.Map;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
- * Mock of {@link Tasks}.
+ * Repo mgmt.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.5
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkTasks implements Tasks {
-
-    @Override
-    public Task get(final long number) {
-        return new MkTask(number);
-    }
-
-    @Override
-    public Iterable<Task> open() {
-        return Collections.<Task>singleton(new MkTask());
-    }
-
-    @Override
-    public Iterable<Task> all() {
-        return Collections.<Task>singleton(new MkTask());
-    }
-
-    @Override
-    public Task add(final String command, final Map<String, String> args) {
-        return new MkTask();
-    }
-}
+package com.thindeck.cockpit.repo;

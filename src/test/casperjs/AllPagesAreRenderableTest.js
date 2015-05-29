@@ -2,11 +2,11 @@
 [
     '/',
     '/xsl/layout.xsl',
+    '/css/style.css',
     '/robots.txt',
     '/acc',
-    '/repos',
     '/r/fake-repo',
-    '/t/fake-repo/1/log'
+    '/r/fake-repo/log?task=1'
 ].forEach(
     function (page) {
         casper.test.begin(
@@ -15,7 +15,7 @@
                 casper.start(
                     casper.cli.get("home") + page,
                     function () {
-                        test.assertHttpStatus(200);
+                        test.assertHttpStatus(200, page);
                     }
                 );
                 casper.run(

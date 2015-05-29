@@ -27,45 +27,58 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.cockpit;
 
-import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Task;
-import com.thindeck.api.Tasks;
-import java.util.Collections;
-import java.util.Map;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.jcabi.urn.URN;
+import com.thindeck.api.Base;
+import com.thindeck.api.User;
+import java.io.IOException;
+import org.takes.Request;
+import org.takes.facets.auth.Identity;
+import org.takes.facets.auth.RqAuth;
+import org.takes.facets.flash.RsFlash;
+import org.takes.facets.forward.RsForward;
+import org.takes.rq.RqWrap;
 
 /**
- * Mock of {@link Tasks}.
+ * Request with user.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.5
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkTasks implements Tasks {
+public final class RqUser extends RqWrap {
 
-    @Override
-    public Task get(final long number) {
-        return new MkTask(number);
+    /**
+     * Base.
+     */
+    private final transient Base base;
+
+    /**
+     * Ctor.
+     * @param req Request
+     * @param bse Base
+     */
+    public RqUser(final Request req, final Base bse) {
+        super(req);
+        this.base = bse;
     }
 
-    @Override
-    public Iterable<Task> open() {
-        return Collections.<Task>singleton(new MkTask());
+    /**
+     * Get user.
+     * @return User
+     * @throws IOException If fails
+     */
+    public User get() throws IOException {
+        final Identity identity = new RqAuth(this).identity();
+        if (identity.equals(Identity.ANONYMOUS)) {
+            throw new RsForward(
+                new RsFlash("you are not logged in")
+            );
+        }
+        return this.base.user(
+            URN.create(identity.urn())
+        );
     }
 
-    @Override
-    public Iterable<Task> all() {
-        return Collections.<Task>singleton(new MkTask());
-    }
-
-    @Override
-    public Task add(final String command, final Map<String, String> args) {
-        return new MkTask();
-    }
 }

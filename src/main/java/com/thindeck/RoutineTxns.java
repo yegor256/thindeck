@@ -27,45 +27,62 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck;
 
-import com.jcabi.aspects.Immutable;
+import com.jcabi.aspects.Loggable;
+import com.jcabi.aspects.ScheduleWithFixedDelay;
+import com.thindeck.api.Base;
+import com.thindeck.api.Repo;
 import com.thindeck.api.Task;
-import com.thindeck.api.Tasks;
-import java.util.Collections;
-import java.util.Map;
+import java.io.Closeable;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Mock of {@link Tasks}.
+ * Agents.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.5
+ * @since 0.1
  */
-@Immutable
 @ToString
 @EqualsAndHashCode
-public final class MkTasks implements Tasks {
+@ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.MINUTES)
+@Loggable(Loggable.INFO)
+@SuppressWarnings("PMD.DoNotUseThreads")
+final class RoutineTxns implements Runnable, Closeable {
 
-    @Override
-    public Task get(final long number) {
-        return new MkTask(number);
+    /**
+     * Base.
+     */
+    private final transient Base base;
+
+    /**
+     * Execute them all.
+     * @param bse Base
+     */
+    RoutineTxns(final Base bse) {
+        this.base = bse;
     }
 
     @Override
-    public Iterable<Task> open() {
-        return Collections.<Task>singleton(new MkTask());
+    public void run() {
+        for (final Repo repo : this.base.repos().iterate()) {
+            for (final Task task : repo.tasks().open()) {
+                try {
+                    this.base.txn(task).increment();
+                } catch (final IOException ex) {
+                    throw new IllegalStateException(ex);
+                }
+            }
+        }
     }
 
     @Override
-    public Iterable<Task> all() {
-        return Collections.<Task>singleton(new MkTask());
+    public void close() {
+        // nothing to do
     }
 
-    @Override
-    public Task add(final String command, final Map<String, String> args) {
-        return new MkTask();
-    }
 }

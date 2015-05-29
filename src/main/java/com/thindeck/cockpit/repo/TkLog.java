@@ -27,45 +27,52 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.cockpit.repo;
 
-import com.jcabi.aspects.Immutable;
+import com.google.common.base.Joiner;
+import com.thindeck.api.Base;
+import com.thindeck.api.Repo;
 import com.thindeck.api.Task;
-import com.thindeck.api.Tasks;
-import java.util.Collections;
-import java.util.Map;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import java.io.IOException;
+import org.takes.Request;
+import org.takes.Response;
+import org.takes.Take;
+import org.takes.rq.RqHref;
+import org.takes.rs.RsText;
 
 /**
- * Mock of {@link Tasks}.
+ * Log of one task.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.5
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkTasks implements Tasks {
+public final class TkLog implements Take {
 
-    @Override
-    public Task get(final long number) {
-        return new MkTask(number);
+    /**
+     * Base.
+     */
+    private final transient Base base;
+
+    /**
+     * Ctor.
+     * @param bse Base
+     */
+    TkLog(final Base bse) {
+        this.base = bse;
     }
 
     @Override
-    public Iterable<Task> open() {
-        return Collections.<Task>singleton(new MkTask());
+    public Response act(final Request req) throws IOException {
+        final Repo repo = new RqRepo(this.base, req).repo();
+        final Task task = repo.tasks().get(
+            Long.parseLong(
+                new RqHref.Smart(new RqHref.Base(req)).single("task")
+            )
+        );
+        return new RsText(
+            Joiner.on('\n').join(this.base.txn(task).log())
+        );
     }
 
-    @Override
-    public Iterable<Task> all() {
-        return Collections.<Task>singleton(new MkTask());
-    }
-
-    @Override
-    public Task add(final String command, final Map<String, String> args) {
-        return new MkTask();
-    }
 }

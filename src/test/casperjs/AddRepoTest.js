@@ -2,19 +2,33 @@
 casper.test.begin(
     'can add repo',
     function (test) {
-        casper.start(
-            casper.cli.get("home") + '/repos',
+        casper.start().then(
             function () {
-                test.assertHttpStatus(200);
-            }
-        );
-        casper.then(
-            function () {
-                this.fill('.content > form', {
-                    'name' : 'test_repo_name',
-                    'uri'  : 'test_repo_uri'
-                }, true);
-                test.assertHttpStatus(200);
+                this.open(
+                    casper.cli.get("home"),
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'text/html'
+                        }
+                    }
+                ).then(
+                    function () {
+                        test.assertHttpStatus(200);
+                    }
+                ).then(
+                    function () {
+                        this.fill(
+                            'form',
+                            {
+                                'name': 'test_repo_name',
+                                'uri': 'test_repo_uri'
+                            },
+                            true
+                        );
+                        test.assertHttpStatus(200);
+                    }
+                );
             }
         );
         casper.run(

@@ -1,3 +1,6 @@
+Thindeck-Version: 1.0
+Thindeck-Date: ${timestamp}
+Thindeck-Revision: TEST
 Thindeck-GithubId: ${failsafe.github.id}
 Thindeck-GithubSecret: ${failsafe.github.secret}
 Thindeck-SecurityKey: ${failsafe.security.key}

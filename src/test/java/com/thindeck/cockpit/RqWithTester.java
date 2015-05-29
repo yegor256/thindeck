@@ -27,45 +27,73 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.cockpit;
 
-import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Task;
-import com.thindeck.api.Tasks;
-import java.util.Collections;
-import java.util.Map;
+import com.jcabi.urn.URN;
+import java.io.IOException;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import org.takes.Request;
+import org.takes.facets.auth.Identity;
+import org.takes.facets.auth.TkAuth;
+import org.takes.facets.auth.codecs.CcPlain;
+import org.takes.rq.RqFake;
+import org.takes.rq.RqWithHeader;
+import org.takes.rq.RqWrap;
 
 /**
- * Mock of {@link Tasks}.
+ * Request with tester.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.5
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkTasks implements Tasks {
+@EqualsAndHashCode(callSuper = true)
+public final class RqWithTester extends RqWrap {
 
-    @Override
-    public Task get(final long number) {
-        return new MkTask(number);
+    /**
+     * Ctor.
+     * @throws IOException If fails
+     */
+    public RqWithTester() throws IOException {
+        this(URN.create("urn:test:tester"), new RqFake());
     }
 
-    @Override
-    public Iterable<Task> open() {
-        return Collections.<Task>singleton(new MkTask());
+    /**
+     * Ctor.
+     * @param urn URN of the tester
+     * @throws IOException If fails
+     */
+    public RqWithTester(final URN urn) throws IOException {
+        this(urn, new RqFake());
     }
 
-    @Override
-    public Iterable<Task> all() {
-        return Collections.<Task>singleton(new MkTask());
+    /**
+     * Ctor.
+     * @param urn URN of the tester
+     * @param req Request
+     * @throws IOException If fails
+     */
+    public RqWithTester(final URN urn, final Request req) throws IOException {
+        super(RqWithTester.make(urn, req));
     }
 
-    @Override
-    public Task add(final String command, final Map<String, String> args) {
-        return new MkTask();
+    /**
+     * Ctor.
+     * @param urn URN of the tester
+     * @param req Request
+     * @return Request
+     * @throws IOException If fails
+     */
+    private static Request make(final URN urn, final Request req)
+        throws IOException {
+        return new RqWithHeader(
+            req,
+            TkAuth.class.getSimpleName(),
+            new String(
+                new CcPlain().encode(
+                    new Identity.Simple(urn.toString())
+                )
+            )
+        );
     }
 }

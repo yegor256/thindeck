@@ -27,45 +27,41 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.cockpit.repo;
 
-import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Task;
-import com.thindeck.api.Tasks;
-import java.util.Collections;
-import java.util.Map;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.thindeck.api.Base;
+import org.takes.Take;
+import org.takes.facets.fork.TkFork;
+import org.takes.tk.TkWrap;
 
 /**
- * Mock of {@link Tasks}.
+ * Repo.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.5
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkTasks implements Tasks {
+public final class TkRepo extends TkWrap {
 
-    @Override
-    public Task get(final long number) {
-        return new MkTask(number);
+    /**
+     * Ctor.
+     * @param base Base
+     */
+    public TkRepo(final Base base) {
+        super(TkRepo.make(base));
     }
 
-    @Override
-    public Iterable<Task> open() {
-        return Collections.<Task>singleton(new MkTask());
+    /**
+     * Ctor.
+     * @param base Base
+     * @return Take
+     */
+    private static Take make(final Base base) {
+        return new TkFork(
+            new FkRepo("", new TkIndex(base)),
+            new FkRepo("/add", new TkAddTask(base)),
+            new FkRepo("/log", new TkLog(base))
+        );
     }
 
-    @Override
-    public Iterable<Task> all() {
-        return Collections.<Task>singleton(new MkTask());
-    }
-
-    @Override
-    public Task add(final String command, final Map<String, String> args) {
-        return new MkTask();
-    }
 }

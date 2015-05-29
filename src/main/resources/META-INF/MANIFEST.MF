@@ -1,3 +1,6 @@
+Thindeck-Version: ${project.version}
+Thindeck-Date: ${timestamp}
+Thindeck-Revision: BUILD
 Thindeck-GithubId: ${github.id}
 Thindeck-GithubSecret: ${github.secret}
 Thindeck-SecurityKey: ${security.key}

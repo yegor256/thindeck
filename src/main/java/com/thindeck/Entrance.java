@@ -27,61 +27,74 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.log.Logger;
-import com.thindeck.api.Context;
-import com.thindeck.api.Step;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
-import java.io.IOException;
-import java.util.Collections;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.jcabi.dynamo.Credentials;
+import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.retry.ReRegion;
+import com.jcabi.manifests.Manifests;
+import com.thindeck.api.Base;
+import com.thindeck.api.mock.MkBase;
+import com.thindeck.cockpit.TkApp;
+import com.thindeck.dynamo.DyBase;
+import org.takes.http.Exit;
+import org.takes.http.FtCLI;
 
 /**
- * Mock of {@link Txn}.
+ * Launch (used only for heroku).
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.4
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkTxn implements Txn {
+public final class Entrance {
 
     /**
-     * Task.
+     * Utility class.
      */
-    private final transient Task task;
-
-    /**
-     * Ctor.
-     * @param tsk Task to work with
-     */
-    public MkTxn(final Task tsk) {
-        this.task = tsk;
+    private Entrance() {
+        // intentionally empty
     }
 
-    @Override
-    public void increment() throws IOException {
-        final Context ctx = new MkContext(new MkMemo());
-        for (final Step step : this.task.scenario().steps()) {
-            step.exec(ctx);
+    /**
+     * Entry point.
+     * @param args Command line args
+     * @throws Exception If fails
+     */
+    public static void main(final String... args) throws Exception {
+        final Base base = Entrance.base();
+        new FtCLI(new TkApp(base), args).start(Exit.NEVER);
+        new RoutineTxns(base);
+    }
+
+    /**
+     * Make base.
+     * @return The base
+     */
+    private static Base base() {
+        final Base base;
+        // @checkstyle MultipleStringLiteralsCheck (1 line)
+        if (Manifests.read("Thindeck-DynamoKey").startsWith("AAAAA")) {
+            base = new MkBase();
+        } else {
+            base = new DyBase(Entrance.dynamo());
         }
+        return base;
     }
 
-    @Override
-    public void log(final String text) {
-        Logger.info(this, text);
-    }
-
-    @Override
-    public Iterable<String> log() {
-        return Collections.singleton(
-            "there is nothing to say here..."
+    /**
+     * Dynamo DB region.
+     * @return Region
+     */
+    private static Region dynamo() {
+        final String key = Manifests.read("Thindeck-DynamoKey");
+        final Credentials creds = new Credentials.Simple(
+            key,
+            Manifests.read("Thindeck-DynamoSecret")
+        );
+        return new Region.Prefixed(
+            new ReRegion(new Region.Simple(creds)), "td-"
         );
     }
 }

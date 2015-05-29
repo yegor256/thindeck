@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Internal application error</title>
+    <link rel="stylesheet" type="text/css"
+        href="//yegor256.github.io/tacit/tacit.min.css"/>
+    <link rel="stylesheet" type="text/css"
+        href="/css/style.css?${version}"/>
+    <link rel="icon" type="image/gif" href="/favicon.ico"/>
+</head>
+<body>
+<p>
+    <strong style="color:red;">
+        Internal Application Error
+    </strong>
+</p>
+<p>
+    Version: <code>${version}</code>
+</p>
+<p>
+    Sorry about it. Please, send the content of this page
+    to <a href="mailto:bug@thindeck.com">bug@thindeck.com</a>.
+    We will try to fix the problem ASAP.
+</p>
+<pre>${error}</pre>
+</body>
+</html>

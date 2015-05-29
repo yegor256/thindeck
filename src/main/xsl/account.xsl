@@ -1,4 +1,5 @@
-/**
+<?xml version="1.0"?>
+<!--
  * Copyright (c) 2014-2015, Thindeck.com
  * All rights reserved.
  *
@@ -26,46 +27,17 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-package com.thindeck.api.mock;
-
-import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Task;
-import com.thindeck.api.Tasks;
-import java.util.Collections;
-import java.util.Map;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-/**
- * Mock of {@link Tasks}.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Paul Polishchuk (ppol@ua.fm)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.5
- */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkTasks implements Tasks {
-
-    @Override
-    public Task get(final long number) {
-        return new MkTask(number);
-    }
-
-    @Override
-    public Iterable<Task> open() {
-        return Collections.<Task>singleton(new MkTask());
-    }
-
-    @Override
-    public Iterable<Task> all() {
-        return Collections.<Task>singleton(new MkTask());
-    }
-
-    @Override
-    public Task add(final String command, final Map<String, String> args) {
-        return new MkTask();
-    }
-}
+ -->
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns="http://www.w3.org/1999/xhtml" version="1.0">
+    <xsl:output method="xml" omit-xml-declaration="yes"/>
+    <xsl:include href="/xsl/layout.xsl" />
+    <xsl:template match="page" mode="body">
+        <p><xsl:text>Account management will be here...</xsl:text></p>
+        <p><xsl:text>At the moment everything is free, please be polite :)</xsl:text></p>
+    </xsl:template>
+</xsl:stylesheet>

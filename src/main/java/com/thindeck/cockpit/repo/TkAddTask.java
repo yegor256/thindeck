@@ -27,45 +27,53 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.cockpit.repo;
 
-import com.jcabi.aspects.Immutable;
+import com.jcabi.immutable.ArrayMap;
+import com.thindeck.api.Base;
+import com.thindeck.api.Repo;
 import com.thindeck.api.Task;
-import com.thindeck.api.Tasks;
-import java.util.Collections;
-import java.util.Map;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import java.io.IOException;
+import org.takes.Request;
+import org.takes.Response;
+import org.takes.Take;
+import org.takes.facets.flash.RsFlash;
+import org.takes.facets.forward.RsForward;
 
 /**
- * Mock of {@link Tasks}.
+ * Add task.
  *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.5
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkTasks implements Tasks {
+final class TkAddTask implements Take {
 
-    @Override
-    public Task get(final long number) {
-        return new MkTask(number);
+    /**
+     * Base.
+     */
+    private final transient Base base;
+
+    /**
+     * Ctor.
+     * @param bse Base
+     */
+    TkAddTask(final Base bse) {
+        this.base = bse;
     }
 
     @Override
-    public Iterable<Task> open() {
-        return Collections.<Task>singleton(new MkTask());
+    public Response act(final Request req) throws IOException {
+        final Repo repo = new RqRepo(this.base, req).repo();
+        final Task task = repo.tasks().add("", new ArrayMap<String, String>());
+        return new RsForward(
+            new RsFlash(
+                String.format(
+                    "task #%d:%s added to the queue",
+                    task.number(), task.command()
+                )
+            )
+        );
     }
 
-    @Override
-    public Iterable<Task> all() {
-        return Collections.<Task>singleton(new MkTask());
-    }
-
-    @Override
-    public Task add(final String command, final Map<String, String> args) {
-        return new MkTask();
-    }
 }

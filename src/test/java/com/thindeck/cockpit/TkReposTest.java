@@ -27,45 +27,44 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.cockpit;
 
-import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Task;
-import com.thindeck.api.Tasks;
-import java.util.Collections;
-import java.util.Map;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.jcabi.matchers.XhtmlMatchers;
+import com.thindeck.api.Base;
+import com.thindeck.api.mock.MkBase;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.takes.rs.RsPrettyXML;
+import org.takes.rs.RsPrint;
 
 /**
- * Mock of {@link Tasks}.
- *
- * @author Paul Polishchuk (ppol@yua.fm)
+ * Test case for {@link TkRepos}.
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.5
+ * @since 0.4
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkTasks implements Tasks {
+public final class TkReposTest {
 
-    @Override
-    public Task get(final long number) {
-        return new MkTask(number);
+    /**
+     * TkRepos can render a page in XML.
+     * @throws Exception If something goes wrong.
+     */
+    @Test
+    public void rendersXmlPage() throws Exception {
+        final Base base = new MkBase();
+        MatcherAssert.assertThat(
+            new RsPrint(
+                new RsPrettyXML(
+                    new TkRepos(base).act(new RqWithTester())
+                )
+            ).printBody(),
+            XhtmlMatchers.hasXPaths(
+                "/page/links/link[@rel='home']",
+                "/page/repos[count(repo)=1]",
+                "//repo[name='test']",
+                "//repo/links/link[@rel='open']"
+            )
+        );
     }
 
-    @Override
-    public Iterable<Task> open() {
-        return Collections.<Task>singleton(new MkTask());
-    }
-
-    @Override
-    public Iterable<Task> all() {
-        return Collections.<Task>singleton(new MkTask());
-    }
-
-    @Override
-    public Task add(final String command, final Map<String, String> args) {
-        return new MkTask();
-    }
 }

@@ -1,0 +1,31 @@
+* {
+  font-family: monospace;
+}
+
+aside {
+  font-size: 0.75em;
+  line-height: 1em;
+  position: fixed;
+  right: 0;
+  padding: 4px 0.8em;
+  background-color: #d3d3d3;
+  color: gray;
+  span,
+  a {
+    font-size: 1em;
+    line-height: 1em;
+  }
+  span {
+    margin-right: .5em;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  &.version {
+    bottom: 0;
+  }
+  &.alpha {
+    bottom: 2em;
+    color: red;
+  }
+}
