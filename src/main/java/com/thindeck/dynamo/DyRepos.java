@@ -29,7 +29,6 @@
  */
 package com.thindeck.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.Select;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
@@ -105,11 +104,7 @@ final class DyRepos implements Repos {
         return Iterables.transform(
             this.region.table(DyRepo.TBL)
                 .frame()
-                .through(
-                    new QueryValve()
-                        .withConsistentRead(false)
-                        .withSelect(Select.ALL_PROJECTED_ATTRIBUTES)
-                )
+                .through(new QueryValve())
                 .where(DyRepo.HASH, this.user.toString()),
             new Function<Item, Repo>() {
                 @Override
