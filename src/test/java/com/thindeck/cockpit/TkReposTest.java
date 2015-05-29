@@ -34,6 +34,7 @@ import com.thindeck.api.Base;
 import com.thindeck.api.mock.MkBase;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.takes.facets.auth.RqWithAuth;
 import org.takes.rs.RsPrettyXML;
 import org.takes.rs.RsPrint;
 
@@ -55,7 +56,7 @@ public final class TkReposTest {
         MatcherAssert.assertThat(
             new RsPrint(
                 new RsPrettyXML(
-                    new TkRepos(base).act(new RqWithTester())
+                    new TkRepos(base).act(new RqWithAuth("urn:test:1"))
                 )
             ).printBody(),
             XhtmlMatchers.hasXPaths(

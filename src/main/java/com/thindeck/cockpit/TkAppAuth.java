@@ -31,9 +31,6 @@ package com.thindeck.cockpit;
 
 import com.jcabi.manifests.Manifests;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -51,6 +48,7 @@ import org.takes.facets.auth.codecs.CcSafe;
 import org.takes.facets.auth.codecs.CcSalted;
 import org.takes.facets.auth.codecs.CcXOR;
 import org.takes.facets.auth.social.PsGithub;
+import org.takes.misc.Opt;
 import org.takes.rq.RqHref;
 import org.takes.tk.TkWrap;
 
@@ -124,16 +122,18 @@ final class TkAppAuth extends TkWrap {
      */
     private static final class FakePass implements Pass {
         @Override
-        public Iterator<Identity> enter(final Request req) throws IOException {
-            final Collection<Identity> user = new ArrayList<>(1);
+        public Opt<Identity> enter(final Request req) throws IOException {
+            final Opt<Identity> user;
             if (TkAppAuth.TESTING) {
-                user.add(
+                user = new Opt.Single<Identity>(
                     new Identity.Simple(
                         new RqHref.Smart(new RqHref.Base(req)).single("urn")
                     )
                 );
+            } else {
+                user = new Opt.Empty<>();
             }
-            return user.iterator();
+            return user;
         }
         @Override
         public Response exit(final Response response, final Identity identity) {

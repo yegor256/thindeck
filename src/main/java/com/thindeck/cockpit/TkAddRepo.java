@@ -36,6 +36,7 @@ import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.flash.RsFlash;
+import org.takes.facets.forward.RsFailure;
 import org.takes.facets.forward.RsForward;
 import org.takes.rq.RqForm;
 import org.xembly.Directives;
@@ -74,7 +75,7 @@ public final class TkAddRepo implements Take {
                 new Directives().xpath("/memo").addIf("uri").set(uri)
             );
         } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
+            throw new RsFailure(ex);
         }
         return new RsForward(
             new RsFlash(

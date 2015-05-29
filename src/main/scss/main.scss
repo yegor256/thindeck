@@ -1,3 +1,7 @@
+body {
+  background-color: white;
+}
+
 * {
   font-family: monospace;
 }
@@ -8,7 +12,7 @@ aside {
   position: fixed;
   right: 0;
   padding: 4px 0.8em;
-  background-color: #d3d3d3;
+  background-color: #eee;
   color: gray;
   span,
   a {
