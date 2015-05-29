@@ -35,7 +35,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Repositories of a {@link User}.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */

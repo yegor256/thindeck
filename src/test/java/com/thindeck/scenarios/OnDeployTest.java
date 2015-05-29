@@ -39,7 +39,7 @@ import org.junit.Test;
 /**
  * Tests for {@link OnDeploy}.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  */
 public final class OnDeployTest {

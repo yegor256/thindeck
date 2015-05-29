@@ -41,7 +41,7 @@ import javax.validation.constraints.NotNull;
  * from somewhere (depends on the implementation) and then
  * use one of the users, repos or transactions.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */

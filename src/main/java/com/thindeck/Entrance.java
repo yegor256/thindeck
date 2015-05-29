@@ -43,7 +43,7 @@ import org.takes.http.FtCLI;
 /**
  * Launch (used only for heroku).
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.4
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)

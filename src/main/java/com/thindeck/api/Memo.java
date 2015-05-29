@@ -55,7 +55,7 @@ import org.xembly.Directive;
  * methods consequently. If two threads will update in parallel,
  * the result may be unpredictable.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */

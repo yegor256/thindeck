@@ -57,7 +57,7 @@ import javax.validation.constraints.NotNull;
  * <p>Also, we assume that a step will never fail at
  * {@link Step#commit(Context)} phase.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */

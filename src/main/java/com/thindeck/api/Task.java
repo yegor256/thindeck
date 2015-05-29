@@ -40,7 +40,7 @@ import javax.validation.constraints.NotNull;
  * simply means that a collection of steps should be executed
  * when it's possible.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */

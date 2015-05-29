@@ -39,7 +39,7 @@ import org.xembly.Directives;
 /**
  * Find tanks available for deployment.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */

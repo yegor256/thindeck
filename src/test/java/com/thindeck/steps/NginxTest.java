@@ -50,7 +50,7 @@ import org.junit.rules.TemporaryFolder;
  * Test case for {@link Nginx}.
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @checkstyle MultipleStringLiterals (500 lines)
  */

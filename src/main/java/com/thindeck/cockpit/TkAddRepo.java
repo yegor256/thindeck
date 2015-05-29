@@ -43,7 +43,7 @@ import org.xembly.Directives;
 /**
  * Add repo.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.5
  * @checkstyle MultipleStringLiteralsCheck (500 lines)

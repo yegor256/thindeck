@@ -40,7 +40,7 @@ import javax.validation.constraints.NotNull;
  * to Docker containers. Repository should be configured through
  * {@link #memo()} and modified through {@link #tasks()}.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  * @todo #409:30min Let's add a new method User user(). It should return the

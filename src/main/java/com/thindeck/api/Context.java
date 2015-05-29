@@ -41,7 +41,7 @@ import javax.validation.constraints.NotNull;
  * in {@link Step}, in order to make it aware of the context it
  * is in.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */
