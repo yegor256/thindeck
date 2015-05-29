@@ -34,7 +34,6 @@ import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.rs.xe.XeLink;
 
 /**
  * Account.
@@ -63,8 +62,7 @@ public final class TkAccount implements Take {
         return new RsPage(
             "/xsl/account.xsl",
             this.base,
-            req,
-            new XeLink("repos", "/repos")
+            req
         );
     }
 
