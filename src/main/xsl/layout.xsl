@@ -50,19 +50,19 @@
                     <ul style="text-align:left">
                         <xsl:if test="identity">
                             <li>
-                                <a href="{links/link[@rel='home']/@href}">
-                                    <xsl:text>repositories</xsl:text>
-                                </a>
-                            </li>
-                            <li>
                                 <img src="{identity/avatar}"
                                     alt="profile picture of {identity/urn}"
                                     title="{identity/urn}"
-                                    style="width:48px;height:48px"/>
+                                    style="width:32px;height:32px"/>
                             </li>
                             <li>
                                 <a href="{links/link[@rel='account']/@href}">
                                     <xsl:value-of select="identity/login"/>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{links/link[@rel='home']/@href}">
+                                    <xsl:text>repositories</xsl:text>
                                 </a>
                             </li>
                             <li>
