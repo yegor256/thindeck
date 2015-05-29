@@ -712,7 +712,7 @@
                 <file><exists>pom.xml</exists></file>
             </activation>
             <build>
-                <finalName>netbout</finalName>
+                <finalName>thindeck</finalName>
                 <plugins>
                     <plugin>
                         <artifactId>maven-jar-plugin</artifactId>
