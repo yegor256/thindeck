@@ -54,6 +54,27 @@
             </fieldset>
         </form>
     </xsl:template>
+    <xsl:template match="repos[repo]">
+        <p>
+            <xsl:text>Your </xsl:text>
+            <xsl:choose>
+                <xsl:when test="count(repo) = 1">
+                    <xsl:text>repository</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="count(repo)"/>
+                    <xsl:text> repositories</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text>:</xsl:text>
+        </p>
+        <ul>
+            <xsl:apply-templates select="repos/repo"/>
+        </ul>
+    </xsl:template>
+    <xsl:template match="repos[not(repo)]">
+        <p><xsl:text>You don't have any repositories yet.<xsl:text></p>
+    </xsl:template>
     <xsl:template match="repo">
         <li>
             <a href="{links/link[@rel='open']/@href}">
