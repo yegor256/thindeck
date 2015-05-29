@@ -36,10 +36,7 @@
     <xsl:output method="xml" omit-xml-declaration="yes"/>
     <xsl:include href="/xsl/layout.xsl" />
     <xsl:template match="page" mode="body">
-        <p>Your repositories:</p>
-        <ul>
-            <xsl:apply-templates select="repos/repo"/>
-        </ul>
+        <xsl:apply-templates select="repos"/>
         <form action="{links/link[@rel='add']/@href}" method="post">
             <fieldset>
                 <label>Name:</label>
@@ -73,7 +70,7 @@
         </ul>
     </xsl:template>
     <xsl:template match="repos[not(repo)]">
-        <p><xsl:text>You don't have any repositories yet.<xsl:text></p>
+        <p><xsl:text>You don't have any repositories yet.</xsl:text></p>
     </xsl:template>
     <xsl:template match="repo">
         <li>
