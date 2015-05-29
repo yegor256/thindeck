@@ -64,8 +64,8 @@ public final class Entrance {
      */
     public static void main(final String... args) throws Exception {
         final Base base = Entrance.base();
+        new Routine(base);
         new FtCLI(new TkApp(base), args).start(Exit.NEVER);
-        new RoutineTxns(base);
     }
 
     /**
@@ -90,8 +90,7 @@ public final class Entrance {
     private static Region dynamo() {
         final String key = Manifests.read("Thindeck-DynamoKey");
         final Credentials creds = new Credentials.Simple(
-            key,
-            Manifests.read("Thindeck-DynamoSecret")
+            key, Manifests.read("Thindeck-DynamoSecret")
         );
         return new Region.Prefixed(
             new ReRegion(new Region.Simple(creds)), "td-"

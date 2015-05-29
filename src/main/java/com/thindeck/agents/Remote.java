@@ -27,41 +27,42 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.agents;
 
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
+import com.jcabi.ssh.SSH;
+import com.jcabi.ssh.Shell;
 import java.io.IOException;
-import java.util.Collections;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import org.apache.commons.io.IOUtils;
 
 /**
- * Mock of {@link Repos}.
+ * Remote shell(s).
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.1
  */
 @Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkRepos implements Repos {
+public final class Remote {
 
-    @Override
-    public Repo get(final String name) throws IOException {
-        return new MkRepo();
-    }
-
-    @Override
-    public Repo add(final String name) throws IOException {
-        return new MkRepo();
-    }
-
-    @Override
-    public Iterable<Repo> iterate() throws IOException {
-        return Collections.<Repo>singleton(new MkRepo());
+    /**
+     * Make a shell to the remote host.
+     * @param host Host name of the tank
+     * @return Shell
+     * @throws IOException If fails
+     */
+    public Shell shell(final String host) throws IOException {
+        return new Shell.Verbose(
+            new Shell.Safe(
+                new SSH(
+                    // @checkstyle MagicNumber (1 line)
+                    host, 22, "thindeck",
+                    IOUtils.toString(
+                        this.getClass().getResourceAsStream("thindeck.key")
+                    )
+                )
+            )
+        );
     }
 
 }

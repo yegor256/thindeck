@@ -31,7 +31,6 @@ package com.thindeck.cockpit.repo;
 
 import com.thindeck.api.Base;
 import com.thindeck.api.Repo;
-import com.thindeck.api.Task;
 import com.thindeck.cockpit.RsPage;
 import java.io.IOException;
 import org.takes.Request;
@@ -42,8 +41,6 @@ import org.takes.rs.xe.XeAppend;
 import org.takes.rs.xe.XeChain;
 import org.takes.rs.xe.XeDirectives;
 import org.takes.rs.xe.XeLink;
-import org.takes.rs.xe.XeSource;
-import org.takes.rs.xe.XeTransform;
 import org.xembly.Directives;
 
 /**
@@ -89,36 +86,6 @@ public final class TkIndex implements Take {
                 ),
                 new XeChain(
                     new XeLink("open", home.path("open"))
-                )
-            ),
-            new XeAppend(
-                "tasks",
-                // @checkstyle AnonInnerLengthCheck (50 lines)
-                new XeTransform<>(
-                    repo.tasks().all(),
-                    new XeTransform.Func<Task>() {
-                        @Override
-                        public XeSource transform(final Task task) {
-                            return new XeAppend(
-                                "task",
-                                new XeChain(
-                                    new XeDirectives(
-                                        new Directives()
-                                            .add("number")
-                                            .set(Long.toString(task.number()))
-                                            .up()
-                                            .add("command")
-                                            .set(task.command())
-                                    ),
-                                    new XeLink(
-                                        "log",
-                                        home.path("log")
-                                            .with("task", task.number())
-                                    )
-                                )
-                            );
-                        }
-                    }
                 )
             )
         );

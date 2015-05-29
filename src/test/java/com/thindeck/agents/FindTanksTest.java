@@ -27,41 +27,38 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.agents;
 
-import com.jcabi.aspects.Immutable;
+import com.jcabi.matchers.XhtmlMatchers;
+import com.thindeck.agents.tanks.FindTanks;
 import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
+import com.thindeck.api.mock.MkRepo;
 import java.io.IOException;
-import java.util.Collections;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Mock of {@link Repos}.
+ * Test case for {@link com.thindeck.agents.tanks.FindTanks}.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.1
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkRepos implements Repos {
+public final class FindTanksTest {
 
-    @Override
-    public Repo get(final String name) throws IOException {
-        return new MkRepo();
-    }
-
-    @Override
-    public Repo add(final String name) throws IOException {
-        return new MkRepo();
-    }
-
-    @Override
-    public Iterable<Repo> iterate() throws IOException {
-        return Collections.<Repo>singleton(new MkRepo());
+    /**
+     * FindTanks can find tanks and report them in XML.
+     * @throws IOException If fails
+     */
+    @Test
+    public void findsTanksAndDocumentsInXml() throws IOException {
+        final Agent agent = new FindTanks();
+        final Repo repo = new MkRepo();
+        agent.exec(repo);
+        MatcherAssert.assertThat(
+            repo.memo().read(),
+            XhtmlMatchers.hasXPaths("/memo/tanks/tank")
+        );
     }
 
 }

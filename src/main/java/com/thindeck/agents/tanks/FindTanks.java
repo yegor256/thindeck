@@ -27,41 +27,33 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.agents.tanks;
 
 import com.jcabi.aspects.Immutable;
+import com.thindeck.agents.Agent;
 import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
 import java.io.IOException;
-import java.util.Collections;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import java.util.logging.Level;
+import org.xembly.Directives;
 
 /**
- * Mock of {@link Repos}.
+ * Find tanks available for deployment.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.1
  */
 @Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkRepos implements Repos {
+public final class FindTanks implements Agent {
 
     @Override
-    public Repo get(final String name) throws IOException {
-        return new MkRepo();
+    public void exec(final Repo repo) throws IOException {
+        repo.memo().update(
+            new Directives()
+                .xpath("/memo/tanks/tank").remove()
+                .xpath("/memo").addIf("tanks")
+                .add("tank").set("t1.thindeck.com")
+        );
+        repo.console().log(Level.INFO, "one tank t1.thindeck.com found");
     }
-
-    @Override
-    public Repo add(final String name) throws IOException {
-        return new MkRepo();
-    }
-
-    @Override
-    public Iterable<Repo> iterate() throws IOException {
-        return Collections.<Repo>singleton(new MkRepo());
-    }
-
 }

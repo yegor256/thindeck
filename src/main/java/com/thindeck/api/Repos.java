@@ -30,6 +30,7 @@
 package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
+import java.io.IOException;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -51,9 +52,10 @@ public interface Repos {
      *
      * @param name The name
      * @return Repo
+     * @throws IOException If fails
      */
     @NotNull(message = "repo can't be null")
-    Repo get(String name);
+    Repo get(String name) throws IOException;
 
     /**
      * Add a new repository.
@@ -63,22 +65,17 @@ public interface Repos {
      *
      * @param name Unique name
      * @return Repo
+     * @throws IOException If fails
      */
     @NotNull(message = "repo can't be null")
-    Repo add(String name);
+    Repo add(String name) throws IOException;
 
     /**
      * Iterate them all.
      * @return All repositories of the user
+     * @throws IOException If fails
      */
     @NotNull(message = "iterable of repos can't be null")
-    Iterable<Repo> iterate();
-
-    /**
-     * The owner of this.
-     * @return Owner of the repos.
-     */
-    @NotNull(message = "user of repos can't be null")
-    User user();
+    Iterable<Repo> iterate() throws IOException;
 
 }

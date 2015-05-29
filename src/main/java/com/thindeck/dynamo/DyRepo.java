@@ -31,9 +31,10 @@ package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Item;
+import com.thindeck.api.Console;
 import com.thindeck.api.Memo;
 import com.thindeck.api.Repo;
-import com.thindeck.api.Tasks;
+import com.thindeck.api.mock.MkConsole;
 import java.io.IOException;
 import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
@@ -43,21 +44,28 @@ import lombok.ToString;
  * Dynamo implementation of {@link Repo}.
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  */
-@EqualsAndHashCode
 @ToString
 @Immutable
+@EqualsAndHashCode(of = "item")
 public final class DyRepo implements Repo {
+
     /**
      * Table name.
      */
     public static final String TBL = "repos";
 
     /**
-     * URN attribute.
+     * URN of the user (owner of the repo).
      */
-    public static final String ATTR_NAME = "name";
+    public static final String HASH = "urn";
+
+    /**
+     * Unique name of the repo, for that user.
+     */
+    public static final String RANGE = "name";
 
     /**
      * When updated.
@@ -83,22 +91,17 @@ public final class DyRepo implements Repo {
     }
 
     @Override
-    public String name() {
-        try {
-            return this.item.get(DyRepo.ATTR_NAME).getS();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    public String name() throws IOException {
+        return this.item.get(DyRepo.RANGE).getS();
     }
 
     @Override
-    @NotNull
-    public Tasks tasks() {
-        return new DyTasks(this.item.frame().table().region(), this);
+    public Console console() {
+        return new MkConsole();
     }
 
     @Override
-    public Memo memo() throws IOException {
+    public Memo memo() {
         return new DyMemo(this.item);
     }
 }

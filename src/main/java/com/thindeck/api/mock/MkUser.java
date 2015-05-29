@@ -32,7 +32,6 @@ package com.thindeck.api.mock;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.urn.URN;
 import com.thindeck.api.Repos;
-import com.thindeck.api.Usage;
 import com.thindeck.api.User;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -59,8 +58,4 @@ public final class MkUser implements User {
         return new MkRepos();
     }
 
-    @Override
-    public Usage usage() {
-        throw new UnsupportedOperationException("#usage()");
-    }
 }

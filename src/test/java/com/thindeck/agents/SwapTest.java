@@ -27,41 +27,54 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.agents;
 
-import com.jcabi.aspects.Immutable;
+import com.jcabi.aspects.Tv;
+import com.jcabi.matchers.XhtmlMatchers;
 import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
+import com.thindeck.api.mock.MkRepo;
 import java.io.IOException;
-import java.util.Collections;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.xembly.Directives;
 
 /**
- * Mock of {@link Repos}.
+ * Test case for {@link Swap}.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.1
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkRepos implements Repos {
+public final class SwapTest {
 
-    @Override
-    public Repo get(final String name) throws IOException {
-        return new MkRepo();
-    }
-
-    @Override
-    public Repo add(final String name) throws IOException {
-        return new MkRepo();
-    }
-
-    @Override
-    public Iterable<Repo> iterate() throws IOException {
-        return Collections.<Repo>singleton(new MkRepo());
+    /**
+     * Swap can swap containers.
+     * @throws IOException If fails
+     */
+    @Test
+    public void swapsGreenAndBlueContainers() throws IOException {
+        final Agent agent = new Swap();
+        final Repo repo = new MkRepo();
+        repo.memo().update(
+            new Directives().xpath("/memo").addIf("containers")
+                .add("container").attr("type", "green")
+                .add("cid")
+                .set(StringUtils.repeat('a', 1 << Tv.SIX))
+                .up()
+                .add("dir").set("/tmp").up()
+                .add("tank").set("localhost").up()
+                .add("ports").add("port")
+                .add("in").set("80").up().add("out").set("8090").up().up()
+        );
+        agent.exec(repo);
+        MatcherAssert.assertThat(
+            repo.memo().read(),
+            XhtmlMatchers.hasXPaths(
+                "/memo/containers[count(container)=1]",
+                "/memo/containers/container[@type='blue']"
+            )
+        );
     }
 
 }

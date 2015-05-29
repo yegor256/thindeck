@@ -29,14 +29,14 @@
  */
 package com.thindeck.dynamo;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.QueryValve;
+import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
 import com.jcabi.urn.URN;
 import com.thindeck.api.Base;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
+import com.thindeck.api.Repo;
 import com.thindeck.api.User;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -45,13 +45,15 @@ import lombok.ToString;
  * Dynamo implementation of the {@link Base}.
  *
  * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.3
  */
-@EqualsAndHashCode(of = "region")
 @ToString
 @Immutable
+@EqualsAndHashCode(of = "region")
 public final class DyBase implements Base {
+
     /**
      * Region we're in.
      */
@@ -67,25 +69,20 @@ public final class DyBase implements Base {
 
     @Override
     public User user(final URN urn) {
-        return new DyUser(
-            this.region.table(DyUser.TBL)
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(1)
-                )
-                .where(DyUser.ATTR_URN, urn.toString())
-                .iterator().next()
+        return new DyUser(this.region, urn);
+    }
+
+    @Override
+    public Iterable<Repo> active() {
+        return Iterables.transform(
+            this.region.table(DyRepo.TBL).frame(),
+            new Function<Item, Repo>() {
+                @Override
+                public Repo apply(final Item item) {
+                    return new DyRepo(item);
+                }
+            }
         );
     }
 
-    @Override
-    public Repos repos() {
-        return new DyRepos(this.region);
-    }
-
-    @Override
-    public Txn txn(final Task task) {
-        return new DyTxn(task.scenario());
-    }
 }

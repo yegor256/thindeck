@@ -32,10 +32,10 @@ package com.thindeck.api.mock;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.urn.URN;
 import com.thindeck.api.Base;
-import com.thindeck.api.Repos;
-import com.thindeck.api.Task;
-import com.thindeck.api.Txn;
+import com.thindeck.api.Repo;
 import com.thindeck.api.User;
+import java.io.IOException;
+import java.util.Collections;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -57,12 +57,8 @@ public final class MkBase implements Base {
     }
 
     @Override
-    public Repos repos() {
-        return new MkRepos();
+    public Iterable<Repo> active() throws IOException {
+        return Collections.<Repo>singleton(new MkRepo());
     }
 
-    @Override
-    public Txn txn(final Task task) {
-        return new MkTxn(task);
-    }
 }

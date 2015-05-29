@@ -27,41 +27,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.agents;
 
 import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
 import java.io.IOException;
-import java.util.Collections;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import java.util.logging.Level;
+import org.xembly.Directives;
 
 /**
- * Mock of {@link Repos}.
+ * Swap BLUE and GREEN containers.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.1
  */
 @Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkRepos implements Repos {
+public final class Swap implements Agent {
 
     @Override
-    public Repo get(final String name) throws IOException {
-        return new MkRepo();
+    public void exec(final Repo repo) throws IOException {
+        repo.memo().update(
+            new Directives()
+                .xpath("/memo/containers/container[@type='green']")
+                .push()
+                .xpath("/memo/containers/container[@type='blue']")
+                // @checkstyle MultipleStringLiteralsCheck (1 line)
+                .attr("type", "green")
+                .pop()
+                .attr("type", "blue")
+        );
+        repo.console().log(Level.INFO, "swapped blue vs green containers");
     }
-
-    @Override
-    public Repo add(final String name) throws IOException {
-        return new MkRepo();
-    }
-
-    @Override
-    public Iterable<Repo> iterate() throws IOException {
-        return Collections.<Repo>singleton(new MkRepo());
-    }
-
 }

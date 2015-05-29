@@ -30,12 +30,10 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
+import com.jcabi.dynamo.Region;
 import com.jcabi.urn.URN;
 import com.thindeck.api.Repos;
-import com.thindeck.api.Usage;
 import com.thindeck.api.User;
-import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -43,51 +41,42 @@ import lombok.ToString;
  * Dynamo implementation of the {@link User}.
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  */
-@EqualsAndHashCode
 @ToString
 @Immutable
-public final class DyUser implements User {
-    /**
-     * Table name.
-     */
-    public static final String TBL = "users";
+@EqualsAndHashCode(of = { "region", "name" })
+final class DyUser implements User {
 
     /**
-     * URN attribute.
+     * Region.
      */
-    public static final String ATTR_URN = "urn";
+    private final transient Region region;
 
     /**
-     * Item.
+     * URN.
      */
-    private final transient Item item;
+    private final transient URN name;
 
     /**
      * Ctor.
-     * @param itm Item
+     * @param reg Region
+     * @param urn URN
      */
-    DyUser(final Item itm) {
-        this.item = itm;
+    DyUser(final Region reg, final URN urn) {
+        this.region = reg;
+        this.name = urn;
     }
 
     @Override
     public URN urn() {
-        try {
-            return URN.create(this.item.get(DyUser.ATTR_URN).getS());
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+        return this.name;
     }
 
     @Override
     public Repos repos() {
-        return new DyRepos(this.item.frame().table().region(), this);
+        return new DyRepos(this.region, this.name);
     }
 
-    @Override
-    public Usage usage() {
-        return new DyUsage(this);
-    }
 }

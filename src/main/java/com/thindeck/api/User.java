@@ -31,7 +31,7 @@ package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.urn.URN;
-import java.net.URISyntaxException;
+import java.io.IOException;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -43,27 +43,6 @@ import javax.validation.constraints.NotNull;
  */
 @Immutable
 public interface User {
-    /**
-     * Default User.
-     */
-    User DEFAULT = new User() {
-        @Override
-        public URN urn() {
-            try {
-                return new URN("urn:thindeck:DEFAULT");
-            } catch (final URISyntaxException ex) {
-                throw new IllegalStateException(ex);
-            }
-        }
-        @Override
-        public Repos repos() {
-            throw new UnsupportedOperationException();
-        }
-        @Override
-        public Usage usage() {
-            throw new UnsupportedOperationException();
-        }
-    };
 
     /**
      * URN.
@@ -73,9 +52,10 @@ public interface User {
      * (like Github, Facebook, Twitter, etc.).
      *
      * @return URN
+     * @throws IOException If fails
      */
     @NotNull(message = "URN can't be null")
-    URN urn();
+    URN urn() throws IOException;
 
     /**
      * Repositories.
@@ -83,12 +63,5 @@ public interface User {
      */
     @NotNull(message = "repositories can't be null")
     Repos repos();
-
-    /**
-     * Consumption of resources.
-     * @return Usage
-     */
-    @NotNull(message = "usage can't be null")
-    Usage usage();
 
 }

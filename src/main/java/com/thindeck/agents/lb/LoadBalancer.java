@@ -27,41 +27,31 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.agents.lb;
 
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
 import java.io.IOException;
-import java.util.Collections;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
- * Mock of {@link Repos}.
+ * Load balancer representation.
  *
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
- * @since 0.4
+ * @since 0.3
  */
 @Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkRepos implements Repos {
+public interface LoadBalancer {
 
-    @Override
-    public Repo get(final String name) throws IOException {
-        return new MkRepo();
-    }
-
-    @Override
-    public Repo add(final String name) throws IOException {
-        return new MkRepo();
-    }
-
-    @Override
-    public Iterable<Repo> iterate() throws IOException {
-        return Collections.<Repo>singleton(new MkRepo());
-    }
+    /**
+     * Update load balancer configuration with the given mapping.
+     * @param host The host name indicated by requests
+     * @param hport Port corresponding to the host name
+     * @param server Server name to redirect requests to
+     * @param sport Server port to redirect requests to
+     * @throws IOException If fails
+     * @checkstyle ParameterNumber (3 lines)
+     */
+    void update(String host, int hport, String server, int sport)
+        throws IOException;
 
 }

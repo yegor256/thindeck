@@ -6,7 +6,6 @@
     '/robots.txt',
     '/acc',
     '/r/fake-repo',
-    '/r/fake-repo/log?task=1'
 ].forEach(
     function (page) {
         casper.test.begin(

@@ -38,14 +38,11 @@ import javax.validation.constraints.NotNull;
  *
  * <p>Repository is a configurable deployment of sources
  * to Docker containers. Repository should be configured through
- * {@link #memo()} and modified through {@link #tasks()}.
+ * {@link #memo()}.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
- * @todo #409:30min Let's add a new method User user(). It should return the
- *  User whom the Repo is associated to. Let's also add implementations in the
- *  classes that implement this interface.
  */
 @Immutable
 public interface Repo {
@@ -57,16 +54,17 @@ public interface Repo {
      * that two users can have repositories with the same name.
      *
      * @return Unique name of the repo
+     * @throws IOException If fails
      */
     @NotNull(message = "repo name can't be null")
-    String name();
+    String name() throws IOException;
 
     /**
-     * Tasks.
-     * @return Tasks
+     * Console.
+     * @return Console
      */
-    @NotNull(message = "tasks can't be null")
-    Tasks tasks();
+    @NotNull(message = "console can't be null")
+    Console console();
 
     /**
      * Memo.

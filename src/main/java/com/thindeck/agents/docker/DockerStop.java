@@ -27,53 +27,70 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.agents.docker;
 
+import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Console;
-import com.thindeck.api.Memo;
+import com.jcabi.ssh.SSH;
+import com.jcabi.ssh.Shell;
+import com.jcabi.xml.XML;
+import com.thindeck.agents.Agent;
+import com.thindeck.agents.Remote;
 import com.thindeck.api.Repo;
 import java.io.IOException;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import java.util.Collection;
+import java.util.logging.Level;
+import org.xembly.Directives;
 
 /**
- * Mock of {@link Repo}.
+ * Stop all BLUE containers.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.1
  */
 @Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkRepo implements Repo {
+public final class DockerStop implements Agent {
+
+    @Override
+    public void exec(final Repo repo) throws IOException {
+        final XML xml = repo.memo().read();
+        final Collection<XML> blue = xml.nodes(
+            "/memo/containers/container[@type='blue']"
+        );
+        for (final XML node : blue) {
+            DockerStop.stop(repo, node);
+        }
+        repo.console().log(
+            Level.INFO, "%d blue containers stopped", blue.size()
+        );
+    }
 
     /**
-     * Memo.
-     */
-    private final transient Memo mmo;
-
-    /**
-     * Ctor.
+     * Stop docker container.
+     * @param repo Repo
+     * @param xml XML with container info
      * @throws IOException If fails
      */
-    public MkRepo() throws IOException {
-        this.mmo = new MkMemo();
+    private static void stop(final Repo repo, final XML xml)
+        throws IOException {
+        final String host = xml.xpath("tank/text()").get(0);
+        final String cid = xml.xpath("cid/text()").get(0);
+        final String dir = xml.xpath("dir/text()").get(0);
+        new Shell.Empty(new Remote().shell(host)).exec(
+            Joiner.on(" && ").join(
+                String.format("dir=%s", SSH.escape(dir)),
+                String.format("sudo docker stop %s", SSH.escape(cid)),
+                String.format("sudo docker rm %s", SSH.escape(cid)),
+                "rm -rf \"${dir}\""
+            )
+        );
+        repo.memo().update(
+            new Directives().xpath(
+                String.format("/memo/containers/container[cid='%s']", cid)
+            ).remove()
+        );
+        repo.console().log(Level.INFO, "container %s terminated", cid);
     }
 
-    @Override
-    public String name() {
-        return "test";
-    }
-
-    @Override
-    public Console console() {
-        return new MkConsole();
-    }
-
-    @Override
-    public Memo memo() throws IOException {
-        return this.mmo;
-    }
 }

@@ -27,41 +27,27 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.agents;
 
 import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
 import java.io.IOException;
-import java.util.Collections;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
- * Mock of {@link Repos}.
+ * Agent.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.5
  */
 @Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkRepos implements Repos {
+public interface Agent {
 
-    @Override
-    public Repo get(final String name) throws IOException {
-        return new MkRepo();
-    }
-
-    @Override
-    public Repo add(final String name) throws IOException {
-        return new MkRepo();
-    }
-
-    @Override
-    public Iterable<Repo> iterate() throws IOException {
-        return Collections.<Repo>singleton(new MkRepo());
-    }
+    /**
+     * Execute it on the given repo.
+     * @param repo The repo
+     * @throws IOException If fails
+     */
+    void exec(Repo repo) throws IOException;
 
 }

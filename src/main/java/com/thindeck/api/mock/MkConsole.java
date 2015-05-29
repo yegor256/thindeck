@@ -30,38 +30,32 @@
 package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
-import java.io.IOException;
+import com.thindeck.api.Console;
 import java.util.Collections;
+import java.util.logging.Level;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Mock of {@link Repos}.
+ * Mock of {@link Console}.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.5
  */
 @Immutable
 @ToString
 @EqualsAndHashCode
-public final class MkRepos implements Repos {
+public final class MkConsole implements Console {
 
     @Override
-    public Repo get(final String name) throws IOException {
-        return new MkRepo();
+    public void log(final Level level, final String text,
+        final Object... args) {
+        //;
     }
 
     @Override
-    public Repo add(final String name) throws IOException {
-        return new MkRepo();
+    public Iterable<String> cat() {
+        return Collections.singleton("one long line");
     }
-
-    @Override
-    public Iterable<Repo> iterate() throws IOException {
-        return Collections.<Repo>singleton(new MkRepo());
-    }
-
 }

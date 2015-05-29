@@ -27,41 +27,85 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.aspects.Loggable;
+import com.jcabi.aspects.ScheduleWithFixedDelay;
+import com.jcabi.immutable.Array;
+import com.thindeck.agents.Agent;
+import com.thindeck.agents.docker.DockerRun;
+import com.thindeck.agents.docker.DockerStop;
+import com.thindeck.agents.lb.UpdateLB;
+import com.thindeck.agents.tanks.FindTanks;
+import com.thindeck.api.Base;
 import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Mock of {@link Repos}.
+ * Agents.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.1
  */
 @Immutable
 @ToString
 @EqualsAndHashCode
-public final class MkRepos implements Repos {
+@ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.MINUTES)
+@Loggable(Loggable.INFO)
+@SuppressWarnings("PMD.DoNotUseThreads")
+final class Routine implements Runnable {
 
-    @Override
-    public Repo get(final String name) throws IOException {
-        return new MkRepo();
+    /**
+     * Base.
+     */
+    private final transient Base base;
+
+    /**
+     * Agents.
+     */
+    private final transient Array<Agent> agents;
+
+    /**
+     * Execute them all.
+     * @param bse Base
+     * @throws IOException If fails
+     */
+    Routine(final Base bse) throws IOException {
+        this.base = bse;
+        this.agents = new Array<>(Routine.all());
     }
 
     @Override
-    public Repo add(final String name) throws IOException {
-        return new MkRepo();
+    public void run() {
+        try {
+            for (final Repo repo : this.base.active()) {
+                for (final Agent agent : this.agents) {
+                    agent.exec(repo);
+                }
+            }
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
-    @Override
-    public Iterable<Repo> iterate() throws IOException {
-        return Collections.<Repo>singleton(new MkRepo());
+    /**
+     * Create a list of agents.
+     * @return List of agents
+     * @throws IOException If fails
+     */
+    private static Iterable<Agent> all() throws IOException {
+        return Arrays.asList(
+            new FindTanks(),
+            new UpdateLB(),
+            new DockerRun(),
+            new DockerStop()
+        );
     }
 
 }

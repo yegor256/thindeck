@@ -29,7 +29,7 @@
  */
 package com.thindeck.dynamo;
 
-import java.util.Collections;
+import com.jcabi.urn.URN;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -37,23 +37,22 @@ import org.junit.Test;
 /**
  * Integration case for {@link DyBase}.
  * @author Paul Polishchuk (ppol@ua.fm)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  */
 public final class DyBaseITCase {
 
     /**
-     * DyBase can add a command.
+     * DyBase can add a repo.
      * @throws Exception If there is some problem inside
      */
     @Test
     public void canAddCommand() throws Exception {
-        final String command = "command";
         MatcherAssert.assertThat(
             new DyBase(new RegionLocalDynamo())
-                .repos().add("test").tasks()
-                .add(command, Collections.<String, String>emptyMap())
-                .command(),
-            Matchers.equalTo(command)
+                .user(new URN("urn:test:7678"))
+                .repos().add("testrepo").name(),
+            Matchers.startsWith("test")
         );
     }
 

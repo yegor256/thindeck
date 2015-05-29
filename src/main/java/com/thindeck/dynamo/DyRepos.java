@@ -37,78 +37,69 @@ import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
+import com.jcabi.urn.URN;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Repos;
-import com.thindeck.api.User;
 import java.io.IOException;
-import java.util.Iterator;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
  * Dynamo implementation of {@link Repos}.
+ *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  */
-@EqualsAndHashCode(of = "region")
 @ToString
 @Immutable
-public final class DyRepos implements Repos {
+@EqualsAndHashCode(of = { "region", "user" })
+final class DyRepos implements Repos {
+
     /**
-     * Region we're in.
+     * Region.
      */
     private final transient Region region;
 
     /**
-     * Owner of these.
+     * URN of the owner.
      */
-    private final transient User owner;
+    private final transient URN user;
 
     /**
-     * Constructor.
-     * @param rgn Region
+     * Ctor.
+     * @param reg Region
+     * @param urn URN
      */
-    public DyRepos(final Region rgn) {
-        this(rgn, User.DEFAULT);
-    }
-
-    /**
-     * Constructor.
-     * @param rgn Region
-     * @param usr The user of the Repos
-     */
-    public DyRepos(final Region rgn, final User usr) {
-        this.region = rgn;
-        this.owner = usr;
+    DyRepos(final Region reg, final URN urn) {
+        this.region = reg;
+        this.user = urn;
     }
 
     @Override
     public Repo get(final String name) {
-        return new DyRepo(this.iterate(name).next());
+        return new DyRepo(
+            this.region.table(DyRepo.TBL).frame()
+                .through(new QueryValve().withLimit(1))
+                .where(DyRepo.HASH, this.user.toString())
+                .where(DyRepo.RANGE, name)
+                .iterator().next()
+        );
     }
 
     @Override
-    public Repo add(final String name) {
-        if (this.iterate(name).hasNext()) {
-            throw new IllegalArgumentException();
-        }
-        try {
-            return new DyRepo(
-                this.region.table(DyRepo.TBL).put(
-                    new Attributes()
-                        .with(DyRepo.ATTR_NAME, name)
-                        .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
-                )
-            );
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    public Repo add(final String name) throws IOException {
+        return new DyRepo(
+            this.region.table(DyRepo.TBL).put(
+                new Attributes()
+                    .with(DyRepo.HASH, this.user.toString())
+                    .with(DyRepo.RANGE, name)
+                    .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
+                    .with(DyRepo.ATTR_MEMO, "<memo/>")
+            )
+        );
     }
 
-    //@todo #409:30min We should include the User as a filter to the repos that
-    // will be fetched. If the Default user is specified, we should return all
-    // repos. Otherwise, only the repos of that specific user should be
-    // contained in the Iterable.
     @Override
     public Iterable<Repo> iterate() {
         return Iterables.transform(
@@ -118,7 +109,8 @@ public final class DyRepos implements Repos {
                     new QueryValve()
                         .withConsistentRead(false)
                         .withSelect(Select.ALL_PROJECTED_ATTRIBUTES)
-                ),
+                )
+                .where(DyRepo.HASH, this.user.toString()),
             new Function<Item, Repo>() {
                 @Override
                 public Repo apply(final Item input) {
@@ -128,26 +120,5 @@ public final class DyRepos implements Repos {
         );
     }
 
-    @Override
-    public User user() {
-        return this.owner;
-    }
-
-    /**
-     * Get iterator over repos with the name specified.
-     * If this repo exists, the iterator's set will contain 1 element.
-     * Else - will contain 0 elements.
-     * @param name Repo name
-     * @return Iterator
-     */
-    private Iterator<Item> iterate(final String name) {
-        return this.region.table(DyRepo.TBL)
-            .frame()
-            .through(
-                new QueryValve().withLimit(1)
-            )
-            .where(DyRepo.ATTR_NAME, name)
-            .iterator();
-    }
 }
 

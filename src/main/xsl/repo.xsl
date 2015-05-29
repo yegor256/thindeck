@@ -40,33 +40,6 @@
             <strong><xsl:value-of select="repo/name"/></strong>
         </p>
         <xsl:apply-templates select="memo"/>
-        <form action="{links/link[@rel='add']/@href}" method="post">
-            <fieldset>
-                <input type="text" name="cmd" size="65"
-                    placeholder="start a task..."/>
-                <button type="submit">Start</button>
-            </fieldset>
-        </form>
-        <xsl:if test="not(tasks/task)">
-            <p>No tasks in this repo yet.</p>
-        </xsl:if>
-        <xsl:if test="tasks/task">
-            <p>Tasks:</p>
-            <ul>
-                <xsl:apply-templates select="tasks/task"/>
-            </ul>
-        </xsl:if>
-    </xsl:template>
-    <xsl:template match="task">
-        <li>
-            <xsl:value-of select="number"/>
-            <xsl:text>:</xsl:text>
-            <xsl:value-of select="command"/>
-            <xsl:text> </xsl:text>
-            <a href="{links/link[@rel='log']/@href}">
-                <xsl:text>log</xsl:text>
-            </a>
-        </li>
     </xsl:template>
     <xsl:template match="memo[containers/container]">
         <p>Running containers:</p>

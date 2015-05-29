@@ -81,7 +81,8 @@ public final class TkRepos implements Take {
                     new RqUser(req, this.base).get().repos().iterate(),
                     new XeTransform.Func<Repo>() {
                         @Override
-                        public XeSource transform(final Repo repo) {
+                        public XeSource transform(final Repo repo)
+                            throws IOException {
                             return new XeAppend(
                                 "repo",
                                 new XeDirectives(
