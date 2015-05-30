@@ -66,7 +66,7 @@
             <xsl:text>:</xsl:text>
         </p>
         <ul>
-            <xsl:apply-templates select="repos/repo"/>
+            <xsl:apply-templates select="repo"/>
         </ul>
     </xsl:template>
     <xsl:template match="repos[not(repo)]">
