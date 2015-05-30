@@ -15,9 +15,6 @@ casper.test.begin(
                 ).then(
                     function () {
                         test.assertHttpStatus(200);
-                    }
-                ).then(
-                    function () {
                         this.fill(
                             'form',
                             {

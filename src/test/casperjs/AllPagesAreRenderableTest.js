@@ -3,6 +3,7 @@
     '/',
     '/xsl/layout.xsl',
     '/css/style.css',
+    '/js/main.js',
     '/robots.txt',
     '/acc'
 ].forEach(

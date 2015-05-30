@@ -49,7 +49,6 @@ import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.TkFork;
 import org.takes.facets.forward.TkForward;
 import org.takes.tk.TkClasspath;
-import org.takes.tk.TkEmpty;
 import org.takes.tk.TkFiles;
 import org.takes.tk.TkMeasured;
 import org.takes.tk.TkRedirect;
@@ -158,7 +157,6 @@ public final class TkApp extends TkWrap {
                     "text/css"
                 )
             ),
-            new FkRegex("/favicon.ico", new TkEmpty()),
             new FkAnonymous(
                 new TkFork(
                     new FkRegex("/", new TkIndex(base))
