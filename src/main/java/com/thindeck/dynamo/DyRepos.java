@@ -84,6 +84,11 @@ final class DyRepos implements Repos {
 
     @Override
     public void add(final String name) throws IOException {
+        if (!name.matches("[a-z]{3,32}")) {
+            throw new IllegalStateException(
+                "invalid repository name, must be 3-32 English letters"
+            );
+        }
         this.region.table(DyRepo.TBL).put(
             new Attributes()
                 .with(DyRepo.HASH, this.user.toString())
