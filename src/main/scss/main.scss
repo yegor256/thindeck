@@ -12,7 +12,6 @@ aside {
   position: fixed;
   right: 0;
   padding: 4px 0.8em;
-  background-color: #eee;
   color: gray;
   span,
   a {
@@ -27,9 +26,14 @@ aside {
   }
   &.version {
     bottom: 0;
+    background-color: #eee;
   }
   &.alpha {
     bottom: 2em;
     color: red;
+    background-color: #eee;
+  }
+  &.ico {
+    bottom: 4em;
   }
 }

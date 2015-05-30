@@ -84,6 +84,11 @@
                 <aside class="alpha">
                     <xsl:text>alpha version, be careful</xsl:text>
                 </aside>
+                <aside class="ico">
+                    <img src="//www.thindeck.com/favicon.ico"
+                        style="width:64px;height:64px;"
+                        alt="thindeck logo"/>
+                </aside>
             </body>
         </html>
     </xsl:template>
