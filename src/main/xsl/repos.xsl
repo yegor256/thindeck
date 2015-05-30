@@ -35,6 +35,9 @@
     xmlns="http://www.w3.org/1999/xhtml" version="1.0">
     <xsl:output method="xml" omit-xml-declaration="yes"/>
     <xsl:include href="/xsl/layout.xsl" />
+    <xsl:template match="page" mode="head">
+        <title><xsl:value-of select="identity/login"/></title>
+    </xsl:template>
     <xsl:template match="page" mode="body">
         <xsl:apply-templates select="repos"/>
         <form action="{links/link[@rel='add']/@href}" method="post">

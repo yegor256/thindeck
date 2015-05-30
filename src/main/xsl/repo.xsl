@@ -35,6 +35,9 @@
     xmlns="http://www.w3.org/1999/xhtml" version="1.0">
     <xsl:output method="xml" omit-xml-declaration="yes"/>
     <xsl:include href="/xsl/layout.xsl" />
+    <xsl:template match="page" mode="head">
+        <title><xsl:value-of select="repo/name"/></title>
+    </xsl:template>
     <xsl:template match="page" mode="body">
         <p>
             <strong><xsl:value-of select="repo/name"/></strong>
