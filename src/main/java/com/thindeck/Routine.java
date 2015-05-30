@@ -46,8 +46,10 @@ import com.thindeck.api.Repo;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
  * Agents.
@@ -55,6 +57,7 @@ import lombok.ToString;
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @Immutable
 @ToString
@@ -86,12 +89,53 @@ final class Routine implements Runnable {
 
     @Override
     public void run() {
-        try {
-            for (final Repo repo : this.base.active()) {
-                for (final Agent agent : this.agents) {
-                    agent.exec(repo);
-                }
+        for (final Repo repo : this.repos()) {
+            for (final Agent agent : this.agents) {
+                this.exec(repo, agent);
             }
+        }
+    }
+
+    /**
+     * Get all repos.
+     * @return Repos
+     */
+    private Iterable<Repo> repos() {
+        try {
+            return this.base.active();
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    /**
+     * Process one agent with one repo.
+     * @param repo Repo
+     * @param agent Agent
+     */
+    private void exec(final Repo repo, final Agent agent) {
+        try {
+            agent.exec(repo);
+        } catch (final IOException ex) {
+            this.log(repo, agent, ex);
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    /**
+     * Log an error.
+     * @param repo Repo
+     * @param agent Agent
+     * @param error The error
+     */
+    private void log(final Repo repo, final Agent agent,
+        final IOException error) {
+        try {
+            repo.console().log(
+                Level.SEVERE, "%s failed: %s",
+                agent.getClass().getCanonicalName(),
+                ExceptionUtils.getStackTrace(error)
+            );
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }

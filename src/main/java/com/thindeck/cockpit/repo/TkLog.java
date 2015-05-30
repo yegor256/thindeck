@@ -30,6 +30,8 @@
 package com.thindeck.cockpit.repo;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Iterables;
+import com.jcabi.aspects.Tv;
 import com.thindeck.api.Base;
 import com.thindeck.api.Repo;
 import java.io.IOException;
@@ -65,7 +67,7 @@ public final class TkLog implements Take {
         final Repo repo = new RqRepo(this.base, req).repo();
         return new RsText(
             Joiner.on("\n").join(
-                repo.console().cat()
+                Iterables.limit(repo.console().cat(), Tv.HUNDRED)
             )
         );
     }

@@ -130,6 +130,7 @@ final class DyConsole implements Console {
                 .through(
                     new QueryValve()
                         .withScanIndexForward(false)
+                        .withLimit(Tv.HUNDRED)
                         .withAttributesToGet(
                             DyConsole.ATTR_LEVEL,
                             DyConsole.ATTR_DETAILS
