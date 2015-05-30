@@ -29,12 +29,7 @@
  */
 package com.thindeck;
 
-import com.jcabi.dynamo.Credentials;
-import com.jcabi.dynamo.Region;
-import com.jcabi.dynamo.retry.ReRegion;
-import com.jcabi.manifests.Manifests;
 import com.thindeck.api.Base;
-import com.thindeck.api.mock.MkBase;
 import com.thindeck.cockpit.TkApp;
 import com.thindeck.dynamo.DyBase;
 import org.takes.http.Exit;
@@ -63,37 +58,9 @@ public final class Entrance {
      * @throws Exception If fails
      */
     public static void main(final String... args) throws Exception {
-        final Base base = Entrance.base();
-        new Routine(base);
+        final Base base = new DyBase();
         new FtCLI(new TkApp(base), args).start(Exit.NEVER);
+        new Routine(base);
     }
 
-    /**
-     * Make base.
-     * @return The base
-     */
-    private static Base base() {
-        final Base base;
-        // @checkstyle MultipleStringLiteralsCheck (1 line)
-        if (Manifests.read("Thindeck-DynamoKey").startsWith("AAAAA")) {
-            base = new MkBase();
-        } else {
-            base = new DyBase(Entrance.dynamo());
-        }
-        return base;
-    }
-
-    /**
-     * Dynamo DB region.
-     * @return Region
-     */
-    private static Region dynamo() {
-        final String key = Manifests.read("Thindeck-DynamoKey");
-        final Credentials creds = new Credentials.Simple(
-            key, Manifests.read("Thindeck-DynamoSecret")
-        );
-        return new Region.Prefixed(
-            new ReRegion(new Region.Simple(creds)), "td-"
-        );
-    }
 }

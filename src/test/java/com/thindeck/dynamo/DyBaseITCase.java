@@ -49,7 +49,7 @@ public final class DyBaseITCase {
      */
     @Test
     public void canAddCommand() throws Exception {
-        final Repos repos = new DyBase(new RegionLocalDynamo())
+        final Repos repos = new DyBase()
             .user(new URN("urn:test:7678"))
             .repos();
         repos.add("testrepo");

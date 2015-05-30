@@ -21,8 +21,8 @@ casper.test.begin(
                         this.fill(
                             'form',
                             {
-                                'name': 'test_repo_name',
-                                'uri': 'test_repo_uri'
+                                'name': 'demo',
+                                'uri': 'https://github.com/yegor256/thindeck.git'
                             },
                             true
                         );

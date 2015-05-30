@@ -48,12 +48,15 @@ public final class FindTanks implements Agent {
 
     @Override
     public void exec(final Repo repo) throws IOException {
-        repo.memo().update(
-            new Directives()
-                .xpath("/memo/tanks/tank").remove()
-                .xpath("/memo").addIf("tanks")
-                .add("tank").set("t1.thindeck.com")
-        );
-        repo.console().log(Level.INFO, "one tank t1.thindeck.com found");
+        if (repo.memo().read().nodes("//tanks/tank").isEmpty()) {
+            repo.memo().update(
+                new Directives()
+                    .xpath("/memo/tanks/tank").remove()
+                    .xpath("/memo").addIf("tanks")
+                    .add("tank").set("t1.thindeck.com")
+            );
+            repo.console().log(Level.INFO, "one tank t1.thindeck.com found");
+        }
     }
+
 }

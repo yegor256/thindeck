@@ -50,7 +50,7 @@ public final class DyConsoleITCase {
      */
     @Test
     public void addsAndReads() throws Exception {
-        final Repos repos = new DyBase(new RegionLocalDynamo())
+        final Repos repos = new DyBase()
             .user(new URN("urn:test:989"))
             .repos();
         repos.add("testit");

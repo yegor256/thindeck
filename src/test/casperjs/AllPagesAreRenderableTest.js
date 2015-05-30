@@ -4,8 +4,7 @@
     '/xsl/layout.xsl',
     '/css/style.css',
     '/robots.txt',
-    '/acc',
-    '/r/fake-repo',
+    '/acc'
 ].forEach(
     function (page) {
         casper.test.begin(

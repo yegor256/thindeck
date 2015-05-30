@@ -116,7 +116,7 @@ final class Routine implements Runnable {
     private void exec(final Repo repo, final Agent agent) {
         try {
             agent.exec(repo);
-        } catch (final IOException ex) {
+        } catch (final Throwable ex) {
             this.log(repo, agent, ex);
             throw new IllegalStateException(ex);
         }
@@ -129,7 +129,7 @@ final class Routine implements Runnable {
      * @param error The error
      */
     private void log(final Repo repo, final Agent agent,
-        final IOException error) {
+        final Throwable error) {
         try {
             repo.console().log(
                 Level.SEVERE, "%s failed: %s",

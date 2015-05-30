@@ -32,8 +32,11 @@ package com.thindeck.dynamo;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.Credentials;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.retry.ReRegion;
+import com.jcabi.manifests.Manifests;
 import com.jcabi.urn.URN;
 import com.thindeck.api.Base;
 import com.thindeck.api.Repo;
@@ -59,6 +62,13 @@ public final class DyBase implements Base {
      * Region we're in.
      */
     private final transient Region region;
+
+    /**
+     * Constructor.
+     */
+    public DyBase() {
+        this(DyBase.dynamo());
+    }
 
     /**
      * Constructor.
@@ -91,6 +101,26 @@ public final class DyBase implements Base {
                     }
                 }
             }
+        );
+    }
+
+    /**
+     * Dynamo DB region.
+     * @return Region
+     */
+    private static Region dynamo() {
+        final String key = Manifests.read("Thindeck-DynamoKey");
+        Credentials creds = new Credentials.Simple(
+            key, Manifests.read("Thindeck-DynamoSecret")
+        );
+        if (key.startsWith("AAAAA")) {
+            creds = new Credentials.Direct(
+                creds,
+                Integer.parseInt(System.getProperty("dynamo.port"))
+            );
+        }
+        return new Region.Prefixed(
+            new ReRegion(new Region.Simple(creds)), "td-"
         );
     }
 
