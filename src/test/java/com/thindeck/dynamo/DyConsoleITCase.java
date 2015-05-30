@@ -53,7 +53,7 @@ public final class DyConsoleITCase {
         final Repos repos = new DyBase(new RegionLocalDynamo())
             .user(new URN("urn:test:989"))
             .repos();
-        repos.add("test9");
+        repos.add("testit");
         final Console console = repos.iterate().iterator().next().console();
         console.log(Level.INFO, "test message for Jeff");
         MatcherAssert.assertThat(
