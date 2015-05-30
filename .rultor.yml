@@ -1,4 +1,9 @@
 install: |-
+  sudo locale-gen en_US en_US.UTF-8
+  sudo dpkg-reconfigure locales
+  export LC_ALL=en_US.UTF-8
+  export LANG=en_US.UTF-8
+  export LANGUAGE=en_US.UTF-8
   sudo apt-get update
   sudo apt-get install -y openjdk-6-jre
   wget --retry-connrefused http://yar.fruct.org/attachments/download/362/plantuml_7707-1_all.deb
