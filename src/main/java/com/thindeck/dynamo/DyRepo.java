@@ -50,7 +50,7 @@ import lombok.ToString;
 @ToString
 @Immutable
 @EqualsAndHashCode(of = "item")
-public final class DyRepo implements Repo {
+final class DyRepo implements Repo {
 
     /**
      * Table name.
@@ -86,7 +86,7 @@ public final class DyRepo implements Repo {
      * Ctor.
      * @param itm Item
      */
-    public DyRepo(@NotNull final Item itm) {
+    DyRepo(@NotNull final Item itm) {
         this.item = itm;
     }
 

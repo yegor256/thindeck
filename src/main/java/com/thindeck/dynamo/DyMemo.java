@@ -52,7 +52,7 @@ import org.xembly.Xembler;
 @Immutable
 @ToString
 @EqualsAndHashCode
-public final class DyMemo implements Memo {
+final class DyMemo implements Memo {
 
     /**
      * Item.
@@ -63,7 +63,7 @@ public final class DyMemo implements Memo {
      * Constructor.
      * @param itm Item
      */
-    public DyMemo(@NotNull final Item itm) {
+    DyMemo(@NotNull final Item itm) {
         this.item = itm;
     }
 

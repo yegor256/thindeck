@@ -58,7 +58,8 @@ public final class TkRepo extends TkWrap {
      */
     private static Take make(final Base base) {
         return new TkFork(
-            new FkRepo("", new TkIndex(base))
+            new FkRepo("", new TkIndex(base)),
+            new FkRepo("/log", new TkLog(base))
         );
     }
 

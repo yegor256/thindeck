@@ -30,6 +30,7 @@
 package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
+import java.io.IOException;
 import java.util.logging.Level;
 
 /**
@@ -47,8 +48,9 @@ public interface Console {
      * @param level Level of log
      * @param text Text to log
      * @param args Optional args
+     * @throws IOException If fails
      */
-    void log(Level level, String text, Object... args);
+    void log(Level level, String text, Object... args) throws IOException;
 
     /**
      * Cat it.

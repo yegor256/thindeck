@@ -29,19 +29,14 @@
  */
 package com.thindeck.cockpit.repo;
 
+import com.google.common.base.Joiner;
 import com.thindeck.api.Base;
 import com.thindeck.api.Repo;
-import com.thindeck.cockpit.RsPage;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.misc.Href;
-import org.takes.rs.xe.XeAppend;
-import org.takes.rs.xe.XeChain;
-import org.takes.rs.xe.XeDirectives;
-import org.takes.rs.xe.XeLink;
-import org.xembly.Directives;
+import org.takes.rs.RsText;
 
 /**
  * Repo.
@@ -49,10 +44,8 @@ import org.xembly.Directives;
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.5
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
-public final class TkIndex implements Take {
+public final class TkLog implements Take {
 
     /**
      * Base.
@@ -63,30 +56,16 @@ public final class TkIndex implements Take {
      * Ctor.
      * @param bse Base
      */
-    TkIndex(final Base bse) {
+    TkLog(final Base bse) {
         this.base = bse;
     }
 
     @Override
     public Response act(final Request req) throws IOException {
         final Repo repo = new RqRepo(this.base, req).repo();
-        final Href home = new Href("/r").path(repo.name());
-        return new RsPage(
-            "/xsl/repo.xsl",
-            this.base,
-            req,
-            new XeLink("log", home.path("log")),
-            new XeDirectives(
-                Directives.copyOf(repo.memo().read().node())
-            ),
-            new XeAppend(
-                "repo",
-                new XeDirectives(
-                    new Directives().add("name").set(repo.name())
-                ),
-                new XeChain(
-                    new XeLink("open", home.path("open"))
-                )
+        return new RsText(
+            Joiner.on("\n").join(
+                repo.console().cat()
             )
         );
     }

@@ -39,6 +39,12 @@
         <p>
             <strong><xsl:value-of select="repo/name"/></strong>
         </p>
+        <p>
+            <xsl:text>Log is </xsl:text>
+            <a href="{links/link[@rel='log']/@href}">
+                <xsl:text>here</xsl:text>
+            </a>
+        </p>
         <xsl:apply-templates select="memo"/>
     </xsl:template>
     <xsl:template match="memo[containers/container]">
