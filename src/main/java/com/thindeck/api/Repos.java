@@ -64,11 +64,10 @@ public interface Repos {
      * with this name already exists.
      *
      * @param name Unique name
-     * @return Repo
      * @throws IOException If fails
      */
     @NotNull(message = "repo can't be null")
-    Repo add(String name) throws IOException;
+    void add(String name) throws IOException;
 
     /**
      * Iterate them all.

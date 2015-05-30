@@ -1,21 +1,21 @@
 {
   "AttributeDefinitions": [
     {
-      "AttributeName": "urn",
+      "AttributeName": "repo",
       "AttributeType": "S"
     },
     {
-      "AttributeName": "name",
-      "AttributeType": "S"
+      "AttributeName": "nano",
+      "AttributeType": "N"
     }
   ],
   "KeySchema": [
     {
-      "AttributeName": "urn",
+      "AttributeName": "repo",
       "KeyType": "HASH"
     },
     {
-      "AttributeName": "name",
+      "AttributeName": "nano",
       "KeyType": "RANGE"
     }
   ],
@@ -23,5 +23,5 @@
     "ReadCapacityUnits": "1",
     "WriteCapacityUnits": "1"
   },
-  "TableName": "td-repos"
+  "TableName": "td-console"
 }

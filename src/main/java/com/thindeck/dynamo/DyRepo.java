@@ -30,13 +30,11 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
+import com.jcabi.dynamo.Region;
+import com.jcabi.urn.URN;
 import com.thindeck.api.Console;
 import com.thindeck.api.Memo;
 import com.thindeck.api.Repo;
-import com.thindeck.api.mock.MkConsole;
-import java.io.IOException;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -49,7 +47,7 @@ import lombok.ToString;
  */
 @ToString
 @Immutable
-@EqualsAndHashCode(of = "item")
+@EqualsAndHashCode(of = { "region", "user", "repo" })
 final class DyRepo implements Repo {
 
     /**
@@ -78,30 +76,47 @@ final class DyRepo implements Repo {
     public static final String ATTR_MEMO = "memo";
 
     /**
-     * Item.
+     * Region.
      */
-    private final transient Item item;
+    private final transient Region region;
+
+    /**
+     * URN of the owner.
+     */
+    private final transient URN user;
+
+    /**
+     * Name of the repo.
+     */
+    private final transient String repo;
 
     /**
      * Ctor.
-     * @param itm Item
+     * @param reg Region
+     * @param urn URN
+     * @param name Repo name
      */
-    DyRepo(@NotNull final Item itm) {
-        this.item = itm;
+    DyRepo(final Region reg, final URN urn, final String name) {
+        this.region = reg;
+        this.user = urn;
+        this.repo = name;
     }
 
     @Override
-    public String name() throws IOException {
-        return this.item.get(DyRepo.RANGE).getS();
+    public String name() {
+        return this.repo;
     }
 
     @Override
     public Console console() {
-        return new MkConsole();
+        return new DyConsole(
+            this.region,
+            String.format("%s %s", this.user, this.repo)
+        );
     }
 
     @Override
     public Memo memo() {
-        return new DyMemo(this.item);
+        return new DyMemo(this.region, this.user, this.repo);
     }
 }

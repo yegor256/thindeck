@@ -29,68 +29,36 @@
  */
 package com.thindeck.dynamo;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Item;
-import com.jcabi.dynamo.Region;
 import com.jcabi.urn.URN;
-import com.thindeck.api.Base;
-import com.thindeck.api.Repo;
-import com.thindeck.api.User;
-import java.io.IOException;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.thindeck.api.Console;
+import com.thindeck.api.Repos;
+import java.util.logging.Level;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Dynamo implementation of the {@link Base}.
- *
- * @author Krzyszof Krason (Krzysztof.Krason@gmail.com)
+ * Integration case for {@link DyConsole}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.3
  */
-@ToString
-@Immutable
-@EqualsAndHashCode(of = "region")
-public final class DyBase implements Base {
+public final class DyConsoleITCase {
 
     /**
-     * Region we're in.
+     * DyConsole can add and read.
+     * @throws Exception If there is some problem inside
      */
-    private final transient Region region;
-
-    /**
-     * Constructor.
-     * @param rgn Region
-     */
-    public DyBase(final Region rgn) {
-        this.region = rgn;
-    }
-
-    @Override
-    public User user(final URN urn) {
-        return new DyUser(this.region, urn);
-    }
-
-    @Override
-    public Iterable<Repo> active() {
-        return Iterables.transform(
-            this.region.table(DyRepo.TBL).frame(),
-            new Function<Item, Repo>() {
-                @Override
-                public Repo apply(final Item item) {
-                    try {
-                        return new DyRepo(
-                            DyBase.this.region,
-                            URN.create(item.get(DyRepo.HASH).getS()),
-                            item.get(DyRepo.RANGE).getS()
-                        );
-                    } catch (final IOException ex) {
-                        throw new IllegalStateException(ex);
-                    }
-                }
-            }
+    @Test
+    public void addsAndReads() throws Exception {
+        final Repos repos = new DyBase(new RegionLocalDynamo())
+            .user(new URN("urn:test:989"))
+            .repos();
+        repos.add("test9");
+        final Console console = repos.iterate().iterator().next().console();
+        console.log(Level.INFO, "test message for Jeff");
+        MatcherAssert.assertThat(
+            console.cat(),
+            Matchers.hasItem(Matchers.containsString("Jeff"))
         );
     }
 

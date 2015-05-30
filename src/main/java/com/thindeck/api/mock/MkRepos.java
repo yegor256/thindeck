@@ -55,8 +55,8 @@ public final class MkRepos implements Repos {
     }
 
     @Override
-    public Repo add(final String name) throws IOException {
-        return new MkRepo();
+    public void add(final String name) {
+        // nothing
     }
 
     @Override

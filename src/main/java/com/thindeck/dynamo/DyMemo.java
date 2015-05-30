@@ -32,12 +32,14 @@ package com.thindeck.dynamo;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Item;
+import com.jcabi.dynamo.QueryValve;
+import com.jcabi.dynamo.Region;
+import com.jcabi.urn.URN;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import com.thindeck.api.Memo;
 import java.io.IOException;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.xembly.Directive;
@@ -55,23 +57,37 @@ import org.xembly.Xembler;
 final class DyMemo implements Memo {
 
     /**
-     * Item.
+     * Region.
      */
-    private final transient Item item;
+    private final transient Region region;
 
     /**
-     * Constructor.
-     * @param itm Item
+     * URN of the owner.
      */
-    DyMemo(@NotNull final Item itm) {
-        this.item = itm;
+    private final transient URN user;
+
+    /**
+     * Name of the repo.
+     */
+    private final transient String repo;
+
+    /**
+     * Ctor.
+     * @param reg Region
+     * @param urn URN
+     * @param name Repo name
+     */
+    DyMemo(final Region reg, final URN urn, final String name) {
+        this.region = reg;
+        this.user = urn;
+        this.repo = name;
     }
 
     @Override
     public XML read() throws IOException {
         return new StrictXML(
             Memo.CLEANUP.transform(
-                new XMLDocument(this.item.get(DyRepo.ATTR_MEMO).getS())
+                new XMLDocument(this.item().get(DyRepo.ATTR_MEMO).getS())
             ),
             Memo.SCHEMA
         );
@@ -79,7 +95,7 @@ final class DyMemo implements Memo {
 
     @Override
     public void update(final Iterable<Directive> dirs) throws IOException {
-        this.item.put(
+        this.item().put(
             new AttributeUpdates().with(
                 DyRepo.ATTR_MEMO,
                 new XMLDocument(
@@ -87,5 +103,17 @@ final class DyMemo implements Memo {
                 ).toString()
             )
         );
+    }
+
+    /**
+     * Item.
+     * @return Item
+     */
+    private Item item() {
+        return this.region.table(DyRepo.TBL).frame()
+            .through(new QueryValve().withLimit(1))
+            .where(DyRepo.HASH, this.user.toString())
+            .where(DyRepo.RANGE, this.repo)
+            .iterator().next();
     }
 }

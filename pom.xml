@@ -486,6 +486,7 @@
                     <plugin>
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <configuration>
+                            <parallel>none</parallel>
                             <systemPropertyVariables combine.children="append">
                                 <takes.home>http://localhost:${takes.port}</takes.home>
                             </systemPropertyVariables>
@@ -656,8 +657,7 @@
                                     <secret>${failsafe.dynamo.secret}</secret>
                                     <tables>
                                         <table>${basedir}/src/test/dynamodb/repos.json</table>
-                                        <table>${basedir}/src/test/dynamodb/users.json</table>
-                                        <table>${basedir}/src/test/dynamodb/tasks.json</table>
+                                        <table>${basedir}/src/test/dynamodb/console.json</table>
                                     </tables>
                                 </configuration>
                             </execution>

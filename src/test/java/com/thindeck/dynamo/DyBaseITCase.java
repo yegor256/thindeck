@@ -30,6 +30,7 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.urn.URN;
+import com.thindeck.api.Repos;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -48,10 +49,12 @@ public final class DyBaseITCase {
      */
     @Test
     public void canAddCommand() throws Exception {
+        final Repos repos = new DyBase(new RegionLocalDynamo())
+            .user(new URN("urn:test:7678"))
+            .repos();
+        repos.add("testrepo");
         MatcherAssert.assertThat(
-            new DyBase(new RegionLocalDynamo())
-                .user(new URN("urn:test:7678"))
-                .repos().add("testrepo").name(),
+            repos.iterate().iterator().next().name(),
             Matchers.startsWith("test")
         );
     }

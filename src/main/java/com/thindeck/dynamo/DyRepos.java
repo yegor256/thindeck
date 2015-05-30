@@ -78,24 +78,18 @@ final class DyRepos implements Repos {
     @Override
     public Repo get(final String name) {
         return new DyRepo(
-            this.region.table(DyRepo.TBL).frame()
-                .through(new QueryValve().withLimit(1))
-                .where(DyRepo.HASH, this.user.toString())
-                .where(DyRepo.RANGE, name)
-                .iterator().next()
+            this.region, this.user, name
         );
     }
 
     @Override
-    public Repo add(final String name) throws IOException {
-        return new DyRepo(
-            this.region.table(DyRepo.TBL).put(
-                new Attributes()
-                    .with(DyRepo.HASH, this.user.toString())
-                    .with(DyRepo.RANGE, name)
-                    .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
-                    .with(DyRepo.ATTR_MEMO, "<memo/>")
-            )
+    public void add(final String name) throws IOException {
+        this.region.table(DyRepo.TBL).put(
+            new Attributes()
+                .with(DyRepo.HASH, this.user.toString())
+                .with(DyRepo.RANGE, name)
+                .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
+                .with(DyRepo.ATTR_MEMO, "<memo/>")
         );
     }
 
@@ -109,7 +103,11 @@ final class DyRepos implements Repos {
             new Function<Item, Repo>() {
                 @Override
                 public Repo apply(final Item input) {
-                    return new DyRepo(input);
+                    try {
+                        return DyRepos.this.get(input.get(DyRepo.RANGE).getS());
+                    } catch (final IOException ex) {
+                        throw new IllegalStateException(ex);
+                    }
                 }
             }
         );

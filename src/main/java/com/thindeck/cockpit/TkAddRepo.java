@@ -31,6 +31,7 @@ package com.thindeck.cockpit;
 
 import com.thindeck.api.Base;
 import com.thindeck.api.Repo;
+import com.thindeck.api.Repos;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
@@ -69,7 +70,9 @@ public final class TkAddRepo implements Take {
         final RqForm.Smart form = new RqForm.Smart(new RqForm.Base(req));
         final String name = form.single("name");
         final String uri = form.single("uri");
-        final Repo repo = new RqUser(req, this.base).get().repos().add(name);
+        final Repos repos = new RqUser(req, this.base).get().repos();
+        repos.add(name);
+        final Repo repo = repos.get(name);
         try {
             repo.memo().update(
                 new Directives().xpath("/memo").addIf("uri").set(uri)
