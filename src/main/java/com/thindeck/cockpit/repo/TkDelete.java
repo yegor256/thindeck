@@ -30,37 +30,47 @@
 package com.thindeck.cockpit.repo;
 
 import com.thindeck.api.Base;
+import com.thindeck.api.Repos;
+import com.thindeck.cockpit.RqUser;
+import java.io.IOException;
+import org.takes.Request;
+import org.takes.Response;
 import org.takes.Take;
-import org.takes.facets.fork.TkFork;
-import org.takes.tk.TkWrap;
+import org.takes.facets.flash.RsFlash;
+import org.takes.facets.forward.RsForward;
 
 /**
- * Repo.
+ * Delete repo.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.5
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class TkRepo extends TkWrap {
+public final class TkDelete implements Take {
+
+    /**
+     * Base.
+     */
+    private final transient Base base;
 
     /**
      * Ctor.
-     * @param base Base
+     * @param bse Base
      */
-    public TkRepo(final Base base) {
-        super(TkRepo.make(base));
+    TkDelete(final Base bse) {
+        this.base = bse;
     }
 
-    /**
-     * Ctor.
-     * @param base Base
-     * @return Take
-     */
-    private static Take make(final Base base) {
-        return new TkFork(
-            new FkRepo("", new TkIndex(base)),
-            new FkRepo("/log", new TkLog(base)),
-            new FkRepo("/delete", new TkDelete(base))
+    @Override
+    public Response act(final Request req) throws IOException {
+        final Repos repos = new RqUser(req, this.base).get().repos();
+        final String repo = new RqRepo(this.base, req).repo().name();
+        repos.delete(repo);
+        return new RsForward(
+            new RsFlash(
+                String.format("repository \"%s\" deleted", repo)
+            )
         );
     }
 

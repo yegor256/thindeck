@@ -99,6 +99,16 @@ final class DyRepos implements Repos {
     }
 
     @Override
+    public void delete(final String name) {
+        this.region.table(DyRepo.TBL)
+            .frame()
+            .through(new QueryValve())
+            .where(DyRepo.HASH, this.user.toString())
+            .where(DyRepo.RANGE, name)
+            .iterator().remove();
+    }
+
+    @Override
     public Iterable<Repo> iterate() {
         return Iterables.transform(
             this.region.table(DyRepo.TBL)

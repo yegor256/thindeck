@@ -66,8 +66,18 @@ public interface Repos {
      * @param name Unique name
      * @throws IOException If fails
      */
-    @NotNull(message = "repo can't be null")
     void add(String name) throws IOException;
+
+    /**
+     * Delete a repository.
+     *
+     * <p>The method should throw a runtime exception if a repository
+     * with this name is absent.
+     *
+     * @param name Unique name
+     * @throws IOException If fails
+     */
+    void delete(String name) throws IOException;
 
     /**
      * Iterate them all.

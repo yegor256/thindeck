@@ -60,6 +60,11 @@ public final class MkRepos implements Repos {
     }
 
     @Override
+    public void delete(final String name) throws IOException {
+        // nothing
+    }
+
+    @Override
     public Iterable<Repo> iterate() throws IOException {
         return Collections.<Repo>singleton(new MkRepo());
     }
