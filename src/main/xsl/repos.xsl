@@ -83,6 +83,10 @@
             <a href="{links/link[@rel='open']/@href}">
                 <xsl:value-of select="name"/>
             </a>
+            <xsl:text> </xsl:text>
+            <a href="{links/link[@rel='delete']/@href}">
+                <xsl:text>delete</xsl:text>
+            </a>
         </li>
     </xsl:template>
 </xsl:stylesheet>

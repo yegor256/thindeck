@@ -51,6 +51,7 @@ import org.xembly.Directives;
  * @version $Id$
  * @since 0.5
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
 public final class TkRepos implements Take {
 
@@ -91,7 +92,11 @@ public final class TkRepos implements Take {
                                     )
                                 ),
                                 new XeChain(
-                                    new XeLink("open", home.path(repo.name()))
+                                    new XeLink("open", home.path(repo.name())),
+                                    new XeLink(
+                                        "delete",
+                                        home.path(repo.name()).path("delete")
+                                    )
                                 )
                             );
                         }
