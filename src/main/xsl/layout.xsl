@@ -53,7 +53,7 @@
                                 <img src="{identity/avatar}"
                                     alt="profile picture of {identity/urn}"
                                     title="{identity/urn}"
-                                    style="width:32px;height:32px"/>
+                                    style="width:32px;height:32px;vertical-align:middle"/>
                             </li>
                             <li>
                                 <a href="{links/link[@rel='home']/@href}">
