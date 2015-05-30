@@ -110,7 +110,9 @@ final class DyMemo implements Memo {
      * @return Item
      */
     private Item item() {
-        return this.region.table(DyRepo.TBL).frame()
+        return this.region
+            .table(DyRepo.TBL)
+            .frame()
             .through(
                 new QueryValve()
                     .withLimit(1)

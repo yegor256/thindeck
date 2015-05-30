@@ -32,8 +32,11 @@ package com.thindeck;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.ScheduleWithFixedDelay;
+import com.jcabi.github.RtGithub;
 import com.jcabi.immutable.Array;
 import com.thindeck.agents.Agent;
+import com.thindeck.agents.ReadConfig;
+import com.thindeck.agents.Swap;
 import com.thindeck.agents.docker.DockerRun;
 import com.thindeck.agents.docker.DockerStop;
 import com.thindeck.agents.lb.UpdateLB;
@@ -101,10 +104,12 @@ final class Routine implements Runnable {
      */
     private static Iterable<Agent> all() throws IOException {
         return Arrays.asList(
+            new ReadConfig(new RtGithub()),
             new FindTanks(),
             new UpdateLB(),
             new DockerRun(),
-            new DockerStop()
+            new DockerStop(),
+            new Swap()
         );
     }
 

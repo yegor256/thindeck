@@ -43,6 +43,7 @@
                     href="//yegor256.github.io/tacit/tacit.min.css"/>
                 <link rel="stylesheet" type="text/css"
                     href="/css/style.css"/>
+                <link rel="shortcut icon" href="//www.thindeck.com/favicon.ico"/>
                 <xsl:apply-templates select="." mode="head"/>
             </head>
             <body>
