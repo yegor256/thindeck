@@ -34,6 +34,7 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.ScheduleWithFixedDelay;
 import com.jcabi.github.RtGithub;
 import com.jcabi.immutable.Array;
+import com.jcabi.log.Logger;
 import com.thindeck.agents.Agent;
 import com.thindeck.agents.ReadConfig;
 import com.thindeck.agents.Swap;
@@ -140,6 +141,7 @@ final class Routine implements Runnable {
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
+        Logger.warn(this, "%[exception]s", error);
     }
 
     /**
