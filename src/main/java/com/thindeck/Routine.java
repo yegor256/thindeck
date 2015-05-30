@@ -120,7 +120,6 @@ final class Routine implements Runnable {
             // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Throwable ex) {
             this.log(repo, agent, ex);
-            throw new IllegalStateException(ex);
         }
     }
 
