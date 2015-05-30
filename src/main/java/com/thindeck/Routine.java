@@ -69,6 +69,11 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 final class Routine implements Runnable {
 
     /**
+     * Start.
+     */
+    private final transient long start = System.currentTimeMillis();
+
+    /**
      * Base.
      */
     private final transient Base base;
@@ -90,11 +95,17 @@ final class Routine implements Runnable {
 
     @Override
     public void run() {
+        int total = 0;
         for (final Repo repo : this.repos()) {
             for (final Agent agent : this.agents) {
                 this.exec(repo, agent);
             }
+            ++total;
         }
+        Logger.info(
+            this, "%d repos, alive for %[msec]s",
+            total, System.currentTimeMillis() - this.start
+        );
     }
 
     /**
