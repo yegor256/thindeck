@@ -47,7 +47,29 @@
         </p>
         <xsl:apply-templates select="memo"/>
     </xsl:template>
-    <xsl:template match="memo[containers/container]">
+    <xsl:template match="memo">
+        <p>
+            <xsl:text>URI: </xsl:text>
+            <xsl:value-of select="uri"/>
+        </p>
+        <xsl:if test="not(tanks/tank)">
+            <p>No tanks available yet.</p>
+        </xsl:if>
+        <xsl:apply-templates select="tanks"/>
+        <xsl:if test="not(containers/container)">
+            <p>No running containers yet.</p>
+        </xsl:if>
+        <xsl:apply-templates select="containers"/>
+    </xsl:template>
+    <xsl:template match="tanks[tank]">
+        <p>Recommended tanks:</p>
+        <ul>
+            <xsl:for-each select="tank">
+                <li><xsl:value-of select="."/></li>
+            </xsl:for-each>
+        </ul>
+    </xsl:template>
+    <xsl:template match="containers[container]">
         <p>Running containers:</p>
         <table>
             <tr>
@@ -74,8 +96,5 @@
                 </tr>
             </xsl:for-each>
         </table>
-    </xsl:template>
-    <xsl:template match="memo">
-        <p>No running containers at the moment.</p>
     </xsl:template>
 </xsl:stylesheet>
