@@ -74,7 +74,6 @@ final class TkAppAuth extends TkWrap {
      */
     TkAppAuth(final Take take) {
         super(TkAppAuth.make(take));
-        System.out.println("testing:" + TkAppAuth.TESTING);
     }
 
     /**

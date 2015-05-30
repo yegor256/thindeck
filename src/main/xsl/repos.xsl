@@ -36,17 +36,20 @@
     <xsl:output method="xml" omit-xml-declaration="yes"/>
     <xsl:include href="/xsl/layout.xsl" />
     <xsl:template match="page" mode="head">
-        <title><xsl:value-of select="identity/login"/></title>
+        <title>
+            <xsl:text>@</xsl:text>
+            <xsl:value-of select="identity/login"/>
+        </title>
     </xsl:template>
     <xsl:template match="page" mode="body">
         <xsl:apply-templates select="repos"/>
         <form action="{links/link[@rel='add']/@href}" method="post">
             <fieldset>
-                <label>Name:</label>
+                <label><xsl:text>Name:</xsl:text></label>
                 <input type="text" name="name"
                     size="25" maxlength="64"
                     placeholder="[a-z\-]+"/>
-                <label>URI:</label>
+                <label><xsl:text>URI:</xsl:text></label>
                 <input type="text" name="uri"
                     size="50" maxlength="255"
                     placeholder="e.g. https://github.com/yegor256/thindeck.git"/>

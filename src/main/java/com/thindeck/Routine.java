@@ -113,9 +113,11 @@ final class Routine implements Runnable {
      * @param repo Repo
      * @param agent Agent
      */
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
     private void exec(final Repo repo, final Agent agent) {
         try {
             agent.exec(repo);
+            // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Throwable ex) {
             this.log(repo, agent, ex);
             throw new IllegalStateException(ex);
