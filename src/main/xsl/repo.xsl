@@ -38,7 +38,7 @@
     <xsl:template match="page" mode="body">
         <p>
             <strong><xsl:value-of select="repo/name"/></strong>
-            <xsl:text>(log is </xsl:text>
+            <xsl:text> (log is </xsl:text>
             <a href="{links/link[@rel='log']/@href}">
                 <xsl:text>here</xsl:text>
             </a>
