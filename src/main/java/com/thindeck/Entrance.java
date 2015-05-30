@@ -59,8 +59,8 @@ public final class Entrance {
      */
     public static void main(final String... args) throws Exception {
         final Base base = new DyBase();
-        new FtCLI(new TkApp(base), args).start(Exit.NEVER);
         new Routine(base);
+        new FtCLI(new TkApp(base), args).start(Exit.NEVER);
     }
 
 }
