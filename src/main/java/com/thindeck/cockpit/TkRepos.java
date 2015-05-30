@@ -80,6 +80,7 @@ public final class TkRepos implements Take {
                 "repos",
                 new XeTransform<>(
                     new RqUser(req, this.base).get().repos().iterate(),
+                    // @checkstyle AnonInnerLengthCheck (50 lines)
                     new XeTransform.Func<Repo>() {
                         @Override
                         public XeSource transform(final Repo repo)
