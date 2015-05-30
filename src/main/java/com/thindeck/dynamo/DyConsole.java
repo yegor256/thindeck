@@ -40,6 +40,7 @@ import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
 import com.thindeck.api.Console;
 import java.io.IOException;
+import java.util.Date;
 import java.util.logging.Level;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -132,8 +133,14 @@ final class DyConsole implements Console {
                 @Override
                 public String apply(final Item item) {
                     try {
+                        final Date date = new Date(
+                            Long.parseLong(
+                                item.get(DyConsole.RANGE).getN()
+                            ) / (long) Tv.MILLION
+                        );
                         return String.format(
-                            "%s %s",
+                            "%tF %1$tT %s: %s",
+                            date,
                             item.get(DyConsole.ATTR_LEVEL).getS(),
                             item.get(DyConsole.ATTR_DETAILS).getS()
                         );
