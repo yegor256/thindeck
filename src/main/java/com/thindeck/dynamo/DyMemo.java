@@ -111,7 +111,11 @@ final class DyMemo implements Memo {
      */
     private Item item() {
         return this.region.table(DyRepo.TBL).frame()
-            .through(new QueryValve().withLimit(1))
+            .through(
+                new QueryValve()
+                    .withLimit(1)
+                    .withAttributesToGet(DyRepo.ATTR_UPDATED, DyRepo.ATTR_MEMO)
+            )
             .where(DyRepo.HASH, this.user.toString())
             .where(DyRepo.RANGE, this.repo)
             .iterator().next();

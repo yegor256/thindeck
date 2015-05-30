@@ -127,7 +127,14 @@ final class DyConsole implements Console {
         return Iterables.transform(
             this.region.table(DyConsole.TBL)
                 .frame()
-                .through(new QueryValve().withScanIndexForward(false))
+                .through(
+                    new QueryValve()
+                        .withScanIndexForward(false)
+                        .withAttributesToGet(
+                            DyConsole.ATTR_LEVEL,
+                            DyConsole.ATTR_DETAILS
+                        )
+                )
                 .where(DyConsole.HASH, this.repo),
             new Function<Item, String>() {
                 @Override
