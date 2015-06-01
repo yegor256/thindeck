@@ -60,11 +60,12 @@ public final class DockerRun implements Agent {
         for (final String tank : tanks) {
             DockerRun.run(
                 repo, tank,
-                "https://github.com/yegor256/test-php-site.git"
+                xml.xpath("/memo/uri/text()").get(0)
             );
         }
         repo.console().log(
-            Level.INFO, "containers started in %d tanks", tanks.size()
+            Level.INFO, "containers started in %d tank(s)",
+            tanks.size()
         );
     }
 

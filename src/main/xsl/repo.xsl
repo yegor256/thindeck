@@ -71,7 +71,7 @@
     <xsl:template match="domains[domain]">
         <p>
             <xsl:text>Domains: </xsl:text>
-            <xsl:for-each select="port">
+            <xsl:for-each select="domain">
                 <xsl:if test="position()!=1">, </xsl:if>
                 <xsl:value-of select="."/>
             </xsl:for-each>
