@@ -54,49 +54,39 @@
             <xsl:text>URI: </xsl:text>
             <xsl:value-of select="uri"/>
         </p>
-        <xsl:if test="not(containers/container)">
-            <p>No running containers yet.</p>
-        </xsl:if>
         <xsl:apply-templates select="containers"/>
-        <xsl:if test="not(tanks/tank)">
-            <p>No tanks available yet.</p>
-        </xsl:if>
         <xsl:apply-templates select="tanks"/>
-        <xsl:if test="not(domains/domain)">
-            <p>No domains found.</p>
-        </xsl:if>
         <xsl:apply-templates select="domains"/>
-        <xsl:if test="not(ports/port)">
-            <p>No ports found.</p>
-        </xsl:if>
         <xsl:apply-templates select="ports"/>
     </xsl:template>
     <xsl:template match="tanks[tank]">
-        <p>Recommended tanks:</p>
-        <ul>
+        <p>
+            <xsl:text>Tanks: </xsl:text>
             <xsl:for-each select="tank">
-                <li><xsl:value-of select="."/></li>
+                <xsl:if test="position()!=1">, </xsl:if>
+                <xsl:value-of select="."/>
             </xsl:for-each>
-        </ul>
+        </p>
     </xsl:template>
     <xsl:template match="domains[domain]">
-        <p>Domains:</p>
-        <ul>
-            <xsl:for-each select="domain">
-                <li><xsl:value-of select="."/></li>
+        <p>
+            <xsl:text>Domains: </xsl:text>
+            <xsl:for-each select="port">
+                <xsl:if test="position()!=1">, </xsl:if>
+                <xsl:value-of select="."/>
             </xsl:for-each>
-        </ul>
+        </p>
     </xsl:template>
     <xsl:template match="ports[port]">
-        <p>Ports:</p>
-        <ul>
+        <p>
+            <xsl:text>Ports: </xsl:text>
             <xsl:for-each select="port">
-                <li><xsl:value-of select="."/></li>
+                <xsl:if test="position()!=1">, </xsl:if>
+                <xsl:value-of select="."/>
             </xsl:for-each>
-        </ul>
+        </p>
     </xsl:template>
     <xsl:template match="containers[container]">
-        <p>Running containers:</p>
         <table>
             <tr>
                 <th>CID</th>
