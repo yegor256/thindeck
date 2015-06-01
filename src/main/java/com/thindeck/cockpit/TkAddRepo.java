@@ -68,9 +68,14 @@ public final class TkAddRepo implements Take {
     @Override
     public Response act(final Request req) throws IOException {
         final RqForm.Smart form = new RqForm.Smart(new RqForm.Base(req));
-        final String name = form.single("name");
         final String uri = form.single("uri");
+        if (!uri.matches("https://github\\.com/[_\\w-]+/[_\\w-]+\\.git")) {
+            throw new RsFailure(
+                "only Github projects are accepted at the moment"
+            );
+        }
         final Repos repos = new RqUser(req, this.base).get().repos();
+        final String name = form.single("name");
         repos.add(name);
         final Repo repo = repos.get(name);
         try {
