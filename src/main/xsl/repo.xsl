@@ -58,6 +58,14 @@
             <p>No tanks available yet.</p>
         </xsl:if>
         <xsl:apply-templates select="tanks"/>
+        <xsl:if test="not(domains/domain)">
+            <p>No domains found.</p>
+        </xsl:if>
+        <xsl:apply-templates select="domains"/>
+        <xsl:if test="not(ports/port)">
+            <p>No ports found.</p>
+        </xsl:if>
+        <xsl:apply-templates select="ports"/>
         <xsl:if test="not(containers/container)">
             <p>No running containers yet.</p>
         </xsl:if>
@@ -67,6 +75,22 @@
         <p>Recommended tanks:</p>
         <ul>
             <xsl:for-each select="tank">
+                <li><xsl:value-of select="."/></li>
+            </xsl:for-each>
+        </ul>
+    </xsl:template>
+    <xsl:template match="domains[domain]">
+        <p>Domains:</p>
+        <ul>
+            <xsl:for-each select="domain">
+                <li><xsl:value-of select="."/></li>
+            </xsl:for-each>
+        </ul>
+    </xsl:template>
+    <xsl:template match="ports[port]">
+        <p>Ports:</p>
+        <ul>
+            <xsl:for-each select="port">
                 <li><xsl:value-of select="."/></li>
             </xsl:for-each>
         </ul>
