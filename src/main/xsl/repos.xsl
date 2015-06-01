@@ -84,7 +84,7 @@
                 <xsl:value-of select="name"/>
             </a>
             <xsl:text> </xsl:text>
-            <a href="{links/link[@rel='delete']/@href}">
+            <a href="{links/link[@rel='delete']/@href}" title="delete it">
                 <xsl:text>&#x2718;</xsl:text>
             </a>
         </li>
