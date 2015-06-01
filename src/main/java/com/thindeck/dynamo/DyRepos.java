@@ -40,6 +40,7 @@ import com.jcabi.urn.URN;
 import com.thindeck.api.Repo;
 import com.thindeck.api.Repos;
 import java.io.IOException;
+import java.util.Iterator;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -100,12 +101,14 @@ final class DyRepos implements Repos {
 
     @Override
     public void delete(final String name) {
-        this.region.table(DyRepo.TBL)
+        final Iterator<Item> items = this.region.table(DyRepo.TBL)
             .frame()
-            .through(new QueryValve())
+            .through(new QueryValve().withLimit(1))
             .where(DyRepo.HASH, this.user.toString())
             .where(DyRepo.RANGE, name)
-            .iterator().remove();
+            .iterator();
+        items.next();
+        items.remove();
     }
 
     @Override

@@ -85,7 +85,7 @@
             </a>
             <xsl:text> </xsl:text>
             <a href="{links/link[@rel='delete']/@href}">
-                <xsl:text>delete</xsl:text>
+                <xsl:text>&#2718;</xsl:text>
             </a>
         </li>
     </xsl:template>
