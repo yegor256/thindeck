@@ -105,9 +105,25 @@
                 <th>Dir</th>
                 <th>Tank</th>
             </tr>
-            <xsl:for-each select="containers/container">
+            <xsl:for-each select="container">
                 <tr>
-                   <td><xsl:value-of select="cid"/></td>
+                   <td>
+                       <xsl:attribute name="style">
+                           <xsl:text>color:</xsl:text>
+                           <xsl:choose>
+                               <xsl:when test="@type='green'">
+                                   <xsl:text>green</xsl:text>
+                               </xsl:when>
+                               <xsl:when test="@type='blue'">
+                                   <xsl:text>blue</xsl:text>
+                               </xsl:when>
+                               <xsl:otherwise>
+                                   <xsl:text>red</xsl:text>
+                               </xsl:otherwise>
+                           </xsl:choose>
+                       </xsl:attribute>
+                       <xsl:value-of select="substring(cid, 0, 8)"/>
+                   </td>
                    <td><xsl:value-of select="@type"/></td>
                    <td><xsl:value-of select="dir"/></td>
                    <td>
