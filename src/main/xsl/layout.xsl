@@ -79,6 +79,7 @@
                     </ul>
                 </nav>
                 <div role="main">
+                    <xsl:apply-templates select="flash"/>
                     <xsl:apply-templates select="." mode="body"/>
                 </div>
                 <xsl:apply-templates select="version"/>
@@ -143,6 +144,11 @@
                 <xsl:value-of select="/page/@sla"/>
             </span>
         </aside>
+    </xsl:template>
+    <xsl:template match="flash">
+        <p class="flash {level}">
+            <xsl:value-of select="message"/>
+        </p>
     </xsl:template>
     <xsl:template name="millis">
         <xsl:param name="millis"/>

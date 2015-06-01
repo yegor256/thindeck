@@ -37,3 +37,15 @@ aside {
     bottom: 4em;
   }
 }
+
+.flash {
+  &.SEVERE {
+    color: red;
+  }
+  &.INFO {
+    color: green;
+  }
+  &.WARNING {
+    color: orange;
+  }
+}
