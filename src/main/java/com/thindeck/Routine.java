@@ -166,8 +166,8 @@ final class Routine implements Runnable {
             new FindTanks(),
             new UpdateLB(),
             new DockerRun(),
-            new DockerStop(),
-            new Swap()
+            new Swap(),
+            new DockerStop()
         );
     }
 
