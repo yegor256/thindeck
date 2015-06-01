@@ -54,6 +54,10 @@
             <xsl:text>URI: </xsl:text>
             <xsl:value-of select="uri"/>
         </p>
+        <xsl:if test="not(containers/container)">
+            <p>No running containers yet.</p>
+        </xsl:if>
+        <xsl:apply-templates select="containers"/>
         <xsl:if test="not(tanks/tank)">
             <p>No tanks available yet.</p>
         </xsl:if>
@@ -66,10 +70,6 @@
             <p>No ports found.</p>
         </xsl:if>
         <xsl:apply-templates select="ports"/>
-        <xsl:if test="not(containers/container)">
-            <p>No running containers yet.</p>
-        </xsl:if>
-        <xsl:apply-templates select="containers"/>
     </xsl:template>
     <xsl:template match="tanks[tank]">
         <p>Recommended tanks:</p>
@@ -125,7 +125,6 @@
                        <xsl:value-of select="substring(cid, 0, 8)"/>
                    </td>
                    <td><xsl:value-of select="@type"/></td>
-                   <td><xsl:value-of select="dir"/></td>
                    <td>
                       <xsl:for-each select="ports/port">
                           <xsl:value-of select="in"/>
@@ -134,6 +133,7 @@
                           <br/>
                       </xsl:for-each>
                     </td>
+                    <td><xsl:value-of select="dir"/></td>
                     <td><xsl:value-of select="tank"/></td>
                 </tr>
             </xsl:for-each>
