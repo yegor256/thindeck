@@ -64,7 +64,7 @@ public final class DockerRun implements Agent {
             );
         }
         repo.console().log(
-            Level.INFO, "containers started in %d tank(s)",
+            Level.INFO, "container(s) started in %d tank(s)",
             tanks.size()
         );
     }
@@ -79,12 +79,13 @@ public final class DockerRun implements Agent {
     private static void run(final Repo repo, final String host,
         final String git) throws IOException {
         final Shell.Plain shell = new Shell.Plain(new Remote().shell(host));
-        final String dir = shell.exec("mktemp -d -t thindeck-XXXX").trim();
+        final String dir = shell.exec("mktemp -d -t td-XXXX").trim();
         shell.exec(
             Joiner.on(" && ").join(
-                String.format("dir=%s", SSH.escape(dir)),
-                "cd \"${dir}\"",
-                String.format("git clone %s repo", SSH.escape(git)),
+                String.format("cd %s", SSH.escape(dir)),
+                "cd repo",
+                new Clone(git).toString(),
+                "cd ..",
                 Joiner.on(' ').join(
                     "sudo docker run -d -p ::80",
                     "\"--cidfile=$(pwd)/cid\"",
@@ -94,7 +95,7 @@ public final class DockerRun implements Agent {
             )
         );
         final String cid = shell.exec(
-            String.format("dir=%s; cat \"${dir}/cid\"", SSH.escape(dir))
+            String.format("cd %s; cat cid", SSH.escape(dir))
         ).trim();
         final int port = Integer.parseInt(
             StringUtils.substringAfterLast(
@@ -114,7 +115,11 @@ public final class DockerRun implements Agent {
                 .add("dir").set(dir).up()
                 .add("tank").set(host).up()
         );
-        repo.console().log(Level.INFO, "container %s started", cid);
+        repo.console().log(
+            Level.INFO,
+            "container %s started at %s in %s",
+            cid, dir, host
+        );
     }
 
 }
