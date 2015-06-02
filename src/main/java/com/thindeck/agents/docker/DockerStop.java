@@ -79,10 +79,9 @@ public final class DockerStop implements Agent {
         final String dir = xml.xpath("dir/text()").get(0);
         new Shell.Empty(new Remote().shell(host)).exec(
             Joiner.on(" && ").join(
-                String.format("dir=%s", SSH.escape(dir)),
                 String.format("sudo docker stop %s", SSH.escape(cid)),
                 String.format("sudo docker rm %s", SSH.escape(cid)),
-                "rm -rf \"${dir}\""
+                String.format("rm -rf %s", SSH.escape(dir))
             )
         );
         repo.memo().update(

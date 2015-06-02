@@ -83,6 +83,7 @@ public final class DockerRun implements Agent {
         shell.exec(
             Joiner.on(" && ").join(
                 String.format("cd %s", SSH.escape(dir)),
+                "mkdir repo",
                 "cd repo",
                 new Clone(git).toString(),
                 "cd ..",
