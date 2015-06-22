@@ -1,7 +1,6 @@
-# @todo https://github.com/teamed/requs/issues/65 Until requs bug is fixed, we enforce LF line endings
-# on all (e.g. Windows) machines to make requs build possible
-* text eol=lf
-*.gif binary
-*.png binary
-*.jpg binary
-*.psd binary
+# Check out all text files in UNIX format, with LF as end of line
+# Don't change this file. If you have any ideas about it, please
+# submit a separate issue about it and we'll discuss. There has to
+# be a single line here:
+
+* text=auto eol=lf
