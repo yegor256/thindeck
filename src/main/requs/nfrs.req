@@ -8,10 +8,10 @@ UC1/WD must "be designed in 'responsive' manner, see
   site pages will look good on every device, we won't need a separate
   mobile version of the site".
 
-UC1/STL must "require all user repositories to be 100% stateless.
+UC1/STL must "require all user decksitories to be 100% stateless.
   We should inform users that we will be constantly changing the number
   of running containers. We may terminate any container at any moment.
-  This means that the software inside the container (repository) should
+  This means that the software inside the container (decksitory) should
   NOT keep any data persistent. They should use other services for
   persistence, like Amazon DynamoDB, etc".
 
@@ -34,7 +34,7 @@ UC2/MTBF must "be 30 days".
 UC2/LOG must "be kept for 180 days since creation.
   Log is deleted once the 180 day mark is reached".
 
-UC2/AVAIL must "be provided on deployment of an updated repository
+UC2/AVAIL must "be provided on deployment of an updated decksitory
   by using the blue-green deployment approach to minimize
   administrative downtime to less than 10 seconds".
 

@@ -27,43 +27,50 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.dynamo;
+package com.thindeck.api;
 
-import com.jcabi.urn.URN;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import com.jcabi.aspects.Immutable;
+import java.io.IOException;
+import javax.validation.constraints.NotNull;
 
 /**
- * Integration case for {@link DyRepos}.
+ * Decksitory.
+ *
+ * <p>Decksitory is a configurable deployment of sources
+ * to Docker containers. Decksitory should be configured through
+ * {@link #memo()}.
+ *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.5
+ * @since 0.1
  */
-public final class DyReposITCase {
+@Immutable
+public interface Deck {
 
     /**
-     * DyRepos can add and remove a repo.
-     * @throws Exception If there is some problem inside
+     * Name, unique.
+     *
+     * <p>Name of the deck is unique in the entire system, which consists
+     * of user name and a name of the deck, for example "yegor256/test".
+     *
+     * @return Unique name of the deck
+     * @throws IOException If fails
      */
-    @Test
-    public void canAddAndRemoveRepo() throws Exception {
-        final Repos repos = new DyBase()
-            .user(new URN("urn:test:70098"))
-            .repos();
-        final String name = "test";
-        repos.add(name);
-        MatcherAssert.assertThat(
-            repos.iterate(),
-            Matchers.<Repo>iterableWithSize(1)
-        );
-        repos.delete(name);
-        MatcherAssert.assertThat(
-            repos.iterate(),
-            Matchers.<Repo>emptyIterable()
-        );
-    }
+    @NotNull(message = "deck name can't be null")
+    String name() throws IOException;
+
+    /**
+     * Memo.
+     * @return Memo
+     * @throws IOException If fails
+     */
+    @NotNull(message = "memo can't be null")
+    Memo memo() throws IOException;
+
+    /**
+     * Get events.
+     * @return Events
+     */
+    Events events();
 
 }

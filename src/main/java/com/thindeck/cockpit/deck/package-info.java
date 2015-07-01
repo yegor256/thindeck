@@ -29,10 +29,10 @@
  */
 
 /**
- * Repo mgmt.
+ * Deck mgmt.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.5
  */
-package com.thindeck.cockpit.repo;
+package com.thindeck.cockpit.deck;

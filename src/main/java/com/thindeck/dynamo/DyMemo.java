@@ -34,7 +34,6 @@ import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
@@ -49,6 +48,7 @@ import org.xembly.Xembler;
  * Dynamo implementation of {@code Memo}.
  *
  * @author Nathan Green (ngreen@inco5.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  */
 @Immutable
@@ -62,32 +62,32 @@ final class DyMemo implements Memo {
     private final transient Region region;
 
     /**
-     * URN of the owner.
+     * Name of the owner.
      */
-    private final transient URN user;
+    private final transient String user;
 
     /**
-     * Name of the repo.
+     * Name of the deck.
      */
-    private final transient String repo;
+    private final transient String deck;
 
     /**
      * Ctor.
      * @param reg Region
-     * @param urn URN
-     * @param name Repo name
+     * @param owner Name of the owner
+     * @param name Deck name
      */
-    DyMemo(final Region reg, final URN urn, final String name) {
+    DyMemo(final Region reg, final String owner, final String name) {
         this.region = reg;
-        this.user = urn;
-        this.repo = name;
+        this.user = owner;
+        this.deck = name;
     }
 
     @Override
     public XML read() throws IOException {
         return new StrictXML(
             Memo.CLEANUP.transform(
-                new XMLDocument(this.item().get(DyRepo.ATTR_MEMO).getS())
+                new XMLDocument(this.item().get(DyDeck.ATTR_MEMO).getS())
             ),
             Memo.SCHEMA
         );
@@ -97,7 +97,7 @@ final class DyMemo implements Memo {
     public void update(final Iterable<Directive> dirs) throws IOException {
         this.item().put(
             new AttributeUpdates().with(
-                DyRepo.ATTR_MEMO,
+                DyDeck.ATTR_MEMO,
                 new XMLDocument(
                     new Xembler(dirs).applyQuietly(this.read().node())
                 ).toString()
@@ -111,15 +111,15 @@ final class DyMemo implements Memo {
      */
     private Item item() {
         return this.region
-            .table(DyRepo.TBL)
+            .table(DyDeck.TBL)
             .frame()
             .through(
                 new QueryValve()
                     .withLimit(1)
-                    .withAttributesToGet(DyRepo.ATTR_UPDATED, DyRepo.ATTR_MEMO)
+                    .withAttributesToGet(DyDeck.ATTR_UPDATED, DyDeck.ATTR_MEMO)
             )
-            .where(DyRepo.HASH, this.user.toString())
-            .where(DyRepo.RANGE, this.repo)
+            .where(DyDeck.HASH, this.user)
+            .where(DyDeck.RANGE, this.deck)
             .iterator().next();
     }
 }

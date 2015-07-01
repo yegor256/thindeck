@@ -32,8 +32,9 @@ package com.thindeck.agents;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.github.Coordinates;
 import com.jcabi.github.Github;
+import com.jcabi.github.Repo;
 import com.jcabi.xml.XML;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Deck;
 import java.io.IOException;
 import java.net.URI;
 import javax.validation.constraints.NotNull;
@@ -42,7 +43,7 @@ import org.apache.commons.lang3.CharEncoding;
 import org.xembly.Directives;
 
 /**
- * Read repository configuration.
+ * Read decksitory configuration.
  *
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @author Paul Polishchuk (ppol@ua.fm)
@@ -53,7 +54,7 @@ import org.xembly.Directives;
 public final class ReadConfig implements Agent {
 
     /**
-     * Github repo to read the configuration from.
+     * Github deck to read the configuration from.
      */
     private final transient Github github;
 
@@ -66,9 +67,9 @@ public final class ReadConfig implements Agent {
     }
 
     @Override
-    public void exec(final Repo repo) throws IOException {
-        final String uri = repo.memo().read().xpath("/memo/uri/text()").get(0);
-        final com.jcabi.github.Repo rpo = this.github.repos().get(
+    public void exec(final Deck deck) throws IOException {
+        final String uri = deck.memo().read().xpath("/memo/uri/text()").get(0);
+        final Repo rpo = this.github.repos().get(
             new Coordinates.Simple(
                 URI.create(uri).getPath()
                     .replaceFirst("/", "")
@@ -96,6 +97,6 @@ public final class ReadConfig implements Agent {
                 .remove();
             dirs.xpath("/memo/ports").add("port").set(port);
         }
-        repo.memo().update(dirs);
+        deck.memo().update(dirs);
     }
 }

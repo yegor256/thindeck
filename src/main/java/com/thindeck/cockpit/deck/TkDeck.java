@@ -27,38 +27,40 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.dynamo;
+package com.thindeck.cockpit.deck;
 
-import com.jcabi.urn.URN;
-import com.thindeck.api.Console;
-import com.thindeck.api.Repos;
-import java.util.logging.Level;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import com.thindeck.api.Base;
+import org.takes.Take;
+import org.takes.facets.fork.TkFork;
+import org.takes.tk.TkWrap;
 
 /**
- * Integration case for {@link DyConsole}.
+ * Deck.
+ *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
+ * @since 0.5
  */
-public final class DyConsoleITCase {
+public final class TkDeck extends TkWrap {
 
     /**
-     * DyConsole can add and read.
-     * @throws Exception If there is some problem inside
+     * Ctor.
+     * @param base Base
      */
-    @Test
-    public void addsAndReads() throws Exception {
-        final Repos repos = new DyBase()
-            .user(new URN("urn:test:989"))
-            .repos();
-        repos.add("testit");
-        final Console console = repos.iterate().iterator().next().console();
-        console.log(Level.INFO, "test message for Jeff");
-        MatcherAssert.assertThat(
-            console.cat(),
-            Matchers.hasItem(Matchers.containsString("Jeff"))
+    public TkDeck(final Base base) {
+        super(TkDeck.make(base));
+    }
+
+    /**
+     * Ctor.
+     * @param base Base
+     * @return Take
+     */
+    private static Take make(final Base base) {
+        return new TkFork(
+            new FkDeck("", new TkIndex(base)),
+            new FkDeck("/log", new TkLog(base)),
+            new FkDeck("/delete", new TkDelete(base))
         );
     }
 

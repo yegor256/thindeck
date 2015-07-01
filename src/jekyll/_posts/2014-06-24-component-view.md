@@ -37,20 +37,20 @@ during the design of Thindeck:
 There is a number of technical concepts (full list of them
 is in [JavaDoc](/apidocs-${project.version}/com/thindeck/api/index.html)):
 
- * [**Repository**](/apidocs-${project.version}/com/thindeck/api/Repo.html) is
+ * [**Decksitory**](/apidocs-${project.version}/com/thindeck/api/Deck.html) is
    an entity that knows where the sources are and continuously deploys them.
 
  * [**Task**](/apidocs-${project.version}/com/thindeck/api/Task.html) is
    a collection of steps to be executed one-by-one
-   in order to change the situation in a repository (for example, to deploy it).
+   in order to change the situation in a decksitory (for example, to deploy it).
 
  * [**Txn**](/apidocs-${project.version}/com/thindeck/api/Txn.html) (transaction) is
-   a multi-step process of deployment a repository.
+   a multi-step process of deployment a decksitory.
 
 The system consists of the following components:
 
  * **Cockpit** is a Java web app that communicates with
-   end-users and API clients. The Cockpit registers repositories,
+   end-users and API clients. The Cockpit registers decksitories,
    starts tasks and shows task logs. Besides that, the Cockpit,
    activates transactions regularly, every minute.
 
@@ -75,7 +75,7 @@ The system consists of the following components:
    as a cloud web service, through RESTful API.
 
  * **Meter** is a usage tracking service, that helps us to record
-   runtime information about traffic and CPU usage by our repositories
+   runtime information about traffic and CPU usage by our decksitories
    and Docker containers.
    The Meter is out of our technical scope and is provided to us
    as a cloud web service, through RESTful API.

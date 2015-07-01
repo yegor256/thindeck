@@ -35,7 +35,7 @@ Static analysis of the source code is done by
 ## Merge Pipeline
 
 Source code of all components is kept in
-[Github repository](https://github.com/yegor256/thindeck).
+[Github decksitory](https://github.com/yegor256/thindeck).
 
 Every new feature or a bug fix is developed in its own Git branch,
 and submitted for review in a pull request by its author.
@@ -55,7 +55,7 @@ by code reviewer.
 In case of success, Rultor commits and pushes requested changes
 into `master` branch, then closing the pull request.
 
-Rultor reports progress via comments of a pull request, in Github.
+Rultor deckrts progress via comments of a pull request, in Github.
 
 ## Continuous Integration
 
@@ -69,7 +69,7 @@ our formal merge or deployment process, but helps team members
 to fix bugs before sending code through formal merge or
 deployment pipelines.
 
-Travis reports its progress [here](https://travis-ci.org/yegor256/thindeck).
+Travis deckrts its progress [here](https://travis-ci.org/yegor256/thindeck).
 
 ## Deployment Pipeline
 
@@ -89,6 +89,6 @@ all JAR artifacts to Maven Central (Load Balancer and Tank). Then,
 it deploys Cockpit to Heroku. Then it builds and deploys
 documentation website (the one you're looking at now) to Github Pages.
 
-What site deployment is done, Rultor reports success into Github issue.
+What site deployment is done, Rultor deckrts success into Github issue.
 
 Rultor also tags deployed version in Github and creates a Github "release".

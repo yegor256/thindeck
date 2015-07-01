@@ -31,15 +31,15 @@ package com.thindeck.agents.docker;
 
 import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
+import com.jcabi.log.Logger;
 import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
 import com.jcabi.xml.XML;
 import com.thindeck.agents.Agent;
 import com.thindeck.agents.Remote;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Deck;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.logging.Level;
 import org.xembly.Directives;
 
 /**
@@ -53,26 +53,24 @@ import org.xembly.Directives;
 public final class DockerStop implements Agent {
 
     @Override
-    public void exec(final Repo repo) throws IOException {
-        final XML xml = repo.memo().read();
+    public void exec(final Deck deck) throws IOException {
+        final XML xml = deck.memo().read();
         final Collection<XML> blue = xml.nodes(
             "/memo/containers/container[@type='blue']"
         );
         for (final XML node : blue) {
-            DockerStop.stop(repo, node);
+            DockerStop.stop(deck, node);
         }
-        repo.console().log(
-            Level.INFO, "%d blue containers stopped", blue.size()
-        );
+        Logger.info(this, "%d blue containers stopped", blue.size());
     }
 
     /**
      * Stop docker container.
-     * @param repo Repo
+     * @param deck Deck
      * @param xml XML with container info
      * @throws IOException If fails
      */
-    private static void stop(final Repo repo, final XML xml)
+    private static void stop(final Deck deck, final XML xml)
         throws IOException {
         final String host = xml.xpath("tank/text()").get(0);
         final String cid = xml.xpath("cid/text()").get(0);
@@ -84,12 +82,12 @@ public final class DockerStop implements Agent {
                 String.format("rm -rf %s", SSH.escape(dir))
             )
         );
-        repo.memo().update(
+        deck.memo().update(
             new Directives().xpath(
                 String.format("/memo/containers/container[cid='%s']", cid)
             ).remove()
         );
-        repo.console().log(Level.INFO, "container %s terminated", cid);
+        Logger.info(DockerStop.class, "container %s terminated", cid);
     }
 
 }

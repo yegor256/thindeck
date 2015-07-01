@@ -326,20 +326,20 @@
                     <plugin>
                         <artifactId>maven-site-plugin</artifactId>
                         <configuration>
-                            <reportPlugins combine.children="append">
+                            <deckrtPlugins combine.children="append">
                                 <plugin>
                                     <groupId>org.requs</groupId>
                                     <artifactId>requs-maven-plugin</artifactId>
                                     <version>${requs.version}</version>
-                                    <reportSets>
-                                        <reportSet>
-                                            <reports>
-                                                <report>default</report>
-                                            </reports>
-                                        </reportSet>
-                                    </reportSets>
+                                    <deckrtSets>
+                                        <deckrtSet>
+                                            <deckrts>
+                                                <deckrt>default</deckrt>
+                                            </deckrts>
+                                        </deckrtSet>
+                                    </deckrtSets>
                                 </plugin>
-                            </reportPlugins>
+                            </deckrtPlugins>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -656,7 +656,7 @@
                                     <key>${failsafe.dynamo.key}</key>
                                     <secret>${failsafe.dynamo.secret}</secret>
                                     <tables>
-                                        <table>${basedir}/src/test/dynamodb/repos.json</table>
+                                        <table>${basedir}/src/test/dynamodb/decks.json</table>
                                         <table>${basedir}/src/test/dynamodb/console.json</table>
                                     </tables>
                                 </configuration>

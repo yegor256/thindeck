@@ -27,51 +27,42 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api;
+package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
-import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import com.thindeck.api.Deck;
+import com.thindeck.api.Decks;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Repository.
- *
- * <p>Repository is a configurable deployment of sources
- * to Docker containers. Repository should be configured through
- * {@link #memo()}.
- *
+ * Integration case for {@link DyDecks}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.1
+ * @since 0.5
  */
-@Immutable
-public interface Repo {
+public final class DyDecksITCase {
 
     /**
-     * Name, unique.
-     *
-     * <p>Name of the repository is unique for a given user. This means
-     * that two users can have repositories with the same name.
-     *
-     * @return Unique name of the repo
-     * @throws IOException If fails
+     * DyDecks can add and remove a deck.
+     * @throws Exception If there is some problem inside
      */
-    @NotNull(message = "repo name can't be null")
-    String name() throws IOException;
-
-    /**
-     * Console.
-     * @return Console
-     */
-    @NotNull(message = "console can't be null")
-    Console console();
-
-    /**
-     * Memo.
-     * @return Memo
-     * @throws IOException If fails
-     */
-    @NotNull(message = "memo can't be null")
-    Memo memo() throws IOException;
+    @Test
+    public void canAddAndRemoveDeck() throws Exception {
+        final Decks decks = new DyBase()
+            .user("bobby")
+            .decks();
+        final String name = "test";
+        decks.add(name);
+        MatcherAssert.assertThat(
+            decks.iterate(),
+            Matchers.<Deck>iterableWithSize(1)
+        );
+        decks.delete(name);
+        MatcherAssert.assertThat(
+            decks.iterate(),
+            Matchers.<Deck>emptyIterable()
+        );
+    }
 
 }

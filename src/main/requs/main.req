@@ -1,20 +1,20 @@
 :UC1 is implemented.
 UC1 where User (a user) deploys Application (an app):
-  1. The user creates Repository (a repo);
-  2. The repo launches the app;
-  3. The user reads the repo;
-  4. The user updates the repo;
-  5. The user deletes the repo;
-  6. The user pays for the repo.
+  1. The user creates Decksitory (a deck);
+  2. The deck launches the app;
+  3. The user reads the deck;
+  4. The user updates the deck;
+  5. The user deletes the deck;
+  6. The user pays for the deck.
 
 :UC2 is implemented.
-UC2 where Repository (a repo) launches Application (an app):
-  1. The repo creates Deployment (a deployment);
+UC2 where Decksitory (a deck) launches Application (an app):
+  1. The deck creates Deployment (a deployment);
   2. The deployment executes the app;
-  3. The repo deletes the deployment
-    "every 5 minutes, if repository sources are updated".
+  3. The deck deletes the deployment
+    "every 5 minutes, if decksitory sources are updated".
 
-UC2/1 when "several domain-s and/or port-s are equal within repo":
+UC2/1 when "several domain-s and/or port-s are equal within deck":
   1. "Notify the user via email about this";
   2. Fail as "can't launch app with conflicts".
 
@@ -27,13 +27,13 @@ UC2.3 where Deployment (a deployment) executes Application (an app):
   5. The server deletes the container;
   6. The cloud deletes the server.
 
-UC6 where User (a user) pays for Repository (a repo):
-  1. The repo updates the user
+UC6 where User (a user) pays for Decksitory (a deck):
+  1. The deck updates the user
     "decreasing his balance, every hour according to
-    invoices of containers of deployments of repository";
+    invoices of containers of deployments of decksitory";
   2. PayPal (a paypal) updates the user
     "charging his credit card and adding funds to his balance";
-  3. The repo updates the user
+  3. The deck updates the user
     "via email when his balance is below $5".
 
 :UC10.1 is implemented.
@@ -46,16 +46,16 @@ UC10.1 where Visitor (a visitor) utilizes Application (an app):
 
 User is "a person who uses or wants to use hosting and is identified
 by the system (logged in)". User is an actor. User includes:
-  repo-s? as Repository!,
+  deck-s? as Decksitory!,
   URN as "a unique identifier of itself, for example urn:github:526301",
   authTokens as "a list of auth tokens to each auth provider the
     user connected to, e.g., Google, Facebook, etc.",
   balance as "amount of money available, can be stored as
     integer number of cents".
 
-Repository is "a local copy of files and folders being pulled every
-  5 minutes from some remote source". Repository includes:
-  name as "a unique name of the repo in user's account",
+Decksitory is "a local copy of files and folders being pulled every
+  5 minutes from some remote source". Decksitory includes:
+  name as "a unique name of the deck in user's account",
   coordinates as "URI with user/password where sources can be found",
   deployment-s? as Deployment!,
   dockerFile as "a configuration for building and starting Container-s",
@@ -65,14 +65,14 @@ Repository is "a local copy of files and folders being pulled every
   port-s as "a 16-bit number that identifies a network port
     for the establishment of host-to-host connectivity".
 
-Deployment is "a deployed and working instance of Repository". Deployment
+Deployment is "a deployed and working instance of Decksitory". Deployment
   includes:
   container-s as Container! "the number of containers should be
     modified in runtime according to the current CPU load of existing
     containers.".
 
 Container is "a virtual operating system running user's
-  applications build from Repository. Virtualization technology
+  applications build from Decksitory. Virtualization technology
   a) must be open source or free, so that we avoid license costs,
   b) must be mature product that is currently supported,
   c) must provide full file system and network isolation,
@@ -108,4 +108,4 @@ PayPal includes:
   credentials as "secret data for payment authorization".
 
 Application is "a custom sofware application packaged inside
-  Repository and executed in a Container".
+  Decksitory and executed in a Container".

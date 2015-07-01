@@ -32,7 +32,7 @@ package com.thindeck.cockpit;
 import com.jcabi.log.VerboseProcess;
 import com.jcabi.manifests.Manifests;
 import com.thindeck.api.Base;
-import com.thindeck.cockpit.repo.TkRepo;
+import com.thindeck.cockpit.deck.TkDeck;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -164,10 +164,10 @@ public final class TkApp extends TkWrap {
             ),
             new FkAuthenticated(
                 new TkFork(
-                    new FkRegex("/", new TkRepos(base)),
+                    new FkRegex("/", new TkDecks(base)),
                     new FkRegex("/acc", new TkAccount(base)),
-                    new FkRegex("/add", new TkAddRepo(base)),
-                    new FkRegex("/r/.*", new TkRepo(base))
+                    new FkRegex("/add", new TkAddDeck(base)),
+                    new FkRegex("/r/.*", new TkDeck(base))
                 )
             )
         );

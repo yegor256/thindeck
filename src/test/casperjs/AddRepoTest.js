@@ -1,6 +1,6 @@
 /*globals casper:false */
 casper.test.begin(
-    'can add repo',
+    'can add deck',
     function (test) {
         casper.start().then(
             function () {

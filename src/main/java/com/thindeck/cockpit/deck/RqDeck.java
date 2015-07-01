@@ -27,30 +27,27 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.cockpit;
+package com.thindeck.cockpit.deck;
 
 import com.thindeck.api.Base;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
+import com.thindeck.api.Deck;
+import com.thindeck.api.User;
+import com.thindeck.cockpit.RqUser;
 import java.io.IOException;
+import lombok.EqualsAndHashCode;
 import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
-import org.takes.facets.flash.RsFlash;
-import org.takes.facets.forward.RsFailure;
-import org.takes.facets.forward.RsForward;
-import org.takes.rq.RqForm;
-import org.xembly.Directives;
+import org.takes.rq.RqHeaders;
+import org.takes.rq.RqWrap;
 
 /**
- * Add repo.
+ * Deck fork.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.5
- * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
-public final class TkAddRepo implements Take {
+@EqualsAndHashCode(callSuper = true)
+public final class RqDeck extends RqWrap {
 
     /**
      * Base.
@@ -59,40 +56,25 @@ public final class TkAddRepo implements Take {
 
     /**
      * Ctor.
-     * @param bse Base
+     * @param bse The base
+     * @param req Request
      */
-    TkAddRepo(final Base bse) {
+    public RqDeck(final Base bse, final Request req) {
+        super(req);
         this.base = bse;
     }
 
-    @Override
-    public Response act(final Request req) throws IOException {
-        final RqForm.Smart form = new RqForm.Smart(new RqForm.Base(req));
-        final String uri = form.single("uri");
-        if (!uri.matches("https://github\\.com/[_\\w-]+/[_\\w-]+\\.git")) {
-            throw new RsFailure(
-                "only Github projects are accepted at the moment"
-            );
-        }
-        final Repos repos = new RqUser(req, this.base).get().repos();
-        final String name = form.single("name");
-        repos.add(name);
-        final Repo repo = repos.get(name);
-        try {
-            repo.memo().update(
-                new Directives().xpath("/memo").addIf("uri").set(uri)
-            );
-        } catch (final IOException ex) {
-            throw new RsFailure(ex);
-        }
-        return new RsForward(
-            new RsFlash(
-                String.format(
-                    "repo \"%s\" added with URI=\"%s\"",
-                    name, uri
-                )
-            )
-        );
+    /**
+     * Get deck.
+     * @return The deck
+     * @throws IOException If fails
+     */
+    public Deck deck() throws IOException {
+        final User user = new RqUser(this, this.base).get();
+        final String name = new RqHeaders.Smart(
+            new RqHeaders.Base(this)
+        ).single("X-Thindeck-Deck");
+        return user.decks().get(name);
     }
 
 }

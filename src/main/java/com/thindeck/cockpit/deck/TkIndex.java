@@ -27,43 +27,66 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.cockpit;
+package com.thindeck.cockpit.deck;
 
-import com.jcabi.matchers.XhtmlMatchers;
 import com.thindeck.api.Base;
-import com.thindeck.api.mock.MkBase;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.takes.facets.auth.RqWithAuth;
-import org.takes.rs.RsPrettyXML;
-import org.takes.rs.RsPrint;
+import com.thindeck.api.Deck;
+import com.thindeck.cockpit.RsPage;
+import java.io.IOException;
+import org.takes.Request;
+import org.takes.Response;
+import org.takes.Take;
+import org.takes.misc.Href;
+import org.takes.rs.xe.XeAppend;
+import org.takes.rs.xe.XeChain;
+import org.takes.rs.xe.XeDirectives;
+import org.takes.rs.xe.XeLink;
+import org.xembly.Directives;
 
 /**
- * Test case for {@link TkRepos}.
+ * Deck.
+ *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.5
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
-public final class TkReposTest {
+public final class TkIndex implements Take {
 
     /**
-     * TkRepos can render a page in XML.
-     * @throws Exception If something goes wrong.
+     * Base.
      */
-    @Test
-    public void rendersXmlPage() throws Exception {
-        final Base base = new MkBase();
-        MatcherAssert.assertThat(
-            new RsPrint(
-                new RsPrettyXML(
-                    new TkRepos(base).act(new RqWithAuth("urn:test:1"))
+    private final transient Base base;
+
+    /**
+     * Ctor.
+     * @param bse Base
+     */
+    TkIndex(final Base bse) {
+        this.base = bse;
+    }
+
+    @Override
+    public Response act(final Request req) throws IOException {
+        final Deck deck = new RqDeck(this.base, req).deck();
+        final Href home = new Href("/r").path(deck.name());
+        return new RsPage(
+            "/xsl/deck.xsl",
+            this.base,
+            req,
+            new XeLink("log", home.path("log")),
+            new XeDirectives(
+                Directives.copyOf(deck.memo().read().node())
+            ),
+            new XeAppend(
+                "deck",
+                new XeDirectives(
+                    new Directives().add("name").set(deck.name())
+                ),
+                new XeChain(
+                    new XeLink("open", home.path("open"))
                 )
-            ).printBody(),
-            XhtmlMatchers.hasXPaths(
-                "/page/links/link[@rel='home']",
-                "/page/repos[count(repo)=1]",
-                "//repo[name='test']",
-                "//repo/links/link[@rel='open']"
             )
         );
     }

@@ -1,7 +1,7 @@
 {
   "AttributeDefinitions": [
     {
-      "AttributeName": "repo",
+      "AttributeName": "deck",
       "AttributeType": "S"
     },
     {
@@ -11,7 +11,7 @@
   ],
   "KeySchema": [
     {
-      "AttributeName": "repo",
+      "AttributeName": "deck",
       "KeyType": "HASH"
     },
     {

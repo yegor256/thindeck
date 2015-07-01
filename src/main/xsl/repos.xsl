@@ -42,7 +42,7 @@
         </title>
     </xsl:template>
     <xsl:template match="page" mode="body">
-        <xsl:apply-templates select="repos"/>
+        <xsl:apply-templates select="decks"/>
         <form action="{links/link[@rel='add']/@href}" method="post">
             <fieldset>
                 <label><xsl:text>Name:</xsl:text></label>
@@ -57,28 +57,28 @@
             </fieldset>
         </form>
     </xsl:template>
-    <xsl:template match="repos[repo]">
+    <xsl:template match="decks[deck]">
         <p>
             <xsl:text>Your </xsl:text>
             <xsl:choose>
-                <xsl:when test="count(repo) = 1">
-                    <xsl:text>repository</xsl:text>
+                <xsl:when test="count(deck) = 1">
+                    <xsl:text>decksitory</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="count(repo)"/>
-                    <xsl:text> repositories</xsl:text>
+                    <xsl:value-of select="count(deck)"/>
+                    <xsl:text> decksitories</xsl:text>
                 </xsl:otherwise>
             </xsl:choose>
             <xsl:text>:</xsl:text>
         </p>
         <ul>
-            <xsl:apply-templates select="repo"/>
+            <xsl:apply-templates select="deck"/>
         </ul>
     </xsl:template>
-    <xsl:template match="repos[not(repo)]">
-        <p><xsl:text>You don't have any repositories yet.</xsl:text></p>
+    <xsl:template match="decks[not(deck)]">
+        <p><xsl:text>You don't have any decksitories yet.</xsl:text></p>
     </xsl:template>
-    <xsl:template match="repo">
+    <xsl:template match="deck">
         <li>
             <a href="{links/link[@rel='open']/@href}">
                 <xsl:value-of select="name"/>

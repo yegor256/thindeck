@@ -31,8 +31,8 @@ package com.thindeck.agents;
 
 import com.thindeck.agents.lb.LoadBalancer;
 import com.thindeck.agents.lb.UpdateLB;
-import com.thindeck.api.Repo;
-import com.thindeck.api.mock.MkRepo;
+import com.thindeck.api.Deck;
+import com.thindeck.api.mock.MkDeck;
 import java.io.IOException;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -56,7 +56,7 @@ public final class UpdateLBTest {
     public void updatesLoadBalancerConfig() throws IOException {
         final LoadBalancer balancer = Mockito.mock(LoadBalancer.class);
         final Agent agent = new UpdateLB(balancer);
-        final Repo repo = new MkRepo();
+        final Deck deck = new MkDeck();
         // @checkstyle MagicNumber (6 lines)
         final String domain = "www.example.com";
         final int firstport = 80;
@@ -65,7 +65,7 @@ public final class UpdateLBTest {
         final int firstout = 32667;
         final int secondout = 32668;
         // @checkstyle MultipleStringLiterals (30 lines)
-        repo.memo().update(
+        deck.memo().update(
             new Directives()
                 .xpath("/memo")
                 .addIf("domains")
@@ -90,7 +90,7 @@ public final class UpdateLBTest {
                 .add("dir").set("/fake/dir").up()
                 .add("tank").set(tank)
         );
-        agent.exec(repo);
+        agent.exec(deck);
         Mockito.verify(balancer).update(domain, firstport, tank, firstout);
         Mockito.verify(balancer).update(domain, secondport, tank, secondout);
     }

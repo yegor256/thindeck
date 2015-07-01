@@ -30,7 +30,7 @@
 package com.thindeck.agents;
 
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Deck;
 import java.io.IOException;
 
 /**
@@ -44,10 +44,10 @@ import java.io.IOException;
 public interface Agent {
 
     /**
-     * Execute it on the given repo.
-     * @param repo The repo
+     * Execute it on the given deck.
+     * @param deck The deck
      * @throws IOException If fails
      */
-    void exec(Repo repo) throws IOException;
+    void exec(Deck deck) throws IOException;
 
 }

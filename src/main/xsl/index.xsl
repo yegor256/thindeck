@@ -40,6 +40,6 @@
     </xsl:template>
     <xsl:template match="page" mode="body">
         <p><xsl:text>Thindeck.com is a platform-as-a-service that deploys itself.</xsl:text></p>
-        <p><xsl:text>Login (via Github) and you will be able to create and host repositories.</xsl:text></p>
+        <p><xsl:text>Login (via Github) and you will be able to create and host decksitories.</xsl:text></p>
     </xsl:template>
 </xsl:stylesheet>

@@ -29,7 +29,6 @@
  */
 package com.thindeck.cockpit;
 
-import com.jcabi.urn.URN;
 import com.thindeck.api.Base;
 import com.thindeck.api.User;
 import java.io.IOException;
@@ -76,9 +75,7 @@ public final class RqUser extends RqWrap {
                 new RsFlash("you are not logged in")
             );
         }
-        return this.base.user(
-            URN.create(identity.urn())
-        );
+        return this.base.user(identity.urn());
     }
 
 }

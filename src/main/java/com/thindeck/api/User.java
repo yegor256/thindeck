@@ -30,7 +30,6 @@
 package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.urn.URN;
 import java.io.IOException;
 import javax.validation.constraints.NotNull;
 
@@ -45,23 +44,18 @@ import javax.validation.constraints.NotNull;
 public interface User {
 
     /**
-     * URN.
-     *
-     * <p>Every URN is a unique identifier of a user, in the entire system.
-     * URN's are provided by OAuth authenticators
-     * (like Github, Facebook, Twitter, etc.).
-     *
-     * @return URN
+     * Name (Github login).
+     * @return Name
      * @throws IOException If fails
      */
-    @NotNull(message = "URN can't be null")
-    URN urn() throws IOException;
+    @NotNull(message = "name can't be null")
+    String name() throws IOException;
 
     /**
-     * Repositories.
-     * @return All repositories of this user
+     * Decksitories.
+     * @return All decksitories of this user
      */
-    @NotNull(message = "repositories can't be null")
-    Repos repos();
+    @NotNull(message = "decksitories can't be null")
+    Decks decks();
 
 }

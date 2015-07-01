@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.cockpit.repo;
+package com.thindeck.cockpit.deck;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -45,27 +45,27 @@ import org.takes.rq.RqHref;
 import org.takes.rq.RqWithHeader;
 
 /**
- * Repo fork.
+ * Deck fork.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.5
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class FkRepo extends FkWrap {
+final class FkDeck extends FkWrap {
 
     /**
      * Ctor.
      * @param regex Regular expression
      * @param take Take
      */
-    FkRepo(final String regex, final Take take) {
+    FkDeck(final String regex, final Take take) {
         super(
             new Fork() {
                 @Override
                 public Opt<Response> route(final Request req)
                     throws IOException {
-                    return FkRepo.route(regex, take, req);
+                    return FkDeck.route(regex, take, req);
                 }
             }
         );
@@ -87,8 +87,8 @@ final class FkRepo extends FkWrap {
                 @Override
                 public Response act(final RqRegex rreq) throws IOException {
                     final String name = rreq.matcher().group(1);
-                    return FkRepo.redirect(name, take).act(
-                        new RqWithHeader(rreq, "X-Thindeck-Repo", name)
+                    return FkDeck.redirect(name, take).act(
+                        new RqWithHeader(rreq, "X-Thindeck-Deck", name)
                     );
                 }
             }
@@ -97,11 +97,11 @@ final class FkRepo extends FkWrap {
 
     /**
      * Redirect to the bout.
-     * @param repo Repo name
+     * @param deck Deck name
      * @param take Take
      * @return New take
      */
-    private static Take redirect(final String repo, final Take take) {
+    private static Take redirect(final String deck, final Take take) {
         return new Take() {
             @Override
             public Response act(final Request req) throws IOException {
@@ -113,7 +113,7 @@ final class FkRepo extends FkWrap {
                             ex,
                             new RqHref.Smart(
                                 new RqHref.Base(req)
-                            ).home().path("r").path(repo)
+                            ).home().path("r").path(deck)
                         );
                     }
                     throw ex;

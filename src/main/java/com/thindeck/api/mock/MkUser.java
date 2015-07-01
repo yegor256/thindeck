@@ -30,8 +30,7 @@
 package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Repos;
+import com.thindeck.api.Decks;
 import com.thindeck.api.User;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -49,13 +48,13 @@ import lombok.ToString;
 public final class MkUser implements User {
 
     @Override
-    public URN urn() {
-        return URN.create("urn:test:1");
+    public String name() {
+        return "test";
     }
 
     @Override
-    public Repos repos() {
-        return new MkRepos();
+    public Decks decks() {
+        return new MkDecks();
     }
 
 }

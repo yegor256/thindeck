@@ -10,10 +10,10 @@
 
 How it works:
 
- 1. You create a [`Dockerfile`](https://www.docker.io/) in your Github repo
- 2. You give us your Github repo coordinates
- 3. We pull your repo and start a container (with a public IP and open ports)
- 4. Every five minutes we check your repo for updates and re-deploy if any
+ 1. You create a [`Dockerfile`](https://www.docker.io/) in your Github deck
+ 2. You give us your Github deck coordinates
+ 3. We pull your deck and start a container (with a public IP and open ports)
+ 4. Every five minutes we check your deck for updates and re-deploy if any
  5. You pay for our CPU usage (per load!) and traffic (per Gb)
 
 Technical documentation is here: [doc.thindeck.com](http://doc.thindeck.com/)
@@ -36,7 +36,7 @@ Our unique advantages are:
 
 ## How to contribute
 
-Fork repository, make changes, send us a pull request. We will review
+Fork decksitory, make changes, send us a pull request. We will review
 your changes and apply them to the `master` branch shortly, provided
 they don't violate our quality standards. To avoid frustration, before
 sending us your pull request please run full Maven build:

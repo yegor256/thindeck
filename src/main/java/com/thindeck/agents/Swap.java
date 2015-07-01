@@ -30,9 +30,9 @@
 package com.thindeck.agents;
 
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Repo;
+import com.jcabi.log.Logger;
+import com.thindeck.api.Deck;
 import java.io.IOException;
-import java.util.logging.Level;
 import org.xembly.Directives;
 
 /**
@@ -46,8 +46,8 @@ import org.xembly.Directives;
 public final class Swap implements Agent {
 
     @Override
-    public void exec(final Repo repo) throws IOException {
-        repo.memo().update(
+    public void exec(final Deck deck) throws IOException {
+        deck.memo().update(
             new Directives()
                 .xpath("/memo/containers/container[@type='green']")
                 .push()
@@ -57,6 +57,6 @@ public final class Swap implements Agent {
                 .pop()
                 .attr("type", "blue")
         );
-        repo.console().log(Level.INFO, "swapped blue vs green containers");
+        Logger.info(this, "swapped blue vs green containers");
     }
 }

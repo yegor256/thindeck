@@ -7,7 +7,7 @@ PublicData is "a collection of web pages with public information
 
 RuntimeStatistics is "a graphical and textual information representing
   average server availability per day, average server response time per day,
-  current number of running servers, current number of repositories,
+  current number of running servers, current number of decksitories,
   current number of applications, similar to https://status.github.com/".
 
 :UC9.1 is implemented.

@@ -31,10 +31,11 @@ package com.thindeck.agents;
 
 import com.google.common.base.Joiner;
 import com.jcabi.github.Github;
+import com.jcabi.github.Repo;
 import com.jcabi.github.mock.MkGithub;
 import com.jcabi.matchers.XhtmlMatchers;
-import com.thindeck.api.Repo;
-import com.thindeck.api.mock.MkRepo;
+import com.thindeck.api.Deck;
+import com.thindeck.api.mock.MkDeck;
 import java.io.IOException;
 import javax.json.Json;
 import org.apache.commons.codec.binary.Base64;
@@ -53,16 +54,16 @@ import org.xembly.Directives;
 public final class ReadConfigTest {
 
     /**
-     * Fetch repo configuration and update memo accordingly.
+     * Fetch deck configuration and update memo accordingly.
      * @throws Exception If something goes wrong
      */
     @Test
-    public void fetchesRepoConfigAndUpdatesMemo() throws Exception {
-        final Repo repo = ReadConfigTest.repo();
+    public void fetchesDeckConfigAndUpdatesMemo() throws Exception {
+        final Deck deck = ReadConfigTest.deck();
         final Agent agent = new ReadConfig(ReadConfigTest.github());
-        agent.exec(repo);
+        agent.exec(deck);
         MatcherAssert.assertThat(
-            repo.memo().read(),
+            deck.memo().read(),
             XhtmlMatchers.hasXPaths(
                 "//memo/domains/domain[.='example.com']",
                 "//memo/domains/domain[.='test.example.com']",
@@ -78,16 +79,16 @@ public final class ReadConfigTest {
      */
     @Test
     public void multipleExecDoesNotDuplicate() throws Exception {
-        final Repo repo = ReadConfigTest.repo();
+        final Deck deck = ReadConfigTest.deck();
         final Agent agent = new ReadConfig(ReadConfigTest.github());
-        agent.exec(repo);
-        agent.exec(repo);
+        agent.exec(deck);
+        agent.exec(deck);
         MatcherAssert.assertThat(
-            repo.memo().read().nodes("//memo/ports/port").size(),
+            deck.memo().read().nodes("//memo/ports/port").size(),
             Matchers.equalTo(2)
         );
         MatcherAssert.assertThat(
-            repo.memo().read().nodes("//memo/domains/domain").size(),
+            deck.memo().read().nodes("//memo/domains/domain").size(),
             Matchers.equalTo(2)
         );
     }
@@ -97,24 +98,24 @@ public final class ReadConfigTest {
      * @return Context
      * @throws IOException If something goes wrong
      */
-    private static Repo repo() throws IOException {
-        final Repo repo = new MkRepo();
-        repo.memo().update(
+    private static Deck deck() throws IOException {
+        final Deck deck = new MkDeck();
+        deck.memo().update(
             new Directives()
                 .xpath("/memo")
                 .add("uri").set("git://github.com/thindeck/test.git")
         );
-        return repo;
+        return deck;
     }
 
     /**
-     * Create Github and a Repo for tests.
+     * Create Github and a Deck for tests.
      * @return Github
      * @throws IOException If something goes wrong
      */
     private static Github github() throws IOException {
         final Github ghub = new MkGithub("thindeck");
-        final com.jcabi.github.Repo repo = ghub.repos().create(
+        final Repo repo = ghub.repos().create(
             Json.createObjectBuilder()
                 .add("name", "test")
                 .build()

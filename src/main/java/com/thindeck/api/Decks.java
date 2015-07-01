@@ -27,35 +27,64 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Console;
-import java.util.Collections;
-import java.util.logging.Level;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import java.io.IOException;
+import javax.validation.constraints.NotNull;
 
 /**
- * Mock of {@link Console}.
+ * Decksitories of a {@link User}.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.5
+ * @since 0.1
  */
 @Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkConsole implements Console {
+public interface Decks {
 
-    @Override
-    public void log(final Level level, final String text,
-        final Object... args) {
-        //;
-    }
+    /**
+     * Get it by name.
+     *
+     * <p>The method should throw a runtime exception if a deck
+     * with this name doesn't exist. You should call {@link #add(String)}
+     * to create a deck first.
+     *
+     * @param name The name
+     * @return Deck
+     * @throws IOException If fails
+     */
+    @NotNull(message = "deck can't be null")
+    Deck get(String name) throws IOException;
 
-    @Override
-    public Iterable<String> cat() {
-        return Collections.singleton("one long line");
-    }
+    /**
+     * Add a new decksitory.
+     *
+     * <p>The method should throw a runtime exception if a decksitory
+     * with this name already exists.
+     *
+     * @param name Unique name
+     * @throws IOException If fails
+     */
+    void add(String name) throws IOException;
+
+    /**
+     * Delete a decksitory.
+     *
+     * <p>The method should throw a runtime exception if a decksitory
+     * with this name is absent.
+     *
+     * @param name Unique name
+     * @throws IOException If fails
+     */
+    void delete(String name) throws IOException;
+
+    /**
+     * Iterate them all.
+     * @return All decksitories of the user
+     * @throws IOException If fails
+     */
+    @NotNull(message = "iterable of decks can't be null")
+    Iterable<Deck> iterate() throws IOException;
+
 }

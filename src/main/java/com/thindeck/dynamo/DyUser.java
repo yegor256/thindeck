@@ -31,8 +31,7 @@ package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Repos;
+import com.thindeck.api.Decks;
 import com.thindeck.api.User;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -46,7 +45,7 @@ import lombok.ToString;
  */
 @ToString
 @Immutable
-@EqualsAndHashCode(of = { "region", "name" })
+@EqualsAndHashCode(of = { "region", "login" })
 final class DyUser implements User {
 
     /**
@@ -55,28 +54,28 @@ final class DyUser implements User {
     private final transient Region region;
 
     /**
-     * URN.
+     * Name.
      */
-    private final transient URN name;
+    private final transient String login;
 
     /**
      * Ctor.
      * @param reg Region
-     * @param urn URN
+     * @param name Name
      */
-    DyUser(final Region reg, final URN urn) {
+    DyUser(final Region reg, final String name) {
         this.region = reg;
-        this.name = urn;
+        this.login = name;
     }
 
     @Override
-    public URN urn() {
-        return this.name;
+    public String name() {
+        return this.login;
     }
 
     @Override
-    public Repos repos() {
-        return new DyRepos(this.region, this.name);
+    public Decks decks() {
+        return new DyDecks(this.region, this.login);
     }
 
 }

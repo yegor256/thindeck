@@ -27,33 +27,27 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.cockpit;
+package com.thindeck.cockpit.deck;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.Iterables;
+import com.jcabi.aspects.Tv;
 import com.thindeck.api.Base;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Deck;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.misc.Href;
-import org.takes.rs.xe.XeAppend;
-import org.takes.rs.xe.XeChain;
-import org.takes.rs.xe.XeDirectives;
-import org.takes.rs.xe.XeLink;
-import org.takes.rs.xe.XeSource;
-import org.takes.rs.xe.XeTransform;
-import org.xembly.Directives;
+import org.takes.rs.RsText;
 
 /**
- * Repos.
+ * Deck.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.5
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
-public final class TkRepos implements Take {
+public final class TkLog implements Take {
 
     /**
      * Base.
@@ -64,44 +58,17 @@ public final class TkRepos implements Take {
      * Ctor.
      * @param bse Base
      */
-    TkRepos(final Base bse) {
+    TkLog(final Base bse) {
         this.base = bse;
     }
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Href home = new Href("/r");
-        return new RsPage(
-            "/xsl/repos.xsl",
-            this.base,
-            req,
-            new XeLink("add", "/add"),
-            new XeAppend(
-                "repos",
-                new XeTransform<>(
-                    new RqUser(req, this.base).get().repos().iterate(),
-                    // @checkstyle AnonInnerLengthCheck (50 lines)
-                    new XeTransform.Func<Repo>() {
-                        @Override
-                        public XeSource transform(final Repo repo)
-                            throws IOException {
-                            return new XeAppend(
-                                "repo",
-                                new XeDirectives(
-                                    new Directives().add("name").set(
-                                        repo.name()
-                                    )
-                                ),
-                                new XeChain(
-                                    new XeLink("open", home.path(repo.name())),
-                                    new XeLink(
-                                        "delete",
-                                        home.path(repo.name()).path("delete")
-                                    )
-                                )
-                            );
-                        }
-                    }
+        final Deck deck = new RqDeck(this.base, req).deck();
+        return new RsText(
+            Joiner.on("\n").join(
+                Iterables.limit(
+                    deck.events().iterate(Integer.MAX_VALUE), Tv.HUNDRED
                 )
             )
         );

@@ -30,7 +30,6 @@
 package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.urn.URN;
 import java.io.IOException;
 import javax.validation.constraints.NotNull;
 
@@ -40,7 +39,7 @@ import javax.validation.constraints.NotNull;
  * <p>Base is an entry point to the entire object model of
  * the system. You start from getting an instance of this type
  * from somewhere (depends on the implementation) and then
- * use one of the users or repos.
+ * use one of the users or decks.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
@@ -50,27 +49,27 @@ import javax.validation.constraints.NotNull;
 public interface Base {
 
     /**
-     * Get user by URN.
+     * Get user by name.
      *
      * <p>If the user is absent, it should be automatically created
      * and returned.
      *
-     * @param urn His URN
+     * @param name His name
      * @return User found or created
      */
     @NotNull(message = "user can't be null")
-    User user(URN urn);
+    User user(String name);
 
     /**
-     * Get active repositories, no matter what users they belong to.
+     * Get active decksitories, no matter what users they belong to.
      *
      * <p>This method is used only by a system-wide routine procedure
-     * that goes through ALL repositories and increments their tasks.
+     * that goes through ALL decksitories and increments their tasks.
      *
-     * @return Repos
+     * @return Decks
      * @throws IOException If fails
      */
-    @NotNull(message = "Repos can't be null")
-    Iterable<Repo> active() throws IOException;
+    @NotNull(message = "Decks can't be null")
+    Iterable<Deck> active() throws IOException;
 
 }

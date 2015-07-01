@@ -27,35 +27,75 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api;
+package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.Region;
+import com.jcabi.xml.XML;
+import com.thindeck.api.Events;
 import java.io.IOException;
-import java.util.logging.Level;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Repository console.
+ * Dynamo implementation of {@link com.thindeck.api.Events}.
  *
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.5
  */
+@ToString
 @Immutable
-public interface Console {
+@EqualsAndHashCode(of = { "region", "deck" })
+final class DyEvents implements Events {
 
     /**
-     * Add log line.
-     * @param level Level of log
-     * @param text Text to log
-     * @param args Optional args
-     * @throws IOException If fails
+     * Table name.
      */
-    void log(Level level, String text, Object... args) throws IOException;
+    public static final String TBL = "events";
 
     /**
-     * Cat it.
-     * @return All of it
+     * Name of the deck.
      */
-    Iterable<String> cat();
+    public static final String HASH = "deck";
 
+    /**
+     * Time of event (msec).
+     */
+    public static final String RANGE = "time";
+
+    /**
+     * XML.
+     */
+    public static final String ATTR_XML = "xml";
+
+    /**
+     * Region.
+     */
+    private final transient Region region;
+
+    /**
+     * Name of deck, for example "yegor256/test".
+     */
+    private final transient String deck;
+
+    /**
+     * Ctor.
+     * @param reg Region
+     * @param dck Deck name
+     */
+    DyEvents(final Region reg, final String dck) {
+        this.region = reg;
+        this.deck = dck;
+    }
+
+    @Override
+    public Iterable<XML> iterate(final int since) throws IOException {
+        throw new UnsupportedOperationException("#iterate()");
+    }
+
+    @Override
+    public void create(final String text) {
+        throw new UnsupportedOperationException("#create()");
+    }
 }

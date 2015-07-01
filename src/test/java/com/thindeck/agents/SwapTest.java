@@ -31,8 +31,8 @@ package com.thindeck.agents;
 
 import com.jcabi.aspects.Tv;
 import com.jcabi.matchers.XhtmlMatchers;
-import com.thindeck.api.Repo;
-import com.thindeck.api.mock.MkRepo;
+import com.thindeck.api.Deck;
+import com.thindeck.api.mock.MkDeck;
 import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
@@ -55,8 +55,8 @@ public final class SwapTest {
     @Test
     public void swapsGreenAndBlueContainers() throws IOException {
         final Agent agent = new Swap();
-        final Repo repo = new MkRepo();
-        repo.memo().update(
+        final Deck deck = new MkDeck();
+        deck.memo().update(
             new Directives().xpath("/memo").addIf("containers")
                 .add("container").attr("type", "green")
                 .add("cid")
@@ -67,9 +67,9 @@ public final class SwapTest {
                 .add("ports").add("port")
                 .add("in").set("80").up().add("out").set("8090").up().up()
         );
-        agent.exec(repo);
+        agent.exec(deck);
         MatcherAssert.assertThat(
-            repo.memo().read(),
+            deck.memo().read(),
             XhtmlMatchers.hasXPaths(
                 "/memo/containers[count(container)=1]",
                 "/memo/containers/container[@type='blue']"

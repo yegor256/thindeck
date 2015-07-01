@@ -29,8 +29,7 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.urn.URN;
-import com.thindeck.api.Repos;
+import com.thindeck.api.Decks;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -44,17 +43,17 @@ import org.junit.Test;
 public final class DyBaseITCase {
 
     /**
-     * DyBase can add a repo.
+     * DyBase can add a deck.
      * @throws Exception If there is some problem inside
      */
     @Test
     public void canAddCommand() throws Exception {
-        final Repos repos = new DyBase()
-            .user(new URN("urn:test:7678"))
-            .repos();
-        repos.add("testrepo");
+        final Decks decks = new DyBase()
+            .user("jeff")
+            .decks();
+        decks.add("test-deck");
         MatcherAssert.assertThat(
-            repos.iterate().iterator().next().name(),
+            decks.iterate().iterator().next().name(),
             Matchers.startsWith("test")
         );
     }

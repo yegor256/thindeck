@@ -30,9 +30,8 @@
 package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.urn.URN;
 import com.thindeck.api.Base;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Deck;
 import com.thindeck.api.User;
 import java.io.IOException;
 import java.util.Collections;
@@ -52,13 +51,13 @@ import lombok.ToString;
 public final class MkBase implements Base {
 
     @Override
-    public User user(final URN urn) {
+    public User user(final String name) {
         return new MkUser();
     }
 
     @Override
-    public Iterable<Repo> active() throws IOException {
-        return Collections.<Repo>singleton(new MkRepo());
+    public Iterable<Deck> active() throws IOException {
+        return Collections.<Deck>singleton(new MkDeck());
     }
 
 }

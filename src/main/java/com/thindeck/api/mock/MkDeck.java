@@ -27,51 +27,53 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.cockpit.repo;
+package com.thindeck.api.mock;
 
-import com.thindeck.api.Base;
-import com.thindeck.api.Repos;
-import com.thindeck.cockpit.RqUser;
+import com.jcabi.aspects.Immutable;
+import com.thindeck.api.Events;
+import com.thindeck.api.Memo;
+import com.thindeck.api.Deck;
 import java.io.IOException;
-import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
-import org.takes.facets.flash.RsFlash;
-import org.takes.facets.forward.RsForward;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Delete repo.
+ * Mock of {@link com.thindeck.api.Deck}.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.5
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @since 0.4
  */
-public final class TkDelete implements Take {
+@Immutable
+@ToString
+@EqualsAndHashCode
+public final class MkDeck implements Deck {
 
     /**
-     * Base.
+     * Memo.
      */
-    private final transient Base base;
+    private final transient Memo mmo;
 
     /**
      * Ctor.
-     * @param bse Base
+     * @throws IOException If fails
      */
-    TkDelete(final Base bse) {
-        this.base = bse;
+    public MkDeck() throws IOException {
+        this.mmo = new MkMemo();
     }
 
     @Override
-    public Response act(final Request req) throws IOException {
-        final Repos repos = new RqUser(req, this.base).get().repos();
-        final String repo = new RqRepo(this.base, req).repo().name();
-        repos.delete(repo);
-        return new RsForward(
-            new RsFlash(
-                String.format("repository \"%s\" deleted", repo)
-            )
-        );
+    public String name() {
+        return "test";
     }
 
+    @Override
+    public Memo memo() {
+        return this.mmo;
+    }
+
+    @Override
+    public Events events() {
+        return new MkEvents();
+    }
 }

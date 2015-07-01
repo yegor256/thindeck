@@ -27,27 +27,33 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.cockpit.repo;
+package com.thindeck.cockpit;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.Iterables;
-import com.jcabi.aspects.Tv;
 import com.thindeck.api.Base;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Deck;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.rs.RsText;
+import org.takes.misc.Href;
+import org.takes.rs.xe.XeAppend;
+import org.takes.rs.xe.XeChain;
+import org.takes.rs.xe.XeDirectives;
+import org.takes.rs.xe.XeLink;
+import org.takes.rs.xe.XeSource;
+import org.takes.rs.xe.XeTransform;
+import org.xembly.Directives;
 
 /**
- * Repo.
+ * Decks.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.5
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
-public final class TkLog implements Take {
+public final class TkDecks implements Take {
 
     /**
      * Base.
@@ -58,16 +64,45 @@ public final class TkLog implements Take {
      * Ctor.
      * @param bse Base
      */
-    TkLog(final Base bse) {
+    TkDecks(final Base bse) {
         this.base = bse;
     }
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Repo repo = new RqRepo(this.base, req).repo();
-        return new RsText(
-            Joiner.on("\n").join(
-                Iterables.limit(repo.console().cat(), Tv.HUNDRED)
+        final Href home = new Href("/r");
+        return new RsPage(
+            "/xsl/decks.xsl",
+            this.base,
+            req,
+            new XeLink("add", "/add"),
+            new XeAppend(
+                "decks",
+                new XeTransform<>(
+                    new RqUser(req, this.base).get().decks().iterate(),
+                    // @checkstyle AnonInnerLengthCheck (50 lines)
+                    new XeTransform.Func<Deck>() {
+                        @Override
+                        public XeSource transform(final Deck deck)
+                            throws IOException {
+                            return new XeAppend(
+                                "deck",
+                                new XeDirectives(
+                                    new Directives().add("name").set(
+                                        deck.name()
+                                    )
+                                ),
+                                new XeChain(
+                                    new XeLink("open", home.path(deck.name())),
+                                    new XeLink(
+                                        "delete",
+                                        home.path(deck.name()).path("delete")
+                                    )
+                                )
+                            );
+                        }
+                    }
+                )
             )
         );
     }

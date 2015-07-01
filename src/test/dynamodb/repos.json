@@ -23,5 +23,5 @@
     "ReadCapacityUnits": "1",
     "WriteCapacityUnits": "1"
   },
-  "TableName": "td-repos"
+  "TableName": "td-decks"
 }

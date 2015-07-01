@@ -27,46 +27,72 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.cockpit;
 
-import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
+import com.thindeck.api.Base;
+import com.thindeck.api.Deck;
+import com.thindeck.api.Decks;
 import java.io.IOException;
-import java.util.Collections;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import org.takes.Request;
+import org.takes.Response;
+import org.takes.Take;
+import org.takes.facets.flash.RsFlash;
+import org.takes.facets.forward.RsFailure;
+import org.takes.facets.forward.RsForward;
+import org.takes.rq.RqForm;
+import org.xembly.Directives;
 
 /**
- * Mock of {@link Repos}.
+ * Add deck.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.5
+ * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkRepos implements Repos {
+public final class TkAddDeck implements Take {
 
-    @Override
-    public Repo get(final String name) throws IOException {
-        return new MkRepo();
+    /**
+     * Base.
+     */
+    private final transient Base base;
+
+    /**
+     * Ctor.
+     * @param bse Base
+     */
+    TkAddDeck(final Base bse) {
+        this.base = bse;
     }
 
     @Override
-    public void add(final String name) {
-        // nothing
-    }
-
-    @Override
-    public void delete(final String name) throws IOException {
-        // nothing
-    }
-
-    @Override
-    public Iterable<Repo> iterate() throws IOException {
-        return Collections.<Repo>singleton(new MkRepo());
+    public Response act(final Request req) throws IOException {
+        final RqForm.Smart form = new RqForm.Smart(new RqForm.Base(req));
+        final String uri = form.single("uri");
+        if (!uri.matches("https://github\\.com/[_\\w-]+/[_\\w-]+\\.git")) {
+            throw new RsFailure(
+                "only Github projects are accepted at the moment"
+            );
+        }
+        final Decks decks = new RqUser(req, this.base).get().decks();
+        final String name = form.single("name");
+        decks.add(name);
+        final Deck deck = decks.get(name);
+        try {
+            deck.memo().update(
+                new Directives().xpath("/memo").addIf("uri").set(uri)
+            );
+        } catch (final IOException ex) {
+            throw new RsFailure(ex);
+        }
+        return new RsForward(
+            new RsFlash(
+                String.format(
+                    "deck \"%s\" added with URI=\"%s\"",
+                    name, uri
+                )
+            )
+        );
     }
 
 }

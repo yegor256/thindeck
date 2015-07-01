@@ -27,53 +27,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Console;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
+import com.jcabi.xml.XML;
 import java.io.IOException;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import javax.validation.constraints.NotNull;
 
 /**
- * Mock of {@link Repo}.
+ * Events of a deck.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.1
  */
 @Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkRepo implements Repo {
+public interface Events {
 
     /**
-     * Memo.
-     */
-    private final transient Memo mmo;
-
-    /**
-     * Ctor.
+     * Iterate only those smaller than this number.
+     * @param since All of them should be smaller
+     * @return Events
      * @throws IOException If fails
      */
-    public MkRepo() throws IOException {
-        this.mmo = new MkMemo();
-    }
+    @NotNull(message = "list of events can't be NULL")
+    Iterable<XML> iterate(int since) throws IOException;
 
-    @Override
-    public String name() {
-        return "test";
-    }
+    /**
+     * Create new event.
+     * @param text Text to use
+     */
+    void create(String text);
 
-    @Override
-    public Console console() {
-        return new MkConsole();
-    }
-
-    @Override
-    public Memo memo() throws IOException {
-        return this.mmo;
-    }
 }

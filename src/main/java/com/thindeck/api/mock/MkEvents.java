@@ -27,64 +27,35 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api;
+package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
-import java.io.IOException;
-import javax.validation.constraints.NotNull;
+import com.jcabi.xml.XML;
+import com.thindeck.api.Events;
+import java.util.Collections;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Repositories of a {@link User}.
+ * Mock of {@link com.thindeck.api.Events}.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.1
+ * @since 0.4
  */
 @Immutable
-public interface Repos {
+@ToString
+@EqualsAndHashCode
+public final class MkEvents implements Events {
 
-    /**
-     * Get it by name.
-     *
-     * <p>The method should throw a runtime exception if a repo
-     * with this name doesn't exist. You should call {@link #add(String)}
-     * to create a repo first.
-     *
-     * @param name The name
-     * @return Repo
-     * @throws IOException If fails
-     */
-    @NotNull(message = "repo can't be null")
-    Repo get(String name) throws IOException;
+    @Override
+    public Iterable<XML> iterate(final int since) {
+        return Collections.emptyList();
+    }
 
-    /**
-     * Add a new repository.
-     *
-     * <p>The method should throw a runtime exception if a repository
-     * with this name already exists.
-     *
-     * @param name Unique name
-     * @throws IOException If fails
-     */
-    void add(String name) throws IOException;
-
-    /**
-     * Delete a repository.
-     *
-     * <p>The method should throw a runtime exception if a repository
-     * with this name is absent.
-     *
-     * @param name Unique name
-     * @throws IOException If fails
-     */
-    void delete(String name) throws IOException;
-
-    /**
-     * Iterate them all.
-     * @return All repositories of the user
-     * @throws IOException If fails
-     */
-    @NotNull(message = "iterable of repos can't be null")
-    Iterable<Repo> iterate() throws IOException;
+    @Override
+    public void create(final String text) {
+        // nothing
+    }
 
 }

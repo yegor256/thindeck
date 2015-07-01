@@ -36,11 +36,11 @@
     <xsl:output method="xml" omit-xml-declaration="yes"/>
     <xsl:include href="/xsl/layout.xsl" />
     <xsl:template match="page" mode="head">
-        <title><xsl:value-of select="repo/name"/></title>
+        <title><xsl:value-of select="deck/name"/></title>
     </xsl:template>
     <xsl:template match="page" mode="body">
         <p>
-            <strong><xsl:value-of select="repo/name"/></strong>
+            <strong><xsl:value-of select="deck/name"/></strong>
             <xsl:text> (log is </xsl:text>
             <a href="{links/link[@rel='log']/@href}">
                 <xsl:text>here</xsl:text>

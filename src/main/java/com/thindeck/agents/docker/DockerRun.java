@@ -31,15 +31,15 @@ package com.thindeck.agents.docker;
 
 import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
+import com.jcabi.log.Logger;
 import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
 import com.jcabi.xml.XML;
 import com.thindeck.agents.Agent;
 import com.thindeck.agents.Remote;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Deck;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.logging.Level;
 import org.apache.commons.lang3.StringUtils;
 import org.xembly.Directives;
 
@@ -54,43 +54,40 @@ import org.xembly.Directives;
 public final class DockerRun implements Agent {
 
     @Override
-    public void exec(final Repo repo) throws IOException {
-        final XML xml = repo.memo().read();
+    public void exec(final Deck deck) throws IOException {
+        final XML xml = deck.memo().read();
         final Collection<String> tanks = xml.xpath("/memo/tanks/tank/text()");
         for (final String tank : tanks) {
             DockerRun.run(
-                repo, tank,
+                deck, tank,
                 xml.xpath("/memo/uri/text()").get(0)
             );
         }
-        repo.console().log(
-            Level.INFO, "container(s) started in %d tank(s)",
-            tanks.size()
-        );
+        Logger.info(this, "container(s) started in %d tank(s)", tanks.size());
     }
 
     /**
      * Run docker in this tank.
-     * @param repo Repo
+     * @param deck Deck
      * @param host Host name of the tank
      * @param git Git URL to fetch
      * @throws IOException If fails
      */
-    private static void run(final Repo repo, final String host,
+    private static void run(final Deck deck, final String host,
         final String git) throws IOException {
         final Shell.Plain shell = new Shell.Plain(new Remote().shell(host));
         final String dir = shell.exec("mktemp -d -t td-XXXX").trim();
         shell.exec(
             Joiner.on(" && ").join(
                 String.format("cd %s", SSH.escape(dir)),
-                "mkdir repo",
-                "cd repo",
+                "mkdir deck",
+                "cd deck",
                 new Clone(git).toString(),
                 "cd ..",
                 Joiner.on(' ').join(
                     "sudo docker run -d -p ::80",
                     "\"--cidfile=$(pwd)/cid\"",
-                    "-v \"$(pwd)/repo:/var/www\"",
+                    "-v \"$(pwd)/deck:/var/www\"",
                     "yegor256/thindeck"
                 )
             )
@@ -106,7 +103,7 @@ public final class DockerRun implements Agent {
                 ":"
             )
         );
-        repo.memo().update(
+        deck.memo().update(
             new Directives().xpath("/memo").addIf("containers")
                 .add("container").attr("type", "blue")
                 .add("cid").set(cid).up()
@@ -116,8 +113,8 @@ public final class DockerRun implements Agent {
                 .add("dir").set(dir).up()
                 .add("tank").set(host).up()
         );
-        repo.console().log(
-            Level.INFO,
+        Logger.info(
+            DockerRun.class,
             "container %s started at %s in %s",
             cid, dir, host
         );

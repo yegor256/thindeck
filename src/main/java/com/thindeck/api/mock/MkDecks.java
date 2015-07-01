@@ -27,96 +27,46 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.dynamo;
+package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Console;
-import com.thindeck.api.Memo;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Deck;
+import com.thindeck.api.Decks;
+import java.io.IOException;
+import java.util.Collections;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Dynamo implementation of {@link Repo}.
+ * Mock of {@link com.thindeck.api.Decks}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
+ * @since 0.4
  */
-@ToString
 @Immutable
-@EqualsAndHashCode(of = { "region", "user", "repo" })
-final class DyRepo implements Repo {
+@ToString
+@EqualsAndHashCode
+public final class MkDecks implements Decks {
 
-    /**
-     * Table name.
-     */
-    public static final String TBL = "repos";
-
-    /**
-     * URN of the user (owner of the repo).
-     */
-    public static final String HASH = "urn";
-
-    /**
-     * Unique name of the repo, for that user.
-     */
-    public static final String RANGE = "name";
-
-    /**
-     * When updated.
-     */
-    public static final String ATTR_UPDATED = "updated";
-
-    /**
-     * Memo.
-     */
-    public static final String ATTR_MEMO = "memo";
-
-    /**
-     * Region.
-     */
-    private final transient Region region;
-
-    /**
-     * URN of the owner.
-     */
-    private final transient URN user;
-
-    /**
-     * Name of the repo.
-     */
-    private final transient String repo;
-
-    /**
-     * Ctor.
-     * @param reg Region
-     * @param urn URN
-     * @param name Repo name
-     */
-    DyRepo(final Region reg, final URN urn, final String name) {
-        this.region = reg;
-        this.user = urn;
-        this.repo = name;
+    @Override
+    public Deck get(final String name) throws IOException {
+        return new MkDeck();
     }
 
     @Override
-    public String name() {
-        return this.repo;
+    public void add(final String name) {
+        // nothing
     }
 
     @Override
-    public Console console() {
-        return new DyConsole(
-            this.region,
-            String.format("%s %s", this.user, this.repo)
-        );
+    public void delete(final String name) throws IOException {
+        // nothing
     }
 
     @Override
-    public Memo memo() {
-        return new DyMemo(this.region, this.user, this.repo);
+    public Iterable<Deck> iterate() throws IOException {
+        return Collections.<Deck>singleton(new MkDeck());
     }
+
 }

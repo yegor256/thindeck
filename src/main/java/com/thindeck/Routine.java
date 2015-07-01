@@ -43,11 +43,10 @@ import com.thindeck.agents.docker.DockerStop;
 import com.thindeck.agents.lb.UpdateLB;
 import com.thindeck.agents.tanks.FindTanks;
 import com.thindeck.api.Base;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Deck;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -96,23 +95,23 @@ final class Routine implements Runnable {
     @Override
     public void run() {
         int total = 0;
-        for (final Repo repo : this.repos()) {
+        for (final Deck deck : this.decks()) {
             for (final Agent agent : this.agents) {
-                this.exec(repo, agent);
+                this.exec(deck, agent);
             }
             ++total;
         }
         Logger.info(
-            this, "%d repos, alive for %[msec]s",
+            this, "%d decks, alive for %[msec]s",
             total, System.currentTimeMillis() - this.start
         );
     }
 
     /**
-     * Get all repos.
-     * @return Repos
+     * Get all decks.
+     * @return Decks
      */
-    private Iterable<Repo> repos() {
+    private Iterable<Deck> decks() {
         try {
             return this.base.active();
         } catch (final IOException ex) {
@@ -121,38 +120,23 @@ final class Routine implements Runnable {
     }
 
     /**
-     * Process one agent with one repo.
-     * @param repo Repo
+     * Process one agent with one deck.
+     * @param deck Deck
      * @param agent Agent
      */
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    private void exec(final Repo repo, final Agent agent) {
+    private void exec(final Deck deck, final Agent agent) {
         try {
-            agent.exec(repo);
+            agent.exec(deck);
             // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Throwable ex) {
-            this.log(repo, agent, ex);
-        }
-    }
-
-    /**
-     * Log an error.
-     * @param repo Repo
-     * @param agent Agent
-     * @param error The error
-     */
-    private void log(final Repo repo, final Agent agent,
-        final Throwable error) {
-        try {
-            repo.console().log(
-                Level.SEVERE, "%s failed: %s",
+            Logger.error(
+                this, "%s failed: %s",
                 agent.getClass().getCanonicalName(),
-                ExceptionUtils.getStackTrace(error)
+                ExceptionUtils.getStackTrace(ex)
             );
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
         }
-        Logger.warn(this, "%[exception]s", error);
+        deck.events().create(agent.getClass().getCanonicalName());
     }
 
     /**

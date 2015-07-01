@@ -36,16 +36,15 @@ import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
-import com.jcabi.urn.URN;
-import com.thindeck.api.Repo;
-import com.thindeck.api.Repos;
+import com.thindeck.api.Deck;
+import com.thindeck.api.Decks;
 import java.io.IOException;
 import java.util.Iterator;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Dynamo implementation of {@link Repos}.
+ * Dynamo implementation of {@link com.thindeck.api.Decks}.
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @author Yegor Bugayenko (yegor@teamed.io)
@@ -54,7 +53,7 @@ import lombok.ToString;
 @ToString
 @Immutable
 @EqualsAndHashCode(of = { "region", "user" })
-final class DyRepos implements Repos {
+final class DyDecks implements Decks {
 
     /**
      * Region.
@@ -62,23 +61,23 @@ final class DyRepos implements Repos {
     private final transient Region region;
 
     /**
-     * URN of the owner.
+     * Name of the owner.
      */
-    private final transient URN user;
+    private final transient String user;
 
     /**
      * Ctor.
      * @param reg Region
-     * @param urn URN
+     * @param usr URN
      */
-    DyRepos(final Region reg, final URN urn) {
+    DyDecks(final Region reg, final String usr) {
         this.region = reg;
-        this.user = urn;
+        this.user = usr;
     }
 
     @Override
-    public Repo get(final String name) {
-        return new DyRepo(
+    public Deck get(final String name) {
+        return new DyDeck(
             this.region, this.user, name
         );
     }
@@ -87,42 +86,42 @@ final class DyRepos implements Repos {
     public void add(final String name) throws IOException {
         if (!name.matches("[a-z]{3,12}")) {
             throw new IllegalStateException(
-                "invalid repository name, must be 3-12 English letters"
+                "invalid decksitory name, must be 3-12 English letters"
             );
         }
-        this.region.table(DyRepo.TBL).put(
+        this.region.table(DyDeck.TBL).put(
             new Attributes()
-                .with(DyRepo.HASH, this.user.toString())
-                .with(DyRepo.RANGE, name)
-                .with(DyRepo.ATTR_UPDATED, System.currentTimeMillis())
-                .with(DyRepo.ATTR_MEMO, "<memo/>")
+                .with(DyDeck.HASH, this.user)
+                .with(DyDeck.RANGE, name)
+                .with(DyDeck.ATTR_UPDATED, System.currentTimeMillis())
+                .with(DyDeck.ATTR_MEMO, "<memo/>")
         );
     }
 
     @Override
     public void delete(final String name) {
-        final Iterator<Item> items = this.region.table(DyRepo.TBL)
+        final Iterator<Item> items = this.region.table(DyDeck.TBL)
             .frame()
             .through(new QueryValve().withLimit(1))
-            .where(DyRepo.HASH, this.user.toString())
-            .where(DyRepo.RANGE, name)
+            .where(DyDeck.HASH, this.user)
+            .where(DyDeck.RANGE, name)
             .iterator();
         items.next();
         items.remove();
     }
 
     @Override
-    public Iterable<Repo> iterate() {
+    public Iterable<Deck> iterate() {
         return Iterables.transform(
-            this.region.table(DyRepo.TBL)
+            this.region.table(DyDeck.TBL)
                 .frame()
                 .through(new QueryValve())
-                .where(DyRepo.HASH, this.user.toString()),
-            new Function<Item, Repo>() {
+                .where(DyDeck.HASH, this.user),
+            new Function<Item, Deck>() {
                 @Override
-                public Repo apply(final Item input) {
+                public Deck apply(final Item input) {
                     try {
-                        return DyRepos.this.get(input.get(DyRepo.RANGE).getS());
+                        return DyDecks.this.get(input.get(DyDeck.RANGE).getS());
                     } catch (final IOException ex) {
                         throw new IllegalStateException(ex);
                     }

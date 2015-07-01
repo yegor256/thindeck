@@ -3,9 +3,9 @@ author: Carlos Miranda
 method: champions.pert
 scope:
   1: Website UI design
-  2: API design 
-  3: User addition, modification, and deletion of repos
-  4: Automatic deployment of user repos
+  2: API design
+  3: User addition, modification, and deletion of decks
+  4: Automatic deployment of user decks
   5: Billing of resource usage
   6: Resource scaling functionality
   7: Integration testing

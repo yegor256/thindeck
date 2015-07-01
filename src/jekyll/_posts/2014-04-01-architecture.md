@@ -20,7 +20,7 @@ If you find any mistakes in this document or any other pages linked to it,
 don't hesitate to submit a [Github issue](https://github.com/yegor256/thindeck).
 Moreover, if something is not clear in this page or any other pages here,
 please submit an issue. It is our responsibility to keep these documentation
-clean and accurate. You will greatly help us if you report a bug.
+clean and accurate. You will greatly help us if you deckrt a bug.
 
 ## Assumptions
 
@@ -117,7 +117,7 @@ provided by AWS.
   * all UI activities should be available through RESTful API
   * UI will use responsive design to simultaneously support desktop and mobile devices
   * payment processing will be done by PayPal
-  * following source repositories will be supported: ...
+  * following source decksitories will be supported: ...
   * containers will use Linux operating system
   * containers will be created using Docker virtualization technology
 

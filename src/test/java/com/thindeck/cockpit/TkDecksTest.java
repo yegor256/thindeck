@@ -27,66 +27,43 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.cockpit.repo;
+package com.thindeck.cockpit;
 
+import com.jcabi.matchers.XhtmlMatchers;
 import com.thindeck.api.Base;
-import com.thindeck.api.Repo;
-import com.thindeck.cockpit.RsPage;
-import java.io.IOException;
-import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
-import org.takes.misc.Href;
-import org.takes.rs.xe.XeAppend;
-import org.takes.rs.xe.XeChain;
-import org.takes.rs.xe.XeDirectives;
-import org.takes.rs.xe.XeLink;
-import org.xembly.Directives;
+import com.thindeck.api.mock.MkBase;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.takes.facets.auth.RqWithAuth;
+import org.takes.rs.RsPrettyXML;
+import org.takes.rs.RsPrint;
 
 /**
- * Repo.
- *
+ * Test case for {@link TkDecks}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.5
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle MultipleStringLiteralsCheck (500 lines)
+ * @since 0.4
  */
-public final class TkIndex implements Take {
+public final class TkDecksTest {
 
     /**
-     * Base.
+     * TkDecks can render a page in XML.
+     * @throws Exception If something goes wrong.
      */
-    private final transient Base base;
-
-    /**
-     * Ctor.
-     * @param bse Base
-     */
-    TkIndex(final Base bse) {
-        this.base = bse;
-    }
-
-    @Override
-    public Response act(final Request req) throws IOException {
-        final Repo repo = new RqRepo(this.base, req).repo();
-        final Href home = new Href("/r").path(repo.name());
-        return new RsPage(
-            "/xsl/repo.xsl",
-            this.base,
-            req,
-            new XeLink("log", home.path("log")),
-            new XeDirectives(
-                Directives.copyOf(repo.memo().read().node())
-            ),
-            new XeAppend(
-                "repo",
-                new XeDirectives(
-                    new Directives().add("name").set(repo.name())
-                ),
-                new XeChain(
-                    new XeLink("open", home.path("open"))
+    @Test
+    public void rendersXmlPage() throws Exception {
+        final Base base = new MkBase();
+        MatcherAssert.assertThat(
+            new RsPrint(
+                new RsPrettyXML(
+                    new TkDecks(base).act(new RqWithAuth("urn:test:1"))
                 )
+            ).printBody(),
+            XhtmlMatchers.hasXPaths(
+                "/page/links/link[@rel='home']",
+                "/page/decks[count(deck)=1]",
+                "//deck[name='test']",
+                "//deck/links/link[@rel='open']"
             )
         );
     }

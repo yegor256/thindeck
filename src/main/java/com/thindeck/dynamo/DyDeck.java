@@ -27,54 +27,92 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.cockpit.repo;
+package com.thindeck.dynamo;
 
-import com.thindeck.api.Base;
-import com.thindeck.api.Repo;
-import com.thindeck.api.User;
-import com.thindeck.cockpit.RqUser;
-import java.io.IOException;
+import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.Region;
+import com.thindeck.api.Deck;
+import com.thindeck.api.Events;
+import com.thindeck.api.Memo;
 import lombok.EqualsAndHashCode;
-import org.takes.Request;
-import org.takes.rq.RqHeaders;
-import org.takes.rq.RqWrap;
+import lombok.ToString;
 
 /**
- * Repo fork.
+ * Dynamo implementation of {@link com.thindeck.api.Deck}.
  *
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.5
  */
-@EqualsAndHashCode(callSuper = true)
-public final class RqRepo extends RqWrap {
+@ToString
+@Immutable
+@EqualsAndHashCode(of = { "region", "user", "deck" })
+final class DyDeck implements Deck {
 
     /**
-     * Base.
+     * Table name.
      */
-    private final transient Base base;
+    public static final String TBL = "decks";
+
+    /**
+     * Name of the deck owner.
+     */
+    public static final String HASH = "user";
+
+    /**
+     * Unique name of the deck, for that user.
+     */
+    public static final String RANGE = "name";
+
+    /**
+     * When updated.
+     */
+    public static final String ATTR_UPDATED = "updated";
+
+    /**
+     * Memo.
+     */
+    public static final String ATTR_MEMO = "memo";
+
+    /**
+     * Region.
+     */
+    private final transient Region region;
+
+    /**
+     * Name of the owner.
+     */
+    private final transient String user;
+
+    /**
+     * Name of the deck.
+     */
+    private final transient String deck;
 
     /**
      * Ctor.
-     * @param bse The base
-     * @param req Request
+     * @param reg Region
+     * @param owner Name of the owner
+     * @param name Deck name
      */
-    public RqRepo(final Base bse, final Request req) {
-        super(req);
-        this.base = bse;
+    DyDeck(final Region reg, final String owner, final String name) {
+        this.region = reg;
+        this.user = owner;
+        this.deck = name;
     }
 
-    /**
-     * Get repo.
-     * @return The repo
-     * @throws IOException If fails
-     */
-    public Repo repo() throws IOException {
-        final User user = new RqUser(this, this.base).get();
-        final String name = new RqHeaders.Smart(
-            new RqHeaders.Base(this)
-        ).single("X-Thindeck-Repo");
-        return user.repos().get(name);
+    @Override
+    public String name() {
+        return String.format("%s/%s", this.user, this.deck);
     }
 
+    @Override
+    public Memo memo() {
+        return new DyMemo(this.region, this.user, this.deck);
+    }
+
+    @Override
+    public Events events() {
+        return new DyEvents(this.region, this.name());
+    }
 }

@@ -40,11 +40,11 @@ import javax.validation.constraints.NotNull;
 import org.xembly.Directive;
 
 /**
- * Memo of a {@link Repo}.
+ * Memo of a {@link Deck}.
  *
  * <p>Memo is an XML document with data about the current
- * state of the repository. A memo can contain, for example, the
- * list of Docker containers that are running the repo at
+ * state of the decksitory. A memo can contain, for example, the
+ * list of Docker containers that are running the deck at
  * the moment.
  *
  * <p>Full description of what information a memo should (and can)

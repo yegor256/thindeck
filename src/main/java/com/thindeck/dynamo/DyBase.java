@@ -37,9 +37,8 @@ import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.retry.ReRegion;
 import com.jcabi.manifests.Manifests;
-import com.jcabi.urn.URN;
 import com.thindeck.api.Base;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Deck;
 import com.thindeck.api.User;
 import java.io.IOException;
 import lombok.EqualsAndHashCode;
@@ -80,22 +79,22 @@ public final class DyBase implements Base {
     }
 
     @Override
-    public User user(final URN urn) {
-        return new DyUser(this.region, urn);
+    public User user(final String name) {
+        return new DyUser(this.region, name);
     }
 
     @Override
-    public Iterable<Repo> active() {
+    public Iterable<Deck> active() {
         return Iterables.transform(
-            this.region.table(DyRepo.TBL).frame(),
-            new Function<Item, Repo>() {
+            this.region.table(DyDeck.TBL).frame(),
+            new Function<Item, Deck>() {
                 @Override
-                public Repo apply(final Item item) {
+                public Deck apply(final Item item) {
                     try {
-                        return new DyRepo(
+                        return new DyDeck(
                             DyBase.this.region,
-                            URN.create(item.get(DyRepo.HASH).getS()),
-                            item.get(DyRepo.RANGE).getS()
+                            item.get(DyDeck.HASH).getS(),
+                            item.get(DyDeck.RANGE).getS()
                         );
                     } catch (final IOException ex) {
                         throw new IllegalStateException(ex);

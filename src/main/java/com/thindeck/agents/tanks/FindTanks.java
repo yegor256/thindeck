@@ -30,10 +30,10 @@
 package com.thindeck.agents.tanks;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.log.Logger;
 import com.thindeck.agents.Agent;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Deck;
 import java.io.IOException;
-import java.util.logging.Level;
 import org.xembly.Directives;
 
 /**
@@ -47,15 +47,15 @@ import org.xembly.Directives;
 public final class FindTanks implements Agent {
 
     @Override
-    public void exec(final Repo repo) throws IOException {
-        if (repo.memo().read().nodes("//tanks/tank").isEmpty()) {
-            repo.memo().update(
+    public void exec(final Deck deck) throws IOException {
+        if (deck.memo().read().nodes("//tanks/tank").isEmpty()) {
+            deck.memo().update(
                 new Directives()
                     .xpath("/memo/tanks/tank").remove()
                     .xpath("/memo").addIf("tanks")
                     .add("tank").set("t1.thindeck.com")
             );
-            repo.console().log(Level.INFO, "one tank t1.thindeck.com found");
+            Logger.info(this, "one tank t1.thindeck.com found");
         }
     }
 

@@ -33,7 +33,7 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.xml.XML;
 import com.thindeck.agents.Agent;
 import com.thindeck.agents.Remote;
-import com.thindeck.api.Repo;
+import com.thindeck.api.Deck;
 import java.io.IOException;
 import java.util.List;
 
@@ -70,8 +70,8 @@ public final class UpdateLB implements Agent {
     }
 
     @Override
-    public void exec(final Repo repo) throws IOException {
-        final XML memo = repo.memo().read();
+    public void exec(final Deck deck) throws IOException {
+        final XML memo = deck.memo().read();
         final List<String> domains = memo.xpath("/memo/domains/domain/text()");
         final List<String> ports = memo.xpath("/memo/ports/port/text()");
         for (final XML container : memo.nodes("/memo/containers/container")) {
