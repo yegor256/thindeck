@@ -76,7 +76,7 @@ Container is "a virtual operating system running user's
   a) must be open source or free, so that we avoid license costs,
   b) must be mature product that is currently supported,
   c) must provide full file system and network isolation,
-  d) must enable memory and CPU quotas". Container includes:
+  d) must enable deckry and CPU quotas". Container includes:
   server as Server,
   logs as "text logs available in runtime and as historical records",
   state as "one from the list: building, running",

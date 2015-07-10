@@ -27,37 +27,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
-
-import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Base;
-import com.thindeck.api.Deck;
-import com.thindeck.api.User;
-import java.io.IOException;
-import java.util.Collections;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
- * Mock of {@link Base}.
+ * API mock implementation tests.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.1
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkBase implements Base {
-
-    @Override
-    public User user(final String name) {
-        return new MkUser();
-    }
-
-    @Override
-    public Iterable<Deck> active() throws IOException {
-        return Collections.<Deck>singleton(new MkDeck());
-    }
-
-}
+package com.thindeck.mock;

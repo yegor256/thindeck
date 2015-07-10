@@ -35,7 +35,7 @@ import com.jcabi.github.Repo;
 import com.jcabi.github.mock.MkGithub;
 import com.jcabi.matchers.XhtmlMatchers;
 import com.thindeck.api.Deck;
-import com.thindeck.api.mock.MkDeck;
+import com.thindeck.mock.MkDeck;
 import java.io.IOException;
 import javax.json.Json;
 import org.apache.commons.codec.binary.Base64;
@@ -54,7 +54,7 @@ import org.xembly.Directives;
 public final class ReadConfigTest {
 
     /**
-     * Fetch deck configuration and update memo accordingly.
+     * Fetch deck configuration and update deck accordingly.
      * @throws Exception If something goes wrong
      */
     @Test
@@ -65,10 +65,10 @@ public final class ReadConfigTest {
         MatcherAssert.assertThat(
             deck.read(),
             XhtmlMatchers.hasXPaths(
-                "//memo/domains/domain[.='example.com']",
-                "//memo/domains/domain[.='test.example.com']",
-                "//memo/ports/port[.='80']",
-                "//memo/ports/port[.='443']"
+                "//deck/domains/domain[.='example.com']",
+                "//deck/domains/domain[.='test.example.com']",
+                "//deck/ports/port[.='80']",
+                "//deck/ports/port[.='443']"
             )
         );
     }
@@ -84,11 +84,11 @@ public final class ReadConfigTest {
         agent.exec(deck);
         agent.exec(deck);
         MatcherAssert.assertThat(
-            deck.read().nodes("//memo/ports/port").size(),
+            deck.read().nodes("//deck/ports/port").size(),
             Matchers.equalTo(2)
         );
         MatcherAssert.assertThat(
-            deck.read().nodes("//memo/domains/domain").size(),
+            deck.read().nodes("//deck/domains/domain").size(),
             Matchers.equalTo(2)
         );
     }
@@ -102,7 +102,7 @@ public final class ReadConfigTest {
         final Deck deck = new MkDeck();
         deck.update(
             new Directives()
-                .xpath("/memo")
+                .xpath("/deck")
                 .add("uri").set("git://github.com/thindeck/test.git")
         );
         return deck;

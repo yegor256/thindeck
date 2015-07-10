@@ -80,7 +80,7 @@ public final class TkAddDeck implements Take {
         final Deck deck = decks.get(name);
         try {
             deck.update(
-                new Directives().xpath("/memo").addIf("uri").set(uri)
+                new Directives().xpath("/deck").addIf("uri").set(uri)
             );
         } catch (final IOException ex) {
             throw new RsFailure(ex);

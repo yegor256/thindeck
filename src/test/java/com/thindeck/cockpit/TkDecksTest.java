@@ -31,7 +31,7 @@ package com.thindeck.cockpit;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import com.thindeck.api.Base;
-import com.thindeck.api.mock.MkBase;
+import com.thindeck.mock.MkBase;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.takes.facets.auth.RqWithAuth;

@@ -27,18 +27,26 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.mock;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.log.Logger;
+import com.jcabi.xml.StrictXML;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import com.thindeck.api.Deck;
-import com.thindeck.api.Decks;
+import com.thindeck.api.Events;
+import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.CharEncoding;
+import org.xembly.Directive;
+import org.xembly.Xembler;
 
 /**
- * Mock of {@link com.thindeck.api.Decks}.
+ * Mock of {@link com.thindeck.api.Deck}.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
@@ -47,26 +55,74 @@ import lombok.ToString;
 @Immutable
 @ToString
 @EqualsAndHashCode
-public final class MkDecks implements Decks {
+public final class MkDeck implements Deck {
 
-    @Override
-    public Deck get(final String name) throws IOException {
-        return new MkDeck();
+    /**
+     * File path.
+     */
+    private final transient String path;
+
+    /**
+     * Ctor.
+     * @throws IOException If fails
+     */
+    public MkDeck() throws IOException {
+        this(MkDeck.temp());
+    }
+
+    /**
+     * Ctor.
+     * @param file File to use for XML
+     */
+    public MkDeck(final File file) {
+        this.path = file.getAbsolutePath();
     }
 
     @Override
-    public void add(final String name) {
-        // nothing
+    public String name() {
+        return "test";
     }
 
     @Override
-    public void delete(final String name) throws IOException {
-        // nothing
+    public XML read() throws IOException {
+        return new StrictXML(
+            new XMLDocument(new File(this.path)),
+            Deck.SCHEMA
+        );
     }
 
     @Override
-    public Iterable<Deck> iterate() throws IOException {
-        return Collections.<Deck>singleton(new MkDeck());
+    public void update(final Iterable<Directive> dirs) throws IOException {
+        FileUtils.write(
+            new File(this.path),
+            new StrictXML(
+                new XMLDocument(
+                    new Xembler(dirs).applyQuietly(this.read().node())
+                ),
+                Deck.SCHEMA
+            ).toString(),
+            CharEncoding.UTF_8
+        );
+        Logger.info(
+            this, "deck saved to %s (%d bytes)", this.path,
+            new File(this.path).length()
+        );
     }
 
+    @Override
+    public Events events() {
+        return new MkEvents();
+    }
+
+    /**
+     * Create temp file.
+     * @return Temp file with XML
+     * @throws IOException If fails
+     */
+    private static File temp() throws IOException {
+        final File file = File.createTempFile("thindeck-", ".xml");
+        FileUtils.write(file, "<deck/>");
+        FileUtils.forceDeleteOnExit(file);
+        return file;
+    }
 }

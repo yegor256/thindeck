@@ -47,9 +47,9 @@
             </a>
             <xsl:text>)</xsl:text>
         </p>
-        <xsl:apply-templates select="memo"/>
+        <xsl:apply-templates select="deck"/>
     </xsl:template>
-    <xsl:template match="memo">
+    <xsl:template match="deck">
         <p>
             <xsl:text>URI: </xsl:text>
             <xsl:value-of select="uri"/>

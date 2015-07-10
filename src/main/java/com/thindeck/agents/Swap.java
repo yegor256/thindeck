@@ -49,9 +49,9 @@ public final class Swap implements Agent {
     public void exec(final Deck deck) throws IOException {
         deck.update(
             new Directives()
-                .xpath("/memo/containers/container[@type='green']")
+                .xpath("/deck/containers/container[@type='green']")
                 .push()
-                .xpath("/memo/containers/container[@type='blue']")
+                .xpath("/deck/containers/container[@type='blue']")
                 // @checkstyle MultipleStringLiteralsCheck (1 line)
                 .attr("type", "green")
                 .pop()

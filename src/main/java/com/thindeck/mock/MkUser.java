@@ -27,53 +27,34 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
+package com.thindeck.mock;
 
-import com.jcabi.matchers.XhtmlMatchers;
-import com.thindeck.api.Deck;
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.xembly.Directives;
+import com.jcabi.aspects.Immutable;
+import com.thindeck.api.Decks;
+import com.thindeck.api.User;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Test case for {@link MkDeck}.
+ * Mock of {@link User}.
  *
- * @author Carlos Miranda (miranda.cma@gmail.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.3
+ * @since 0.4
  */
-public final class MkDeckTest {
+@Immutable
+@ToString
+@EqualsAndHashCode
+public final class MkUser implements User {
 
-    /**
-     * MkDeck can accept info about domain configuration.
-     * @throws IOException If an IO error gets thrown
-     */
-    @Test
-    public void acceptsDomainDefinition() throws IOException {
-        final Deck ctx = new MkDeck();
-        final String domain = "test.thindeck.com";
-        final int first = 80;
-        final int second = 8080;
-        ctx.update(
-            new Directives()
-                .xpath("/memo")
-                .addIf("domains")
-                .addIf("domain").set(domain).up().up()
-                .addIf("ports")
-                // @checkstyle MultipleStringLiterals (2 lines)
-                .add("port").set(String.valueOf(first)).up()
-                .add("port").set(String.valueOf(second)).up()
-        );
-        MatcherAssert.assertThat(
-            ctx.read(),
-            XhtmlMatchers.hasXPaths(
-                String.format("//memo/domains/domain[.='%s']", domain),
-                // @checkstyle MultipleStringLiterals (2 lines)
-                String.format("//memo/ports/port[.='%d']", first),
-                String.format("//memo/ports/port[.='%d']", second)
-            )
-        );
+    @Override
+    public String name() {
+        return "test";
+    }
+
+    @Override
+    public Decks decks() {
+        return new MkDecks();
     }
 
 }

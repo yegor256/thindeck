@@ -51,8 +51,8 @@ public final class FindTanks implements Agent {
         if (deck.read().nodes("//tanks/tank").isEmpty()) {
             deck.update(
                 new Directives()
-                    .xpath("/memo/tanks/tank").remove()
-                    .xpath("/memo").addIf("tanks")
+                    .xpath("/deck/tanks/tank").remove()
+                    .xpath("/deck").addIf("tanks")
                     .add("tank").set("t1.thindeck.com")
             );
             Logger.info(this, "one tank t1.thindeck.com found");

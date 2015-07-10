@@ -45,11 +45,11 @@ import org.xembly.Directive;
  * {@link #update(java.lang.Iterable)}.
  *
  * <p>Deck is an XML document with data about the current
- * state of the deck. A memo can contain, for example, the
+ * state of the deck. A deck can contain, for example, the
  * list of Docker containers that are running the deck at
  * the moment.
  *
- * <p>Full description of what information a memo should (and can)
+ * <p>Full description of what information a deck should (and can)
  * include you can get from its XSD schema.
  *
  * <p>Deck should not guarantee any thread-safety. It is assumed

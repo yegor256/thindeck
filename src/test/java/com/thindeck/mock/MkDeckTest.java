@@ -27,12 +27,53 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.thindeck.mock;
+
+import com.jcabi.matchers.XhtmlMatchers;
+import com.thindeck.api.Deck;
+import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.xembly.Directives;
 
 /**
- * API mock implementation tests.
+ * Test case for {@link MkDeck}.
  *
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.3
  */
-package com.thindeck.api.mock;
+public final class MkDeckTest {
+
+    /**
+     * MkDeck can accept info about domain configuration.
+     * @throws IOException If an IO error gets thrown
+     */
+    @Test
+    public void acceptsDomainDefinition() throws IOException {
+        final Deck ctx = new MkDeck();
+        final String domain = "test.thindeck.com";
+        final int first = 80;
+        final int second = 8080;
+        ctx.update(
+            new Directives()
+                .xpath("/deck")
+                .addIf("domains")
+                .addIf("domain").set(domain).up().up()
+                .addIf("ports")
+                // @checkstyle MultipleStringLiterals (2 lines)
+                .add("port").set(String.valueOf(first)).up()
+                .add("port").set(String.valueOf(second)).up()
+        );
+        MatcherAssert.assertThat(
+            ctx.read(),
+            XhtmlMatchers.hasXPaths(
+                String.format("//deck/domains/domain[.='%s']", domain),
+                // @checkstyle MultipleStringLiterals (2 lines)
+                String.format("//deck/ports/port[.='%d']", first),
+                String.format("//deck/ports/port[.='%d']", second)
+            )
+        );
+    }
+
+}

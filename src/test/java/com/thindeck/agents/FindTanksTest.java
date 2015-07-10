@@ -32,7 +32,7 @@ package com.thindeck.agents;
 import com.jcabi.matchers.XhtmlMatchers;
 import com.thindeck.agents.tanks.FindTanks;
 import com.thindeck.api.Deck;
-import com.thindeck.api.mock.MkDeck;
+import com.thindeck.mock.MkDeck;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -57,7 +57,7 @@ public final class FindTanksTest {
         agent.exec(deck);
         MatcherAssert.assertThat(
             deck.read(),
-            XhtmlMatchers.hasXPaths("/memo/tanks/tank")
+            XhtmlMatchers.hasXPaths("/deck/tanks/tank")
         );
     }
 

@@ -32,7 +32,7 @@ package com.thindeck.agents;
 import com.jcabi.aspects.Tv;
 import com.jcabi.matchers.XhtmlMatchers;
 import com.thindeck.api.Deck;
-import com.thindeck.api.mock.MkDeck;
+import com.thindeck.mock.MkDeck;
 import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
@@ -57,7 +57,7 @@ public final class SwapTest {
         final Agent agent = new Swap();
         final Deck deck = new MkDeck();
         deck.update(
-            new Directives().xpath("/memo").addIf("containers")
+            new Directives().xpath("/deck").addIf("containers")
                 .add("container").attr("type", "green")
                 .add("cid")
                 .set(StringUtils.repeat('a', 1 << Tv.SIX))
@@ -71,8 +71,8 @@ public final class SwapTest {
         MatcherAssert.assertThat(
             deck.read(),
             XhtmlMatchers.hasXPaths(
-                "/memo/containers[count(container)=1]",
-                "/memo/containers/container[@type='blue']"
+                "/deck/containers[count(container)=1]",
+                "/deck/containers/container[@type='blue']"
             )
         );
     }

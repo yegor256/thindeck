@@ -32,7 +32,7 @@ package com.thindeck.agents;
 import com.thindeck.agents.lb.LoadBalancer;
 import com.thindeck.agents.lb.UpdateLB;
 import com.thindeck.api.Deck;
-import com.thindeck.api.mock.MkDeck;
+import com.thindeck.mock.MkDeck;
 import java.io.IOException;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -48,7 +48,7 @@ import org.xembly.Directives;
 public final class UpdateLBTest {
 
     /**
-     * FindTanks can update load balancer configuration from memo.
+     * FindTanks can update load balancer configuration from deck.
      * @throws IOException If fails
      */
     @Test
@@ -67,7 +67,7 @@ public final class UpdateLBTest {
         // @checkstyle MultipleStringLiterals (30 lines)
         deck.update(
             new Directives()
-                .xpath("/memo")
+                .xpath("/deck")
                 .addIf("domains")
                 .addIf("domain").set(domain).up().up()
                 .addIf("ports")

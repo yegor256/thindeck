@@ -56,7 +56,7 @@ public final class DockerStop implements Agent {
     public void exec(final Deck deck) throws IOException {
         final XML xml = deck.read();
         final Collection<XML> blue = xml.nodes(
-            "/memo/containers/container[@type='blue']"
+            "/deck/containers/container[@type='blue']"
         );
         for (final XML node : blue) {
             DockerStop.stop(deck, node);
@@ -84,7 +84,7 @@ public final class DockerStop implements Agent {
         );
         deck.update(
             new Directives().xpath(
-                String.format("/memo/containers/container[cid='%s']", cid)
+                String.format("/deck/containers/container[cid='%s']", cid)
             ).remove()
         );
         Logger.info(DockerStop.class, "container %s terminated", cid);

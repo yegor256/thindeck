@@ -89,7 +89,7 @@ final class DyDeck implements Deck {
     /**
      * Deck.
      */
-    public static final String ATTR_MEMO = "memo";
+    public static final String ATTR_MEMO = "deck";
 
     /**
      * Region.

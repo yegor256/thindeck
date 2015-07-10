@@ -27,34 +27,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.api.mock;
-
-import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Decks;
-import com.thindeck.api.User;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
- * Mock of {@link User}.
+ * Mock classes.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.1
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkUser implements User {
-
-    @Override
-    public String name() {
-        return "test";
-    }
-
-    @Override
-    public Decks decks() {
-        return new MkDecks();
-    }
-
-}
+package com.thindeck.mock;

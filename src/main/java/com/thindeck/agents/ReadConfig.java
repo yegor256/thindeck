@@ -68,7 +68,7 @@ public final class ReadConfig implements Agent {
 
     @Override
     public void exec(final Deck deck) throws IOException {
-        final String uri = deck.read().xpath("/memo/uri/text()").get(0);
+        final String uri = deck.read().xpath("/deck/uri/text()").get(0);
         final Repo rpo = this.github.repos().get(
             new Coordinates.Simple(
                 URI.create(uri).getPath()
@@ -83,19 +83,19 @@ public final class ReadConfig implements Agent {
             )
         ).get();
         final Directives dirs = new Directives()
-            .xpath("/memo").addIf("domains");
+            .xpath("/deck").addIf("domains");
         for (final String domain
             : content.xpath("//entry[@key='domains']/item/text()")) {
-            dirs.xpath(String.format("/memo/domains/domain[.='%s']", domain))
+            dirs.xpath(String.format("/deck/domains/domain[.='%s']", domain))
                 .remove();
-            dirs.xpath("/memo/domains").add("domain").set(domain);
+            dirs.xpath("/deck/domains").add("domain").set(domain);
         }
         dirs.up().up().addIf("ports");
         for (final String port
             : content.xpath("//entry[@key='ports']/item/text()")) {
-            dirs.xpath(String.format("/memo/ports/port[.='%s']", port))
+            dirs.xpath(String.format("/deck/ports/port[.='%s']", port))
                 .remove();
-            dirs.xpath("/memo/ports").add("port").set(port);
+            dirs.xpath("/deck/ports").add("port").set(port);
         }
         deck.update(dirs);
     }

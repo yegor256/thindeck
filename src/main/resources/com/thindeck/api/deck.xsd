@@ -84,7 +84,7 @@
             </xs:element>
         </xs:all>
     </xs:complexType>
-    <xs:element name="memo">
+    <xs:element name="deck">
         <xs:complexType>
             <xs:all>
                 <xs:element name="uri" type="xs:anyURI" minOccurs="0"/>
