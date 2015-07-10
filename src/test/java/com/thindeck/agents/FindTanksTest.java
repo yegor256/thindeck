@@ -56,7 +56,7 @@ public final class FindTanksTest {
         final Deck deck = new MkDeck();
         agent.exec(deck);
         MatcherAssert.assertThat(
-            deck.memo().read(),
+            deck.read(),
             XhtmlMatchers.hasXPaths("/memo/tanks/tank")
         );
     }

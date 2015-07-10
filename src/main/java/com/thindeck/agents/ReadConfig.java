@@ -68,7 +68,7 @@ public final class ReadConfig implements Agent {
 
     @Override
     public void exec(final Deck deck) throws IOException {
-        final String uri = deck.memo().read().xpath("/memo/uri/text()").get(0);
+        final String uri = deck.read().xpath("/memo/uri/text()").get(0);
         final Repo rpo = this.github.repos().get(
             new Coordinates.Simple(
                 URI.create(uri).getPath()
@@ -97,6 +97,6 @@ public final class ReadConfig implements Agent {
                 .remove();
             dirs.xpath("/memo/ports").add("port").set(port);
         }
-        deck.memo().update(dirs);
+        deck.update(dirs);
     }
 }

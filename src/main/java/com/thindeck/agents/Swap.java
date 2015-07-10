@@ -47,7 +47,7 @@ public final class Swap implements Agent {
 
     @Override
     public void exec(final Deck deck) throws IOException {
-        deck.memo().update(
+        deck.update(
             new Directives()
                 .xpath("/memo/containers/container[@type='green']")
                 .push()

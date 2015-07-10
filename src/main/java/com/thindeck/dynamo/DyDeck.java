@@ -30,12 +30,22 @@
 package com.thindeck.dynamo;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.AttributeUpdates;
+import com.jcabi.dynamo.Item;
+import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
+import com.jcabi.xml.StrictXML;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
+import com.jcabi.xml.XSL;
+import com.jcabi.xml.XSLDocument;
 import com.thindeck.api.Deck;
 import com.thindeck.api.Events;
-import com.thindeck.api.Memo;
+import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.xembly.Directive;
+import org.xembly.Xembler;
 
 /**
  * Dynamo implementation of {@link com.thindeck.api.Deck}.
@@ -48,6 +58,13 @@ import lombok.ToString;
 @Immutable
 @EqualsAndHashCode(of = { "region", "user", "deck" })
 final class DyDeck implements Deck {
+
+    /**
+     * Clean-up XSL.
+     */
+    private static final XSL CLEANUP = XSLDocument.make(
+        DyDeck.class.getResourceAsStream("cleanup.xsl")
+    );
 
     /**
      * Table name.
@@ -70,7 +87,7 @@ final class DyDeck implements Deck {
     public static final String ATTR_UPDATED = "updated";
 
     /**
-     * Memo.
+     * Deck.
      */
     public static final String ATTR_MEMO = "memo";
 
@@ -107,12 +124,47 @@ final class DyDeck implements Deck {
     }
 
     @Override
-    public Memo memo() {
-        return new DyMemo(this.region, this.user, this.deck);
+    public XML read() throws IOException {
+        return new StrictXML(
+            DyDeck.CLEANUP.transform(
+                new XMLDocument(this.item().get(DyDeck.ATTR_MEMO).getS())
+            ),
+            Deck.SCHEMA
+        );
+    }
+
+    @Override
+    public void update(final Iterable<Directive> dirs) throws IOException {
+        this.item().put(
+            new AttributeUpdates().with(
+                DyDeck.ATTR_MEMO,
+                new XMLDocument(
+                    new Xembler(dirs).applyQuietly(this.read().node())
+                ).toString()
+            )
+        );
     }
 
     @Override
     public Events events() {
         return new DyEvents(this.region, this.name());
+    }
+
+    /**
+     * Item.
+     * @return Item
+     */
+    private Item item() {
+        return this.region
+            .table(DyDeck.TBL)
+            .frame()
+            .through(
+                new QueryValve()
+                    .withLimit(1)
+                    .withAttributesToGet(DyDeck.ATTR_UPDATED, DyDeck.ATTR_MEMO)
+            )
+            .where(DyDeck.HASH, this.user)
+            .where(DyDeck.RANGE, this.deck)
+            .iterator().next();
     }
 }

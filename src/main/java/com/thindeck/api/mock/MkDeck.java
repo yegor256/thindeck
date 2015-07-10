@@ -30,12 +30,20 @@
 package com.thindeck.api.mock;
 
 import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Events;
-import com.thindeck.api.Memo;
+import com.jcabi.log.Logger;
+import com.jcabi.xml.StrictXML;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import com.thindeck.api.Deck;
+import com.thindeck.api.Events;
+import java.io.File;
 import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.CharEncoding;
+import org.xembly.Directive;
+import org.xembly.Xembler;
 
 /**
  * Mock of {@link com.thindeck.api.Deck}.
@@ -50,16 +58,24 @@ import lombok.ToString;
 public final class MkDeck implements Deck {
 
     /**
-     * Memo.
+     * File path.
      */
-    private final transient Memo mmo;
+    private final transient String path;
 
     /**
      * Ctor.
      * @throws IOException If fails
      */
     public MkDeck() throws IOException {
-        this.mmo = new MkMemo();
+        this(MkDeck.temp());
+    }
+
+    /**
+     * Ctor.
+     * @param file File to use for XML
+     */
+    public MkDeck(final File file) {
+        this.path = file.getAbsolutePath();
     }
 
     @Override
@@ -68,12 +84,45 @@ public final class MkDeck implements Deck {
     }
 
     @Override
-    public Memo memo() {
-        return this.mmo;
+    public XML read() throws IOException {
+        return new StrictXML(
+            new XMLDocument(new File(this.path)),
+            Deck.SCHEMA
+        );
+    }
+
+    @Override
+    public void update(final Iterable<Directive> dirs) throws IOException {
+        FileUtils.write(
+            new File(this.path),
+            new StrictXML(
+                new XMLDocument(
+                    new Xembler(dirs).applyQuietly(this.read().node())
+                ),
+                Deck.SCHEMA
+            ).toString(),
+            CharEncoding.UTF_8
+        );
+        Logger.info(
+            this, "memo saved to %s (%d bytes)", this.path,
+            new File(this.path).length()
+        );
     }
 
     @Override
     public Events events() {
         return new MkEvents();
+    }
+
+    /**
+     * Create temp file.
+     * @return Temp file with XML
+     * @throws IOException If fails
+     */
+    private static File temp() throws IOException {
+        final File file = File.createTempFile("thindeck-", ".xml");
+        FileUtils.write(file, "<memo/>");
+        FileUtils.forceDeleteOnExit(file);
+        return file;
     }
 }

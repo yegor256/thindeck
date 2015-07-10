@@ -58,12 +58,12 @@ public final class ReadConfigTest {
      * @throws Exception If something goes wrong
      */
     @Test
-    public void fetchesDeckConfigAndUpdatesMemo() throws Exception {
+    public void fetchesDeckConfigAndUpdatesDeck() throws Exception {
         final Deck deck = ReadConfigTest.deck();
         final Agent agent = new ReadConfig(ReadConfigTest.github());
         agent.exec(deck);
         MatcherAssert.assertThat(
-            deck.memo().read(),
+            deck.read(),
             XhtmlMatchers.hasXPaths(
                 "//memo/domains/domain[.='example.com']",
                 "//memo/domains/domain[.='test.example.com']",
@@ -84,11 +84,11 @@ public final class ReadConfigTest {
         agent.exec(deck);
         agent.exec(deck);
         MatcherAssert.assertThat(
-            deck.memo().read().nodes("//memo/ports/port").size(),
+            deck.read().nodes("//memo/ports/port").size(),
             Matchers.equalTo(2)
         );
         MatcherAssert.assertThat(
-            deck.memo().read().nodes("//memo/domains/domain").size(),
+            deck.read().nodes("//memo/domains/domain").size(),
             Matchers.equalTo(2)
         );
     }
@@ -100,7 +100,7 @@ public final class ReadConfigTest {
      */
     private static Deck deck() throws IOException {
         final Deck deck = new MkDeck();
-        deck.memo().update(
+        deck.update(
             new Directives()
                 .xpath("/memo")
                 .add("uri").set("git://github.com/thindeck/test.git")

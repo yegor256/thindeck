@@ -82,14 +82,6 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="version">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="green"/>
-                        <xs:enumeration value="blue"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
         </xs:all>
     </xs:complexType>
     <xs:element name="memo">

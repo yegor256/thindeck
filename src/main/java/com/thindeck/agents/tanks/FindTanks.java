@@ -48,8 +48,8 @@ public final class FindTanks implements Agent {
 
     @Override
     public void exec(final Deck deck) throws IOException {
-        if (deck.memo().read().nodes("//tanks/tank").isEmpty()) {
-            deck.memo().update(
+        if (deck.read().nodes("//tanks/tank").isEmpty()) {
+            deck.update(
                 new Directives()
                     .xpath("/memo/tanks/tank").remove()
                     .xpath("/memo").addIf("tanks")

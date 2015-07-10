@@ -30,28 +30,28 @@
 package com.thindeck.api.mock;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import com.thindeck.api.Memo;
+import com.thindeck.api.Deck;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.xembly.Directives;
 
 /**
- * Test case for {@link MkMemo}.
+ * Test case for {@link MkDeck}.
  *
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  * @since 0.3
  */
-public final class MkMemoTest {
+public final class MkDeckTest {
 
     /**
-     * MkMemo can accept info about domain configuration.
+     * MkDeck can accept info about domain configuration.
      * @throws IOException If an IO error gets thrown
      */
     @Test
     public void acceptsDomainDefinition() throws IOException {
-        final Memo ctx = new MkMemo();
+        final Deck ctx = new MkDeck();
         final String domain = "test.thindeck.com";
         final int first = 80;
         final int second = 8080;

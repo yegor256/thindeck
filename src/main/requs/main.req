@@ -1,6 +1,6 @@
 :UC1 is implemented.
 UC1 where User (a user) deploys Application (an app):
-  1. The user creates Decksitory (a deck);
+  1. The user creates Deck (a deck);
   2. The deck launches the app;
   3. The user reads the deck;
   4. The user updates the deck;
@@ -8,7 +8,7 @@ UC1 where User (a user) deploys Application (an app):
   6. The user pays for the deck.
 
 :UC2 is implemented.
-UC2 where Decksitory (a deck) launches Application (an app):
+UC2 where Deck (a deck) launches Application (an app):
   1. The deck creates Deployment (a deployment);
   2. The deployment executes the app;
   3. The deck deletes the deployment
@@ -27,7 +27,7 @@ UC2.3 where Deployment (a deployment) executes Application (an app):
   5. The server deletes the container;
   6. The cloud deletes the server.
 
-UC6 where User (a user) pays for Decksitory (a deck):
+UC6 where User (a user) pays for Deck (a deck):
   1. The deck updates the user
     "decreasing his balance, every hour according to
     invoices of containers of deployments of decksitory";
@@ -46,15 +46,15 @@ UC10.1 where Visitor (a visitor) utilizes Application (an app):
 
 User is "a person who uses or wants to use hosting and is identified
 by the system (logged in)". User is an actor. User includes:
-  deck-s? as Decksitory!,
+  deck-s? as Deck!,
   URN as "a unique identifier of itself, for example urn:github:526301",
   authTokens as "a list of auth tokens to each auth provider the
     user connected to, e.g., Google, Facebook, etc.",
   balance as "amount of money available, can be stored as
     integer number of cents".
 
-Decksitory is "a local copy of files and folders being pulled every
-  5 minutes from some remote source". Decksitory includes:
+Deck is "a local copy of files and folders being pulled every
+  5 minutes from some remote source". Deck includes:
   name as "a unique name of the deck in user's account",
   coordinates as "URI with user/password where sources can be found",
   deployment-s? as Deployment!,
@@ -65,14 +65,14 @@ Decksitory is "a local copy of files and folders being pulled every
   port-s as "a 16-bit number that identifies a network port
     for the establishment of host-to-host connectivity".
 
-Deployment is "a deployed and working instance of Decksitory". Deployment
+Deployment is "a deployed and working instance of Deck". Deployment
   includes:
   container-s as Container! "the number of containers should be
     modified in runtime according to the current CPU load of existing
     containers.".
 
 Container is "a virtual operating system running user's
-  applications build from Decksitory. Virtualization technology
+  applications build from Deck. Virtualization technology
   a) must be open source or free, so that we avoid license costs,
   b) must be mature product that is currently supported,
   c) must provide full file system and network isolation,
@@ -108,4 +108,4 @@ PayPal includes:
   credentials as "secret data for payment authorization".
 
 Application is "a custom sofware application packaged inside
-  Decksitory and executed in a Container".
+  Deck and executed in a Container".

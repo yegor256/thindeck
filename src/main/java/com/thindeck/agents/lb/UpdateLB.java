@@ -71,7 +71,7 @@ public final class UpdateLB implements Agent {
 
     @Override
     public void exec(final Deck deck) throws IOException {
-        final XML memo = deck.memo().read();
+        final XML memo = deck.read();
         final List<String> domains = memo.xpath("/memo/domains/domain/text()");
         final List<String> ports = memo.xpath("/memo/ports/port/text()");
         for (final XML container : memo.nodes("/memo/containers/container")) {

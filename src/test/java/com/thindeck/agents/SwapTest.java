@@ -56,7 +56,7 @@ public final class SwapTest {
     public void swapsGreenAndBlueContainers() throws IOException {
         final Agent agent = new Swap();
         final Deck deck = new MkDeck();
-        deck.memo().update(
+        deck.update(
             new Directives().xpath("/memo").addIf("containers")
                 .add("container").attr("type", "green")
                 .add("cid")
@@ -69,7 +69,7 @@ public final class SwapTest {
         );
         agent.exec(deck);
         MatcherAssert.assertThat(
-            deck.memo().read(),
+            deck.read(),
             XhtmlMatchers.hasXPaths(
                 "/memo/containers[count(container)=1]",
                 "/memo/containers/container[@type='blue']"

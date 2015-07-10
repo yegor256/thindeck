@@ -65,7 +65,7 @@ public final class UpdateLBTest {
         final int firstout = 32667;
         final int secondout = 32668;
         // @checkstyle MultipleStringLiterals (30 lines)
-        deck.memo().update(
+        deck.update(
             new Directives()
                 .xpath("/memo")
                 .addIf("domains")

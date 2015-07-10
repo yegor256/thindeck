@@ -54,7 +54,7 @@ public final class DockerStop implements Agent {
 
     @Override
     public void exec(final Deck deck) throws IOException {
-        final XML xml = deck.memo().read();
+        final XML xml = deck.read();
         final Collection<XML> blue = xml.nodes(
             "/memo/containers/container[@type='blue']"
         );
@@ -82,7 +82,7 @@ public final class DockerStop implements Agent {
                 String.format("rm -rf %s", SSH.escape(dir))
             )
         );
-        deck.memo().update(
+        deck.update(
             new Directives().xpath(
                 String.format("/memo/containers/container[cid='%s']", cid)
             ).remove()

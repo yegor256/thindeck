@@ -55,7 +55,7 @@ public final class DockerRun implements Agent {
 
     @Override
     public void exec(final Deck deck) throws IOException {
-        final XML xml = deck.memo().read();
+        final XML xml = deck.read();
         final Collection<String> tanks = xml.xpath("/memo/tanks/tank/text()");
         for (final String tank : tanks) {
             DockerRun.run(
@@ -103,7 +103,7 @@ public final class DockerRun implements Agent {
                 ":"
             )
         );
-        deck.memo().update(
+        deck.update(
             new Directives().xpath("/memo").addIf("containers")
                 .add("container").attr("type", "blue")
                 .add("cid").set(cid).up()

@@ -30,15 +30,32 @@
 package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XSD;
+import com.jcabi.xml.XSDDocument;
 import java.io.IOException;
 import javax.validation.constraints.NotNull;
+import org.xembly.Directive;
 
 /**
- * Decksitory.
+ * Deck.
  *
- * <p>Decksitory is a configurable deployment of sources
- * to Docker containers. Decksitory should be configured through
- * {@link #memo()}.
+ * <p>Deck is a configurable deployment of sources
+ * to Docker containers. Deck should be configured through
+ * {@link #update(java.lang.Iterable)}.
+ *
+ * <p>Deck is an XML document with data about the current
+ * state of the deck. A memo can contain, for example, the
+ * list of Docker containers that are running the deck at
+ * the moment.
+ *
+ * <p>Full description of what information a memo should (and can)
+ * include you can get from its XSD schema.
+ *
+ * <p>Deck should not guarantee any thread-safety. It is assumed
+ * that the client calls {@link #read()} and {@link #update(Iterable)}
+ * methods consequently. If two threads will update in parallel,
+ * the result may be unpredictable.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
@@ -46,6 +63,13 @@ import javax.validation.constraints.NotNull;
  */
 @Immutable
 public interface Deck {
+
+    /**
+     * Schema.
+     */
+    XSD SCHEMA = XSDDocument.make(
+        Deck.class.getResourceAsStream("deck.xsd")
+    );
 
     /**
      * Name, unique.
@@ -60,12 +84,27 @@ public interface Deck {
     String name() throws IOException;
 
     /**
-     * Memo.
-     * @return Memo
+     * Read XML.
+     *
+     * <p>The method must guarantee that the XML document it
+     * returns complies to the XSD schema.
+     *
+     * @return XML
      * @throws IOException If fails
      */
-    @NotNull(message = "memo can't be null")
-    Memo memo() throws IOException;
+    @NotNull(message = "XML can't be null")
+    XML read() throws IOException;
+
+    /**
+     * Update.
+     *
+     * <p>The method must throw a runtime exception if,
+     * after applying the changes to the XML, it violates the XSD schema.
+     *
+     * @param dirs Directives
+     * @throws IOException If fails
+     */
+    void update(Iterable<Directive> dirs) throws IOException;
 
     /**
      * Get events.

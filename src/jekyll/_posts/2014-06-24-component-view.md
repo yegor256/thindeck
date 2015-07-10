@@ -37,7 +37,7 @@ during the design of Thindeck:
 There is a number of technical concepts (full list of them
 is in [JavaDoc](/apidocs-${project.version}/com/thindeck/api/index.html)):
 
- * [**Decksitory**](/apidocs-${project.version}/com/thindeck/api/Deck.html) is
+ * [**Deck**](/apidocs-${project.version}/com/thindeck/api/Deck.html) is
    an entity that knows where the sources are and continuously deploys them.
 
  * [**Task**](/apidocs-${project.version}/com/thindeck/api/Task.html) is

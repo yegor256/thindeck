@@ -77,7 +77,7 @@ public final class TkIndex implements Take {
             req,
             new XeLink("log", home.path("log")),
             new XeDirectives(
-                Directives.copyOf(deck.memo().read().node())
+                Directives.copyOf(deck.read().node())
             ),
             new XeAppend(
                 "deck",
