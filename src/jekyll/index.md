@@ -24,7 +24,7 @@ Thindeck is a Platform as a Service (PaaS) cloud service that features:
  * built-in load balancing
 
 To start working with Thindeck,
-go to [www.thindeck.com](http://www.thindeck.com), create a decksitory
+go to [www.thindeck.com](http://www.thindeck.com), create a deck
 and follow the instructions.
 
 There are two sections in the documentation, which are

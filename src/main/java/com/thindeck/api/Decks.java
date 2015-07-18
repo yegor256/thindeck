@@ -58,9 +58,9 @@ public interface Decks {
     Deck get(String name) throws IOException;
 
     /**
-     * Add a new decksitory.
+     * Add a new deck.
      *
-     * <p>The method should throw a runtime exception if a decksitory
+     * <p>The method should throw a runtime exception if a deck
      * with this name already exists.
      *
      * @param name Unique name
@@ -69,9 +69,9 @@ public interface Decks {
     void add(String name) throws IOException;
 
     /**
-     * Delete a decksitory.
+     * Delete a deck.
      *
-     * <p>The method should throw a runtime exception if a decksitory
+     * <p>The method should throw a runtime exception if a deck
      * with this name is absent.
      *
      * @param name Unique name

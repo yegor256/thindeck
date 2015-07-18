@@ -69,7 +69,7 @@ public final class TkDelete implements Take {
         decks.delete(deck);
         return new RsForward(
             new RsFlash(
-                String.format("decksitory \"%s\" deleted", deck)
+                String.format("deck \"%s\" deleted", deck)
             )
         );
     }

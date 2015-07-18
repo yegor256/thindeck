@@ -35,7 +35,7 @@ Static analysis of the source code is done by
 ## Merge Pipeline
 
 Source code of all components is kept in
-[Github decksitory](https://github.com/yegor256/thindeck).
+[Github deck](https://github.com/yegor256/thindeck).
 
 Every new feature or a bug fix is developed in its own Git branch,
 and submitted for review in a pull request by its author.

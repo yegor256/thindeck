@@ -42,10 +42,10 @@ is in [JavaDoc](/apidocs-${project.version}/com/thindeck/api/index.html)):
 
  * [**Task**](/apidocs-${project.version}/com/thindeck/api/Task.html) is
    a collection of steps to be executed one-by-one
-   in order to change the situation in a decksitory (for example, to deploy it).
+   in order to change the situation in a deck (for example, to deploy it).
 
  * [**Txn**](/apidocs-${project.version}/com/thindeck/api/Txn.html) (transaction) is
-   a multi-step process of deployment a decksitory.
+   a multi-step process of deployment a deck.
 
 The system consists of the following components:
 

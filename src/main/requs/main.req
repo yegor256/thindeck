@@ -12,7 +12,7 @@ UC2 where Deck (a deck) launches Application (an app):
   1. The deck creates Deployment (a deployment);
   2. The deployment executes the app;
   3. The deck deletes the deployment
-    "every 5 minutes, if decksitory sources are updated".
+    "every 5 minutes, if deck sources are updated".
 
 UC2/1 when "several domain-s and/or port-s are equal within deck":
   1. "Notify the user via email about this";
@@ -30,7 +30,7 @@ UC2.3 where Deployment (a deployment) executes Application (an app):
 UC6 where User (a user) pays for Deck (a deck):
   1. The deck updates the user
     "decreasing his balance, every hour according to
-    invoices of containers of deployments of decksitory";
+    invoices of containers of deployments of deck";
   2. PayPal (a paypal) updates the user
     "charging his credit card and adding funds to his balance";
   3. The deck updates the user

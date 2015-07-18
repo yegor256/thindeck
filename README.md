@@ -36,7 +36,7 @@ Our unique advantages are:
 
 ## How to contribute
 
-Fork decksitory, make changes, send us a pull request. We will review
+Fork deck, make changes, send us a pull request. We will review
 your changes and apply them to the `master` branch shortly, provided
 they don't violate our quality standards. To avoid frustration, before
 sending us your pull request please run full Maven build:
