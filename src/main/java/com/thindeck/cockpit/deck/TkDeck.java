@@ -59,7 +59,8 @@ public final class TkDeck extends TkWrap {
     private static Take make(final Base base) {
         return new TkFork(
             new FkDeck("", new TkIndex(base)),
-            new FkDeck("/delete", new TkDelete(base))
+            new FkDeck("/delete", new TkDelete(base)),
+            new FkDeck("/command", new TkCommand(base))
         );
     }
 

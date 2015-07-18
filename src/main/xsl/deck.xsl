@@ -39,17 +39,27 @@
         <title><xsl:value-of select="deck/name"/></title>
     </xsl:template>
     <xsl:template match="page" mode="body">
-        <xsl:apply-templates select="deck/deck"/>
+        <xsl:apply-templates select="deck"/>
         <xsl:apply-templates select="events[event]"/>
     </xsl:template>
-    <xsl:template match="deck/deck">
+    <xsl:template match="deck">
         <p>
-            <strong><xsl:value-of select="@name"/></strong>
+            <strong><xsl:value-of select="deck/@name"/></strong>
         </p>
-        <xsl:apply-templates select="domains"/>
-        <xsl:apply-templates select="images"/>
-        <xsl:apply-templates select="containers"/>
-        <xsl:apply-templates select="tanks"/>
+        <form action="{links/link[@rel='command']/@href}" method="post">
+            <fieldset>
+                <label><xsl:text>Name:</xsl:text></label>
+                <input type="text" name="command"
+                    size="50" maxlength="1000"
+                    placeholder="tell me what to do..."/>
+                <button type="submit">Post</button>
+            </fieldset>
+        </form>
+        <xsl:apply-templates select="deck/domains"/>
+        <xsl:apply-templates select="deck/repos"/>
+        <xsl:apply-templates select="deck/images"/>
+        <xsl:apply-templates select="deck/containers"/>
+        <xsl:apply-templates select="deck/tanks"/>
     </xsl:template>
     <xsl:template match="tanks[tank]">
         <p>
@@ -69,10 +79,40 @@
             </xsl:for-each>
         </p>
     </xsl:template>
+    <xsl:template match="repos[repo]">
+        <table>
+            <tr>
+                <th>Repo</th>
+                <th>URI</th>
+            </tr>
+            <xsl:for-each select="repo">
+                <tr>
+                    <td>
+                        <xsl:attribute name="style">
+                            <xsl:text>color:</xsl:text>
+                            <xsl:choose>
+                                <xsl:when test="@type='green'">
+                                    <xsl:text>green</xsl:text>
+                                </xsl:when>
+                                <xsl:when test="@type='blue'">
+                                    <xsl:text>blue</xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>?</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:attribute>
+                        <xsl:value-of select="name"/>
+                    </td>
+                    <td><xsl:value-of select="uri"/></td>
+                </tr>
+            </xsl:for-each>
+        </table>
+    </xsl:template>
     <xsl:template match="images[image]">
         <table>
             <tr>
-                <th>Name</th>
+                <th>Image</th>
             </tr>
             <xsl:for-each select="image">
                 <tr>
@@ -100,8 +140,7 @@
     <xsl:template match="containers[container]">
         <table>
             <tr>
-                <th>CID</th>
-                <th>Ports (In/Out)</th>
+                <th>Container</th>
                 <th>Image</th>
                 <th>Tank</th>
             </tr>

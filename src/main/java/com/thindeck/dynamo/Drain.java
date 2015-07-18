@@ -63,6 +63,7 @@ final class Drain extends AppenderSkeleton {
      * Ctor.
      */
     private Drain() {
+        super();
         final Logger root = Logger.getRootLogger();
         root.addAppender(this);
         this.setLayout(new PatternLayout("%p %c %m\n"));
@@ -96,7 +97,7 @@ final class Drain extends AppenderSkeleton {
     }
 
     @Override
-    protected void append(final LoggingEvent event) {
+    public void append(final LoggingEvent event) {
         final ThreadGroup group = Thread.currentThread().getThreadGroup();
         this.buffers.putIfAbsent(group, new StringBuffer(0));
         this.buffers.get(group).append(this.layout.format(event));

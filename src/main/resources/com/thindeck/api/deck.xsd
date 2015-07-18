@@ -45,7 +45,7 @@
     <xs:complexType name="repo">
         <xs:all>
             <xs:element name="name" type="repoName"/>
-            <xs:element name="uri" type="xs:anyURI"/>
+            <xs:element name="uri" type="xs:string"/>
         </xs:all>
         <xs:attribute name="waste" type="xs:boolean" use="required"/>
         <xs:attribute name="type" use="required">
@@ -122,6 +122,10 @@
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
+                    <xs:unique name="domainName">
+                        <xs:selector xpath="./domain" />
+                        <xs:field xpath="." />
+                    </xs:unique>
                 </xs:element>
                 <xs:element name="repos" minOccurs="0">
                     <xs:complexType>

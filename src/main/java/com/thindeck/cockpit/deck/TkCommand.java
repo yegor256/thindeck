@@ -29,39 +29,32 @@
  */
 package com.thindeck.cockpit.deck;
 
-import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Tv;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
 import com.thindeck.api.Base;
-import com.thindeck.api.Deck;
-import com.thindeck.cockpit.RsPage;
+import com.thindeck.api.Decks;
+import com.thindeck.cockpit.RqUser;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.concurrent.atomic.AtomicReference;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.misc.Href;
-import org.takes.rs.xe.XeAppend;
-import org.takes.rs.xe.XeChain;
-import org.takes.rs.xe.XeDirectives;
-import org.takes.rs.xe.XeLink;
-import org.takes.rs.xe.XeSource;
-import org.takes.rs.xe.XeTransform;
+import org.takes.facets.flash.RsFlash;
+import org.takes.facets.forward.RsForward;
+import org.takes.rq.RqForm;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
 /**
- * Deck.
+ * Post a command.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.5
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
-public final class TkIndex implements Take {
+public final class TkCommand implements Take {
 
     /**
      * Base.
@@ -72,58 +65,70 @@ public final class TkIndex implements Take {
      * Ctor.
      * @param bse Base
      */
-    TkIndex(final Base bse) {
+    TkCommand(final Base bse) {
         this.base = bse;
     }
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Deck deck = new RqDeck(this.base, req).deck();
-        final Href home = new Href("/r").path(deck.name());
-        final AtomicReference<XML> xml = new AtomicReference<>();
-        deck.exec(
+        final Decks decks = new RqUser(req, this.base).get().decks();
+        final String deck = new RqDeck(this.base, req).deck().name();
+        final String cmd = new RqForm.Smart(
+            new RqForm.Base(req)
+        ).single("command");
+        decks.get(deck).exec(
             new Agent() {
                 @Override
-                public Iterable<Directive> exec(final XML doc) {
-                    xml.set(doc);
-                    return Collections.emptyList();
+                public Iterable<Directive> exec(final XML xml) {
+                    return TkCommand.answer(cmd);
                 }
             }
         );
-        return new RsPage(
-            "/xsl/deck.xsl",
-            this.base,
-            req,
-            new XeAppend(
-                "deck",
-                new XeDirectives(Directives.copyOf(xml.get().node())),
-                new XeChain(
-                    new XeLink("open", home.path("open")),
-                    new XeLink("command", home.path("command"))
-                )
-            ),
-            new XeAppend(
-                "events",
-                new XeTransform<>(
-                    Iterables.limit(
-                        deck.events().iterate(Long.MAX_VALUE),
-                        Tv.TWENTY
-                    ),
-                    new XeTransform.Func<String>() {
-                        @Override
-                        public XeSource transform(final String txt) {
-                            final String[] parts = txt.split("\n", Tv.THREE);
-                            return new XeDirectives(
-                                new Directives().add("event")
-                                    .attr("head", parts[0])
-                                    .attr("msec", parts[1])
-                                    .set(parts[2])
-                            );
-                        }
-                    }
-                )
-            )
-        );
+        return new RsForward(new RsFlash("thanks!"));
+    }
+
+    /**
+     * Process command.
+     * @param cmd Command
+     * @return Directives
+     */
+    private static Iterable<Directive> answer(final String cmd) {
+        final Directives dirs = new Directives().xpath("/deck");
+        final String[] parts = cmd.trim().split("\\s+");
+        if ("domain".equals(parts[0])) {
+            if ("add".equals(parts[1])) {
+                dirs.addIf("domains").add("domain").set(parts[2]);
+            } else if ("remove".equals(parts[1])) {
+                dirs.xpath(
+                    String.format(
+                        "domains/domain[.='%s']", parts[2]
+                    )
+                ).remove();
+            } else {
+                throw new IllegalArgumentException(
+                    String.format(
+                        "should be either 'add' or 'remove': '%s' is wrong",
+                        parts[1]
+                    )
+                );
+            }
+        } else if ("repo".equals(parts[0])) {
+            if ("put".equals(parts[1])) {
+                dirs.addIf("repos").add("repo")
+                    .attr("waste", "false")
+                    .attr("type", "blue")
+                    .add("name").set(RandomStringUtils.randomNumeric(Tv.EIGHT))
+                    .up().add("uri").set(parts[2]).up();
+            } else {
+                throw new IllegalArgumentException(
+                    String.format(
+                        "should be only 'put': '%s' is wrong",
+                        parts[1]
+                    )
+                );
+            }
+        }
+        return dirs;
     }
 
 }

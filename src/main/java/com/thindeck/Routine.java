@@ -99,6 +99,7 @@ final class Routine implements Runnable {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public void run() {
         final AtomicInteger grp = new AtomicInteger();
         final ExecutorService exec = Executors.newCachedThreadPool(

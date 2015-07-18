@@ -136,6 +136,13 @@ final class DyEvents implements Events {
 
     @Override
     public void create(final String text) throws IOException {
+        final String log = Drain.INSTANCE.fetch();
+        final String body;
+        if (log.isEmpty()) {
+            body = "no details...";
+        } else {
+            body = log;
+        }
         this.region.table(DyEvents.TBL).put(
             new Attributes()
                 .with(DyEvents.HASH, this.deck)
@@ -146,7 +153,7 @@ final class DyEvents implements Events {
                     )
                 )
                 .with(DyEvents.ATTR_HEAD, text)
-                .with(DyEvents.ATTR_TEXT, Drain.INSTANCE.fetch())
+                .with(DyEvents.ATTR_TEXT, body)
         );
     }
 }
