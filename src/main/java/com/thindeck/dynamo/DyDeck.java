@@ -122,7 +122,7 @@ final class DyDeck implements Deck {
 
     @Override
     public String name() {
-        return String.format("%s/%s", this.user, this.deck);
+        return this.deck;
     }
 
     @Override

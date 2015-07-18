@@ -65,6 +65,7 @@ final class TkAppAuth extends TkWrap {
 
     /**
      * Testing mode is ON?
+     * @checkstyle ConstantUsageCheck (4 lines)
      */
     private static final boolean TESTING =
         Manifests.read("Thindeck-DynamoKey").startsWith("AAAA");

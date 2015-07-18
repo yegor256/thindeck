@@ -70,11 +70,7 @@ public interface Deck {
     );
 
     /**
-     * Name, unique.
-     *
-     * <p>Name of the deck is unique in the entire system, which consists
-     * of user name and a name of the deck, for example "yegor256/test".
-     *
+     * Name, unique for the user.
      * @return Unique name of the deck
      * @throws IOException If fails
      */
