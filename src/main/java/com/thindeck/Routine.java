@@ -94,7 +94,6 @@ final class Routine implements Runnable {
      * @param bse Base
      */
     Routine(final Base bse) {
-        System.out.println("instance");
         this.base = bse;
         this.agents = new Array<>(Routine.all());
     }
