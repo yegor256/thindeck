@@ -72,6 +72,11 @@ final class DyEvents implements Events {
     public static final String RANGE = "msec";
 
     /**
+     * Head.
+     */
+    public static final String ATTR_HEAD = "head";
+
+    /**
      * XML.
      */
     public static final String ATTR_TEXT = "text";
@@ -115,7 +120,12 @@ final class DyEvents implements Events {
                 @Override
                 public String apply(final Item input) {
                     try {
-                        return input.get(DyEvents.ATTR_TEXT).getS();
+                        return String.format(
+                            "%s\n%s\n%s",
+                            input.get(DyEvents.ATTR_HEAD).getS(),
+                            input.get(DyEvents.RANGE).getN(),
+                            input.get(DyEvents.ATTR_TEXT).getS()
+                        );
                     } catch (final IOException ex) {
                         throw new IllegalStateException(ex);
                     }
@@ -135,7 +145,8 @@ final class DyEvents implements Events {
                         Long.toString(System.currentTimeMillis())
                     )
                 )
-                .with(DyEvents.ATTR_TEXT, text)
+                .with(DyEvents.ATTR_HEAD, text)
+                .with(DyEvents.ATTR_TEXT, Drain.INSTANCE.fetch())
         );
     }
 }

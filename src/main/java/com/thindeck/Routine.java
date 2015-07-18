@@ -91,20 +91,16 @@ final class Routine implements Runnable {
 
     @Override
     public void run() {
-        int total = 0;
         for (final Deck deck : this.decks()) {
-            for (final Agent agent : this.agents) {
-                try {
-                    this.exec(deck, agent);
-                } catch (final IOException ex) {
-                    throw new IllegalStateException(ex);
-                }
+            try {
+                this.exec(deck);
+            } catch (final IOException ex) {
+                throw new IllegalStateException(ex);
             }
-            ++total;
         }
         Logger.info(
-            this, "%d decks, alive for %[msec]s",
-            total, System.currentTimeMillis() - this.start
+            this, "decks done, alive for %[msec]s",
+            System.currentTimeMillis() - this.start
         );
     }
 
@@ -121,24 +117,22 @@ final class Routine implements Runnable {
     }
 
     /**
-     * Process one agent with one deck.
+     * Process one deck.
      * @param deck Deck
-     * @param agent Agent
      * @throws IOException If fails
      */
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    private void exec(final Deck deck, final Agent agent) throws IOException {
+    private void exec(final Deck deck) throws IOException {
         try {
-            deck.exec(agent);
+            for (final Agent agent : this.agents) {
+                deck.exec(agent);
+            }
+            deck.events().create("success");
             // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Throwable ex) {
-            Logger.error(
-                this, "%s failed: %s",
-                agent.getClass().getCanonicalName(),
-                ExceptionUtils.getStackTrace(ex)
-            );
+            Logger.error(this, "%s", ExceptionUtils.getStackTrace(ex));
+            deck.events().create(ex.getLocalizedMessage());
         }
-        deck.events().create(agent.getClass().getCanonicalName());
     }
 
     /**

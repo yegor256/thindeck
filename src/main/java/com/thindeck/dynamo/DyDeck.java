@@ -44,6 +44,7 @@ import com.thindeck.api.Agent;
 import com.thindeck.api.Deck;
 import com.thindeck.api.Events;
 import java.io.IOException;
+import java.util.Iterator;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.xembly.Directive;
@@ -161,7 +162,7 @@ final class DyDeck implements Deck {
      * @return Item
      */
     private Item item() {
-        return this.region
+        final Iterator<Item> items = this.region
             .table(DyDeck.TBL)
             .frame()
             .through(
@@ -171,6 +172,12 @@ final class DyDeck implements Deck {
             )
             .where(DyDeck.HASH, this.user)
             .where(DyDeck.RANGE, this.deck)
-            .iterator().next();
+            .iterator();
+        if (!items.hasNext()) {
+            throw new IllegalArgumentException(
+                String.format("deck '%s' not found", this.deck)
+            );
+        }
+        return items.next();
     }
 }

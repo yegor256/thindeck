@@ -29,6 +29,8 @@
  */
 package com.thindeck.cockpit.deck;
 
+import com.google.common.collect.Iterables;
+import com.jcabi.aspects.Tv;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
 import com.thindeck.api.Base;
@@ -45,6 +47,8 @@ import org.takes.rs.xe.XeAppend;
 import org.takes.rs.xe.XeChain;
 import org.takes.rs.xe.XeDirectives;
 import org.takes.rs.xe.XeLink;
+import org.takes.rs.xe.XeSource;
+import org.takes.rs.xe.XeTransform;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -90,15 +94,32 @@ public final class TkIndex implements Take {
             "/xsl/deck.xsl",
             this.base,
             req,
-            new XeLink("log", home.path("log")),
-            new XeDirectives(Directives.copyOf(xml.get().node())),
             new XeAppend(
                 "deck",
-                new XeDirectives(
-                    new Directives().add("name").set(deck.name())
-                ),
+                new XeDirectives(Directives.copyOf(xml.get().node())),
                 new XeChain(
                     new XeLink("open", home.path("open"))
+                )
+            ),
+            new XeAppend(
+                "events",
+                new XeTransform<>(
+                    Iterables.limit(
+                        deck.events().iterate(Long.MAX_VALUE),
+                        Tv.TWENTY
+                    ),
+                    new XeTransform.Func<String>() {
+                        @Override
+                        public XeSource transform(final String txt) {
+                            final String[] parts = txt.split("\n", Tv.THREE);
+                            return new XeDirectives(
+                                new Directives().add("event")
+                                    .attr("head", parts[0])
+                                    .attr("msec", parts[1])
+                                    .set(parts[2])
+                            );
+                        }
+                    }
                 )
             )
         );

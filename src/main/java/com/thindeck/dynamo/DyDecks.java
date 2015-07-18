@@ -97,7 +97,10 @@ final class DyDecks implements Decks {
                 .with(DyDeck.HASH, this.user)
                 .with(DyDeck.RANGE, name)
                 .with(DyDeck.ATTR_UPDATED, System.currentTimeMillis())
-                .with(DyDeck.ATTR_MEMO, "<deck/>")
+                .with(
+                    DyDeck.ATTR_MEMO,
+                    String.format("<deck name='%s/%s'/>", this.user, name)
+                )
         );
     }
 

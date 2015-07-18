@@ -39,25 +39,17 @@
         <title><xsl:value-of select="deck/name"/></title>
     </xsl:template>
     <xsl:template match="page" mode="body">
-        <p>
-            <strong><xsl:value-of select="deck/name"/></strong>
-            <xsl:text> (log is </xsl:text>
-            <a href="{links/link[@rel='log']/@href}">
-                <xsl:text>here</xsl:text>
-            </a>
-            <xsl:text>)</xsl:text>
-        </p>
-        <xsl:apply-templates select="deck"/>
+        <xsl:apply-templates select="deck/deck"/>
+        <xsl:apply-templates select="events[event]"/>
     </xsl:template>
-    <xsl:template match="deck">
+    <xsl:template match="deck/deck">
         <p>
-            <xsl:text>URI: </xsl:text>
-            <xsl:value-of select="uri"/>
+            <strong><xsl:value-of select="@name"/></strong>
         </p>
+        <xsl:apply-templates select="domains"/>
+        <xsl:apply-templates select="images"/>
         <xsl:apply-templates select="containers"/>
         <xsl:apply-templates select="tanks"/>
-        <xsl:apply-templates select="domains"/>
-        <xsl:apply-templates select="ports"/>
     </xsl:template>
     <xsl:template match="tanks[tank]">
         <p>
@@ -77,22 +69,40 @@
             </xsl:for-each>
         </p>
     </xsl:template>
-    <xsl:template match="ports[port]">
-        <p>
-            <xsl:text>Ports: </xsl:text>
-            <xsl:for-each select="port">
-                <xsl:if test="position()!=1">, </xsl:if>
-                <xsl:value-of select="."/>
+    <xsl:template match="images[image]">
+        <table>
+            <tr>
+                <th>Name</th>
+            </tr>
+            <xsl:for-each select="image">
+                <tr>
+                    <td>
+                        <xsl:attribute name="style">
+                            <xsl:text>color:</xsl:text>
+                            <xsl:choose>
+                                <xsl:when test="@type='green'">
+                                    <xsl:text>green</xsl:text>
+                                </xsl:when>
+                                <xsl:when test="@type='blue'">
+                                    <xsl:text>blue</xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>?</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:attribute>
+                        <xsl:value-of select="name"/>
+                    </td>
+                </tr>
             </xsl:for-each>
-        </p>
+        </table>
     </xsl:template>
     <xsl:template match="containers[container]">
         <table>
             <tr>
                 <th>CID</th>
-                <th>Type</th>
                 <th>Ports (In/Out)</th>
-                <th>Dir</th>
+                <th>Image</th>
                 <th>Tank</th>
             </tr>
             <xsl:for-each select="container">
@@ -112,21 +122,20 @@
                                </xsl:otherwise>
                            </xsl:choose>
                        </xsl:attribute>
-                       <xsl:value-of select="substring(cid, 0, 8)"/>
+                       <xsl:value-of select="substring(name, 0, 8)"/>
                    </td>
-                   <td><xsl:value-of select="@type"/></td>
-                   <td>
-                      <xsl:for-each select="ports/port">
-                          <xsl:value-of select="in"/>
-                          <xsl:text>/</xsl:text>
-                          <xsl:value-of select="out"/>
-                          <br/>
-                      </xsl:for-each>
-                    </td>
-                    <td><xsl:value-of select="dir"/></td>
-                    <td><xsl:value-of select="tank"/></td>
+                    <td><xsl:value-of select="image"/></td>
+                    <td><xsl:value-of select="host"/></td>
                 </tr>
             </xsl:for-each>
         </table>
+    </xsl:template>
+    <xsl:template match="events[event]">
+        <xsl:for-each select="event">
+            <p>
+                <xsl:value-of select="@head"/>
+            </p>
+            <pre><xsl:value-of select="."/></pre>
+        </xsl:for-each>
     </xsl:template>
 </xsl:stylesheet>

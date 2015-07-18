@@ -27,50 +27,32 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.cockpit.deck;
+package com.thindeck.dynamo;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.Iterables;
-import com.jcabi.aspects.Tv;
-import com.thindeck.api.Base;
-import com.thindeck.api.Deck;
-import java.io.IOException;
-import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
-import org.takes.rs.RsText;
+import com.jcabi.log.Logger;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Deck.
- *
+ * Test case for {@link Drain}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.5
  */
-public final class TkLog implements Take {
+public final class DrainTest {
 
     /**
-     * Base.
+     * Drain can accumulate logs.
+     * @throws Exception If there is some problem inside
      */
-    private final transient Base base;
-
-    /**
-     * Ctor.
-     * @param bse Base
-     */
-    TkLog(final Base bse) {
-        this.base = bse;
-    }
-
-    @Override
-    public Response act(final Request req) throws IOException {
-        final Deck deck = new RqDeck(this.base, req).deck();
-        return new RsText(
-            Joiner.on("\n").join(
-                Iterables.limit(
-                    deck.events().iterate(Long.MAX_VALUE), Tv.HUNDRED
-                )
-            )
+    @Test
+    public void accumulatesLongs() throws Exception {
+        Drain.INSTANCE.fetch();
+        Logger.info(this, "simple log line");
+        MatcherAssert.assertThat(
+            Drain.INSTANCE.fetch(),
+            Matchers.containsString("simple")
         );
     }
 

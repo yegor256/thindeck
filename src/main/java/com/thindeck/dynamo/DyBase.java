@@ -76,6 +76,7 @@ public final class DyBase implements Base {
      */
     public DyBase(final Region rgn) {
         this.region = rgn;
+        Drain.INSTANCE.fetch();
     }
 
     @Override
