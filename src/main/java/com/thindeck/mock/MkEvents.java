@@ -30,7 +30,6 @@
 package com.thindeck.mock;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.xml.XML;
 import com.thindeck.api.Events;
 import java.util.Collections;
 import lombok.EqualsAndHashCode;
@@ -49,7 +48,7 @@ import lombok.ToString;
 public final class MkEvents implements Events {
 
     @Override
-    public Iterable<XML> iterate(final int since) {
+    public Iterable<String> iterate(final long since) {
         return Collections.emptyList();
     }
 

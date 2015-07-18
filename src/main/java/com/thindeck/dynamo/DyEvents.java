@@ -29,9 +29,16 @@
  */
 package com.thindeck.dynamo;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.Attributes;
+import com.jcabi.dynamo.Item;
+import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
-import com.jcabi.xml.XML;
 import com.thindeck.api.Events;
 import java.io.IOException;
 import lombok.EqualsAndHashCode;
@@ -62,12 +69,12 @@ final class DyEvents implements Events {
     /**
      * Time of event (msec).
      */
-    public static final String RANGE = "time";
+    public static final String RANGE = "msec";
 
     /**
      * XML.
      */
-    public static final String ATTR_XML = "xml";
+    public static final String ATTR_TEXT = "text";
 
     /**
      * Region.
@@ -90,12 +97,45 @@ final class DyEvents implements Events {
     }
 
     @Override
-    public Iterable<XML> iterate(final int since) throws IOException {
-        throw new UnsupportedOperationException("#iterate()");
+    public Iterable<String> iterate(final long since) {
+        return Iterables.transform(
+            this.region.table(DyEvents.TBL)
+                .frame()
+                .through(new QueryValve())
+                .where(DyEvents.HASH, this.deck)
+                .where(
+                    DyEvents.RANGE,
+                    new Condition()
+                        .withComparisonOperator(ComparisonOperator.LE)
+                        .withAttributeValueList(
+                            new AttributeValue().withN(Long.toString(since))
+                        )
+                ),
+            new Function<Item, String>() {
+                @Override
+                public String apply(final Item input) {
+                    try {
+                        return input.get(DyEvents.ATTR_TEXT).getS();
+                    } catch (final IOException ex) {
+                        throw new IllegalStateException(ex);
+                    }
+                }
+            }
+        );
     }
 
     @Override
-    public void create(final String text) {
-        throw new UnsupportedOperationException("#create()");
+    public void create(final String text) throws IOException {
+        this.region.table(DyEvents.TBL).put(
+            new Attributes()
+                .with(DyEvents.HASH, this.deck)
+                .with(
+                    DyEvents.RANGE,
+                    new AttributeValue().withN(
+                        Long.toString(System.currentTimeMillis())
+                    )
+                )
+                .with(DyEvents.ATTR_TEXT, text)
+        );
     }
 }

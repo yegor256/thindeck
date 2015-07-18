@@ -80,7 +80,7 @@ final class Script {
                 Joiner.on(' ').join(
                     Iterables.transform(
                         args.entrySet(),
-                        new Function<Map.Entry<String,String>, String>() {
+                        new Function<Map.Entry<String, String>, String>() {
                             @Override
                             public String apply(
                                 final Map.Entry<String, String> ent) {

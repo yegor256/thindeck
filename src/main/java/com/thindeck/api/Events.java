@@ -30,7 +30,6 @@
 package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.xml.XML;
 import java.io.IOException;
 import javax.validation.constraints.NotNull;
 
@@ -51,12 +50,13 @@ public interface Events {
      * @throws IOException If fails
      */
     @NotNull(message = "list of events can't be NULL")
-    Iterable<XML> iterate(int since) throws IOException;
+    Iterable<String> iterate(long since) throws IOException;
 
     /**
      * Create new event.
      * @param text Text to use
+     * @throws IOException If fails
      */
-    void create(String text);
+    void create(String text) throws IOException;
 
 }

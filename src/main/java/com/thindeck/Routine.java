@@ -34,6 +34,7 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.ScheduleWithFixedDelay;
 import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
+import com.thindeck.agents.BuildImage;
 import com.thindeck.agents.FindTanks;
 import com.thindeck.agents.StartDocker;
 import com.thindeck.agents.StopDocker;
@@ -82,9 +83,8 @@ final class Routine implements Runnable {
     /**
      * Execute them all.
      * @param bse Base
-     * @throws IOException If fails
      */
-    Routine(final Base bse) throws IOException {
+    Routine(final Base bse) {
         this.base = bse;
         this.agents = new Array<>(Routine.all());
     }
@@ -94,7 +94,11 @@ final class Routine implements Runnable {
         int total = 0;
         for (final Deck deck : this.decks()) {
             for (final Agent agent : this.agents) {
-                this.exec(deck, agent);
+                try {
+                    this.exec(deck, agent);
+                } catch (final IOException ex) {
+                    throw new IllegalStateException(ex);
+                }
             }
             ++total;
         }
@@ -120,9 +124,10 @@ final class Routine implements Runnable {
      * Process one agent with one deck.
      * @param deck Deck
      * @param agent Agent
+     * @throws IOException If fails
      */
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    private void exec(final Deck deck, final Agent agent) {
+    private void exec(final Deck deck, final Agent agent) throws IOException {
         try {
             deck.exec(agent);
             // @checkstyle IllegalCatchCheck (1 line)
@@ -142,6 +147,7 @@ final class Routine implements Runnable {
      */
     private static Iterable<Agent> all() {
         return Arrays.asList(
+            new BuildImage(),
             new FindTanks(),
             new StartDocker(),
             new Swap(),

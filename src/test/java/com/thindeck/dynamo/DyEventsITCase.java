@@ -27,37 +27,40 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.agents;
+package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.log.Logger;
-import com.jcabi.xml.XML;
-import com.thindeck.api.Agent;
-import java.io.IOException;
-import org.xembly.Directive;
-import org.xembly.Directives;
+import com.thindeck.api.Base;
+import com.thindeck.api.Deck;
+import com.thindeck.api.Events;
+import com.thindeck.api.User;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Find tanks available for deployment.
- *
+ * Integration case for {@link DyEvents}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.1
- * @checkstyle MultipleStringLiteralsCheck (500 lines)
+ * @since 0.5
  */
-@Immutable
-public final class FindTanks implements Agent {
+public final class DyEventsITCase {
 
-    @Override
-    public Iterable<Directive> exec(final XML deck) throws IOException {
-        final Directives dirs = new Directives();
-        if (deck.nodes("/deck/tanks/tank").isEmpty()) {
-            dirs.xpath("/deck/tanks/tank").remove()
-                .xpath("/deck").addIf("tanks")
-                .add("tank").add("host").set("t1.thindeck.com");
-            Logger.info(this, "one tank t1.thindeck.com found");
-        }
-        return dirs;
+    /**
+     * DyEvents can add an event.
+     * @throws Exception If there is some problem inside
+     */
+    @Test
+    public void addsEvent() throws Exception {
+        final Base base = new DyBase();
+        final User user = base.user("sarah");
+        user.decks().add("foo");
+        final Deck deck = user.decks().iterate().iterator().next();
+        final Events events = deck.events();
+        events.create("first one");
+        MatcherAssert.assertThat(
+            events.iterate(Long.MAX_VALUE).iterator().next(),
+            Matchers.startsWith("first ")
+        );
     }
 
 }

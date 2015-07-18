@@ -1,7 +1,7 @@
 {
   "AttributeDefinitions": [
     {
-      "AttributeName": "urn",
+      "AttributeName": "user",
       "AttributeType": "S"
     },
     {
@@ -11,7 +11,7 @@
   ],
   "KeySchema": [
     {
-      "AttributeName": "urn",
+      "AttributeName": "user",
       "KeyType": "HASH"
     },
     {

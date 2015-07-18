@@ -34,7 +34,6 @@ import com.jcabi.xml.XSD;
 import com.jcabi.xml.XSDDocument;
 import java.io.IOException;
 import javax.validation.constraints.NotNull;
-import org.xembly.Directive;
 
 /**
  * Deck.

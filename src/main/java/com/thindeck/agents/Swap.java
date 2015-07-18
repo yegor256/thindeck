@@ -33,7 +33,6 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
-import java.io.IOException;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -43,12 +42,13 @@ import org.xembly.Directives;
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
+ * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
 @Immutable
 public final class Swap implements Agent {
 
     @Override
-    public Iterable<Directive> exec(final XML deck) throws IOException {
+    public Iterable<Directive> exec(final XML deck) {
         final boolean ready = deck.nodes(
             "/deck/containers/container[@waste='true' or state='dead']"
         ).isEmpty();

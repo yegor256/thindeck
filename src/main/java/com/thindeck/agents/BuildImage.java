@@ -48,6 +48,7 @@ import org.xembly.Directives;
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
+ * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
 @Immutable
 public final class BuildImage implements Agent {
@@ -78,6 +79,7 @@ public final class BuildImage implements Agent {
      * @param deck Deck name
      * @param repo Repo
      * @return Image name
+     * @throws IOException If fails
      */
     private static String build(final String deck, final XML repo)
         throws IOException {

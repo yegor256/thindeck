@@ -68,7 +68,7 @@ public final class TkLog implements Take {
         return new RsText(
             Joiner.on("\n").join(
                 Iterables.limit(
-                    deck.events().iterate(Integer.MAX_VALUE), Tv.HUNDRED
+                    deck.events().iterate(Long.MAX_VALUE), Tv.HUNDRED
                 )
             )
         );

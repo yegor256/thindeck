@@ -48,6 +48,7 @@ import org.xembly.Directives;
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
+ * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
 @Immutable
 public final class StartDocker implements Agent {
@@ -87,6 +88,7 @@ public final class StartDocker implements Agent {
      * Run docker in this tank.
      * @param image Docker image name
      * @param host Host name of the tank
+     * @return Docker container name
      * @throws IOException If fails
      */
     private static String start(final String image, final String host)

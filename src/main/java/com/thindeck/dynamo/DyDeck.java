@@ -29,6 +29,7 @@
  */
 package com.thindeck.dynamo;
 
+import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Item;
@@ -45,6 +46,7 @@ import com.thindeck.api.Events;
 import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.xembly.Directive;
 import org.xembly.Xembler;
 
 /**
@@ -58,13 +60,6 @@ import org.xembly.Xembler;
 @Immutable
 @EqualsAndHashCode(of = { "region", "user", "deck" })
 final class DyDeck implements Deck {
-
-    /**
-     * Clean-up XSL.
-     */
-    private static final XSL CLEANUP = XSLDocument.make(
-        DyDeck.class.getResourceAsStream("cleanup.xsl")
-    );
 
     /**
      * Table name.
@@ -90,6 +85,13 @@ final class DyDeck implements Deck {
      * Deck.
      */
     public static final String ATTR_MEMO = "deck";
+
+    /**
+     * Clean-up XSL.
+     */
+    private static final XSL CLEANUP = XSLDocument.make(
+        DyDeck.class.getResourceAsStream("cleanup.xsl")
+    );
 
     /**
      * Region.
@@ -131,17 +133,20 @@ final class DyDeck implements Deck {
             ),
             Deck.SCHEMA
         );
-        this.item().put(
-            new AttributeUpdates().with(
-                DyDeck.ATTR_MEMO,
-                new StrictXML(
-                    new XMLDocument(
-                        new Xembler(agent.exec(xml)).applyQuietly(xml.node())
-                    ),
-                    Deck.SCHEMA
-                ).toString()
-            )
-        );
+        final Iterable<Directive> dirs = agent.exec(xml);
+        if (!Iterables.isEmpty(dirs)) {
+            this.item().put(
+                new AttributeUpdates().with(
+                    DyDeck.ATTR_MEMO,
+                    new StrictXML(
+                        new XMLDocument(
+                            new Xembler(dirs).applyQuietly(xml.node())
+                        ),
+                        Deck.SCHEMA
+                    ).toString()
+                )
+            );
+        }
     }
 
     @Override

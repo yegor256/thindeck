@@ -51,10 +51,10 @@ public final class DyBaseITCase {
         final Decks decks = new DyBase()
             .user("jeff")
             .decks();
-        decks.add("testdeck");
+        decks.add("booodeck");
         MatcherAssert.assertThat(
             decks.iterate().iterator().next().name(),
-            Matchers.startsWith("test")
+            Matchers.containsString("booo")
         );
     }
 

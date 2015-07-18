@@ -61,6 +61,7 @@ public final class Remote implements Shell {
     }
 
     @Override
+    // @checkstyle ParameterNumberCheck (3 lines)
     public int exec(final String command, final InputStream stdin,
         final OutputStream stdout, final OutputStream stderr)
         throws IOException {
