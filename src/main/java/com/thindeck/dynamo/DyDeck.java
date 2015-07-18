@@ -127,25 +127,27 @@ final class DyDeck implements Deck {
 
     @Override
     public void exec(final Agent agent) throws IOException {
+        final String text = this.item().get(DyDeck.ATTR_MEMO).getS();
         final XML xml = new StrictXML(
-            DyDeck.CLEANUP.transform(
-                new XMLDocument(this.item().get(DyDeck.ATTR_MEMO).getS())
-            ),
+            DyDeck.CLEANUP.transform(new XMLDocument(text)),
             Deck.SCHEMA
         );
         final Iterable<Directive> dirs = agent.exec(xml);
         if (!Iterables.isEmpty(dirs)) {
-            this.item().put(
-                new AttributeUpdates().with(
-                    DyDeck.ATTR_MEMO,
-                    new StrictXML(
-                        new XMLDocument(
-                            new Xembler(dirs).applyQuietly(xml.node())
-                        ),
-                        Deck.SCHEMA
-                    ).toString()
-                )
-            );
+            final String update = new StrictXML(
+                new XMLDocument(
+                    new Xembler(dirs).applyQuietly(xml.node())
+                ),
+                Deck.SCHEMA
+            ).toString();
+            if (!text.equals(update)) {
+                this.item().put(
+                    new AttributeUpdates().with(
+                        DyDeck.ATTR_MEMO,
+                        update
+                    )
+                );
+            }
         }
     }
 

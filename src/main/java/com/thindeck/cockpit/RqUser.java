@@ -75,7 +75,7 @@ public final class RqUser extends RqWrap {
                 new RsFlash("you are not logged in")
             );
         }
-        return this.base.user(identity.urn());
+        return this.base.user(identity.properties().get("login"));
     }
 
 }

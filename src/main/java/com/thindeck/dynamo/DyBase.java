@@ -80,6 +80,14 @@ public final class DyBase implements Base {
 
     @Override
     public User user(final String name) {
+        if (!name.matches("[a-zA-Z\\-0-9]+")) {
+            throw new IllegalStateException(
+                String.format(
+                    "invalid user name '%s'",
+                    name
+                )
+            );
+        }
         return new DyUser(this.region, name);
     }
 

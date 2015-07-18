@@ -29,48 +29,35 @@
  */
 package com.thindeck.cockpit;
 
-import com.thindeck.api.Base;
-import com.thindeck.api.Decks;
-import java.io.IOException;
-import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
-import org.takes.facets.flash.RsFlash;
-import org.takes.facets.forward.RsForward;
-import org.takes.rq.RqForm;
+import com.jcabi.matchers.XhtmlMatchers;
+import com.thindeck.mock.MkBase;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.takes.facets.auth.RqWithAuth;
+import org.takes.rs.RsPrint;
 
 /**
- * Add deck.
- *
+ * Test case for {@link TkApp}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.5
- * @checkstyle MultipleStringLiteralsCheck (500 lines)
+ * @since 0.4
  */
-public final class TkAddDeck implements Take {
+public final class TkAppTest {
 
     /**
-     * Base.
+     * TkApp can render home page.
+     * @throws Exception If something goes wrong.
      */
-    private final transient Base base;
-
-    /**
-     * Ctor.
-     * @param bse Base
-     */
-    TkAddDeck(final Base bse) {
-        this.base = bse;
-    }
-
-    @Override
-    public Response act(final Request req) throws IOException {
-        final RqForm.Smart form = new RqForm.Smart(new RqForm.Base(req));
-        final Decks decks = new RqUser(req, this.base).get().decks();
-        final String name = form.single("name");
-        decks.add(name);
-        return new RsForward(
-            new RsFlash(String.format("deck \"%s\" added", name))
+    @Test
+    public void rendersHomePage() throws Exception {
+        MatcherAssert.assertThat(
+            new RsPrint(
+                new TkApp(new MkBase()).act(new RqWithAuth("urn:test:1"))
+            ).printBody(),
+            XhtmlMatchers.hasXPaths(
+                "/page[@date]",
+                "/page/links/link[@rel='home']"
+            )
         );
     }
-
 }

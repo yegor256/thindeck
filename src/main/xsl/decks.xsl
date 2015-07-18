@@ -49,10 +49,6 @@
                 <input type="text" name="name"
                     size="25" maxlength="64"
                     placeholder="[a-z\-]+"/>
-                <label><xsl:text>URI:</xsl:text></label>
-                <input type="text" name="uri"
-                    size="50" maxlength="255"
-                    placeholder="e.g. https://github.com/yegor256/thindeck.git"/>
                 <button type="submit">Add</button>
             </fieldset>
         </form>
@@ -62,11 +58,11 @@
             <xsl:text>Your </xsl:text>
             <xsl:choose>
                 <xsl:when test="count(deck) = 1">
-                    <xsl:text>decksitory</xsl:text>
+                    <xsl:text>deck</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="count(deck)"/>
-                    <xsl:text> decksitories</xsl:text>
+                    <xsl:text> decks</xsl:text>
                 </xsl:otherwise>
             </xsl:choose>
             <xsl:text>:</xsl:text>
@@ -76,7 +72,7 @@
         </ul>
     </xsl:template>
     <xsl:template match="decks[not(deck)]">
-        <p><xsl:text>You don't have any decksitories yet.</xsl:text></p>
+        <p><xsl:text>You don't have any decks yet.</xsl:text></p>
     </xsl:template>
     <xsl:template match="deck">
         <li>

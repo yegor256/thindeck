@@ -29,8 +29,10 @@
  */
 package com.thindeck.cockpit;
 
+import com.jcabi.immutable.ArrayMap;
 import com.jcabi.manifests.Manifests;
 import java.io.IOException;
+import java.util.Iterator;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -39,7 +41,6 @@ import org.takes.facets.auth.Pass;
 import org.takes.facets.auth.PsByFlag;
 import org.takes.facets.auth.PsChain;
 import org.takes.facets.auth.PsCookie;
-import org.takes.facets.auth.PsFake;
 import org.takes.facets.auth.PsLogout;
 import org.takes.facets.auth.TkAuth;
 import org.takes.facets.auth.codecs.CcCompact;
@@ -85,6 +86,7 @@ final class TkAppAuth extends TkWrap {
         return new TkAuth(
             take,
             new PsChain(
+                new TkAppAuth.FakePass(),
                 new PsByFlag(
                     new PsByFlag.Pair(
                         PsGithub.class.getSimpleName(),
@@ -111,8 +113,7 @@ final class TkAppAuth extends TkWrap {
                             )
                         )
                     )
-                ),
-                new PsFake(TkAppAuth.TESTING)
+                )
             )
         );
     }
@@ -125,9 +126,18 @@ final class TkAppAuth extends TkWrap {
         public Opt<Identity> enter(final Request req) throws IOException {
             final Opt<Identity> user;
             if (TkAppAuth.TESTING) {
+                final Iterator<String> login =
+                    new RqHref.Base(req).href().param("user").iterator();
+                final String name;
+                if (login.hasNext()) {
+                    name = login.next();
+                } else {
+                    name = "tester";
+                }
                 user = new Opt.Single<Identity>(
                     new Identity.Simple(
-                        new RqHref.Smart(new RqHref.Base(req)).single("urn")
+                        String.format("urn:test:%s", name),
+                        new ArrayMap<String, String>().with("login", name)
                     )
                 );
             } else {
