@@ -37,6 +37,7 @@ import com.jcabi.log.Logger;
 import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -71,32 +72,35 @@ final class Script {
      */
     public void exec(final String host, final Map<String, String> args)
         throws IOException {
-        new Shell.Safe(new Shell.Safe(new Remote(host))).exec(
-            Joiner.on(" && ").join(
-                "dir=$(mktemp -d -t td-XXXX)",
-                "cd \"${dir}\"",
-                "cat > script.sh",
-                "chmod a+x script.sh",
-                Joiner.on(' ').join(
-                    Iterables.transform(
-                        args.entrySet(),
-                        new Function<Map.Entry<String, String>, String>() {
-                            @Override
-                            public String apply(
-                                final Map.Entry<String, String> ent) {
-                                return SSH.escape(
-                                    String.format(
-                                        "export %s=%s",
-                                        ent.getKey(), ent.getValue()
-                                    )
-                                );
-                            }
-                        }
-                    )
+        final String script = Joiner.on(" && ").join(
+            Iterables.concat(
+                Arrays.asList(
+                    "dir=$(mktemp -d -t td-XXXX)",
+                    "cd \"${dir}\"",
+                    "cat > script.sh",
+                    "chmod a+x script.sh"
                 ),
-                "./script.sh %s",
-                "rm -rf \"${dir}\""
-            ),
+                Iterables.transform(
+                    args.entrySet(),
+                    new Function<Map.Entry<String, String>, String>() {
+                        @Override
+                        public String apply(
+                            final Map.Entry<String, String> ent) {
+                            return String.format(
+                                "export %s=%s",
+                                ent.getKey(), SSH.escape(ent.getValue())
+                            );
+                        }
+                    }
+                ),
+                Arrays.asList(
+                    "./script.sh %s",
+                    "rm -rf \"${dir}\""
+                )
+            )
+        );
+        new Shell.Safe(new Shell.Safe(new Remote(host))).exec(
+            script,
             this.getClass().getResourceAsStream(this.name),
             Logger.stream(Level.INFO, this),
             Logger.stream(Level.WARNING, this)

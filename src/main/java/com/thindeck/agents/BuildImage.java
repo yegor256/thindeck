@@ -67,7 +67,7 @@ public final class BuildImage implements Agent {
             final String image = BuildImage.build(name, repo);
             dirs.xpath("/deck/images").add("image")
                 .add("name").set(image).up()
-                .add("repo").set(repo.xpath("name").get(0)).up()
+                .add("repo").set(repo.xpath("name/text()").get(0)).up()
                 .attr("waste", "false")
                 .attr("type", repo.xpath("@type").get(0));
         }

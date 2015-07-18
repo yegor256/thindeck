@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+set -x
 
 dir=$(mktemp -d -t td-XXXX)
 cd "${dir}"

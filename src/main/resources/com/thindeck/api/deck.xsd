@@ -34,7 +34,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:simpleType name="imageName">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[0-9a-fA-Z\-]+/[0-9a-f]+"/>
+            <xs:pattern value="[0-9a-zA-Z\-]+/[0-9a-zA-Z\-]+"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="repoName">

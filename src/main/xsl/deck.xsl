@@ -174,7 +174,9 @@
             <p>
                 <xsl:value-of select="@head"/>
             </p>
-            <pre><xsl:value-of select="."/></pre>
+            <pre style="font-size:0.8em">
+                <xsl:value-of select="."/>
+            </pre>
         </xsl:for-each>
     </xsl:template>
 </xsl:stylesheet>
