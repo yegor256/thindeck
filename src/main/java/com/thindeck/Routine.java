@@ -44,7 +44,16 @@ import com.thindeck.api.Base;
 import com.thindeck.api.Deck;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -85,21 +94,53 @@ final class Routine implements Runnable {
      * @param bse Base
      */
     Routine(final Base bse) {
+        System.out.println("instance");
         this.base = bse;
         this.agents = new Array<>(Routine.all());
     }
 
     @Override
     public void run() {
+        final AtomicInteger grp = new AtomicInteger();
+        final ExecutorService exec = Executors.newCachedThreadPool(
+            new ThreadFactory() {
+                @Override
+                public Thread newThread(final Runnable runnable) {
+                    return new Thread(
+                        new ThreadGroup(
+                            Integer.toString(grp.getAndIncrement())
+                        ),
+                        runnable
+                    );
+                }
+            }
+        );
+        final Collection<Future<Integer>> futures = new LinkedList<>();
         for (final Deck deck : this.decks()) {
+            futures.add(
+                exec.submit(
+                    new Callable<Integer>() {
+                        @Override
+                        public Integer call() throws Exception {
+                            Routine.this.exec(deck);
+                            return 1;
+                        }
+                    }
+                )
+            );
+        }
+        for (final Future<?> future : futures) {
             try {
-                this.exec(deck);
-            } catch (final IOException ex) {
+                future.get();
+            } catch (final InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException(ex);
+            } catch (final ExecutionException ex) {
                 throw new IllegalStateException(ex);
             }
         }
         Logger.info(
-            this, "decks done, alive for %[msec]s",
+            this, "decks done, alive for %[ms]s",
             System.currentTimeMillis() - this.start
         );
     }
