@@ -29,38 +29,80 @@
  */
 package com.thindeck.agents;
 
+import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
+import com.jcabi.aspects.Tv;
+import com.jcabi.immutable.ArrayMap;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
 import java.io.IOException;
+import java.util.Collection;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
 /**
- * Swap BLUE and GREEN containers.
+ * Start containers.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */
 @Immutable
-public final class Swap implements Agent {
+public final class StartDocker implements Agent {
 
     @Override
     public Iterable<Directive> exec(final XML deck) throws IOException {
-        final boolean ready = deck.nodes(
-            "/deck/containers/container[@waste='true' or state='dead']"
-        ).isEmpty();
-        final Directives dirs = new Directives();
-        if (ready) {
-            dirs.xpath("/deck/containers/container[@type='blue']")
-                .attr("type", "green")
-                .xpath("/deck/containers/container[@type='green']")
-                .attr("type", "blue")
-                .attr("waste", "true");
-            Logger.info(this, "swapped blue vs green containers");
+        final Collection<XML> images = deck.nodes(
+            "/deck/images/image"
+        );
+        final Directives dirs = new Directives()
+            .xpath("/deck").addIf("containers");
+        for (final XML image : images) {
+            final String img = image.xpath("name/text()").get(0);
+            final Collection<String> tanks = deck.xpath(
+                Joiner.on(" and ").join(
+                    "/deck/tanks/tank[",
+                    String.format(
+                        // @checkstyle LineLength (1 line)
+                        "not(host=/deck/containers/container[image='%s']/tank)]/host/text()",
+                        img
+                    )
+                )
+            );
+            for (final String tank : tanks) {
+                final String cid = StartDocker.start(img, tank);
+                dirs.xpath("/deck/containers").add("container")
+                    .add("name").set(cid).up()
+                    .add("image").set(img).up()
+                    .attr("waste", "false")
+                    .attr("type", image.xpath("@type").get(0));
+            }
         }
         return dirs;
     }
+
+    /**
+     * Run docker in this tank.
+     * @param image Docker image name
+     * @param host Host name of the tank
+     * @throws IOException If fails
+     */
+    private static String start(final String image, final String host)
+        throws IOException {
+        final String name = RandomStringUtils.randomAlphabetic(Tv.TEN);
+        new Script("start-docker.sh").exec(
+            host,
+            new ArrayMap<String, String>()
+                .with("image", image)
+                .with("name", name)
+        );
+        Logger.info(
+            StartDocker.class,
+            "container %s started at %s", name, host
+        );
+        return name;
+    }
+
 }

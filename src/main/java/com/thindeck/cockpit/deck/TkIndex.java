@@ -29,10 +29,14 @@
  */
 package com.thindeck.cockpit.deck;
 
+import com.jcabi.xml.XML;
+import com.thindeck.api.Agent;
 import com.thindeck.api.Base;
 import com.thindeck.api.Deck;
 import com.thindeck.cockpit.RsPage;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.concurrent.atomic.AtomicReference;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -41,6 +45,7 @@ import org.takes.rs.xe.XeAppend;
 import org.takes.rs.xe.XeChain;
 import org.takes.rs.xe.XeDirectives;
 import org.takes.rs.xe.XeLink;
+import org.xembly.Directive;
 import org.xembly.Directives;
 
 /**
@@ -71,14 +76,22 @@ public final class TkIndex implements Take {
     public Response act(final Request req) throws IOException {
         final Deck deck = new RqDeck(this.base, req).deck();
         final Href home = new Href("/r").path(deck.name());
+        final AtomicReference<XML> xml = new AtomicReference<>();
+        deck.exec(
+            new Agent() {
+                @Override
+                public Iterable<Directive> exec(final XML doc) {
+                    xml.set(doc);
+                    return Collections.emptyList();
+                }
+            }
+        );
         return new RsPage(
             "/xsl/deck.xsl",
             this.base,
             req,
             new XeLink("log", home.path("log")),
-            new XeDirectives(
-                Directives.copyOf(deck.read().node())
-            ),
+            new XeDirectives(Directives.copyOf(xml.get().node())),
             new XeAppend(
                 "deck",
                 new XeDirectives(

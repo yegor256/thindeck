@@ -30,79 +30,63 @@
 package com.thindeck.agents;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.immutable.ArrayMap;
+import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
-import com.jcabi.xml.XMLDocument;
-import java.util.List;
-import java.util.Map;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.thindeck.api.Agent;
+import java.io.IOException;
+import java.util.Collection;
 import org.xembly.Directive;
 import org.xembly.Directives;
-import org.xembly.ImpossibleModificationException;
-import org.xembly.Xembler;
-import org.yaml.snakeyaml.Yaml;
 
 /**
- * YAML into XML.
+ * Stop all waste containers.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 1.0
+ * @since 0.1
  */
 @Immutable
-@ToString
-@EqualsAndHashCode(of = "yaml")
-final class YamlXML {
-    /**
-     * Yaml.
-     */
-    private final transient String yaml;
-    /**
-     * Ctor.
-     * @param yml YAML
-     */
-    YamlXML(final String yml) {
-        this.yaml = yml.trim();
-    }
-    /**
-     * Get XML.
-     * @return XML
-     */
-    public XML get() {
-        final Yaml parser = new Yaml();
-        final Directives dirs = new Directives().add("p");
-        if (!this.yaml.isEmpty()) {
-            dirs.append(YamlXML.dirs(parser.load(this.yaml)));
-        }
-        try {
-            return new XMLDocument(new Xembler(dirs).xml());
-        } catch (final ImpossibleModificationException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-    /**
-     * Convert something to dirs.
-     * @param obj Object
-     * @return Dirs
-     */
-    @SuppressWarnings("unchecked")
-    private static Iterable<Directive> dirs(final Object obj) {
+public final class StopDocker implements Agent {
+
+    @Override
+    public Iterable<Directive> exec(final XML deck) throws IOException {
+        final Collection<XML> containers = deck.nodes(
+            "/deck/containers/container[@waste='true']"
+        );
         final Directives dirs = new Directives();
-        if (obj instanceof Map) {
-            for (final Map.Entry<String, Object> ent
-                : ((Map<String, Object>) obj).entrySet()) {
-                dirs.add("entry")
-                    .attr("key", ent.getKey())
-                    .append(YamlXML.dirs(ent.getValue()))
-                    .up();
-            }
-        } else if (obj instanceof List) {
-            for (final Object item : (Iterable<Object>) obj) {
-                dirs.add("item").append(YamlXML.dirs(item)).up();
-            }
-        } else {
-            dirs.set(obj.toString());
+        for (final XML ctr : containers) {
+            final String name = ctr.xpath("name/text()").get(0);
+            StopDocker.stop(
+                ctr.xpath("host/text()").get(0),
+                name
+            );
+            dirs.xpath(
+                String.format(
+                    "/deck/containers/container[name='%s']",
+                    name
+                )
+            ).remove();
         }
         return dirs;
     }
+
+    /**
+     * Stop docker container.
+     * @param host Host
+     * @param name Name of container
+     * @throws IOException If fails
+     */
+    private static void stop(final String host, final String name)
+        throws IOException {
+        new Script("stop-docker.sh").exec(
+            host,
+            new ArrayMap<String, String>().with("name", name)
+        );
+        Logger.info(
+            StartDocker.class,
+            "container %s stopped at %s", name, host
+        );
+    }
+
 }

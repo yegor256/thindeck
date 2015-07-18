@@ -32,16 +32,13 @@ package com.thindeck;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.ScheduleWithFixedDelay;
-import com.jcabi.github.RtGithub;
 import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
-import com.thindeck.agents.Agent;
-import com.thindeck.agents.ReadConfig;
+import com.thindeck.agents.FindTanks;
+import com.thindeck.agents.StartDocker;
+import com.thindeck.agents.StopDocker;
 import com.thindeck.agents.Swap;
-import com.thindeck.agents.docker.DockerRun;
-import com.thindeck.agents.docker.DockerStop;
-import com.thindeck.agents.lb.UpdateLB;
-import com.thindeck.agents.tanks.FindTanks;
+import com.thindeck.api.Agent;
 import com.thindeck.api.Base;
 import com.thindeck.api.Deck;
 import java.io.IOException;
@@ -127,7 +124,7 @@ final class Routine implements Runnable {
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     private void exec(final Deck deck, final Agent agent) {
         try {
-            agent.exec(deck);
+            deck.exec(agent);
             // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Throwable ex) {
             Logger.error(
@@ -142,16 +139,13 @@ final class Routine implements Runnable {
     /**
      * Create a list of agents.
      * @return List of agents
-     * @throws IOException If fails
      */
-    private static Iterable<Agent> all() throws IOException {
+    private static Iterable<Agent> all() {
         return Arrays.asList(
-            new ReadConfig(new RtGithub()),
             new FindTanks(),
-            new UpdateLB(),
-            new DockerRun(),
+            new StartDocker(),
             new Swap(),
-            new DockerStop()
+            new StopDocker()
         );
     }
 

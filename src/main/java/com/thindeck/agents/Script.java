@@ -29,51 +29,78 @@
  */
 package com.thindeck.agents;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
+import com.jcabi.log.Logger;
 import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import org.apache.commons.io.IOUtils;
+import java.util.Map;
+import java.util.logging.Level;
 
 /**
- * Remote shell(s).
+ * Execs a script.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */
 @Immutable
-public final class Remote implements Shell {
+final class Script {
 
     /**
-     * Host.
+     * Sript name.
      */
-    private final transient String host;
+    private final transient String name;
 
     /**
      * Ctor.
-     * @param hst Host
+     * @param res Resource name
      */
-    public Remote(final String hst) {
-        this.host = hst;
+    Script(final String res) {
+        this.name = res;
     }
 
-    @Override
-    public int exec(final String command, final InputStream stdin,
-        final OutputStream stdout, final OutputStream stderr)
+    /**
+     * Run it.
+     * @param host The host to run it on
+     * @param args Arguments to pass into it
+     * @throws IOException If fails
+     */
+    public void exec(final String host, final Map<String, String> args)
         throws IOException {
-        return new Shell.Verbose(
-            new Shell.Safe(
-                new SSH(
-                    // @checkstyle MagicNumber (1 line)
-                    this.host, 22, "thindeck",
-                    IOUtils.toString(
-                        this.getClass().getResourceAsStream("thindeck.key")
+        new Shell.Safe(new Shell.Safe(new Remote(host))).exec(
+            Joiner.on(" && ").join(
+                "dir=$(mktemp -d -t td-XXXX)",
+                "cd \"${dir}\"",
+                "cat > script.sh",
+                "chmod a+x script.sh",
+                Joiner.on(' ').join(
+                    Iterables.transform(
+                        args.entrySet(),
+                        new Function<Map.Entry<String,String>, String>() {
+                            @Override
+                            public String apply(
+                                final Map.Entry<String, String> ent) {
+                                return SSH.escape(
+                                    String.format(
+                                        "export %s=%s",
+                                        ent.getKey(), ent.getValue()
+                                    )
+                                );
+                            }
+                        }
                     )
-                )
-            )
-        ).exec(command, stdin, stdout, stderr);
+                ),
+                "./script.sh %s",
+                "rm -rf \"${dir}\""
+            ),
+            this.getClass().getResourceAsStream(this.name),
+            Logger.stream(Level.INFO, this),
+            Logger.stream(Level.WARNING, this)
+        );
     }
+
 }

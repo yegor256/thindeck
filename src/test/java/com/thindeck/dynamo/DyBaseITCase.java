@@ -51,7 +51,7 @@ public final class DyBaseITCase {
         final Decks decks = new DyBase()
             .user("jeff")
             .decks();
-        decks.add("test-deck");
+        decks.add("testdeck");
         MatcherAssert.assertThat(
             decks.iterate().iterator().next().name(),
             Matchers.startsWith("test")

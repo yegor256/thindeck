@@ -27,37 +27,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.agents.docker;
+package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.ssh.SSH;
+import com.jcabi.xml.XML;
+import java.io.IOException;
+import org.xembly.Directive;
 
 /**
- * Clone sources.
+ * Agent.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.5
  */
 @Immutable
-final class Clone {
+public interface Agent {
 
     /**
-     * URI.
+     * Execute it on the given deck.
+     * @param deck The deck XML
+     * @return Directives to update XML
+     * @throws IOException If fails
      */
-    private final transient String uri;
-
-    /**
-     * Ctor.
-     * @param src URI of sources
-     */
-    Clone(final String src) {
-        this.uri = src;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("git clone %s .", SSH.escape(this.uri));
-    }
+    Iterable<Directive> exec(XML deck) throws IOException;
 
 }

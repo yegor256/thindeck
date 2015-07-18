@@ -29,15 +29,14 @@
  */
 package com.thindeck.agents;
 
-import com.jcabi.aspects.Tv;
 import com.jcabi.matchers.XhtmlMatchers;
-import com.thindeck.api.Deck;
-import com.thindeck.mock.MkDeck;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
+import com.thindeck.api.Agent;
 import java.io.IOException;
-import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-import org.xembly.Directives;
+import org.xembly.Xembler;
 
 /**
  * Test case for {@link Swap}.
@@ -55,25 +54,12 @@ public final class SwapTest {
     @Test
     public void swapsGreenAndBlueContainers() throws IOException {
         final Agent agent = new Swap();
-        final Deck deck = new MkDeck();
-        deck.update(
-            new Directives().xpath("/deck").addIf("containers")
-                .add("container").attr("type", "green")
-                .add("cid")
-                .set(StringUtils.repeat('a', 1 << Tv.SIX))
-                .up()
-                .add("dir").set("/tmp").up()
-                .add("tank").set("localhost").up()
-                .add("ports").add("port")
-                .add("in").set("80").up().add("out").set("8090").up().up()
-        );
-        agent.exec(deck);
+        final XML deck = new XMLDocument("<deck/>");
         MatcherAssert.assertThat(
-            deck.read(),
-            XhtmlMatchers.hasXPaths(
-                "/deck/containers[count(container)=1]",
-                "/deck/containers/container[@type='blue']"
-            )
+            new XMLDocument(
+                new Xembler(agent.exec(deck)).applyQuietly(deck.node())
+            ),
+            XhtmlMatchers.hasXPaths("/deck")
         );
     }
 

@@ -30,7 +30,6 @@
 package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.xml.XML;
 import com.jcabi.xml.XSD;
 import com.jcabi.xml.XSDDocument;
 import java.io.IOException;
@@ -84,27 +83,11 @@ public interface Deck {
     String name() throws IOException;
 
     /**
-     * Read XML.
-     *
-     * <p>The method must guarantee that the XML document it
-     * returns complies to the XSD schema.
-     *
-     * @return XML
+     * Execute this agent.
+     * @param agent The agent
      * @throws IOException If fails
      */
-    @NotNull(message = "XML can't be null")
-    XML read() throws IOException;
-
-    /**
-     * Update.
-     *
-     * <p>The method must throw a runtime exception if,
-     * after applying the changes to the XML, it violates the XSD schema.
-     *
-     * @param dirs Directives
-     * @throws IOException If fails
-     */
-    void update(Iterable<Directive> dirs) throws IOException;
+    void exec(Agent agent) throws IOException;
 
     /**
      * Get events.

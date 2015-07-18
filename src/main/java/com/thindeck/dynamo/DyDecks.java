@@ -86,7 +86,10 @@ final class DyDecks implements Decks {
     public void add(final String name) throws IOException {
         if (!name.matches("[a-z]{3,12}")) {
             throw new IllegalStateException(
-                "invalid decksitory name, must be 3-12 English letters"
+                String.format(
+                    "invalid deck name '%s', must be 3-12 English letters",
+                    name
+                )
             );
         }
         this.region.table(DyDeck.TBL).put(

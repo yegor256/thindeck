@@ -30,7 +30,6 @@
 package com.thindeck.cockpit;
 
 import com.thindeck.api.Base;
-import com.thindeck.api.Deck;
 import com.thindeck.api.Decks;
 import java.io.IOException;
 import org.takes.Request;
@@ -40,7 +39,6 @@ import org.takes.facets.flash.RsFlash;
 import org.takes.facets.forward.RsFailure;
 import org.takes.facets.forward.RsForward;
 import org.takes.rq.RqForm;
-import org.xembly.Directives;
 
 /**
  * Add deck.
@@ -77,14 +75,6 @@ public final class TkAddDeck implements Take {
         final Decks decks = new RqUser(req, this.base).get().decks();
         final String name = form.single("name");
         decks.add(name);
-        final Deck deck = decks.get(name);
-        try {
-            deck.update(
-                new Directives().xpath("/deck").addIf("uri").set(uri)
-            );
-        } catch (final IOException ex) {
-            throw new RsFailure(ex);
-        }
         return new RsForward(
             new RsFlash(
                 String.format(

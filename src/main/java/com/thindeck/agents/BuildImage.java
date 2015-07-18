@@ -29,38 +29,70 @@
  */
 package com.thindeck.agents;
 
+import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
+import com.jcabi.aspects.Tv;
+import com.jcabi.immutable.ArrayMap;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
 import java.io.IOException;
+import java.util.Collection;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
 /**
- * Swap BLUE and GREEN containers.
+ * Builds image from repo.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */
 @Immutable
-public final class Swap implements Agent {
+public final class BuildImage implements Agent {
 
     @Override
     public Iterable<Directive> exec(final XML deck) throws IOException {
-        final boolean ready = deck.nodes(
-            "/deck/containers/container[@waste='true' or state='dead']"
-        ).isEmpty();
-        final Directives dirs = new Directives();
-        if (ready) {
-            dirs.xpath("/deck/containers/container[@type='blue']")
-                .attr("type", "green")
-                .xpath("/deck/containers/container[@type='green']")
-                .attr("type", "blue")
-                .attr("waste", "true");
-            Logger.info(this, "swapped blue vs green containers");
+        final Collection<XML> repos = deck.nodes(
+            Joiner.on(" and ").join(
+                "/deck/repos/repo[@waste='false'",
+                "not(name=/deck/images/image/repo)]"
+            )
+        );
+        final String name = deck.xpath("/deck/@name").get(0);
+        final Directives dirs = new Directives().xpath("/deck").addIf("images");
+        for (final XML repo : repos) {
+            final String image = BuildImage.build(name, repo);
+            dirs.xpath("/deck/images").add("image")
+                .add("name").set(image).up()
+                .add("repo").set(repo.xpath("name").get(0)).up()
+                .attr("waste", "false")
+                .attr("type", repo.xpath("@type").get(0));
         }
         return dirs;
     }
+
+    /**
+     * Build a new image.
+     * @param deck Deck name
+     * @param repo Repo
+     * @return Image name
+     */
+    private static String build(final String deck, final XML repo)
+        throws IOException {
+        final String name = String.format(
+            "%s-%s", deck,
+            RandomStringUtils.randomAlphabetic(Tv.EIGHT)
+        );
+        new Script("build-image.sh").exec(
+            "t1.thindeck.com",
+            new ArrayMap<String, String>()
+                .with("name", name)
+                .with("uri", repo.xpath("uri/text()").get(0))
+        );
+        Logger.info(BuildImage.class, "image %s built", name);
+        return name;
+    }
+
 }

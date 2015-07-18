@@ -27,67 +27,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.agents.docker;
+package com.thindeck.agents;
 
-import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
-import com.jcabi.ssh.SSH;
-import com.jcabi.ssh.Shell;
 import com.jcabi.xml.XML;
-import com.thindeck.agents.Agent;
-import com.thindeck.agents.Remote;
-import com.thindeck.api.Deck;
+import com.thindeck.api.Agent;
 import java.io.IOException;
-import java.util.Collection;
+import org.xembly.Directive;
 import org.xembly.Directives;
 
 /**
- * Stop all BLUE containers.
+ * Find tanks available for deployment.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */
 @Immutable
-public final class DockerStop implements Agent {
+public final class FindTanks implements Agent {
 
     @Override
-    public void exec(final Deck deck) throws IOException {
-        final XML xml = deck.read();
-        final Collection<XML> blue = xml.nodes(
-            "/deck/containers/container[@type='blue']"
-        );
-        for (final XML node : blue) {
-            DockerStop.stop(deck, node);
+    public Iterable<Directive> exec(final XML deck) throws IOException {
+        final Directives dirs = new Directives();
+        if (deck.nodes("/deck/tanks/tank").isEmpty()) {
+            dirs.xpath("/deck/tanks/tank").remove()
+                .xpath("/deck").addIf("tanks")
+                .add("tank").set("t1.thindeck.com");
+            Logger.info(this, "one tank t1.thindeck.com found");
         }
-        Logger.info(this, "%d blue containers stopped", blue.size());
-    }
-
-    /**
-     * Stop docker container.
-     * @param deck Deck
-     * @param xml XML with container info
-     * @throws IOException If fails
-     */
-    private static void stop(final Deck deck, final XML xml)
-        throws IOException {
-        final String host = xml.xpath("tank/text()").get(0);
-        final String cid = xml.xpath("cid/text()").get(0);
-        final String dir = xml.xpath("dir/text()").get(0);
-        new Shell.Empty(new Remote().shell(host)).exec(
-            Joiner.on(" && ").join(
-                String.format("sudo docker stop %s", SSH.escape(cid)),
-                String.format("sudo docker rm %s", SSH.escape(cid)),
-                String.format("rm -rf %s", SSH.escape(dir))
-            )
-        );
-        deck.update(
-            new Directives().xpath(
-                String.format("/deck/containers/container[cid='%s']", cid)
-            ).remove()
-        );
-        Logger.info(DockerStop.class, "container %s terminated", cid);
+        return dirs;
     }
 
 }

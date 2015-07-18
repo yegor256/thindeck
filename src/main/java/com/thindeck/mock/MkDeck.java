@@ -34,6 +34,7 @@ import com.jcabi.log.Logger;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
+import com.thindeck.api.Agent;
 import com.thindeck.api.Deck;
 import com.thindeck.api.Events;
 import java.io.File;
@@ -42,7 +43,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.CharEncoding;
-import org.xembly.Directive;
 import org.xembly.Xembler;
 
 /**
@@ -84,20 +84,16 @@ public final class MkDeck implements Deck {
     }
 
     @Override
-    public XML read() throws IOException {
-        return new StrictXML(
+    public void exec(final Agent agent) throws IOException {
+        final XML xml = new StrictXML(
             new XMLDocument(new File(this.path)),
             Deck.SCHEMA
         );
-    }
-
-    @Override
-    public void update(final Iterable<Directive> dirs) throws IOException {
         FileUtils.write(
             new File(this.path),
             new StrictXML(
                 new XMLDocument(
-                    new Xembler(dirs).applyQuietly(this.read().node())
+                    new Xembler(agent.exec(xml)).applyQuietly(xml.node())
                 ),
                 Deck.SCHEMA
             ).toString(),

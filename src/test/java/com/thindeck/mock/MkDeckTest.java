@@ -30,10 +30,14 @@
 package com.thindeck.mock;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XML;
+import com.thindeck.api.Agent;
 import com.thindeck.api.Deck;
 import java.io.IOException;
+import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.xembly.Directive;
 import org.xembly.Directives;
 
 /**
@@ -51,28 +55,27 @@ public final class MkDeckTest {
      */
     @Test
     public void acceptsDomainDefinition() throws IOException {
-        final Deck ctx = new MkDeck();
-        final String domain = "test.thindeck.com";
-        final int first = 80;
-        final int second = 8080;
-        ctx.update(
-            new Directives()
-                .xpath("/deck")
-                .addIf("domains")
-                .addIf("domain").set(domain).up().up()
-                .addIf("ports")
-                // @checkstyle MultipleStringLiterals (2 lines)
-                .add("port").set(String.valueOf(first)).up()
-                .add("port").set(String.valueOf(second)).up()
+        final Deck deck = new MkDeck();
+        deck.exec(
+            new Agent() {
+                @Override
+                public Iterable<Directive> exec(final XML xml) {
+                    return new Directives().xpath("/deck")
+                        .attr("name", "test/test");
+                }
+            }
         );
-        MatcherAssert.assertThat(
-            ctx.read(),
-            XhtmlMatchers.hasXPaths(
-                String.format("//deck/domains/domain[.='%s']", domain),
-                // @checkstyle MultipleStringLiterals (2 lines)
-                String.format("//deck/ports/port[.='%d']", first),
-                String.format("//deck/ports/port[.='%d']", second)
-            )
+        deck.exec(
+            new Agent() {
+                @Override
+                public Iterable<Directive> exec(final XML xml) {
+                    MatcherAssert.assertThat(
+                        xml,
+                        XhtmlMatchers.hasXPaths("/deck[@name='test/test']")
+                    );
+                    return Collections.emptyList();
+                }
+            }
         );
     }
 
