@@ -94,6 +94,11 @@ public final class StartDocker implements Agent {
                 )
             );
             for (final String tank : tanks) {
+                Logger.info(
+                    this,
+                    "There are no Docker containers at %s for image %s yet",
+                    tank, img
+                );
                 final String cid = this.start(img, tank);
                 dirs.xpath("/deck/containers").add("container")
                     .add("name").set(cid).up()
