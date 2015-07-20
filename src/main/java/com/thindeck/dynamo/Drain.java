@@ -67,7 +67,9 @@ final class Drain extends AppenderSkeleton {
         final Logger root = Logger.getRootLogger();
         root.addAppender(this);
         this.setLayout(new PatternLayout("%p %c %m\n"));
-        com.jcabi.log.Logger.info(Drain.class, "drain configured");
+        com.jcabi.log.Logger.info(
+            Drain.class, "drain configured for %s", root
+        );
     }
 
     /**

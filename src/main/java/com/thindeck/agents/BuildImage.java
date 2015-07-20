@@ -31,14 +31,14 @@ package com.thindeck.agents;
 
 import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
-import com.jcabi.aspects.Tv;
 import com.jcabi.immutable.ArrayMap;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.Collection;
-import org.apache.commons.lang3.RandomStringUtils;
+import java.util.Random;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -53,6 +53,31 @@ import org.xembly.Directives;
 @Immutable
 public final class BuildImage implements Agent {
 
+    /**
+     * Random.
+     */
+    private static final Random RND = new SecureRandom();
+
+    /**
+     * Script to use.
+     */
+    private final transient Script script;
+
+    /**
+     * Ctor.
+     */
+    public BuildImage() {
+        this(new Script("build-image.sh"));
+    }
+
+    /**
+     * Ctor.
+     * @param spt Script.
+     */
+    public BuildImage(final Script spt) {
+        this.script = spt;
+    }
+
     @Override
     public Iterable<Directive> exec(final XML deck) throws IOException {
         final Collection<XML> repos = deck.nodes(
@@ -64,7 +89,7 @@ public final class BuildImage implements Agent {
         final String name = deck.xpath("/deck/@name").get(0);
         final Directives dirs = new Directives().xpath("/deck").addIf("images");
         for (final XML repo : repos) {
-            final String image = BuildImage.build(name, repo);
+            final String image = this.build(name, repo);
             dirs.xpath("/deck/images").add("image")
                 .add("name").set(image).up()
                 .add("repo").set(repo.xpath("name/text()").get(0)).up()
@@ -81,16 +106,16 @@ public final class BuildImage implements Agent {
      * @return Image name
      * @throws IOException If fails
      */
-    private static String build(final String deck, final XML repo)
+    private String build(final String deck, final XML repo)
         throws IOException {
         final String name = String.format(
-            "%s-%s", deck,
-            RandomStringUtils.randomAlphabetic(Tv.EIGHT)
+            "%s-%08x", deck,
+            BuildImage.RND.nextInt()
         );
-        new Script("build-image.sh").exec(
+        this.script.exec(
             "t1.thindeck.com",
             new ArrayMap<String, String>()
-                .with("name", name)
+                .with("image", name)
                 .with("uri", repo.xpath("uri/text()").get(0))
         );
         Logger.info(BuildImage.class, "image %s built", name);

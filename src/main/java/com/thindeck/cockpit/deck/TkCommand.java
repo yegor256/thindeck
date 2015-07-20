@@ -29,14 +29,14 @@
  */
 package com.thindeck.cockpit.deck;
 
-import com.jcabi.aspects.Tv;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
 import com.thindeck.api.Base;
 import com.thindeck.api.Decks;
 import com.thindeck.cockpit.RqUser;
 import java.io.IOException;
-import org.apache.commons.lang3.RandomStringUtils;
+import java.security.SecureRandom;
+import java.util.Random;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -56,6 +56,11 @@ import org.xembly.Directives;
  * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
 public final class TkCommand implements Take {
+
+    /**
+     * Random.
+     */
+    private static final Random RND = new SecureRandom();
 
     /**
      * Base.
@@ -118,7 +123,8 @@ public final class TkCommand implements Take {
                 dirs.addIf("repos").add("repo")
                     .attr("waste", "false")
                     .attr("type", "blue")
-                    .add("name").set(RandomStringUtils.randomNumeric(Tv.EIGHT))
+                    .add("name")
+                    .set(String.format("%08x", TkCommand.RND.nextInt()))
                     .up().add("uri").set(parts[2]).up();
             } else {
                 throw new IllegalArgumentException(

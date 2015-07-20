@@ -49,6 +49,26 @@ import org.xembly.Directives;
 @Immutable
 public final class StopDocker implements Agent {
 
+    /**
+     * Script to use.
+     */
+    private final transient Script script;
+
+    /**
+     * Ctor.
+     */
+    public StopDocker() {
+        this(new Script("stop-docker.sh"));
+    }
+
+    /**
+     * Ctor.
+     * @param spt Script.
+     */
+    public StopDocker(final Script spt) {
+        this.script = spt;
+    }
+
     @Override
     public Iterable<Directive> exec(final XML deck) throws IOException {
         final Collection<XML> containers = deck.nodes(
@@ -57,7 +77,7 @@ public final class StopDocker implements Agent {
         final Directives dirs = new Directives();
         for (final XML ctr : containers) {
             final String name = ctr.xpath("name/text()").get(0);
-            StopDocker.stop(
+            this.stop(
                 ctr.xpath("host/text()").get(0),
                 name
             );
@@ -77,11 +97,11 @@ public final class StopDocker implements Agent {
      * @param name Name of container
      * @throws IOException If fails
      */
-    private static void stop(final String host, final String name)
+    private void stop(final String host, final String name)
         throws IOException {
-        new Script("stop-docker.sh").exec(
+        this.script.exec(
             host,
-            new ArrayMap<String, String>().with("name", name)
+            new ArrayMap<String, String>().with("container", name)
         );
         Logger.info(
             StartDocker.class,

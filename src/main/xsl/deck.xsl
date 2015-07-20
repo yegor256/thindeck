@@ -101,6 +101,10 @@
                                     <xsl:text>?</xsl:text>
                                 </xsl:otherwise>
                             </xsl:choose>
+                            <xsl:text>;</xsl:text>
+                            <xsl:if test="@waste='true'">
+                                <xsl:text>text-decoration: line-through;</xsl:text>
+                            </xsl:if>
                         </xsl:attribute>
                         <xsl:value-of select="name"/>
                     </td>
@@ -130,6 +134,10 @@
                                     <xsl:text>?</xsl:text>
                                 </xsl:otherwise>
                             </xsl:choose>
+                            <xsl:text>;</xsl:text>
+                            <xsl:if test="@waste='true'">
+                                <xsl:text>text-decoration: line-through;</xsl:text>
+                            </xsl:if>
                         </xsl:attribute>
                         <xsl:value-of select="name"/>
                     </td>
@@ -143,6 +151,7 @@
                 <th>Container</th>
                 <th>Image</th>
                 <th>Tank</th>
+                <th>State</th>
             </tr>
             <xsl:for-each select="container">
                 <tr>
@@ -160,11 +169,16 @@
                                    <xsl:text>red</xsl:text>
                                </xsl:otherwise>
                            </xsl:choose>
+                           <xsl:text>;</xsl:text>
+                           <xsl:if test="@waste='true'">
+                               <xsl:text>text-decoration: line-through;</xsl:text>
+                           </xsl:if>
                        </xsl:attribute>
                        <xsl:value-of select="substring(name, 0, 8)"/>
                    </td>
                     <td><xsl:value-of select="image"/></td>
                     <td><xsl:value-of select="host"/></td>
+                    <td><xsl:value-of select="state"/></td>
                 </tr>
             </xsl:for-each>
         </table>

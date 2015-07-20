@@ -2,4 +2,5 @@
 set -e
 set -x
 
-sudo docker stop "${name}"
+docker stop "${container}"
+docker rm "${container}"

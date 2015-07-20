@@ -34,7 +34,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:simpleType name="imageName">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[0-9a-zA-Z\-]+/[0-9a-zA-Z\-]+"/>
+            <xs:pattern value="[0-9a-zA-Z\-]+/[0-9a-zA-Z\-]+-[0-9a-f]{8}"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="repoName">
@@ -84,7 +84,7 @@
             <xs:element name="name">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:pattern value="[0-9a-f]{64}"/>
+                        <xs:pattern value="[0-9a-f]{8}"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
@@ -95,6 +95,7 @@
                 <xs:restriction base="xs:string">
                     <xs:enumeration value="dead"/>
                     <xs:enumeration value="alive"/>
+                    <xs:enumeration value="unknown"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>

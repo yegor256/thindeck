@@ -29,16 +29,15 @@
  */
 package com.thindeck.agents;
 
-import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
-import com.jcabi.aspects.Tv;
 import com.jcabi.immutable.ArrayMap;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.Collection;
-import org.apache.commons.lang3.RandomStringUtils;
+import java.util.Random;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -53,6 +52,31 @@ import org.xembly.Directives;
 @Immutable
 public final class StartDocker implements Agent {
 
+    /**
+     * Random.
+     */
+    private static final Random RND = new SecureRandom();
+
+    /**
+     * Script to use.
+     */
+    private final transient Script script;
+
+    /**
+     * Ctor.
+     */
+    public StartDocker() {
+        this(new Script("start-docker.sh"));
+    }
+
+    /**
+     * Ctor.
+     * @param spt Script.
+     */
+    public StartDocker(final Script spt) {
+        this.script = spt;
+    }
+
     @Override
     public Iterable<Directive> exec(final XML deck) throws IOException {
         final Collection<XML> images = deck.nodes(
@@ -63,21 +87,20 @@ public final class StartDocker implements Agent {
         for (final XML image : images) {
             final String img = image.xpath("name/text()").get(0);
             final Collection<String> tanks = deck.xpath(
-                Joiner.on(" and ").join(
-                    "/deck/tanks/tank[",
-                    String.format(
-                        // @checkstyle LineLength (1 line)
-                        "not(host=/deck/containers/container[image='%s']/tank)]/host/text()",
-                        img
-                    )
+                String.format(
+                    // @checkstyle LineLength (1 line)
+                    "/deck/tanks/tank[not(host=/deck/containers/container[image='%s']/tank)]/host/text()",
+                    img
                 )
             );
             for (final String tank : tanks) {
-                final String cid = StartDocker.start(img, tank);
+                final String cid = this.start(img, tank);
                 dirs.xpath("/deck/containers").add("container")
                     .add("name").set(cid).up()
                     .add("image").set(img).up()
+                    .add("host").set(tank).up()
                     .attr("waste", "false")
+                    .attr("state", "unknown")
                     .attr("type", image.xpath("@type").get(0));
             }
         }
@@ -91,14 +114,14 @@ public final class StartDocker implements Agent {
      * @return Docker container name
      * @throws IOException If fails
      */
-    private static String start(final String image, final String host)
+    private String start(final String image, final String host)
         throws IOException {
-        final String name = RandomStringUtils.randomAlphabetic(Tv.TEN);
-        new Script("start-docker.sh").exec(
+        final String name = String.format("%08x", StartDocker.RND.nextInt());
+        this.script.exec(
             host,
             new ArrayMap<String, String>()
                 .with("image", image)
-                .with("name", name)
+                .with("container", name)
         );
         Logger.info(
             StartDocker.class,

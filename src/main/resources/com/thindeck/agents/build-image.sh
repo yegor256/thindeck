@@ -9,7 +9,7 @@ git clone ${uri} repo
 if [ ! -f Dockerfile ]; then
   echo "FROM ubuntu:14.04" > Dockerfile
 fi
-docker build -t ${name} .
+docker build -t ${image} .
 cd /tmp
 
 rm -rf ${dir}
