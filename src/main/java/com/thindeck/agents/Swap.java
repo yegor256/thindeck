@@ -54,6 +54,7 @@ public final class Swap implements Agent {
             Joiner.on(" and ").join(
                 "/deck/containers[not(container/@waste='true')",
                 "not(container/@state='dead')",
+                "container/@type='green'",
                 "container/@type='blue']"
             )
         ).isEmpty();
