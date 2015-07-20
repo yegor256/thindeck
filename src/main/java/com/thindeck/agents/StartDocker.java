@@ -89,7 +89,7 @@ public final class StartDocker implements Agent {
             final Collection<String> tanks = deck.xpath(
                 String.format(
                     // @checkstyle LineLength (1 line)
-                    "/deck/tanks/tank[not(host=/deck/containers/container[image='%s']/tank)]/host/text()",
+                    "/deck/tanks/tank[not(host=/deck/containers/container[image='%s']/host)]/host/text()",
                     img
                 )
             );

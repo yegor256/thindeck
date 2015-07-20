@@ -178,7 +178,7 @@
                    </td>
                     <td><xsl:value-of select="image"/></td>
                     <td><xsl:value-of select="host"/></td>
-                    <td><xsl:value-of select="state"/></td>
+                    <td><xsl:value-of select="@state"/></td>
                 </tr>
             </xsl:for-each>
         </table>

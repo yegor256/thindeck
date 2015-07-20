@@ -29,6 +29,7 @@
  */
 package com.thindeck.agents;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
@@ -36,10 +37,12 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
 import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.logging.Level;
+import org.apache.commons.io.output.TeeOutputStream;
 
 /**
  * Execs a script.
@@ -68,9 +71,10 @@ final class Script {
      * Run it.
      * @param host The host to run it on
      * @param args Arguments to pass into it
+     * @return Stdout
      * @throws IOException If fails
      */
-    public void exec(final String host, final Map<String, String> args)
+    public String exec(final String host, final Map<String, String> args)
         throws IOException {
         final String script = Joiner.on(" && ").join(
             Iterables.concat(
@@ -99,12 +103,17 @@ final class Script {
                 )
             )
         );
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Shell.Safe(new Shell.Safe(new Remote(host))).exec(
             script,
             this.getClass().getResourceAsStream(this.name),
-            Logger.stream(Level.INFO, this),
+            new TeeOutputStream(
+                baos,
+                Logger.stream(Level.INFO, this)
+            ),
             Logger.stream(Level.WARNING, this)
         );
+        return new String(baos.toByteArray(), Charsets.UTF_8);
     }
 
 }
