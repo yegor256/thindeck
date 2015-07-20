@@ -90,11 +90,15 @@ public final class BuildImage implements Agent {
         final Directives dirs = new Directives().xpath("/deck").addIf("images");
         for (final XML repo : repos) {
             final String image = this.build(name, repo);
+            final String rname = repo.xpath("name/text()").get(0);
             dirs.xpath("/deck/images").add("image")
                 .add("name").set(image).up()
-                .add("repo").set(repo.xpath("name/text()").get(0)).up()
+                .add("repo").set(rname).up()
                 .attr("waste", "false")
                 .attr("type", repo.xpath("@type").get(0));
+            dirs.xpath(
+                String.format("/deck/repos/repo[name='%s']", rname)
+            ).remove();
         }
         return dirs;
     }
