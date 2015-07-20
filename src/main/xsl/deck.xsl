@@ -56,10 +56,10 @@
             </fieldset>
         </form>
         <xsl:apply-templates select="deck/domains"/>
+        <xsl:apply-templates select="deck/tanks"/>
         <xsl:apply-templates select="deck/repos"/>
         <xsl:apply-templates select="deck/images"/>
         <xsl:apply-templates select="deck/containers"/>
-        <xsl:apply-templates select="deck/tanks"/>
     </xsl:template>
     <xsl:template match="tanks[tank]">
         <p>
