@@ -40,14 +40,14 @@ import org.xembly.Directive;
 import org.xembly.Directives;
 
 /**
- * Stop all waste containers.
+ * Remove all waste images.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.1
+ * @since 0.5
  */
 @Immutable
-public final class StopDocker implements Agent {
+public final class RemoveImages implements Agent {
 
     /**
      * Script to use.
@@ -57,34 +57,30 @@ public final class StopDocker implements Agent {
     /**
      * Ctor.
      */
-    public StopDocker() {
-        this(new Script.Default("stop-docker.sh"));
+    public RemoveImages() {
+        this(new Script.Default("remove-image.sh"));
     }
 
     /**
      * Ctor.
      * @param spt Script.
      */
-    public StopDocker(final Script spt) {
+    public RemoveImages(final Script spt) {
         this.script = spt;
     }
 
     @Override
     public Iterable<Directive> exec(final XML deck) throws IOException {
-        final Collection<XML> containers = deck.nodes(
-            "/deck/containers/container[@waste='true' and @state='dead']"
+        final Collection<String> images = deck.xpath(
+            "/deck/images/image[@waste='true']/name/text()"
         );
         final Directives dirs = new Directives();
-        for (final XML ctr : containers) {
-            final String name = ctr.xpath("name/text()").get(0);
-            this.stop(
-                ctr.xpath("host/text()").get(0),
-                name
-            );
+        for (final String image : images) {
+            this.remove(image);
             dirs.xpath(
                 String.format(
-                    "/deck/containers/container[name='%s']",
-                    name
+                    "/deck/images/image[name='%s']",
+                    image
                 )
             ).remove();
         }
@@ -92,20 +88,18 @@ public final class StopDocker implements Agent {
     }
 
     /**
-     * Stop docker container.
-     * @param host Host
-     * @param name Name of container
+     * Remove image.
+     * @param name Name of image
      * @throws IOException If fails
      */
-    private void stop(final String host, final String name)
-        throws IOException {
+    private void remove(final String name) throws IOException {
         this.script.exec(
-            host,
-            new ArrayMap<String, String>().with("container", name)
+            "t1.thindeck.com",
+            new ArrayMap<String, String>().with("image", name)
         );
         Logger.info(
             StartDocker.class,
-            "Docker container %s stopped at %s", name, host
+            "Docker image %s removed", name
         );
     }
 

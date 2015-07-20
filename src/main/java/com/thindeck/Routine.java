@@ -38,6 +38,7 @@ import com.thindeck.agents.BuildImage;
 import com.thindeck.agents.CheckState;
 import com.thindeck.agents.DetectPorts;
 import com.thindeck.agents.FindTanks;
+import com.thindeck.agents.RemoveImages;
 import com.thindeck.agents.StartDocker;
 import com.thindeck.agents.StopDocker;
 import com.thindeck.agents.Swap;
@@ -185,6 +186,7 @@ final class Routine implements Runnable {
     private static Iterable<Agent> all() {
         return Arrays.asList(
             new BuildImage(),
+            new RemoveImages(),
             new FindTanks(),
             new StartDocker(),
             new DetectPorts(),
