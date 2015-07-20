@@ -38,6 +38,7 @@ import com.thindeck.agents.BuildImage;
 import com.thindeck.agents.CheckState;
 import com.thindeck.agents.DetectPorts;
 import com.thindeck.agents.FindTanks;
+import com.thindeck.agents.PingDocker;
 import com.thindeck.agents.RemoveImages;
 import com.thindeck.agents.StartDocker;
 import com.thindeck.agents.StopDocker;
@@ -192,7 +193,8 @@ final class Routine implements Runnable {
             new DetectPorts(),
             new CheckState(),
             new Swap(),
-            new StopDocker()
+            new StopDocker(),
+            new PingDocker()
         );
     }
 
