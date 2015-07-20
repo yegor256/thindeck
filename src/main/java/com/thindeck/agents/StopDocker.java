@@ -105,7 +105,7 @@ public final class StopDocker implements Agent {
         );
         Logger.info(
             StartDocker.class,
-            "container %s stopped at %s", name, host
+            "Docker container %s stopped at %s", name, host
         );
     }
 

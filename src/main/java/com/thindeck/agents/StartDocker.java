@@ -117,6 +117,7 @@ public final class StartDocker implements Agent {
     private String start(final String image, final String host)
         throws IOException {
         final String name = String.format("%08x", StartDocker.RND.nextInt());
+        final long start = System.currentTimeMillis();
         this.script.exec(
             host,
             new ArrayMap<String, String>()
@@ -124,8 +125,9 @@ public final class StartDocker implements Agent {
                 .with("container", name)
         );
         Logger.info(
-            StartDocker.class,
-            "container %s started at %s", name, host
+            this, "Docker container %s started at %s in %[ms]s",
+            name, host,
+            System.currentTimeMillis() - start
         );
         return name;
     }

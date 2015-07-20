@@ -112,13 +112,17 @@ public final class BuildImage implements Agent {
             "%s-%08x", deck,
             BuildImage.RND.nextInt()
         );
+        final long start = System.currentTimeMillis();
         this.script.exec(
             "t1.thindeck.com",
             new ArrayMap<String, String>()
                 .with("image", name)
                 .with("uri", repo.xpath("uri/text()").get(0))
         );
-        Logger.info(BuildImage.class, "image %s built", name);
+        Logger.info(
+            this, "Docker image %s built in %[ms]s",
+            name, System.currentTimeMillis() - start
+        );
         return name;
     }
 

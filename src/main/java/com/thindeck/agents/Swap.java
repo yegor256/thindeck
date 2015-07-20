@@ -29,6 +29,7 @@
  */
 package com.thindeck.agents;
 
+import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
@@ -49,8 +50,12 @@ public final class Swap implements Agent {
 
     @Override
     public Iterable<Directive> exec(final XML deck) {
-        final boolean ready = deck.nodes(
-            "/deck/containers/container[@waste='true' or state='dead']"
+        final boolean ready = !deck.nodes(
+            Joiner.on(" and ").join(
+                "/deck/containers[not(container/@waste='true')",
+                "not(container/@state='dead')",
+                "container/@type='blue']"
+            )
         ).isEmpty();
         final Directives dirs = new Directives();
         if (ready) {
