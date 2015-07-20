@@ -66,7 +66,7 @@ public final class StartDocker implements Agent {
      * Ctor.
      */
     public StartDocker() {
-        this(new Script("start-docker.sh"));
+        this(new Script.Default("start-docker.sh"));
     }
 
     /**

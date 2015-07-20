@@ -152,33 +152,40 @@
                 <th>Image</th>
                 <th>Tank</th>
                 <th>State</th>
+                <th>Ports</th>
             </tr>
             <xsl:for-each select="container">
                 <tr>
-                   <td>
-                       <xsl:attribute name="style">
-                           <xsl:text>color:</xsl:text>
-                           <xsl:choose>
-                               <xsl:when test="@type='green'">
-                                   <xsl:text>green</xsl:text>
-                               </xsl:when>
-                               <xsl:when test="@type='blue'">
-                                   <xsl:text>blue</xsl:text>
-                               </xsl:when>
-                               <xsl:otherwise>
-                                   <xsl:text>red</xsl:text>
-                               </xsl:otherwise>
-                           </xsl:choose>
-                           <xsl:text>;</xsl:text>
-                           <xsl:if test="@waste='true'">
-                               <xsl:text>text-decoration: line-through;</xsl:text>
-                           </xsl:if>
-                       </xsl:attribute>
-                       <xsl:value-of select="substring(name, 0, 8)"/>
-                   </td>
+                    <td>
+                        <xsl:attribute name="style">
+                            <xsl:text>color:</xsl:text>
+                            <xsl:choose>
+                                <xsl:when test="@type='green'">
+                                    <xsl:text>green</xsl:text>
+                                </xsl:when>
+                                <xsl:when test="@type='blue'">
+                                    <xsl:text>blue</xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>red</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:text>;</xsl:text>
+                            <xsl:if test="@waste='true'">
+                                <xsl:text>text-decoration: line-through;</xsl:text>
+                            </xsl:if>
+                        </xsl:attribute>
+                        <xsl:value-of select="substring(name, 0, 8)"/>
+                    </td>
                     <td><xsl:value-of select="image"/></td>
                     <td><xsl:value-of select="host"/></td>
                     <td><xsl:value-of select="@state"/></td>
+                    <td>
+                        <xsl:text>HTTP=</xsl:text>
+                        <xsl:value-of select="http"/>
+                        <xsl:text>, HTTPS=</xsl:text>
+                        <xsl:value-of select="https"/>
+                    </td>
                 </tr>
             </xsl:for-each>
         </table>

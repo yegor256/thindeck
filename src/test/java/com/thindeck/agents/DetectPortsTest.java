@@ -27,41 +27,50 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.dynamo;
+package com.thindeck.agents;
 
-import com.jcabi.log.Logger;
-import com.thindeck.api.Base;
-import com.thindeck.api.Deck;
-import com.thindeck.api.Events;
-import com.thindeck.api.User;
+import com.google.common.base.Joiner;
+import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
+import com.thindeck.api.Agent;
+import java.io.IOException;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.xembly.Xembler;
 
 /**
- * Integration case for {@link DyEvents}.
+ * Test case for {@link DetectPorts}.
+ *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.5
  */
-public final class DyEventsITCase {
+public final class DetectPortsTest {
 
     /**
-     * DyEvents can add an event.
-     * @throws Exception If there is some problem inside
+     * DetectPorts can detect ports.
+     * @throws IOException If fails
      */
     @Test
-    public void addsEvent() throws Exception {
-        final Base base = new DyBase();
-        final User user = base.user("sarah");
-        user.decks().add("foo");
-        final Deck deck = user.decks().iterate().iterator().next();
-        final Events events = deck.events();
-        Logger.info(this, "some log line, for tests");
-        events.create("first one");
+    public void detectsPorts() throws IOException {
+        final Agent agent = new DetectPorts(
+            new Script.Fake("\n\n hey\nthindeck_http=80\nthindeck_https=456")
+        );
+        final XML deck = new XMLDocument(
+            Joiner.on(' ').join(
+                "<deck><containers><container waste='false'>",
+                "<name>abcd1234</name><host>127.0.0.1</host>",
+                "</container></containers></deck>"
+            )
+        );
         MatcherAssert.assertThat(
-            events.iterate(Long.MAX_VALUE).iterator().next(),
-            Matchers.startsWith("first ")
+            new XMLDocument(
+                new Xembler(agent.exec(deck)).applyQuietly(deck.node())
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/deck/containers/container[http=80 and https=456]"
+            )
         );
     }
 

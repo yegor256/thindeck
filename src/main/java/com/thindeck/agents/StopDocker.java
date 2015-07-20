@@ -58,7 +58,7 @@ public final class StopDocker implements Agent {
      * Ctor.
      */
     public StopDocker() {
-        this(new Script("stop-docker.sh"));
+        this(new Script.Default("stop-docker.sh"));
     }
 
     /**

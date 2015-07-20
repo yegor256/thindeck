@@ -29,34 +29,39 @@
  */
 package com.thindeck.agents;
 
-import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.immutable.ArrayMap;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
 import java.io.IOException;
-import java.security.SecureRandom;
 import java.util.Collection;
-import java.util.Random;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
 /**
- * Builds image from repo.
+ * Discover ports of Docker containers.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.1
+ * @since 0.5
  * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
 @Immutable
-public final class BuildImage implements Agent {
+public final class DetectPorts implements Agent {
 
     /**
-     * Random.
+     * Pattern to find all ports.
      */
-    private static final Random RND = new SecureRandom();
+    private static final Pattern PTN = Pattern.compile(
+        "thindeck_([a-z]+)=(\\d+)",
+        Pattern.CASE_INSENSITIVE | Pattern.MULTILINE
+    );
 
     /**
      * Script to use.
@@ -66,64 +71,70 @@ public final class BuildImage implements Agent {
     /**
      * Ctor.
      */
-    public BuildImage() {
-        this(new Script.Default("build-image.sh"));
+    public DetectPorts() {
+        this(new Script.Default("docker-ports.sh"));
     }
 
     /**
      * Ctor.
      * @param spt Script.
      */
-    public BuildImage(final Script spt) {
+    public DetectPorts(final Script spt) {
         this.script = spt;
     }
 
     @Override
     public Iterable<Directive> exec(final XML deck) throws IOException {
-        final Collection<XML> repos = deck.nodes(
-            Joiner.on(" and ").join(
-                "/deck/repos/repo[@waste='false'",
-                "not(name=/deck/images/image/repo)]"
-            )
+        final Directives dirs = new Directives();
+        final Collection<XML> containers = deck.nodes(
+            // @checkstyle LineLength (1 line)
+            "/deck/containers/container[@waste='false' and (not(http) or not(https))]"
         );
-        final String name = deck.xpath("/deck/@name").get(0);
-        final Directives dirs = new Directives().xpath("/deck").addIf("images");
-        for (final XML repo : repos) {
-            final String image = this.build(name, repo);
-            dirs.xpath("/deck/images").add("image")
-                .add("name").set(image).up()
-                .add("repo").set(repo.xpath("name/text()").get(0)).up()
-                .attr("waste", "false")
-                .attr("type", repo.xpath("@type").get(0));
+        for (final XML ctr : containers) {
+            final String name = ctr.xpath("name/text()").get(0);
+            final String host = ctr.xpath("host/text()").get(0);
+            final Map<String, Integer> ports = this.ports(name, host);
+            dirs.xpath(
+                String.format(
+                    "/deck/containers/container[name='%s']",
+                    name
+                )
+            );
+            for (final Map.Entry<String, Integer> port : ports.entrySet()) {
+                dirs.addIf(port.getKey())
+                    .set(Integer.toString(port.getValue()))
+                    .up();
+            }
         }
         return dirs;
     }
 
     /**
-     * Build a new image.
-     * @param deck Deck name
-     * @param repo Repo
-     * @return Image name
+     * Detect all ports.
+     * @param name Docker container name
+     * @param host Host name of the tank
+     * @return Ports
      * @throws IOException If fails
      */
-    private String build(final String deck, final XML repo)
+    private Map<String, Integer> ports(final String name, final String host)
         throws IOException {
-        final String name = String.format(
-            "%s-%08x", deck,
-            BuildImage.RND.nextInt()
+        final ConcurrentMap<String, Integer> map = new ConcurrentHashMap<>(0);
+        final String stdout = this.script.exec(
+            host,
+            new ArrayMap<String, String>().with("container", name)
         );
-        final long start = System.currentTimeMillis();
-        this.script.exec(
-            "t1.thindeck.com",
-            new ArrayMap<String, String>()
-                .with("image", name)
-                .with("uri", repo.xpath("uri/text()").get(0))
-        );
+        final Matcher matcher = DetectPorts.PTN.matcher(stdout);
+        while (matcher.find()) {
+            map.put(
+                matcher.group(1),
+                Integer.parseInt(matcher.group(2))
+            );
+        }
         Logger.info(
-            this, "Docker image %s built in %[ms]s",
-            name, System.currentTimeMillis() - start
+            this, "Docker container %s at %s exposes these ports: %s",
+            name, host, map
         );
-        return name;
+        return map;
     }
 
 }

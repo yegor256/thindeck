@@ -52,20 +52,7 @@ import org.apache.commons.io.output.TeeOutputStream;
  * @since 0.1
  */
 @Immutable
-final class Script {
-
-    /**
-     * Sript name.
-     */
-    private final transient String name;
-
-    /**
-     * Ctor.
-     * @param res Resource name
-     */
-    Script(final String res) {
-        this.name = res;
-    }
+interface Script {
 
     /**
      * Run it.
@@ -74,46 +61,88 @@ final class Script {
      * @return Stdout
      * @throws IOException If fails
      */
-    public String exec(final String host, final Map<String, String> args)
-        throws IOException {
-        final String script = Joiner.on(" && ").join(
-            Iterables.concat(
-                Arrays.asList(
-                    "dir=$(mktemp -d -t td-XXXX)",
-                    "cd \"${dir}\"",
-                    "cat > script.sh",
-                    "chmod a+x script.sh"
-                ),
-                Iterables.transform(
-                    args.entrySet(),
-                    new Function<Map.Entry<String, String>, String>() {
-                        @Override
-                        public String apply(
-                            final Map.Entry<String, String> ent) {
-                            return String.format(
-                                "export %s=%s",
-                                ent.getKey(), SSH.escape(ent.getValue())
-                            );
+    String exec(String host, Map<String, String> args)
+        throws IOException;
+
+    /**
+     * Default one.
+     */
+    @Immutable
+    final class Default implements Script {
+        /**
+         * Sript name.
+         */
+        private final transient String name;
+        /**
+         * Ctor.
+         * @param res Resource name
+         */
+        Default(final String res) {
+            this.name = res;
+        }
+        @Override
+        public String exec(final String host, final Map<String, String> args)
+            throws IOException {
+            final String script = Joiner.on(" && ").join(
+                Iterables.concat(
+                    Arrays.asList(
+                        "dir=$(mktemp -d -t td-XXXX)",
+                        "cd \"${dir}\"",
+                        "cat > script.sh",
+                        "chmod a+x script.sh"
+                    ),
+                    Iterables.transform(
+                        args.entrySet(),
+                        new Function<Map.Entry<String, String>, String>() {
+                            @Override
+                            public String apply(
+                                final Map.Entry<String, String> ent) {
+                                return String.format(
+                                    "export %s=%s",
+                                    ent.getKey(), SSH.escape(ent.getValue())
+                                );
+                            }
                         }
-                    }
-                ),
-                Arrays.asList(
-                    "./script.sh %s",
-                    "rm -rf \"${dir}\""
+                    ),
+                    Arrays.asList(
+                        "./script.sh %s",
+                        "rm -rf \"${dir}\""
+                    )
                 )
-            )
-        );
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new Shell.Safe(new Shell.Safe(new Remote(host))).exec(
-            script,
-            this.getClass().getResourceAsStream(this.name),
-            new TeeOutputStream(
-                baos,
-                Logger.stream(Level.INFO, this)
-            ),
-            Logger.stream(Level.WARNING, this)
-        );
-        return new String(baos.toByteArray(), Charsets.UTF_8);
+            );
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            new Shell.Safe(new Shell.Safe(new Remote(host))).exec(
+                script,
+                this.getClass().getResourceAsStream(this.name),
+                new TeeOutputStream(
+                    baos,
+                    Logger.stream(Level.INFO, this)
+                ),
+                Logger.stream(Level.WARNING, this)
+            );
+            return new String(baos.toByteArray(), Charsets.UTF_8);
+        }
     }
 
+    /**
+     * Fake one.
+     */
+    @Immutable
+    final class Fake implements Script {
+        /**
+         * Stdout.
+         */
+        private final transient String stdout;
+        /**
+         * Ctor.
+         * @param txt Text of stdout
+         */
+        Fake(final String txt) {
+            this.stdout = txt;
+        }
+        @Override
+        public String exec(final String host, final Map<String, String> args) {
+            return this.stdout;
+        }
+    }
 }
