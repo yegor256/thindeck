@@ -137,23 +137,19 @@ final class DyEvents implements Events {
     @Override
     public void create(final String text) throws IOException {
         final String log = Drain.INSTANCE.fetch();
-        final String body;
-        if (log.isEmpty()) {
-            body = "no details...";
-        } else {
-            body = log;
-        }
-        this.region.table(DyEvents.TBL).put(
-            new Attributes()
-                .with(DyEvents.HASH, this.deck)
-                .with(
-                    DyEvents.RANGE,
-                    new AttributeValue().withN(
-                        Long.toString(System.currentTimeMillis())
+        if (!log.isEmpty()) {
+            this.region.table(DyEvents.TBL).put(
+                new Attributes()
+                    .with(DyEvents.HASH, this.deck)
+                    .with(
+                        DyEvents.RANGE,
+                        new AttributeValue().withN(
+                            Long.toString(System.currentTimeMillis())
+                        )
                     )
-                )
-                .with(DyEvents.ATTR_HEAD, text)
-                .with(DyEvents.ATTR_TEXT, body)
-        );
+                    .with(DyEvents.ATTR_HEAD, text)
+                    .with(DyEvents.ATTR_TEXT, log)
+            );
+        }
     }
 }
