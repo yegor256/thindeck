@@ -53,8 +53,8 @@ public final class Swap implements Agent {
         final boolean ready = !deck.nodes(
             Joiner.on(" and ").join(
                 "/deck/containers[not(container/@waste='true')",
-                "not(container/@state='dead')",
-                "container/@type='green'",
+                "not(container[@state='dead' and @type='blue'])",
+                "not(container[@state='unknown' and @type='blue'])",
                 "container/@type='blue']"
             )
         ).isEmpty();
