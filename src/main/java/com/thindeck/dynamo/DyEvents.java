@@ -106,7 +106,7 @@ final class DyEvents implements Events {
         return Iterables.transform(
             this.region.table(DyEvents.TBL)
                 .frame()
-                .through(new QueryValve())
+                .through(new QueryValve().withScanIndexForward(false))
                 .where(DyEvents.HASH, this.deck)
                 .where(
                     DyEvents.RANGE,
