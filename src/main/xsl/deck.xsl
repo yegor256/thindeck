@@ -37,6 +37,9 @@
     <xsl:include href="/xsl/layout.xsl" />
     <xsl:template match="page" mode="head">
         <title><xsl:value-of select="deck/name"/></title>
+        <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1-rc1.min.js">
+            <xsl:text> </xsl:text>
+        </script>
     </xsl:template>
     <xsl:template match="page" mode="body">
         <xsl:apply-templates select="deck"/>
@@ -192,10 +195,10 @@
     </xsl:template>
     <xsl:template match="events[event]">
         <xsl:for-each select="event">
-            <p>
+            <p onclick="$('event-#{@msec}').toggle();" style="cursor:pointer">
                 <xsl:value-of select="@head"/>
             </p>
-            <pre style="font-size:0.8em">
+            <pre id="event-{@msec}" style="font-size:0.8em;display:none">
                 <xsl:value-of select="."/>
             </pre>
         </xsl:for-each>
