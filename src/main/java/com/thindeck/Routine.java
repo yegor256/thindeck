@@ -35,6 +35,7 @@ import com.jcabi.aspects.ScheduleWithFixedDelay;
 import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
 import com.thindeck.agents.BuildImage;
+import com.thindeck.agents.CheckState;
 import com.thindeck.agents.DetectPorts;
 import com.thindeck.agents.FindTanks;
 import com.thindeck.agents.StartDocker;
@@ -72,7 +73,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 @EqualsAndHashCode
 @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.MINUTES)
 @Loggable(Loggable.INFO)
-@SuppressWarnings("PMD.DoNotUseThreads")
+@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.ExcessiveImports" })
 final class Routine implements Runnable {
 
     /**
@@ -187,6 +188,7 @@ final class Routine implements Runnable {
             new FindTanks(),
             new StartDocker(),
             new DetectPorts(),
+            new CheckState(),
             new Swap(),
             new StopDocker()
         );
