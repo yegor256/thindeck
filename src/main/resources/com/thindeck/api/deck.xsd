@@ -123,7 +123,7 @@
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
-                    <xs:unique name="domainName">
+                    <xs:unique name="uniqueDomainName">
                         <xs:selector xpath="./domain" />
                         <xs:field xpath="." />
                     </xs:unique>
@@ -156,7 +156,7 @@
                             <xs:element name="tank" type="tank" minOccurs="0" maxOccurs="unbounded"/>
                         </xs:sequence>
                     </xs:complexType>
-                    <xs:unique name="tankHost">
+                    <xs:unique name="uniqueTankHost">
                         <xs:selector xpath="./tank" />
                         <xs:field xpath="host" />
                     </xs:unique>
@@ -167,9 +167,13 @@
                             <xs:element name="container" type="container" minOccurs="0" maxOccurs="unbounded"/>
                         </xs:sequence>
                     </xs:complexType>
-                    <xs:unique name="containerID">
+                    <xs:unique name="uniqueContainerName">
                         <xs:selector xpath="./container" />
-                        <xs:field xpath="cid" />
+                        <xs:field xpath="name" />
+                    </xs:unique>
+                    <xs:unique name="oneContainerPerHost">
+                        <xs:selector xpath="./container" />
+                        <xs:field xpath="host" />
                     </xs:unique>
                 </xs:element>
             </xs:all>
