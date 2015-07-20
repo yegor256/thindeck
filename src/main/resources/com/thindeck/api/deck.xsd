@@ -182,7 +182,7 @@
             <xs:attribute name="name">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:pattern value="[a-z0-9A-Z\-]+/[a-z0-9]+"/>
+                        <xs:pattern value="[a-z0-9A-Z\-]+/[a-z]+"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>
