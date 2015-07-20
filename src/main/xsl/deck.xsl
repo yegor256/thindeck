@@ -195,10 +195,10 @@
     </xsl:template>
     <xsl:template match="events[event]">
         <xsl:for-each select="event">
-            <p onclick="$('event-#{@msec}').toggle();" style="cursor:pointer">
+            <p onclick="$('#evt{@msec}').toggle();" style="cursor:pointer">
                 <xsl:value-of select="@head"/>
             </p>
-            <pre id="event-{@msec}" style="font-size:0.8em;display:none">
+            <pre id="evt{@msec}" style="font-size:0.8em;display:none">
                 <xsl:value-of select="."/>
             </pre>
         </xsl:for-each>
