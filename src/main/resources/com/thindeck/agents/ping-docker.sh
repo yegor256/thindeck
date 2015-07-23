@@ -1,4 +1,7 @@
 #!/bin/bash
 
-docker inspect ${container} && echo "ALIVE"
-
+if docker inspect ${container}; then
+  echo "container ${container} is ALIVE"
+else
+  echo "container ${container} is dead"
+fi

@@ -51,7 +51,6 @@
         </p>
         <form action="{links/link[@rel='command']/@href}" method="post">
             <fieldset>
-                <label><xsl:text>Name:</xsl:text></label>
                 <input type="text" name="command"
                     size="50" maxlength="1000"
                     placeholder="tell me what to do..."/>
