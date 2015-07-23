@@ -186,15 +186,15 @@ final class Routine implements Runnable {
      */
     private static Iterable<Agent> all() {
         return Arrays.asList(
-            new BuildImage(),
+            new PingDocker(),
             new RemoveImages(),
+            new BuildImage(),
             new FindTanks(),
-            new StartDocker(),
             new DetectPorts(),
             new CheckState(),
             new Swap(),
             new StopDocker(),
-            new PingDocker()
+            new StartDocker()
         );
     }
 
