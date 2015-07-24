@@ -196,6 +196,9 @@
         <xsl:for-each select="event">
             <p onclick="$('#evt{@msec}').toggle();" style="cursor:pointer">
                 <xsl:value-of select="@head"/>
+                <xsl:text> (</xsl:text>
+                <xsl:value-of select="@ago"/>
+                <xsl:text>)</xsl:text>
             </p>
             <pre id="evt{@msec}" style="font-size:0.8em;display:none">
                 <xsl:value-of select="."/>

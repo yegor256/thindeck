@@ -38,7 +38,9 @@ import com.thindeck.api.Deck;
 import com.thindeck.cockpit.RsPage;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
+import org.ocpsoft.prettytime.PrettyTime;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -90,6 +92,7 @@ public final class TkIndex implements Take {
                 }
             }
         );
+        final PrettyTime pretty = new PrettyTime();
         return new RsPage(
             "/xsl/deck.xsl",
             this.base,
@@ -113,10 +116,12 @@ public final class TkIndex implements Take {
                         @Override
                         public XeSource transform(final String txt) {
                             final String[] parts = txt.split("\n", Tv.THREE);
+                            final long msec = Long.parseLong(parts[1]);
                             return new XeDirectives(
                                 new Directives().add("event")
                                     .attr("head", parts[0])
-                                    .attr("msec", parts[1])
+                                    .attr("msec", Long.toString(msec))
+                                    .attr("ago", pretty.format(new Date(msec)))
                                     .set(parts[2])
                             );
                         }
