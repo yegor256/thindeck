@@ -43,6 +43,7 @@ import com.thindeck.agents.RemoveImages;
 import com.thindeck.agents.StartDocker;
 import com.thindeck.agents.StopDocker;
 import com.thindeck.agents.Swap;
+import com.thindeck.agents.WasteImages;
 import com.thindeck.api.Agent;
 import com.thindeck.api.Base;
 import com.thindeck.api.Deck;
@@ -194,7 +195,8 @@ final class Routine implements Runnable {
             new CheckState(),
             new Swap(),
             new StopDocker(),
-            new StartDocker()
+            new StartDocker(),
+            new WasteImages()
         );
     }
 
