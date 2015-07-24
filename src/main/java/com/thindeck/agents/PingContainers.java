@@ -48,7 +48,7 @@ import org.xembly.Directives;
  * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
 @Immutable
-public final class PingDocker implements Agent {
+public final class PingContainers implements Agent {
 
     /**
      * Script to use.
@@ -58,15 +58,15 @@ public final class PingDocker implements Agent {
     /**
      * Ctor.
      */
-    public PingDocker() {
-        this(new Script.Default("ping-docker.sh"));
+    public PingContainers() {
+        this(new Script.Default("ping-container.sh"));
     }
 
     /**
      * Ctor.
      * @param spt Script.
      */
-    public PingDocker(final Script spt) {
+    public PingContainers(final Script spt) {
         this.script = spt;
     }
 
