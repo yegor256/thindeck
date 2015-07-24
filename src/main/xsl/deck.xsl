@@ -200,7 +200,7 @@
                 <xsl:value-of select="@ago"/>
                 <xsl:text>)</xsl:text>
             </p>
-            <pre id="evt{@msec}" style="font-size:0.8em;display:none;color:#eee">
+            <pre id="evt{@msec}" style="font-size:0.8em;display:none;color:#777">
                 <xsl:value-of select="."/>
             </pre>
         </xsl:for-each>
