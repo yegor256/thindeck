@@ -194,12 +194,12 @@ final class Routine implements Runnable {
             new PingImages(),
             new WasteContainers(),
             new WasteImages(),
+            new StopDocker(),
             new RemoveImages(),
             new BuildImage(),
             new FindTanks(),
             new CheckState(),
             new Swap(),
-            new StopDocker(),
             new StartDocker()
         );
     }
