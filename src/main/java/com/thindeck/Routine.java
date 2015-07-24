@@ -189,14 +189,14 @@ final class Routine implements Runnable {
      */
     private static Iterable<Agent> all() {
         return Arrays.asList(
-            new PingImages(),
+            new DetectPorts(),
             new PingContainers(),
-            new WasteImages(),
+            new PingImages(),
             new WasteContainers(),
+            new WasteImages(),
             new RemoveImages(),
             new BuildImage(),
             new FindTanks(),
-            new DetectPorts(),
             new CheckState(),
             new Swap(),
             new StopDocker(),
