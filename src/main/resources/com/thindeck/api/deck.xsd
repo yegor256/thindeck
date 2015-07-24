@@ -173,10 +173,12 @@
                         <xs:selector xpath="./container" />
                         <xs:field xpath="name" />
                     </xs:unique>
+                    <!--
                     <xs:unique name="oneContainerPerHost">
                         <xs:selector xpath="./container" />
                         <xs:field xpath="host" />
                     </xs:unique>
+                    -->
                 </xs:element>
             </xs:all>
             <xs:attribute name="name">
