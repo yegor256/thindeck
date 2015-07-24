@@ -30,9 +30,9 @@
 package com.thindeck.agents;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
-import java.io.IOException;
 import java.util.Collection;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -60,6 +60,10 @@ public final class WasteImages implements Agent {
                     image
                 )
             ).attr("waste", "true");
+            Logger.info(
+                this, "image %s has broken containers, wasting it",
+                image
+            );
         }
         return dirs;
     }

@@ -30,6 +30,7 @@
 package com.thindeck.agents;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
 import java.util.Collection;
@@ -59,6 +60,10 @@ public final class WasteContainers implements Agent {
                     ctr
                 )
             ).attr("waste", "true").attr("state", "dead");
+            Logger.info(
+                this, "container %s has no HTTP port, wasting it",
+                ctr
+            );
         }
         return dirs;
     }
