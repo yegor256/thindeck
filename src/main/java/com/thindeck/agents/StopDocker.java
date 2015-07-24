@@ -77,6 +77,10 @@ public final class StopDocker implements Agent {
         final Directives dirs = new Directives();
         for (final XML ctr : containers) {
             final String name = ctr.xpath("name/text()").get(0);
+            Logger.info(
+                this, "Docker container %s has to stop, it's waste",
+                name
+            );
             this.stop(
                 ctr.xpath("host/text()").get(0),
                 name

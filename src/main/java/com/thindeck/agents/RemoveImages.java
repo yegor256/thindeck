@@ -76,6 +76,10 @@ public final class RemoveImages implements Agent {
         );
         final Directives dirs = new Directives();
         for (final String image : images) {
+            Logger.info(
+                this, "Docker image %s is waste, has to be removed",
+                image
+            );
             this.remove(image);
             dirs.xpath(
                 String.format(
