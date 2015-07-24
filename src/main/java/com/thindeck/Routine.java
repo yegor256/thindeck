@@ -191,6 +191,8 @@ final class Routine implements Runnable {
         return Arrays.asList(
             new PingImages(),
             new PingContainers(),
+            new WasteImages(),
+            new WasteContainers(),
             new RemoveImages(),
             new BuildImage(),
             new FindTanks(),
@@ -198,9 +200,7 @@ final class Routine implements Runnable {
             new CheckState(),
             new Swap(),
             new StopDocker(),
-            new StartDocker(),
-            new WasteImages(),
-            new WasteContainers()
+            new StartDocker()
         );
     }
 
