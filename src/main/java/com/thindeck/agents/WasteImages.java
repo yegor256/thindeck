@@ -50,7 +50,8 @@ public final class WasteImages implements Agent {
     @Override
     public Iterable<Directive> exec(final XML deck) {
         final Collection<String> images = deck.xpath(
-            "/deck/containers/container[not(http)]/image/text()"
+            // @checkstyle LineLength (1 line)
+            "/deck/containers/container[not(http) and @waste='false']/image/text()"
         );
         final Directives dirs = new Directives();
         for (final String image : images) {
