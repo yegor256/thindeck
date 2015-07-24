@@ -34,15 +34,13 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
-import com.jcabi.log.Logger;
 import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.logging.Level;
-import org.apache.commons.io.output.TeeOutputStream;
+import org.apache.commons.io.output.NullOutputStream;
 
 /**
  * Execs a script.
@@ -114,11 +112,8 @@ interface Script {
             new Shell.Safe(new Shell.Safe(new Remote(host))).exec(
                 script,
                 this.getClass().getResourceAsStream(this.name),
-                new TeeOutputStream(
-                    baos,
-                    Logger.stream(Level.INFO, this)
-                ),
-                Logger.stream(Level.WARNING, this)
+                baos,
+                new NullOutputStream()
             );
             return new String(baos.toByteArray(), Charsets.UTF_8);
         }
