@@ -47,8 +47,11 @@
             <fieldset>
                 <label><xsl:text>Name:</xsl:text></label>
                 <input type="text" name="name"
-                    size="25" maxlength="64"
-                    placeholder="[a-z\-]+"/>
+                    size="25" maxlength="64">
+                    <xsl:attribute name="placeholder">
+                        <xsl:text>[a-z]{3,12}</xsl:text>
+                    </xsl:attribute>
+                </input>
                 <button type="submit">Add</button>
             </fieldset>
         </form>

@@ -89,8 +89,12 @@ public final class BuildImage implements Agent {
         final String name = deck.xpath("/deck/@name").get(0);
         final Directives dirs = new Directives().xpath("/deck").addIf("images");
         for (final XML repo : repos) {
-            final String image = this.build(name, repo);
             final String rname = repo.xpath("name/text()").get(0);
+            Logger.info(
+                this, "There is no Docker image for %s, time to build it",
+                rname
+            );
+            final String image = this.build(name, repo);
             dirs.xpath("/deck/images").add("image")
                 .add("name").set(image).up()
                 .add("repo").set(rname).up()

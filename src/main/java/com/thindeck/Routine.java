@@ -34,7 +34,6 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.ScheduleWithFixedDelay;
 import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
-import com.jcabi.manifests.Manifests;
 import com.thindeck.agents.BuildImage;
 import com.thindeck.agents.CheckState;
 import com.thindeck.agents.DetectPorts;
@@ -53,7 +52,6 @@ import com.thindeck.api.Deck;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -82,17 +80,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 @Loggable(Loggable.INFO)
 @SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.ExcessiveImports" })
 final class Routine implements Runnable {
-
-    /**
-     * Version of the system, to show in header.
-     */
-    private static final String VERSION = String.format(
-        "%s %s %s",
-        // @checkstyle MultipleStringLiterals (3 lines)
-        Manifests.read("Thindeck-Version"),
-        Manifests.read("Thindeck-Revision"),
-        Manifests.read("Thindeck-Date")
-    );
 
     /**
      * Start.
@@ -184,7 +171,6 @@ final class Routine implements Runnable {
      */
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     private void exec(final Deck deck) throws IOException {
-        Logger.info(this, "Thindeck %s, %tc", Routine.VERSION, new Date());
         try {
             for (final Agent agent : this.agents) {
                 deck.exec(agent);

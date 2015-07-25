@@ -93,6 +93,10 @@ public final class DetectPorts implements Agent {
         for (final XML ctr : containers) {
             final String name = ctr.xpath("name/text()").get(0);
             final String host = ctr.xpath("host/text()").get(0);
+            Logger.info(
+                this, "Exposed ports of container %s at %s must be found",
+                name, host
+            );
             final Map<String, Integer> ports = this.ports(name, host);
             dirs.xpath(
                 String.format(

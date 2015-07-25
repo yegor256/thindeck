@@ -33,7 +33,6 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
-import java.io.IOException;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -49,13 +48,13 @@ import org.xembly.Directives;
 public final class FindTanks implements Agent {
 
     @Override
-    public Iterable<Directive> exec(final XML deck) throws IOException {
+    public Iterable<Directive> exec(final XML deck) {
         final Directives dirs = new Directives();
         if (deck.nodes("/deck/tanks/tank").isEmpty()) {
             dirs.xpath("/deck/tanks/tank").remove()
                 .xpath("/deck").addIf("tanks")
                 .add("tank").add("host").set("t1.thindeck.com");
-            Logger.info(this, "one tank t1.thindeck.com found");
+            Logger.info(this, "One tank t1.thindeck.com found");
         }
         return dirs;
     }

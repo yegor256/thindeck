@@ -108,11 +108,11 @@ public final class CheckState implements Agent {
             state = "alive";
         } else {
             state = "dead";
+            Logger.info(
+                this, "HTTP port %d at %s doesn't respond",
+                port, host
+            );
         }
-        Logger.info(
-            this, "HTTP port %d state at %s is: %s",
-            port, host, state
-        );
         return state;
     }
 

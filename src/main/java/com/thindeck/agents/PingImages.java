@@ -98,7 +98,7 @@ public final class PingImages implements Agent {
             "t1.thindeck.com",
             new ArrayMap<String, String>().with("image", name)
         );
-        final boolean exists = stdout.contains("ALIVE");
+        final boolean exists = !stdout.contains("DEAD");
         if (!exists) {
             Logger.info(this, "Docker image %s is absent", name);
         }

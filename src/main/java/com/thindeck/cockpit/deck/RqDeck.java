@@ -72,6 +72,7 @@ public final class RqDeck extends RqWrap {
      * @return The deck
      * @throws IOException If fails
      */
+    @SuppressWarnings("PMD.PreserveStackTrace")
     public Deck deck() throws IOException {
         final User user = new RqUser(this, this.base).get();
         final String name = new RqHeaders.Smart(

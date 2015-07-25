@@ -65,7 +65,7 @@ public final class Swap implements Agent {
                 .xpath("/deck/containers/container[@type='green']")
                 .attr("type", "blue")
                 .attr("waste", "true");
-            Logger.info(this, "swapped blue vs green containers");
+            Logger.info(this, "Swapped blue vs green containers");
         }
         return dirs;
     }

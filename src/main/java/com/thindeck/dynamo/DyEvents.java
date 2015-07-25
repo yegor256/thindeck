@@ -39,6 +39,7 @@ import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
+import com.jcabi.manifests.Manifests;
 import com.thindeck.api.Events;
 import java.io.IOException;
 import lombok.EqualsAndHashCode;
@@ -80,6 +81,17 @@ final class DyEvents implements Events {
      * XML.
      */
     public static final String ATTR_TEXT = "text";
+
+    /**
+     * Version of the system, to show in header.
+     */
+    private static final String VERSION = String.format(
+        "%s %s %s",
+        // @checkstyle MultipleStringLiterals (3 lines)
+        Manifests.read("Thindeck-Version"),
+        Manifests.read("Thindeck-Revision"),
+        Manifests.read("Thindeck-Date")
+    );
 
     /**
      * Region.
@@ -136,8 +148,9 @@ final class DyEvents implements Events {
 
     @Override
     public void create(final String text) throws IOException {
-        final String log = Drain.INSTANCE.fetch();
-        if (!log.isEmpty()) {
+        final StringBuilder log = new StringBuilder(Drain.INSTANCE.fetch());
+        if (log.length() > 0) {
+            log.append('\n').append(DyEvents.VERSION);
             this.region.table(DyEvents.TBL).put(
                 new Attributes()
                     .with(DyEvents.HASH, this.deck)

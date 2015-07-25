@@ -101,7 +101,7 @@ public final class PingContainers implements Agent {
             host,
             new ArrayMap<String, String>().with("container", name)
         );
-        final boolean exists = stdout.contains("ALIVE");
+        final boolean exists = !stdout.contains("DEAD");
         if (!exists) {
             Logger.info(
                 this, "Docker container %s is absent at %s",
