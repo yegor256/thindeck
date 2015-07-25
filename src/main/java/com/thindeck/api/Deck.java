@@ -40,7 +40,7 @@ import javax.validation.constraints.NotNull;
  *
  * <p>Deck is a configurable deployment of sources
  * to Docker containers. Deck should be configured through
- * {@link #update(java.lang.Iterable)}.
+ * {@link #exec(com.thindeck.api.Agent)}.
  *
  * <p>Deck is an XML document with data about the current
  * state of the deck. A deck can contain, for example, the
@@ -49,11 +49,6 @@ import javax.validation.constraints.NotNull;
  *
  * <p>Full description of what information a deck should (and can)
  * include you can get from its XSD schema.
- *
- * <p>Deck should not guarantee any thread-safety. It is assumed
- * that the client calls {@link #read()} and {@link #update(Iterable)}
- * methods consequently. If two threads will update in parallel,
- * the result may be unpredictable.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$

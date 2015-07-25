@@ -34,7 +34,7 @@ import java.io.IOException;
 import javax.validation.constraints.NotNull;
 
 /**
- * Decksitories of a {@link User}.
+ * Decks of a {@link User}.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
