@@ -80,9 +80,6 @@
             <url>http://doc.thindeck.com</url>
         </site>
     </distributionManagement>
-    <properties>
-        <requs.version>1.14</requs.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.takes</groupId>
@@ -243,19 +240,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.requs</groupId>
-                <artifactId>requs-maven-plugin</artifactId>
-                <version>${requs.version}</version>
-                <inherited>false</inherited>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <executions>
                     <execution>
@@ -269,77 +253,6 @@
         </plugins>
     </build>
     <profiles>
-        <profile>
-            <id>site</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>copy-jekyll-sources</id>
-                                <phase>pre-site</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${project.build.directory}/jekyll</outputDirectory>
-                                    <resources>
-                                        <resource>
-                                            <directory>${basedir}/src/jekyll</directory>
-                                            <filtering>true</filtering>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-site-plugin</artifactId>
-                        <configuration>
-                            <deckrtPlugins combine.children="append">
-                                <plugin>
-                                    <groupId>org.requs</groupId>
-                                    <artifactId>requs-maven-plugin</artifactId>
-                                    <version>${requs.version}</version>
-                                    <deckrtSets>
-                                        <deckrtSet>
-                                            <deckrts>
-                                                <deckrt>default</deckrt>
-                                            </deckrts>
-                                        </deckrtSet>
-                                    </deckrtSets>
-                                </plugin>
-                            </deckrtPlugins>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <inherited>false</inherited>
-                        <executions>
-                            <execution>
-                                <id>jekyll-build</id>
-                                <phase>pre-site</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <configuration>
-                                    <executable>jekyll</executable>
-                                    <arguments>
-                                        <argument>build</argument>
-                                        <argument>--source</argument>
-                                        <argument>${project.build.directory}/jekyll</argument>
-                                        <argument>--destination</argument>
-                                        <argument>${project.build.directory}/site</argument>
-                                    </arguments>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
         <profile>
             <id>resources</id>
             <activation>
@@ -508,7 +421,7 @@
                                     <systemProperties>
                                         <property>
                                             <key>dynamo.port</key>
-                                            <value>${dynamodblocal.port}</value>
+                                            <value>${dynamo.port}</value>
                                         </property>
                                     </systemProperties>
                                 </configuration>
@@ -561,7 +474,7 @@
         <profile>
             <id>dynamodb</id>
             <activation>
-                <property><name>!skipTests</name></property>
+                <file><exists>pom.xml</exists></file>
             </activation>
             <properties>
                 <failsafe.dynamo.key>AAAAABBBBBAAAAABBBBB</failsafe.dynamo.key>
@@ -603,7 +516,7 @@
                                 </goals>
                                 <configuration>
                                     <portNames>
-                                        <portName>dynamodblocal.port</portName>
+                                        <portName>dynamo.port</portName>
                                     </portNames>
                                 </configuration>
                             </execution>
@@ -622,7 +535,7 @@
                                     <goal>stop</goal>
                                 </goals>
                                 <configuration>
-                                    <port>${dynamodblocal.port}</port>
+                                    <port>${dynamo.port}</port>
                                     <dist>${project.build.directory}/dynamodb-dist</dist>
                                     <key>${failsafe.dynamo.key}</key>
                                     <secret>${failsafe.dynamo.secret}</secret>
@@ -638,7 +551,7 @@
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <configuration>
                             <systemPropertyVariables combine.children="append">
-                                <dynamo.port>${dynamodblocal.port}</dynamo.port>
+                                <dynamo.port>${dynamo.port}</dynamo.port>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
@@ -668,6 +581,12 @@
                                         <argument>--port=${port}</argument>
                                         <argument>--hit-refresh</argument>
                                     </arguments>
+                                    <systemProperties>
+                                        <property>
+                                            <key>dynamo.port</key>
+                                            <value>${dynamo.port}</value>
+                                        </property>
+                                    </systemProperties>
                                 </configuration>
                             </execution>
                         </executions>

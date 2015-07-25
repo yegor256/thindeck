@@ -34,10 +34,13 @@ import com.thindeck.api.Deck;
 import com.thindeck.api.User;
 import com.thindeck.cockpit.RqUser;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import lombok.EqualsAndHashCode;
 import org.takes.Request;
+import org.takes.facets.forward.RsForward;
 import org.takes.rq.RqHeaders;
 import org.takes.rq.RqWrap;
+import org.takes.rs.RsText;
 
 /**
  * Deck fork.
@@ -74,7 +77,14 @@ public final class RqDeck extends RqWrap {
         final String name = new RqHeaders.Smart(
             new RqHeaders.Base(this)
         ).single("X-Thindeck-Deck");
-        return user.decks().get(name);
+        try {
+            return user.decks().get(name);
+        } catch (final IOException ex) {
+            throw new RsForward(
+                new RsText(ex.getLocalizedMessage()),
+                HttpURLConnection.HTTP_NOT_FOUND
+            );
+        }
     }
 
 }

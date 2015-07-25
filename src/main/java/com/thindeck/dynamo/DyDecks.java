@@ -76,7 +76,19 @@ final class DyDecks implements Decks {
     }
 
     @Override
-    public Deck get(final String name) {
+    public Deck get(final String name) throws IOException {
+        final Iterator<Item> items = this.region
+            .table(DyDeck.TBL)
+            .frame()
+            .through(new QueryValve().withLimit(1))
+            .where(DyDeck.HASH, this.user)
+            .where(DyDeck.RANGE, name)
+            .iterator();
+        if (!items.hasNext()) {
+            throw new IOException(
+                String.format("deck '%s' not found", name)
+            );
+        }
         return new DyDeck(
             this.region, this.user, name
         );

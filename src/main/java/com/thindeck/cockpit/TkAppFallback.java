@@ -77,23 +77,22 @@ final class TkAppFallback extends TkWrap {
      * @return Authenticated takes
      */
     private static Take make(final Take takes) {
+        final Fallback fall = new Fallback() {
+            @Override
+            public Opt<Response> route(final RqFallback req) {
+                return new Opt.Single<Response>(
+                    new RsWithStatus(
+                        new RsText(req.throwable().getLocalizedMessage()),
+                        req.code()
+                    )
+                );
+            }
+        };
         return new TkFallback(
             takes,
             new FbChain(
-                new FbStatus(
-                    HttpURLConnection.HTTP_NOT_FOUND,
-                    new RsWithStatus(
-                        new RsText("page not found"),
-                        HttpURLConnection.HTTP_NOT_FOUND
-                    )
-                ),
-                new FbStatus(
-                    HttpURLConnection.HTTP_BAD_REQUEST,
-                    new RsWithStatus(
-                        new RsText("bad request"),
-                        HttpURLConnection.HTTP_BAD_REQUEST
-                    )
-                ),
+                new FbStatus(HttpURLConnection.HTTP_NOT_FOUND, fall),
+                new FbStatus(HttpURLConnection.HTTP_BAD_REQUEST, fall),
                 new Fallback() {
                     @Override
                     public Opt<Response> route(final RqFallback req)
@@ -128,4 +127,6 @@ final class TkAppFallback extends TkWrap {
             HttpURLConnection.HTTP_INTERNAL_ERROR
         );
     }
+
+
 }

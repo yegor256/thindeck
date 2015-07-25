@@ -4,17 +4,8 @@ install: |-
   export LC_ALL=en_US.UTF-8
   export LANG=en_US.UTF-8
   export LANGUAGE=en_US.UTF-8
-  sudo apt-get update
-  sudo apt-get install -y openjdk-6-jre
-  wget --retry-connrefused http://yar.fruct.org/attachments/download/362/plantuml_7707-1_all.deb
-  sudo dpkg -i plantuml_7707-1_all.deb
-  wget --retry-connrefused https://oss.sonatype.org/content/decksitories/releases/net/sourceforge/plantuml/plantuml/8000/plantuml-8000.jar
-  sudo mv plantuml-8000.jar /usr/share/plantuml/plantuml.jar
   sudo gem install pdd
   sudo gem install est
-  cd src/main/bundler
-  sudo bundle install
-  cd ../../..
   git clone --depth=1 https://github.com/n1k0/casperjs.git /tmp/casperjs
   export PATH=$PATH:/tmp/casperjs/bin
 architect:
@@ -79,4 +70,4 @@ release:
     git push -f heroku $(git symbolic-ref --short HEAD):master
     git reset HEAD~1
     curl -f --connect-timeout 15 --retry 5 --retry-delay 30 http://thindeck.herokuapp.com
-    # mvn clean site-deploy -Psite --settings settings.xml
+    mvn clean site-deploy -Psite --settings settings.xml || echo 'failed to deploy site'

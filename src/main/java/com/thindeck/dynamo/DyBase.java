@@ -123,9 +123,15 @@ public final class DyBase implements Base {
             key, Manifests.read("Thindeck-DynamoSecret")
         );
         if (key.startsWith("AAAAA")) {
+            final String port = System.getProperty("dynamo.port");
+            if (port == null) {
+                throw new IllegalStateException(
+                    "dynamo.port system property is not set, check pom.xml"
+                );
+            }
             creds = new Credentials.Direct(
                 creds,
-                Integer.parseInt(System.getProperty("dynamo.port"))
+                Integer.parseInt(port)
             );
         }
         return new Region.Prefixed(
