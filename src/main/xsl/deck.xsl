@@ -59,7 +59,7 @@
         </form>
         <xsl:apply-templates select="deck/domains"/>
         <xsl:apply-templates select="deck/tanks"/>
-        <xsl:apply-templates select="deck/repos"/>
+        <xsl:apply-templates select="deck/repo"/>
         <xsl:apply-templates select="deck/images"/>
         <xsl:apply-templates select="deck/containers"/>
     </xsl:template>
@@ -81,39 +81,15 @@
             </xsl:for-each>
         </p>
     </xsl:template>
-    <xsl:template match="repos[repo]">
-        <table>
-            <tr>
-                <th>Repo</th>
-                <th>URI</th>
-            </tr>
-            <xsl:for-each select="repo">
-                <tr>
-                    <td>
-                        <xsl:attribute name="style">
-                            <xsl:text>color:</xsl:text>
-                            <xsl:choose>
-                                <xsl:when test="@type='green'">
-                                    <xsl:text>green</xsl:text>
-                                </xsl:when>
-                                <xsl:when test="@type='blue'">
-                                    <xsl:text>blue</xsl:text>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:text>?</xsl:text>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                            <xsl:text>;</xsl:text>
-                            <xsl:if test="@waste='true'">
-                                <xsl:text>text-decoration: line-through;</xsl:text>
-                            </xsl:if>
-                        </xsl:attribute>
-                        <xsl:value-of select="name"/>
-                    </td>
-                    <td><xsl:value-of select="uri"/></td>
-                </tr>
-            </xsl:for-each>
-        </table>
+    <xsl:template match="repo">
+        <p>
+            <xsl:text>Repo </xsl:text>
+            <code>
+                <xsl:value-of select="uri"/>
+            </code>
+            <xsl:text>: </xsl:text>
+            <xsl:value-of select="uri"/>
+        </p>
     </xsl:template>
     <xsl:template match="images[image]">
         <table>
