@@ -42,6 +42,12 @@
             <xs:pattern value="[0-9a-f]{8}"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="port">
+        <xs:restriction base="xs:integer">
+            <xs:maxExclusive value="65536"/>
+            <xs:minInclusive value="1024"/>
+        </xs:restriction>
+    </xs:simpleType>
     <xs:complexType name="repo">
         <xs:all>
             <xs:element name="name" type="repoName"/>
@@ -81,8 +87,8 @@
         <xs:all>
             <xs:element name="image" type="imageName"/>
             <xs:element name="host" type="xs:string"/>
-            <xs:element name="http" type="xs:integer" minOccurs="0"/>
-            <xs:element name="https" type="xs:integer" minOccurs="0"/>
+            <xs:element name="http" type="port" minOccurs="0"/>
+            <xs:element name="https" type="port" minOccurs="0"/>
             <xs:element name="name">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">

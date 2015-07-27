@@ -56,7 +56,11 @@ public final class DetectPortsTest {
     public void detectsPorts() throws IOException {
         final Agent agent = new DetectPorts(
             new Script.Fake(
-                "\n\n hey\nthindeck_http=0.0.0.0:80\nthindeck_https=0.0.0.0:456"
+                Joiner.on('\n').join(
+                    "\n\n hey\nthindeck_http=0.0.0.0:8080",
+                    "something else here",
+                    "thindeck_https=0.0.0.0:45600"
+                )
             )
         );
         final XML deck = new XMLDocument(
@@ -71,7 +75,7 @@ public final class DetectPortsTest {
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),
             XhtmlMatchers.hasXPaths(
-                "/deck/containers/container[http=80 and https=456]"
+                "/deck/containers/container[http=8080 and https=45600]"
             )
         );
     }
