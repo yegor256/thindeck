@@ -50,11 +50,11 @@ import org.takes.rq.RqFake;
 public final class TkCommandTest {
 
     /**
-     * TkCommand can parse a command.
+     * TkCommand can add new domain.
      * @throws Exception If something goes wrong.
      */
     @Test
-    public void parsesSimpleCommand() throws Exception {
+    public void addsNewDomain() throws Exception {
         final String name = "foo";
         final String urn = "urn:test:19";
         final Request req = new RqWithAuth(
@@ -74,6 +74,35 @@ public final class TkCommandTest {
             XhtmlMatchers.hasXPaths(
                 "/deck/domains[count(domain)=1]",
                 "/deck/domains[domain='test.thindeck.com']"
+            )
+        );
+    }
+
+    /**
+     * TkCommand can add new repo.
+     * @throws Exception If something goes wrong.
+     */
+    @Test
+    public void addsNewRepo() throws Exception {
+        final String name = "lion";
+        final String urn = "urn:test:443";
+        final Request req = new RqWithAuth(
+            urn,
+            new RqFake(
+                "PUT",
+                String.format("/d/%s?ooo", name),
+                "command=repo+put+https://github.com/yegor256/thindeck.git"
+            )
+        );
+        final Base base = new MkBase();
+        final Decks decks = base.user(urn).decks();
+        decks.add(name);
+        new FkDeck("", new TkCommand(base)).route(req).get();
+        MatcherAssert.assertThat(
+            new Deck.Smart(decks.get(name)).xml(),
+            XhtmlMatchers.hasXPaths(
+                "/deck/repo",
+                "/deck/repo/uri"
             )
         );
     }
