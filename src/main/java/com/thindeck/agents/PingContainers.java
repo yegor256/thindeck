@@ -103,7 +103,7 @@ public final class PingContainers implements Agent {
         );
         final boolean exists = !stdout.contains("DEAD");
         if (!exists) {
-            Logger.info(
+            Logger.error(
                 this, "Docker container %s is absent at %s",
                 name, host
             );

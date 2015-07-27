@@ -100,7 +100,7 @@ public final class PingImages implements Agent {
         );
         final boolean exists = !stdout.contains("DEAD");
         if (!exists) {
-            Logger.info(this, "Docker image %s is absent", name);
+            Logger.error(this, "Docker image %s is absent", name);
         }
         return exists;
     }
