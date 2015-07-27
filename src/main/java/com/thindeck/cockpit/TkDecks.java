@@ -70,7 +70,7 @@ public final class TkDecks implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Href home = new Href("/r");
+        final Href home = new Href("/d");
         return new RsPage(
             "/xsl/decks.xsl",
             this.base,
