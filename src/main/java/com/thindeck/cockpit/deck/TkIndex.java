@@ -76,7 +76,7 @@ public final class TkIndex implements Take {
     @Override
     public Response act(final Request req) throws IOException {
         final Deck deck = new RqDeck(this.base, req).deck();
-        final Href home = new Href("/r").path(deck.name());
+        final Href home = new Href("/d").path(deck.name());
         final PrettyTime pretty = new PrettyTime();
         return new RsPage(
             "/xsl/deck.xsl",
