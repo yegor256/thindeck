@@ -60,11 +60,20 @@ public final class Swap implements Agent {
         ).isEmpty();
         final Directives dirs = new Directives();
         if (ready) {
-            dirs.xpath("/deck/containers/container[@type='blue']")
-                .attr("type", "green")
-                .xpath("/deck/containers/container[@type='green']")
-                .attr("type", "blue")
-                .attr("waste", "true");
+            for (final XML ctr : deck.nodes("/deck/containers/container")) {
+                dirs.xpath(
+                    String.format(
+                        "/deck/containers/container[name='%s']",
+                        ctr.xpath("name/text()").get(0)
+                    )
+                );
+                final String attr = "type";
+                if ("blue".equals(ctr.xpath("@type").get(0))) {
+                    dirs.attr(attr, "green");
+                } else {
+                    dirs.attr(attr, "blue").attr("waste", "true");
+                }
+            }
             Logger.info(this, "Swapped blue vs green containers");
         }
         return dirs;

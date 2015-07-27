@@ -85,7 +85,7 @@
         <p>
             <xsl:text>Repo </xsl:text>
             <code>
-                <xsl:value-of select="uri"/>
+                <xsl:value-of select="name"/>
             </code>
             <xsl:text>: </xsl:text>
             <xsl:value-of select="uri"/>
