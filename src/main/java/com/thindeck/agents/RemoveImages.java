@@ -72,7 +72,8 @@ public final class RemoveImages implements Agent {
     @Override
     public Iterable<Directive> exec(final XML deck) throws IOException {
         final Collection<String> images = deck.xpath(
-            "/deck/images/image[@waste='true']/name/text()"
+            // @checkstyle LineLength (1 line)
+            "/deck/images/image[@waste='true' and not(name=/deck/containers/container/image)]/name/text()"
         );
         final Directives dirs = new Directives();
         for (final String image : images) {
