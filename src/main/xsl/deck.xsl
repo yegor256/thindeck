@@ -157,7 +157,23 @@
                     </td>
                     <td><xsl:value-of select="image"/></td>
                     <td><xsl:value-of select="host"/></td>
-                    <td><xsl:value-of select="@state"/></td>
+                    <td>
+                        <xsl:attribute name="style">
+                            <xsl:text>color:</xsl:text>
+                            <xsl:choose>
+                                <xsl:when test="@state='alive'">
+                                    <xsl:text>green</xsl:text>
+                                </xsl:when>
+                                <xsl:when test="@state='dead'">
+                                    <xsl:text>red</xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>inherit</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:attribute>
+                        <xsl:value-of select="@state"/>
+                    </td>
                     <td>
                         <xsl:text>HTTP=</xsl:text>
                         <xsl:value-of select="http"/>
