@@ -27,72 +27,53 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.mock;
+package com.thindeck.cockpit.deck;
 
-import com.google.common.io.Files;
-import com.jcabi.aspects.Immutable;
+import com.jcabi.matchers.XhtmlMatchers;
 import com.thindeck.api.Base;
 import com.thindeck.api.Deck;
-import com.thindeck.api.User;
-import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import org.apache.commons.io.FileUtils;
+import com.thindeck.api.Decks;
+import com.thindeck.mock.MkBase;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.takes.Request;
+import org.takes.facets.auth.RqWithAuth;
+import org.takes.rq.RqFake;
 
 /**
- * Mock of {@link Base}.
- *
+ * Test case for {@link TkCommand}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.4
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkBase implements Base {
+public final class TkCommandTest {
 
     /**
-     * Dir path.
+     * TkCommand can parse a command.
+     * @throws Exception If something goes wrong.
      */
-    private final transient String path;
-
-    /**
-     * Ctor.
-     * @throws IOException If fails
-     */
-    public MkBase() throws IOException {
-        this(MkBase.temp());
+    @Test
+    public void parsesSimpleCommand() throws Exception {
+        final String name = "foo";
+        final String urn = "urn:test:19";
+        final Request req = new RqWithAuth(
+            urn,
+            new RqFake(
+                "GET",
+                String.format("/d/%s", name),
+                "command=domain+add+test.thindeck.com"
+            )
+        );
+        final Base base = new MkBase();
+        final Decks decks = base.user(urn).decks();
+        decks.add(name);
+        new FkDeck("", new TkCommand(base)).route(req).get();
+        MatcherAssert.assertThat(
+            new Deck.Smart(decks.get(name)).xml(),
+            XhtmlMatchers.hasXPaths(
+                "/deck/domains[count(domain)=1]",
+                "/deck/domains[domain='test.thindeck.com']"
+            )
+        );
     }
-
-    /**
-     * Ctor.
-     * @param file File to use for XML
-     */
-    public MkBase(final File file) {
-        this.path = file.getAbsolutePath();
-    }
-
-    @Override
-    public User user(final String name) {
-        return new MkUser(new File(this.path));
-    }
-
-    @Override
-    public Iterable<Deck> active() throws IOException {
-        return Collections.<Deck>singleton(new MkDeck());
-    }
-
-    /**
-     * Create temp dir.
-     * @return Temp dir
-     * @throws IOException If fails
-     */
-    private static File temp() throws IOException {
-        final File file = Files.createTempDir();
-        FileUtils.forceDeleteOnExit(file);
-        return file;
-    }
-
 }

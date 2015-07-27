@@ -82,7 +82,7 @@ final class FkDeck extends FkWrap {
     private static Opt<Response> route(final String regex, final Take take,
         final Request req) throws IOException {
         return new FkRegex(
-            String.format("/r/([a-z\\-]+)%s", regex),
+            String.format("/d/([a-z\\-]+)%s", regex),
             new TkRegex() {
                 @Override
                 public Response act(final RqRegex rreq) throws IOException {
@@ -113,7 +113,7 @@ final class FkDeck extends FkWrap {
                             ex,
                             new RqHref.Smart(
                                 new RqHref.Base(req)
-                            ).home().path("r").path(deck)
+                            ).home().path("d").path(deck)
                         );
                     }
                     throw ex;

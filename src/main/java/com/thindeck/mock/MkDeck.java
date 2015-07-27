@@ -42,6 +42,7 @@ import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.CharEncoding;
 import org.xembly.Xembler;
 
@@ -80,28 +81,29 @@ public final class MkDeck implements Deck {
 
     @Override
     public String name() {
-        return "test";
+        return FilenameUtils.getBaseName(this.path);
     }
 
     @Override
     public void exec(final Agent agent) throws IOException {
-        final XML xml = new StrictXML(
+        final XML before = new StrictXML(
             new XMLDocument(new File(this.path)),
             Deck.SCHEMA
+        );
+        final XML after = new XMLDocument(
+            new Xembler(agent.exec(before)).applyQuietly(before.node())
         );
         FileUtils.write(
             new File(this.path),
             new StrictXML(
-                new XMLDocument(
-                    new Xembler(agent.exec(xml)).applyQuietly(xml.node())
-                ),
+                after,
                 Deck.SCHEMA
             ).toString(),
             CharEncoding.UTF_8
         );
         Logger.info(
-            this, "deck saved to %s (%d bytes)", this.path,
-            new File(this.path).length()
+            this, "deck saved to %s (%d bytes):\n%s", this.path,
+            new File(this.path).length(), after
         );
     }
 

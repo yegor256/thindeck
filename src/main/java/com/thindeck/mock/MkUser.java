@@ -29,11 +29,15 @@
  */
 package com.thindeck.mock;
 
+import com.google.common.io.Files;
 import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Decks;
 import com.thindeck.api.User;
+import java.io.File;
+import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.io.FileUtils;
 
 /**
  * Mock of {@link User}.
@@ -47,6 +51,27 @@ import lombok.ToString;
 @EqualsAndHashCode
 public final class MkUser implements User {
 
+    /**
+     * Dir path.
+     */
+    private final transient String path;
+
+    /**
+     * Ctor.
+     * @throws IOException If fails
+     */
+    public MkUser() throws IOException {
+        this(MkUser.temp());
+    }
+
+    /**
+     * Ctor.
+     * @param file File to use for XML
+     */
+    public MkUser(final File file) {
+        this.path = file.getAbsolutePath();
+    }
+
     @Override
     public String name() {
         return "test";
@@ -54,7 +79,18 @@ public final class MkUser implements User {
 
     @Override
     public Decks decks() {
-        return new MkDecks();
+        return new MkDecks(new File(this.path));
+    }
+
+    /**
+     * Create temp dir.
+     * @return Temp dir
+     * @throws IOException If fails
+     */
+    private static File temp() throws IOException {
+        final File file = Files.createTempDir();
+        FileUtils.forceDeleteOnExit(file);
+        return file;
     }
 
 }

@@ -29,13 +29,13 @@
  */
 package com.thindeck.cockpit.deck;
 
-import com.jcabi.xml.XML;
-import com.thindeck.api.Agent;
 import com.thindeck.api.Base;
+import com.thindeck.api.Deck;
 import com.thindeck.api.Decks;
 import com.thindeck.cockpit.RqUser;
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Random;
 import org.takes.Request;
 import org.takes.Response;
@@ -82,14 +82,7 @@ public final class TkCommand implements Take {
         final String cmd = new RqForm.Smart(
             new RqForm.Base(req)
         ).single("command");
-        decks.get(deck).exec(
-            new Agent() {
-                @Override
-                public Iterable<Directive> exec(final XML xml) {
-                    return TkCommand.answer(cmd);
-                }
-            }
-        );
+        new Deck.Smart(decks.get(deck)).update(TkCommand.answer(cmd));
         return new RsForward(new RsFlash("thanks!"));
     }
 
@@ -97,43 +90,95 @@ public final class TkCommand implements Take {
      * Process command.
      * @param cmd Command
      * @return Directives
+     * @throws IOException If fails
      */
-    private static Iterable<Directive> answer(final String cmd) {
+    private static Iterable<Directive> answer(final String cmd)
+        throws IOException {
         final Directives dirs = new Directives().xpath("/deck");
         final String[] parts = cmd.trim().split("\\s+");
         if ("domain".equals(parts[0])) {
-            if ("add".equals(parts[1])) {
-                dirs.addIf("domains").add("domain").set(parts[2]);
-            } else if ("remove".equals(parts[1])) {
-                dirs.xpath(
-                    String.format(
-                        "domains/domain[.='%s']", parts[2]
-                    )
-                ).remove();
-            } else {
-                throw new IllegalArgumentException(
+            dirs.append(
+                TkCommand.domain(
+                    Arrays.copyOfRange(parts, 1, parts.length)
+                )
+            );
+        } else if ("repo".equals(parts[0])) {
+            dirs.append(
+                TkCommand.repo(
+                    Arrays.copyOfRange(parts, 1, parts.length)
+                )
+            );
+        }
+        return dirs;
+    }
+
+    /**
+     * Domain command.
+     * @param args Arguments
+     * @return Directives
+     * @throws IOException If fails
+     */
+    private static Iterable<Directive> domain(final String... args)
+        throws IOException {
+        if (args.length == 0) {
+            throw new RsForward(
+                new RsFlash(
+                    "'domain' command supports 'add' and 'remove'"
+                )
+            );
+        }
+        final Directives dirs = new Directives().xpath("/deck");
+        if ("add".equals(args[0])) {
+            dirs.addIf("domains").add("domain").set(args[1]);
+        } else if ("remove".equals(args[0])) {
+            dirs.xpath(
+                String.format(
+                    "domains/domain[.='%s']", args[1]
+                )
+            ).remove();
+        } else {
+            throw new RsForward(
+                new RsFlash(
                     String.format(
                         "should be either 'add' or 'remove': '%s' is wrong",
-                        parts[1]
+                        args[0]
                     )
-                );
-            }
-        } else if ("repo".equals(parts[0])) {
-            if ("put".equals(parts[1])) {
-                dirs.addIf("repos").add("repo")
-                    .attr("waste", "false")
-                    .attr("type", "blue")
-                    .add("name")
-                    .set(String.format("%08x", TkCommand.RND.nextInt()))
-                    .up().add("uri").set(parts[2]).up();
-            } else {
-                throw new IllegalArgumentException(
-                    String.format(
-                        "should be only 'put': '%s' is wrong",
-                        parts[1]
-                    )
-                );
-            }
+                )
+            );
+        }
+        return dirs;
+    }
+
+    /**
+     * Repo command.
+     * @param args Arguments
+     * @return Directives
+     * @throws IOException If fails
+     */
+    private static Iterable<Directive> repo(final String... args)
+        throws IOException {
+        if (args.length == 0) {
+            throw new RsForward(
+                new RsFlash(
+                    "'repo' command supports 'put'"
+                )
+            );
+        }
+        final Directives dirs = new Directives().xpath("/deck");
+        if ("put".equals(args[0])) {
+            dirs.addIf("repos").add("repo")
+                .attr("waste", "false")
+                .attr("type", "blue")
+                .add("name")
+                .set(String.format("%08x", TkCommand.RND.nextInt()))
+                .up().add("uri").set(args[1]).up();
+        } else {
+            throw new IllegalArgumentException(
+                String.format(
+                    "should be only 'put': '%s' is wrong",
+                    args[0]
+                )
+            );
         }
         return dirs;
     }

@@ -52,10 +52,11 @@ public interface User {
     String name() throws IOException;
 
     /**
-     * Decksitories.
-     * @return All decksitories of this user
+     * Decks.
+     * @return All decks of this user
+     * @throws IOException If fails
      */
-    @NotNull(message = "decksitories can't be null")
-    Decks decks();
+    @NotNull(message = "decks can't be null")
+    Decks decks() throws IOException;
 
 }

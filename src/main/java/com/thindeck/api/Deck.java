@@ -30,10 +30,14 @@
 package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.xml.XML;
 import com.jcabi.xml.XSD;
 import com.jcabi.xml.XSDDocument;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.concurrent.atomic.AtomicReference;
 import javax.validation.constraints.NotNull;
+import org.xembly.Directive;
 
 /**
  * Deck.
@@ -84,5 +88,55 @@ public interface Deck {
      * @return Events
      */
     Events events();
+
+    /**
+     * Smart.
+     */
+    final class Smart {
+        /**
+         * Original deck.
+         */
+        private final transient Deck deck;
+        /**
+         * Ctor.
+         * @param dck Deck
+         */
+        public Smart(final Deck dck) {
+            this.deck = dck;
+        }
+        /**
+         * Get its XML.
+         * @return XML of the deck
+         * @throws IOException If fails
+         */
+        public XML xml() throws IOException {
+            final AtomicReference<XML> xml = new AtomicReference<>();
+            this.deck.exec(
+                new Agent() {
+                    @Override
+                    public Iterable<Directive> exec(final XML doc) {
+                        xml.set(doc);
+                        return Collections.emptyList();
+                    }
+                }
+            );
+            return xml.get();
+        }
+        /**
+         * Update XML with these directives.
+         * @param dirs Directives to use
+         * @throws IOException If fails
+         */
+        public void update(final Iterable<Directive> dirs) throws IOException {
+            this.deck.exec(
+                new Agent() {
+                    @Override
+                    public Iterable<Directive> exec(final XML xml) {
+                        return dirs;
+                    }
+                }
+            );
+        }
+    }
 
 }

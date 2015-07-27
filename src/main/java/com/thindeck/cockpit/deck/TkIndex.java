@@ -31,15 +31,11 @@ package com.thindeck.cockpit.deck;
 
 import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Tv;
-import com.jcabi.xml.XML;
-import com.thindeck.api.Agent;
 import com.thindeck.api.Base;
 import com.thindeck.api.Deck;
 import com.thindeck.cockpit.RsPage;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Date;
-import java.util.concurrent.atomic.AtomicReference;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.takes.Request;
 import org.takes.Response;
@@ -51,7 +47,6 @@ import org.takes.rs.xe.XeDirectives;
 import org.takes.rs.xe.XeLink;
 import org.takes.rs.xe.XeSource;
 import org.takes.rs.xe.XeTransform;
-import org.xembly.Directive;
 import org.xembly.Directives;
 
 /**
@@ -82,16 +77,6 @@ public final class TkIndex implements Take {
     public Response act(final Request req) throws IOException {
         final Deck deck = new RqDeck(this.base, req).deck();
         final Href home = new Href("/r").path(deck.name());
-        final AtomicReference<XML> xml = new AtomicReference<>();
-        deck.exec(
-            new Agent() {
-                @Override
-                public Iterable<Directive> exec(final XML doc) {
-                    xml.set(doc);
-                    return Collections.emptyList();
-                }
-            }
-        );
         final PrettyTime pretty = new PrettyTime();
         return new RsPage(
             "/xsl/deck.xsl",
@@ -99,7 +84,9 @@ public final class TkIndex implements Take {
             req,
             new XeAppend(
                 "deck",
-                new XeDirectives(Directives.copyOf(xml.get().node())),
+                new XeDirectives(
+                    Directives.copyOf(new Deck.Smart(deck).xml().node())
+                ),
                 new XeChain(
                     new XeLink("open", home.path("open")),
                     new XeLink("command", home.path("command"))

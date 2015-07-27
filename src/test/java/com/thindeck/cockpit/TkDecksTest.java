@@ -53,16 +53,18 @@ public final class TkDecksTest {
     @Test
     public void rendersXmlPage() throws Exception {
         final Base base = new MkBase();
+        final String urn = "urn:test:199";
+        base.user(urn).decks().add("elephant");
         MatcherAssert.assertThat(
             new RsPrint(
                 new RsPrettyXML(
-                    new TkDecks(base).act(new RqWithAuth("urn:test:1"))
+                    new TkDecks(base).act(new RqWithAuth(urn))
                 )
             ).printBody(),
             XhtmlMatchers.hasXPaths(
                 "/page/links/link[@rel='home']",
                 "/page/decks[count(deck)=1]",
-                "//deck[name='test']",
+                "//deck[name='elephant']",
                 "//deck/links/link[@rel='open']"
             )
         );
