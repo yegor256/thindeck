@@ -59,7 +59,7 @@ public final class DetectPorts implements Agent {
      * Pattern to find all ports.
      */
     private static final Pattern PTN = Pattern.compile(
-        "thindeck_([a-z]+)=(\\d+)",
+        "thindeck_([a-z]+)=(?:[\\d+\\.]+):(\\d+)",
         Pattern.CASE_INSENSITIVE | Pattern.MULTILINE
     );
 

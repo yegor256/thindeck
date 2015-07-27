@@ -55,7 +55,9 @@ public final class DetectPortsTest {
     @Test
     public void detectsPorts() throws IOException {
         final Agent agent = new DetectPorts(
-            new Script.Fake("\n\n hey\nthindeck_http=80\nthindeck_https=456")
+            new Script.Fake(
+                "\n\n hey\nthindeck_http=0.0.0.0:80\nthindeck_https=0.0.0.0:456"
+            )
         );
         final XML deck = new XMLDocument(
             Joiner.on(' ').join(
