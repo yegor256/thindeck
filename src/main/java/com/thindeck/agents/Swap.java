@@ -61,20 +61,36 @@ public final class Swap implements Agent {
         final Directives dirs = new Directives();
         if (ready) {
             for (final XML ctr : deck.nodes("/deck/containers/container")) {
+                final String name = ctr.xpath("name/text()").get(0);
                 dirs.xpath(
                     String.format(
                         "/deck/containers/container[name='%s']",
-                        ctr.xpath("name/text()").get(0)
+                        name
                     )
                 );
-                final String attr = "type";
+                final String img = ctr.xpath("image/text()").get(0);
                 if ("blue".equals(ctr.xpath("@type").get(0))) {
-                    dirs.attr(attr, "green");
+                    dirs.attr("type", "green");
+                    Logger.info(this, "Blue container %s set to green", name);
+                    dirs.xpath(
+                        String.format(
+                            "/deck/images/image[name='%s']",
+                            img
+                        )
+                    ).attr("type", "green");
+                    Logger.info(this, "Image %s set to green", img);
                 } else {
-                    dirs.attr(attr, "blue").attr("waste", "true");
+                    dirs.attr("waste", "true");
+                    Logger.info(this, "Green container %s set to waste", name);
+                    dirs.xpath(
+                        String.format(
+                            "/deck/images/image[name='%s']",
+                            img
+                        )
+                    ).attr("waste", "true");
+                    Logger.info(this, "Image %s set to waste", img);
                 }
             }
-            Logger.info(this, "Swapped blue vs green containers");
         }
         return dirs;
     }

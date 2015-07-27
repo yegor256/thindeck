@@ -29,6 +29,7 @@
  */
 package com.thindeck.agents;
 
+import com.google.common.base.Joiner;
 import com.jcabi.matchers.XhtmlMatchers;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
@@ -54,12 +55,36 @@ public final class SwapTest {
     @Test
     public void swapsGreenAndBlueContainers() throws IOException {
         final Agent agent = new Swap();
-        final XML deck = new XMLDocument("<deck/>");
+        final XML deck = new XMLDocument(
+            Joiner.on(' ').join(
+                "<deck name='test/test'><containers>",
+                " <container type='blue'>",
+                "  <name>aaaaaaaa</name>",
+                "  <image>ffffffff</image>",
+                " </container><container type='green'>",
+                "  <name>bbbbbbbb</name>",
+                "  <image>eeeeeeee</image>",
+                " </container>",
+                "</containers>",
+                "<images>",
+                " <image type='blue'><name>ffffffff</name></image>",
+                " <image type='green'><name>eeeeeeee</name></image>",
+                "</images></deck>"
+            )
+        );
         MatcherAssert.assertThat(
             new XMLDocument(
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),
-            XhtmlMatchers.hasXPaths("/deck")
+            XhtmlMatchers.hasXPaths(
+                "/deck/containers[count(container)=2]",
+                "//container[name='aaaaaaaa' and @type='green']",
+                "//container[name='bbbbbbbb' and @type='green']",
+                "//container[name='bbbbbbbb' and @waste='true']",
+                "/deck/images[count(image)=2]",
+                "//image[name='ffffffff' and @type='green']",
+                "//image[name='eeeeeeee' and @type='green' and @waste='true']"
+            )
         );
     }
 
