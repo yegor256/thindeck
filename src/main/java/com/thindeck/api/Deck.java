@@ -31,6 +31,7 @@ package com.thindeck.api;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSD;
 import com.jcabi.xml.XSDDocument;
 import java.io.IOException;
@@ -38,6 +39,7 @@ import java.util.Collections;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.validation.constraints.NotNull;
 import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
  * Deck.
@@ -121,6 +123,18 @@ public interface Deck {
                 }
             );
             return xml.get();
+        }
+        /**
+         * Update XML with these exact content.
+         * @param xml XML to save
+         * @throws IOException If fails
+         */
+        public void update(final String xml) throws IOException {
+            this.update(
+                new Directives().xpath("/*").remove().append(
+                    Directives.copyOf(new XMLDocument(xml).node())
+                )
+            );
         }
         /**
          * Update XML with these directives.

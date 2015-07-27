@@ -167,7 +167,7 @@ public final class TkApp extends TkWrap {
                     new FkRegex("/", new TkDecks(base)),
                     new FkRegex("/acc", new TkAccount(base)),
                     new FkRegex("/add", new TkAddDeck(base)),
-                    new FkRegex("/r/.*", new TkDeck(base))
+                    new FkRegex("/d/.*", new TkDeck(base))
                 )
             )
         );

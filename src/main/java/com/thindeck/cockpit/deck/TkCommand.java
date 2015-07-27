@@ -108,6 +108,12 @@ public final class TkCommand implements Take {
                     Arrays.copyOfRange(parts, 1, parts.length)
                 )
             );
+        } else if ("container".equals(parts[0])) {
+            dirs.append(
+                TkCommand.container(
+                    Arrays.copyOfRange(parts, 1, parts.length)
+                )
+            );
         }
         return dirs;
     }
@@ -127,13 +133,13 @@ public final class TkCommand implements Take {
                 )
             );
         }
-        final Directives dirs = new Directives().xpath("/deck");
+        final Directives dirs = new Directives();
         if ("add".equals(args[0])) {
             dirs.addIf("domains").add("domain").set(args[1]);
         } else if ("remove".equals(args[0])) {
             dirs.xpath(
                 String.format(
-                    "domains/domain[.='%s']", args[1]
+                    "/deck/domains/domain[.='%s']", args[1]
                 )
             ).remove();
         } else {
@@ -164,9 +170,9 @@ public final class TkCommand implements Take {
                 )
             );
         }
-        final Directives dirs = new Directives().xpath("/deck");
+        final Directives dirs = new Directives();
         if ("put".equals(args[0])) {
-            dirs.addIf("repos").add("repo")
+            dirs.xpath("/deck").addIf("repos").add("repo")
                 .attr("waste", "false")
                 .attr("type", "blue")
                 .add("name")
@@ -176,6 +182,40 @@ public final class TkCommand implements Take {
             throw new IllegalArgumentException(
                 String.format(
                     "should be only 'put': '%s' is wrong",
+                    args[0]
+                )
+            );
+        }
+        return dirs;
+    }
+
+    /**
+     * Container command.
+     * @param args Arguments
+     * @return Directives
+     * @throws IOException If fails
+     */
+    private static Iterable<Directive> container(final String... args)
+        throws IOException {
+        if (args.length == 0) {
+            throw new RsForward(
+                new RsFlash(
+                    "'container' command supports 'waste'"
+                )
+            );
+        }
+        final Directives dirs = new Directives();
+        if ("waste".equals(args[0])) {
+            dirs.xpath(
+                String.format(
+                    "/deck/containers/container[name='%s']",
+                    args[1]
+                )
+            ).attr("waste", "true");
+        } else {
+            throw new IllegalArgumentException(
+                String.format(
+                    "should be only 'waste': '%s' is wrong",
                     args[0]
                 )
             );

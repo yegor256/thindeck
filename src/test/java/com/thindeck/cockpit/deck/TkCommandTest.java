@@ -29,6 +29,7 @@
  */
 package com.thindeck.cockpit.deck;
 
+import com.google.common.base.Joiner;
 import com.jcabi.matchers.XhtmlMatchers;
 import com.thindeck.api.Base;
 import com.thindeck.api.Deck;
@@ -73,6 +74,42 @@ public final class TkCommandTest {
             XhtmlMatchers.hasXPaths(
                 "/deck/domains[count(domain)=1]",
                 "/deck/domains[domain='test.thindeck.com']"
+            )
+        );
+    }
+
+    /**
+     * TkCommand can waste a container.
+     * @throws Exception If something goes wrong.
+     */
+    @Test
+    public void wastesSelectedContainer() throws Exception {
+        final String name = "tiger";
+        final String urn = "urn:test:909";
+        final Request req = new RqWithAuth(
+            urn,
+            new RqFake(
+                "POST",
+                String.format("/d/%s?hey", name),
+                "command=container+waste+a1b2c3e4"
+            )
+        );
+        final Base base = new MkBase();
+        final Decks decks = base.user(urn).decks();
+        decks.add(name);
+        new Deck.Smart(decks.get(name)).update(
+            Joiner.on(' ').join(
+                "<deck><containers><container waste='false'",
+                " type='blue' state='alive'><name>a1b2c3e4</name>",
+                "<host>127.0.0.1</host><image>foo/foo-aaaabbbb</image>",
+                "</container></containers></deck>"
+            )
+        );
+        new FkDeck("", new TkCommand(base)).route(req).get();
+        MatcherAssert.assertThat(
+            new Deck.Smart(decks.get(name)).xml(),
+            XhtmlMatchers.hasXPaths(
+                "/deck/containers/container[name='a1b2c3e4' and @waste='true']"
             )
         );
     }
