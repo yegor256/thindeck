@@ -153,7 +153,7 @@
                                 <xsl:text>text-decoration: line-through;</xsl:text>
                             </xsl:if>
                         </xsl:attribute>
-                        <xsl:value-of select="substring(name, 0, 8)"/>
+                        <xsl:value-of select="name"/>
                     </td>
                     <td><xsl:value-of select="image"/></td>
                     <td><xsl:value-of select="host"/></td>
