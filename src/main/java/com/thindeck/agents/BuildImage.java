@@ -29,7 +29,6 @@
  */
 package com.thindeck.agents;
 
-import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.immutable.ArrayMap;
 import com.jcabi.log.Logger;
@@ -81,10 +80,7 @@ public final class BuildImage implements Agent {
     @Override
     public Iterable<Directive> exec(final XML deck) throws IOException {
         final Collection<XML> repos = deck.nodes(
-            Joiner.on(" and ").join(
-                "/deck/repos/repo[@waste='false'",
-                "not(name=/deck/images/image/repo)]"
-            )
+            "/deck/repo[not(name=/deck/images/image/repo)]"
         );
         final String name = deck.xpath("/deck/@name").get(0);
         final Directives dirs = new Directives().xpath("/deck").addIf("images");
@@ -99,10 +95,9 @@ public final class BuildImage implements Agent {
                 .add("name").set(image).up()
                 .add("repo").set(rname).up()
                 .attr("waste", "false")
-                .attr("type", repo.xpath("@type").get(0));
-            dirs.xpath(
-                String.format("/deck/repos/repo[name='%s']", rname)
-            ).remove();
+                .attr("type", "blue")
+                .xpath("/deck/repo")
+                .remove();
         }
         return dirs;
     }

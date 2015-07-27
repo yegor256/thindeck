@@ -173,8 +173,6 @@ public final class TkCommand implements Take {
         final Directives dirs = new Directives();
         if ("put".equals(args[0])) {
             dirs.xpath("/deck").addIf("repos").add("repo")
-                .attr("waste", "false")
-                .attr("type", "blue")
                 .add("name")
                 .set(String.format("%08x", TkCommand.RND.nextInt()))
                 .up().add("uri").set(args[1]).up();

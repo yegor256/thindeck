@@ -59,10 +59,9 @@ public final class BuildImageTest {
         );
         final XML deck = new XMLDocument(
             Joiner.on(' ').join(
-                "<deck name='test/test'><repos>",
-                "<repo waste='false' type='green'>",
-                "<name>abcd1234</name><uri>http://</uri>",
-                "</repo></repos></deck>"
+                "<deck name='test/test'>",
+                "<repo><name>abcd1234</name><uri>http://</uri>",
+                "</repo></deck>"
             )
         );
         MatcherAssert.assertThat(
@@ -70,8 +69,8 @@ public final class BuildImageTest {
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),
             XhtmlMatchers.hasXPaths(
-                "/deck/repos[not(repo)]",
-                "/deck/images/image[@type='green']"
+                "/deck[not(repo)]",
+                "/deck/images/image[@type='blue']"
             )
         );
     }

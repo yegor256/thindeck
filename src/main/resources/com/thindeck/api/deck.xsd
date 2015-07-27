@@ -48,21 +48,6 @@
             <xs:minInclusive value="1024"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:complexType name="repo">
-        <xs:all>
-            <xs:element name="name" type="repoName"/>
-            <xs:element name="uri" type="xs:string"/>
-        </xs:all>
-        <xs:attribute name="waste" type="xs:boolean" use="required"/>
-        <xs:attribute name="type" use="required">
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:enumeration value="green"/>
-                    <xs:enumeration value="blue"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-    </xs:complexType>
     <xs:complexType name="image">
         <xs:all>
             <xs:element name="name" type="imageName"/>
@@ -136,16 +121,13 @@
                         <xs:field xpath="." />
                     </xs:unique>
                 </xs:element>
-                <xs:element name="repos" minOccurs="0">
+                <xs:element name="repo" minOccurs="0">
                     <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="repo" type="repo" minOccurs="0" maxOccurs="unbounded"/>
-                        </xs:sequence>
+                        <xs:all>
+                            <xs:element name="name" type="repoName"/>
+                            <xs:element name="uri" type="xs:string"/>
+                        </xs:all>
                     </xs:complexType>
-                    <xs:unique name="repoName">
-                        <xs:selector xpath="./repo" />
-                        <xs:field xpath="name" />
-                    </xs:unique>
                 </xs:element>
                 <xs:element name="images" minOccurs="0">
                     <xs:complexType>
