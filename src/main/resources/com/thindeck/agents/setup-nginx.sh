@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+sudo setenforce 0
+
 sudo mkdir -p /etc/nginx/conf.d/thindeck
 
 tmp=$(mktemp)
