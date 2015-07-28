@@ -34,6 +34,8 @@ import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
 import java.util.Collection;
+import java.util.Date;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -50,17 +52,19 @@ public final class WasteImages implements Agent {
     @Override
     public Iterable<Directive> exec(final XML deck) {
         final Collection<String> images = deck.xpath(
-            // @checkstyle LineLength (1 line)
-            "/deck/containers/container[not(http) and @waste='false']/image/text()"
+            "/deck/containers/container[not(http) and not(@waste)]/image/text()"
         );
         final Directives dirs = new Directives();
+        final String today = DateFormatUtils.ISO_DATETIME_FORMAT.format(
+            new Date()
+        );
         for (final String image : images) {
             dirs.xpath(
                 String.format(
                     "/deck/images/image[name='%s']",
                     image
                 )
-            ).attr("waste", "true");
+            ).attr("waste", today);
             Logger.info(
                 this, "image %s has broken containers, wasting it",
                 image

@@ -72,7 +72,7 @@ public final class StopDocker implements Agent {
     @Override
     public Iterable<Directive> exec(final XML deck) throws IOException {
         final Collection<XML> containers = deck.nodes(
-            "/deck/containers/container[@waste='true' and @state='dead']"
+            "/deck/containers/container[@waste and @state='dead']"
         );
         final Directives dirs = new Directives();
         for (final XML ctr : containers) {

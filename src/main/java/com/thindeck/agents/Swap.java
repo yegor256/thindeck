@@ -34,6 +34,8 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
+import java.util.Date;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -52,7 +54,7 @@ public final class Swap implements Agent {
     public Iterable<Directive> exec(final XML deck) {
         final boolean ready = !deck.nodes(
             Joiner.on(" and ").join(
-                "/deck/containers[not(container/@waste='true')",
+                "/deck/containers[not(container/@waste)",
                 "not(container[@state='dead' and @type='blue'])",
                 "not(container[@state='unknown' and @type='blue'])",
                 "container/@type='blue']"
@@ -60,6 +62,9 @@ public final class Swap implements Agent {
         ).isEmpty();
         final Directives dirs = new Directives();
         if (ready) {
+            final String today = DateFormatUtils.ISO_DATETIME_FORMAT.format(
+                new Date()
+            );
             for (final XML ctr : deck.nodes("/deck/containers/container")) {
                 final String name = ctr.xpath("name/text()").get(0);
                 dirs.xpath(
@@ -72,25 +77,25 @@ public final class Swap implements Agent {
                 if ("blue".equals(ctr.xpath("@type").get(0))) {
                     dirs.attr("type", "green");
                     Logger.info(this, "Blue container %s set to green", name);
-                    dirs.xpath("/deck/images/image").attr("waste", "true");
+                    dirs.xpath("/deck/images/image").attr("waste", today);
                     dirs.xpath(
                         String.format(
                             "/deck/images/image[name='%s']",
                             img
                         )
-                    ).attr("type", "green").attr("waste", "false");
+                    ).attr("type", "green").xpath("@waste").remove();
                     Logger.info(
                         this, "Image %s set to green, others to waste", img
                     );
                 } else {
-                    dirs.attr("waste", "true");
+                    dirs.attr("waste", today);
                     Logger.info(this, "Green container %s set to waste", name);
                     dirs.xpath(
                         String.format(
                             "/deck/images/image[name='%s']",
                             img
                         )
-                    ).attr("waste", "true");
+                    ).attr("waste", today);
                     Logger.info(this, "Image %s set to waste", img);
                 }
             }

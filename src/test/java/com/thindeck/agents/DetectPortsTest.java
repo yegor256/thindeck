@@ -65,7 +65,7 @@ public final class DetectPortsTest {
         );
         final XML deck = new XMLDocument(
             Joiner.on(' ').join(
-                "<deck><containers><container waste='false'>",
+                "<deck><containers><container>",
                 "<name>abcd1234</name><host>127.0.0.1</host>",
                 "</container></containers></deck>"
             )

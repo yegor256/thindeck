@@ -115,7 +115,7 @@
                                 </xsl:otherwise>
                             </xsl:choose>
                             <xsl:text>;</xsl:text>
-                            <xsl:if test="@waste='true'">
+                            <xsl:if test="@waste">
                                 <xsl:text>text-decoration: line-through;</xsl:text>
                             </xsl:if>
                         </xsl:attribute>
@@ -151,7 +151,7 @@
                                 </xsl:otherwise>
                             </xsl:choose>
                             <xsl:text>;</xsl:text>
-                            <xsl:if test="@waste='true'">
+                            <xsl:if test="@waste">
                                 <xsl:text>text-decoration: line-through;</xsl:text>
                             </xsl:if>
                         </xsl:attribute>

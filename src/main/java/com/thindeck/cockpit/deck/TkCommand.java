@@ -36,7 +36,9 @@ import com.thindeck.cockpit.RqUser;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Random;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -204,12 +206,15 @@ public final class TkCommand implements Take {
         }
         final Directives dirs = new Directives();
         if ("waste".equals(args[0])) {
+            final String today = DateFormatUtils.ISO_DATETIME_FORMAT.format(
+                new Date()
+            );
             dirs.xpath(
                 String.format(
                     "/deck/containers/container[name='%s']",
                     args[1]
                 )
-            ).attr("waste", "true");
+            ).attr("waste", today);
         } else {
             throw new IllegalArgumentException(
                 String.format(

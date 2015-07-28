@@ -29,82 +29,54 @@
  */
 package com.thindeck.agents;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.immutable.ArrayMap;
-import com.jcabi.log.Logger;
+import com.google.common.base.Joiner;
+import com.jcabi.matchers.XhtmlMatchers;
 import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import com.thindeck.api.Agent;
 import java.io.IOException;
-import java.util.Collection;
-import org.xembly.Directive;
-import org.xembly.Directives;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.xembly.Xembler;
 
 /**
- * Remove all waste images.
+ * Test case for {@link WasteContainers}.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.5
+ * @since 0.1
  */
-@Immutable
-public final class RemoveImages implements Agent {
+public final class WasteContainersTest {
 
     /**
-     * Script to use.
-     */
-    private final transient Script script;
-
-    /**
-     * Ctor.
-     */
-    public RemoveImages() {
-        this(new Script.Default("remove-image.sh"));
-    }
-
-    /**
-     * Ctor.
-     * @param spt Script.
-     */
-    public RemoveImages(final Script spt) {
-        this.script = spt;
-    }
-
-    @Override
-    public Iterable<Directive> exec(final XML deck) throws IOException {
-        final Collection<String> images = deck.xpath(
-            // @checkstyle LineLength (1 line)
-            "/deck/images/image[@waste and not(name=/deck/containers/container/image)]/name/text()"
-        );
-        final Directives dirs = new Directives();
-        for (final String image : images) {
-            Logger.info(
-                this, "Docker image %s is waste, has to be removed",
-                image
-            );
-            this.remove(image);
-            dirs.xpath(
-                String.format(
-                    "/deck/images/image[name='%s']",
-                    image
-                )
-            ).remove();
-        }
-        return dirs;
-    }
-
-    /**
-     * Remove image.
-     * @param name Name of image
+     * WasteContainers can waste containers.
      * @throws IOException If fails
      */
-    private void remove(final String name) throws IOException {
-        this.script.exec(
-            "t1.thindeck.com",
-            new ArrayMap<String, String>().with("image", name)
+    @Test
+    public void wastesContainers() throws IOException {
+        final Agent agent = new WasteContainers();
+        final XML deck = new XMLDocument(
+            Joiner.on(' ').join(
+                "<deck name='test/test'><containers>",
+                " <container type='blue'>",
+                "  <http>8080</http><name>aaaaaaaa</name>",
+                "  <image>ffffffff</image>",
+                " </container><container type='green'>",
+                "  <name>bbbbbbbb</name>",
+                "  <image>eeeeeeee</image>",
+                " </container>",
+                "</containers></deck>"
+            )
         );
-        Logger.info(
-            StartDocker.class,
-            "Docker image %s removed", name
+        MatcherAssert.assertThat(
+            new XMLDocument(
+                new Xembler(agent.exec(deck)).applyQuietly(deck.node())
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/deck/containers[count(container)=2]",
+                "//container[name='aaaaaaaa' and not(@waste)]",
+                "//container[name='bbbbbbbb' and @waste]"
+            )
         );
     }
 

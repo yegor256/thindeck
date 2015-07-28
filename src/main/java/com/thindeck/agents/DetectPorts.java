@@ -88,7 +88,7 @@ public final class DetectPorts implements Agent {
         final Directives dirs = new Directives();
         final Collection<XML> containers = deck.nodes(
             // @checkstyle LineLength (1 line)
-            "/deck/containers/container[@waste='false' and (not(http) or not(https))]"
+            "/deck/containers/container[not(@waste) and (not(http) or not(https))]"
         );
         for (final XML ctr : containers) {
             final String name = ctr.xpath("name/text()").get(0);

@@ -111,7 +111,7 @@ public final class UpdateNginx implements Agent {
             Iterables.transform(
                 deck.nodes(
                     // @checkstyle LineLength (1 line)
-                    "//container[@waste='false' and @type='green' and @state='alive' and http]"
+                    "//container[not(@waste) and @type='green' and @state='alive' and http]"
                 ),
                 new Function<XML, String>() {
                     @Override

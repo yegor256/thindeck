@@ -74,7 +74,7 @@ public final class CheckState implements Agent {
     public Iterable<Directive> exec(final XML deck) throws IOException {
         final Directives dirs = new Directives();
         final Collection<XML> containers = deck.nodes(
-            "/deck/containers/container[@waste='false' and http]"
+            "/deck/containers/container[not(@waste) and http]"
         );
         for (final XML ctr : containers) {
             final Integer port = Integer.parseInt(

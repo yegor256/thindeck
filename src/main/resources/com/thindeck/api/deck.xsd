@@ -53,7 +53,7 @@
             <xs:element name="name" type="imageName"/>
             <xs:element name="repo" type="repoName"/>
         </xs:all>
-        <xs:attribute name="waste" type="xs:boolean" use="required"/>
+        <xs:attribute name="waste" type="xs:dateTime" use="optional"/>
         <xs:attribute name="type" use="required">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
@@ -82,7 +82,7 @@
                 </xs:simpleType>
             </xs:element>
         </xs:all>
-        <xs:attribute name="waste" type="xs:boolean" use="required"/>
+        <xs:attribute name="waste" type="xs:dateTime" use="optional"/>
         <xs:attribute name="state" use="required">
             <xs:simpleType>
                 <xs:restriction base="xs:string">

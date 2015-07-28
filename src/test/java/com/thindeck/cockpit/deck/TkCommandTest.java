@@ -128,7 +128,7 @@ public final class TkCommandTest {
         decks.add(name);
         new Deck.Smart(decks.get(name)).update(
             Joiner.on(' ').join(
-                "<deck><containers><container waste='false'",
+                "<deck><containers><container",
                 " type='blue' state='alive'><name>a1b2c3e4</name>",
                 "<host>127.0.0.1</host><image>foo/foo-aaaabbbb</image>",
                 "</container></containers></deck>"
@@ -138,7 +138,7 @@ public final class TkCommandTest {
         MatcherAssert.assertThat(
             new Deck.Smart(decks.get(name)).xml(),
             XhtmlMatchers.hasXPaths(
-                "/deck/containers/container[name='a1b2c3e4' and @waste='true']"
+                "/deck/containers/container[name='a1b2c3e4' and @waste]"
             )
         );
     }
