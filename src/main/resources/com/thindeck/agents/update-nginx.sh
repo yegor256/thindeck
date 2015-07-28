@@ -17,3 +17,4 @@ server { \
 
 sudo mv "${tmp}" "/etc/nginx/conf.d/thindeck/${domain}.conf"
 sudo chown nginx "/etc/nginx/conf.d/thindeck/${domain}.conf"
+sudo chmod a+x "/etc/nginx/conf.d/thindeck/${domain}.conf"
