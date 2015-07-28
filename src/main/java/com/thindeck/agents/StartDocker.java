@@ -80,7 +80,7 @@ public final class StartDocker implements Agent {
     @Override
     public Iterable<Directive> exec(final XML deck) throws IOException {
         final Collection<XML> images = deck.nodes(
-            "/deck/images/image"
+            "/deck/images/image[not(@waste)]"
         );
         final Directives dirs = new Directives()
             .xpath("/deck").addIf("containers");
