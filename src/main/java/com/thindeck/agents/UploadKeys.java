@@ -58,7 +58,7 @@ public final class UploadKeys implements Agent {
             IOUtils.toInputStream(
                 IOUtils.toString(
                     this.getClass().getResourceAsStream("id_rsa")
-                ).replace(" ", "")
+                ).replaceAll("\n\\s+", "")
             ),
             new ByteArrayOutputStream(),
             new ByteArrayOutputStream()
