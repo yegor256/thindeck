@@ -47,6 +47,7 @@ import com.thindeck.agents.StopDocker;
 import com.thindeck.agents.Swap;
 import com.thindeck.agents.TerminateDocker;
 import com.thindeck.agents.UpdateNginx;
+import com.thindeck.agents.UploadKeys;
 import com.thindeck.agents.WasteContainers;
 import com.thindeck.agents.WasteImages;
 import com.thindeck.agents.WipeRepo;
@@ -209,7 +210,8 @@ final class Routine implements Runnable {
             new StartDocker(),
             new SetupNginx(),
             new UpdateNginx(),
-            new WipeRepo()
+            new WipeRepo(),
+            new UploadKeys()
         );
     }
 
