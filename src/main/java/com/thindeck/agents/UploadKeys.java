@@ -37,6 +37,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import org.apache.commons.io.IOUtils;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -54,16 +55,20 @@ public final class UploadKeys implements Agent {
         new Shell.Plain(shell).exec("mkdir -p ~/.ssh");
         shell.exec(
             "cat > ~/.ssh/id_rsa",
-            this.getClass().getResourceAsStream("id_rsa"),
+            IOUtils.toInputStream(
+                IOUtils.toString(
+                    this.getClass().getResourceAsStream("id_rsa")
+                ).replace(" ", "")
+            ),
             new ByteArrayOutputStream(),
             new ByteArrayOutputStream()
         );
-        shell.exec(
-            "cat > ~/.ssh/id_rsa.pub",
-            this.getClass().getResourceAsStream("id_rsa.pub"),
-            new ByteArrayOutputStream(),
-            new ByteArrayOutputStream()
-        );
+//        shell.exec(
+//            "cat > ~/.ssh/id_rsa.pub",
+//            this.getClass().getResourceAsStream("id_rsa.pub"),
+//            new ByteArrayOutputStream(),
+//            new ByteArrayOutputStream()
+//        );
         shell.exec(
             "cat > ~/.ssh/config",
             new ByteArrayInputStream(
