@@ -18,3 +18,4 @@ http {
 }" > "${tmp}"
 
 sudo mv "${tmp}" "/etc/nginx/conf.d/thindeck/${domain}.main.conf"
+sudo chown nginx "/etc/nginx/conf.d/thindeck/${domain}.main.conf"
