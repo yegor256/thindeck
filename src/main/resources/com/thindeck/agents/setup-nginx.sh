@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -e
 
 sudo mkdir -p /etc/nginx/conf.d/thindeck
 
