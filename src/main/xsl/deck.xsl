@@ -63,19 +63,21 @@
         <xsl:apply-templates select="deck/images"/>
         <xsl:apply-templates select="deck/containers"/>
     </xsl:template>
-    <xsl:template match="tanks[tank]">
+    <xsl:template match="domains[domain]">
         <p>
-            <xsl:text>Tanks: </xsl:text>
-            <xsl:for-each select="tank">
+            <xsl:text>Domains (CNAME them to </xsl:text>
+            <code><xsl:text>relay.thindeck.com</xsl:text></code>
+            <xsl:text>): </xsl:text>
+            <xsl:for-each select="domain">
                 <xsl:if test="position()!=1">, </xsl:if>
                 <xsl:value-of select="."/>
             </xsl:for-each>
         </p>
     </xsl:template>
-    <xsl:template match="domains[domain]">
+    <xsl:template match="tanks[tank]">
         <p>
-            <xsl:text>Domains: </xsl:text>
-            <xsl:for-each select="domain">
+            <xsl:text>Tanks: </xsl:text>
+            <xsl:for-each select="tank">
                 <xsl:if test="position()!=1">, </xsl:if>
                 <xsl:value-of select="."/>
             </xsl:for-each>
