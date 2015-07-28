@@ -55,7 +55,8 @@ public final class UploadKeys implements Agent {
             new ByteArrayOutputStream(),
             new ByteArrayOutputStream()
         );
-        new Shell.Plain(shell).exec("chmod -R 600 ~/.ssh");
+        new Shell.Plain(shell).exec("chmod 700 ~/.ssh");
+        new Shell.Plain(shell).exec("chmod -R 600 ~/.ssh/*");
         return new Directives();
     }
 
