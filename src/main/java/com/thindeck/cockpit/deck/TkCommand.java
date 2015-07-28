@@ -174,7 +174,11 @@ public final class TkCommand implements Take {
         }
         final Directives dirs = new Directives();
         if ("put".equals(args[0])) {
+            final String today = DateFormatUtils.ISO_DATETIME_FORMAT.format(
+                new Date()
+            );
             dirs.xpath("/deck").add("repo")
+                .attr("added", today)
                 .add("name")
                 .set(String.format("%08x", TkCommand.RND.nextInt())).up()
                 .add("uri").set(args[1]);

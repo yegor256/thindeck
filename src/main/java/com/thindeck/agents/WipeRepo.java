@@ -29,56 +29,56 @@
  */
 package com.thindeck.agents;
 
-import com.google.common.base.Joiner;
-import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.aspects.Immutable;
+import com.jcabi.aspects.Tv;
+import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
-import com.jcabi.xml.XMLDocument;
 import com.thindeck.api.Agent;
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.xembly.Xembler;
+import java.text.ParseException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
- * Test case for {@link TerminateDocker}.
+ * Remove repo if it's too old and still has no images.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */
-public final class TerminateDockerTest {
+@Immutable
+public final class WipeRepo implements Agent {
 
-    /**
-     * TerminateDocker can kill containers.
-     * @throws IOException If fails
-     */
-    @Test
-    public void killsContainers() throws IOException {
-        final Agent agent = new TerminateDocker(
-            new Script.Fake("\n\n")
+    @Override
+    public Iterable<Directive> exec(final XML deck) throws IOException {
+        final Collection<XML> images = deck.nodes(
+            "/deck/images/image[repo=/deck/repo/name]"
         );
-        final XML deck = new XMLDocument(
-            Joiner.on(' ').join(
-                "<deck name='test/test'><containers>",
-                " <container type='blue' state='alive'",
-                " waste='2013-01-01T12:59:59'>",
-                "  <host>localhost</host><name>aaaaaaaa</name>",
-                "  <image>ffffffff</image>",
-                " </container><container type='green'>",
-                "  <name>bbbbbbbb</name>",
-                "  <image>eeeeeeee</image>",
-                " </container>",
-                "</containers></deck>"
-            )
-        );
-        MatcherAssert.assertThat(
-            new XMLDocument(
-                new Xembler(agent.exec(deck)).applyQuietly(deck.node())
-            ),
-            XhtmlMatchers.hasXPaths(
-                "/deck/containers[count(container)=2]"
-            )
-        );
+        final Directives dirs = new Directives();
+        if (images.isEmpty()) {
+            final Date today = new Date();
+            final int age;
+            try {
+                age = (int) ((today.getTime()
+                    - DateFormatUtils.ISO_DATETIME_FORMAT.parse(
+                        deck.xpath("/deck/repo/@added").get(0)
+                    ).getTime()) / TimeUnit.MINUTES.toMillis(1L));
+            } catch (final ParseException ex) {
+                throw new IOException(ex);
+            }
+            if (age > Tv.TEN) {
+                Logger.info(
+                    this, "Repo %s still has no images for over %d mins",
+                    deck.xpath("/deck/repo/uri/text()"), age
+                );
+                dirs.xpath("/deck/repo").remove();
+            }
+        }
+        return dirs;
     }
 
 }

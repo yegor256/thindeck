@@ -127,6 +127,7 @@
                             <xs:element name="name" type="repoName"/>
                             <xs:element name="uri" type="xs:string"/>
                         </xs:all>
+                        <xs:attribute name="added" type="xs:dateTime" use="required"/>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="images" minOccurs="0">

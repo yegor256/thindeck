@@ -90,7 +90,7 @@ public final class TerminateDocker implements Agent {
             } catch (final ParseException ex) {
                 throw new IOException(ex);
             }
-            if (age > Tv.TEN) {
+            if (age < Tv.TEN) {
                 continue;
             }
             final String name = ctr.xpath("name/text()").get(0);
