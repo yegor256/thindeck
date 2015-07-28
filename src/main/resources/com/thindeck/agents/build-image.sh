@@ -4,12 +4,13 @@ set -x
 
 dir=$(mktemp -d -t td-XXXX)
 cd "${dir}"
-git clone ${uri} .
+git clone "${uri}" .
 
 if [ ! -f Dockerfile ]; then
-  echo "FROM ubuntu:14.04" > Dockerfile
+  echo "Dockerfile is absent!"
+  exit -1
 fi
-docker build -t ${image} .
+docker build -t "${image}" .
 cd /tmp
 
-rm -rf ${dir}
+rm -rf "${dir}"
