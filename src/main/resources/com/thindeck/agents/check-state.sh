@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 url="localhost:${port}"
 if curl --silent --show-error --fail ${url} > /dev/null; then
