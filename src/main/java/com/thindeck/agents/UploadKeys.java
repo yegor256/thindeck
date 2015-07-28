@@ -64,12 +64,6 @@ public final class UploadKeys implements Agent {
             new ByteArrayOutputStream()
         );
         shell.exec(
-            "cat > ~/.ssh/id_rsa.pub",
-            this.getClass().getResourceAsStream("id_rsa.pub"),
-            new ByteArrayOutputStream(),
-            new ByteArrayOutputStream()
-        );
-        shell.exec(
             "cat > ~/.ssh/config",
             new ByteArrayInputStream(
                 Joiner.on('\n').join(
