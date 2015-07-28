@@ -82,7 +82,7 @@ public final class SwapTest {
                 "//container[name='bbbbbbbb' and @type='green']",
                 "//container[name='bbbbbbbb' and @waste='true']",
                 "/deck/images[count(image)=2]",
-                "//image[name='ffffffff' and @type='green']",
+                "//image[name='ffffffff' and @type='green' and @waste='false']",
                 "//image[name='eeeeeeee' and @type='green' and @waste='true']"
             )
         );

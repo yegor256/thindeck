@@ -78,7 +78,7 @@ public final class Swap implements Agent {
                             "/deck/images/image[name='%s']",
                             img
                         )
-                    ).attr("type", "green");
+                    ).attr("type", "green").attr("waste", "false");
                     Logger.info(
                         this, "Image %s set to green, others to waste", img
                     );
