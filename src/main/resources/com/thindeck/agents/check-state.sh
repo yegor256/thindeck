@@ -1,9 +1,8 @@
 #!/bin/bash
-set -x
 
-url="localhost:${port}"
-if curl --silent --show-error --fail ${url} > /dev/null; then
-  echo "${url} is ALIVE"
+target="localhost:${port}"
+if curl --silent --show-error --fail "${target}" > /dev/null; then
+  echo "${target} is ALIVE"
 else
-  echo "${url} is dead"
+  echo "${target} is dead"
 fi
