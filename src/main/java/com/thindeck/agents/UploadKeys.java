@@ -29,11 +29,14 @@
  */
 package com.thindeck.agents;
 
+import com.google.common.base.Joiner;
 import com.jcabi.ssh.Shell;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -61,6 +64,18 @@ public final class UploadKeys implements Agent {
             new ByteArrayOutputStream(),
             new ByteArrayOutputStream()
         );
+        shell.exec(
+            "cat > ~/.ssh/config",
+            new ByteArrayInputStream(
+                Joiner.on('\n').join(
+                    "Host github.com",
+                    " StrictHostKeyChecking no"
+                ).getBytes(Charset.defaultCharset())
+            ),
+            new ByteArrayOutputStream(),
+            new ByteArrayOutputStream()
+        );
+
         new Shell.Plain(shell).exec("chmod 700 ~/.ssh");
         new Shell.Plain(shell).exec("chmod -R 600 ~/.ssh/*");
         return new Directives();
