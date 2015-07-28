@@ -45,6 +45,7 @@ import com.thindeck.agents.SetupNginx;
 import com.thindeck.agents.StartDocker;
 import com.thindeck.agents.StopDocker;
 import com.thindeck.agents.Swap;
+import com.thindeck.agents.TerminateDocker;
 import com.thindeck.agents.UpdateNginx;
 import com.thindeck.agents.WasteContainers;
 import com.thindeck.agents.WasteImages;
@@ -193,6 +194,7 @@ final class Routine implements Runnable {
     private static Iterable<Agent> all() {
         return Arrays.asList(
             new DetectPorts(),
+            new TerminateDocker(),
             new PingContainers(),
             new PingImages(),
             new WasteContainers(),

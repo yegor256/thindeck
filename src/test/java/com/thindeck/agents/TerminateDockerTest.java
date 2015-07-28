@@ -40,36 +40,34 @@ import org.junit.Test;
 import org.xembly.Xembler;
 
 /**
- * Test case for {@link Swap}.
+ * Test case for {@link TerminateDocker}.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */
-public final class SwapTest {
+public final class TerminateDockerTest {
 
     /**
-     * Swap can swap containers.
+     * TerminateDocker can kill containers.
      * @throws IOException If fails
      */
     @Test
-    public void swapsGreenAndBlueContainers() throws IOException {
-        final Agent agent = new Swap();
+    public void killsContainers() throws IOException {
+        final Agent agent = new TerminateDocker(
+            new Script.Fake("\n\n")
+        );
         final XML deck = new XMLDocument(
             Joiner.on(' ').join(
                 "<deck name='test/test'><containers>",
-                " <container type='blue'>",
+                " <container type='blue' waste=''>",
                 "  <name>aaaaaaaa</name>",
                 "  <image>ffffffff</image>",
                 " </container><container type='green'>",
                 "  <name>bbbbbbbb</name>",
                 "  <image>eeeeeeee</image>",
                 " </container>",
-                "</containers>",
-                "<images>",
-                " <image type='blue'><name>ffffffff</name></image>",
-                " <image type='green'><name>eeeeeeee</name></image>",
-                "</images></deck>"
+                "</containers></deck>"
             )
         );
         MatcherAssert.assertThat(
@@ -77,13 +75,7 @@ public final class SwapTest {
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),
             XhtmlMatchers.hasXPaths(
-                "/deck/containers[count(container)=2]",
-                "//container[name='aaaaaaaa' and @type='green']",
-                "//container[name='bbbbbbbb' and @type='green']",
-                "//container[name='bbbbbbbb' and @waste]",
-                "/deck/images[count(image)=2]",
-                "//image[name='ffffffff' and @type='green' and not(@waste)]",
-                "//image[name='eeeeeeee' and @type='green' and @waste]"
+                "/deck/containers[count(container)=2]"
             )
         );
     }
