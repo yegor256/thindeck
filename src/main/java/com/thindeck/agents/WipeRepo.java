@@ -59,7 +59,7 @@ public final class WipeRepo implements Agent {
             "/deck/images/image[repo=/deck/repo/name]"
         );
         final Directives dirs = new Directives();
-        if (images.isEmpty()) {
+        if (images.isEmpty() && !deck.nodes("/deck/repo/name").isEmpty()) {
             final Date today = new Date();
             final int age;
             try {
