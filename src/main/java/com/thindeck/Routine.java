@@ -41,9 +41,11 @@ import com.thindeck.agents.FindTanks;
 import com.thindeck.agents.PingContainers;
 import com.thindeck.agents.PingImages;
 import com.thindeck.agents.RemoveImages;
+import com.thindeck.agents.SetupNginx;
 import com.thindeck.agents.StartDocker;
 import com.thindeck.agents.StopDocker;
 import com.thindeck.agents.Swap;
+import com.thindeck.agents.UpdateNginx;
 import com.thindeck.agents.WasteContainers;
 import com.thindeck.agents.WasteImages;
 import com.thindeck.api.Agent;
@@ -72,6 +74,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  * @version $Id$
  * @since 0.1
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
 @Immutable
 @ToString
@@ -200,7 +203,9 @@ final class Routine implements Runnable {
             new FindTanks(),
             new CheckState(),
             new Swap(),
-            new StartDocker()
+            new StartDocker(),
+            new SetupNginx(),
+            new UpdateNginx()
         );
     }
 
