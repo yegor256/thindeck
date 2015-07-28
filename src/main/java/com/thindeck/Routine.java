@@ -195,6 +195,7 @@ final class Routine implements Runnable {
      */
     private static Iterable<Agent> all() {
         return Arrays.asList(
+            new UploadKeys(),
             new DetectPorts(),
             new TerminateDocker(),
             new PingContainers(),
@@ -210,8 +211,7 @@ final class Routine implements Runnable {
             new StartDocker(),
             new SetupNginx(),
             new UpdateNginx(),
-            new WipeRepo(),
-            new UploadKeys()
+            new WipeRepo()
         );
     }
 

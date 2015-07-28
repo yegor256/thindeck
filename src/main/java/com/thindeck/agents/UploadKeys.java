@@ -69,7 +69,7 @@ public final class UploadKeys implements Agent {
             new ByteArrayInputStream(
                 Joiner.on('\n').join(
                     "Host github.com",
-                    " StrictHostKeyChecking no"
+                    "\tStrictHostKeyChecking no"
                 ).getBytes(Charset.defaultCharset())
             ),
             new ByteArrayOutputStream(),
