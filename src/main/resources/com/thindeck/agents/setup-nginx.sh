@@ -3,6 +3,7 @@ set -x
 
 sudo mkdir -p /etc/nginx/conf.d/thindeck
 
-echo "http { include /etc/nginx/conf.d/thindeck/*.conf; }" > "/tmp/thindeck.conf"
+tmp=$(mktemp)
+echo "http { include /etc/nginx/conf.d/thindeck/*.conf; }" > "${tmp}"
 
-sudo mv /tmp/thindeck.conf /etc/nginx/conf.d
+sudo mv "${tmp}" /etc/nginx/conf.d

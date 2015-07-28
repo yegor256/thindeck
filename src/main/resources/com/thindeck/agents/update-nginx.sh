@@ -1,7 +1,9 @@
 #!/bin/bash
 set -x
 
-sudo echo " \
+tmp=$(mktemp)
+
+echo " \
 http {
   upstream ${group} { \
     ${servers}
@@ -13,4 +15,6 @@ http {
       proxy_pass http://${group}; \
     } \
   } \
-}" > "/etc/nginx/conf.d/thindeck/${domain}.main.conf"
+}" > "${tmp}"
+
+sudo mv "${tmp}" "/etc/nginx/conf.d/thindeck/${domain}.main.conf"
