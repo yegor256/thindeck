@@ -58,17 +58,17 @@ public final class UploadKeys implements Agent {
             IOUtils.toInputStream(
                 IOUtils.toString(
                     this.getClass().getResourceAsStream("id_rsa")
-                ).replaceAll("\n\\s+", "\n")
+                ).replaceAll("^\\s+", "")
             ),
             new ByteArrayOutputStream(),
             new ByteArrayOutputStream()
         );
-//        shell.exec(
-//            "cat > ~/.ssh/id_rsa.pub",
-//            this.getClass().getResourceAsStream("id_rsa.pub"),
-//            new ByteArrayOutputStream(),
-//            new ByteArrayOutputStream()
-//        );
+        shell.exec(
+            "cat > ~/.ssh/id_rsa.pub",
+            this.getClass().getResourceAsStream("id_rsa.pub"),
+            new ByteArrayOutputStream(),
+            new ByteArrayOutputStream()
+        );
         shell.exec(
             "cat > ~/.ssh/config",
             new ByteArrayInputStream(
