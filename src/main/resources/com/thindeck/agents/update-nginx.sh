@@ -11,6 +11,9 @@ server { \
   listen ${port}; \
   server_name ${domain}; \
   location / { \
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header X-Forwarded-For \$remote_addr;
+    proxy_set_header Host \$host;
     proxy_pass http://${group}; \
   } \
 }" > "${tmp}"
