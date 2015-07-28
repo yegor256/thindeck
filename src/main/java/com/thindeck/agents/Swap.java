@@ -72,13 +72,16 @@ public final class Swap implements Agent {
                 if ("blue".equals(ctr.xpath("@type").get(0))) {
                     dirs.attr("type", "green");
                     Logger.info(this, "Blue container %s set to green", name);
+                    dirs.xpath("/deck/images/image").attr("waste", "true");
                     dirs.xpath(
                         String.format(
                             "/deck/images/image[name='%s']",
                             img
                         )
                     ).attr("type", "green");
-                    Logger.info(this, "Image %s set to green", img);
+                    Logger.info(
+                        this, "Image %s set to green, others to waste", img
+                    );
                 } else {
                     dirs.attr("waste", "true");
                     Logger.info(this, "Green container %s set to waste", name);
