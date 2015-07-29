@@ -78,7 +78,7 @@ public final class BuryContainers implements Agent {
             dirs.xpath(
                 String.format(
                     "/deck/containers/container[name='%s']",
-                    ctr
+                    name
                 )
             ).attr("waste", now);
             Logger.info(
