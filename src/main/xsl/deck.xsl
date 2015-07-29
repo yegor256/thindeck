@@ -58,7 +58,7 @@
             </fieldset>
         </form>
         <xsl:apply-templates select="deck/domains"/>
-        <xsl:if test="not(domains/domain)">
+        <xsl:if test="not(deck/domains/domain)">
             <p>
                 <xsl:text>No domains registered yet, your deck is </xsl:text>
                 <strong style="color:red"><xsl:text>not reachable</xsl:text></strong>
