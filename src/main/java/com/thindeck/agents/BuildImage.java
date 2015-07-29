@@ -95,6 +95,7 @@ public final class BuildImage implements Agent {
             dirs.xpath("/deck/images").add("image")
                 .add("name").set(image).up()
                 .add("repo").set(rname).up()
+                .add("uri").set(repo.xpath("uri/text() ").get(0)).up()
                 .attr("type", "blue")
                 .xpath("/deck/repo")
                 .remove();

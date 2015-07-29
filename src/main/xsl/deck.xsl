@@ -61,13 +61,13 @@
         <xsl:if test="not(domains/domain)">
             <p>
                 <xsl:text>No domains registered yet, your deck is </xsl:text>
-                <strong><xsl:text>not reachable</xsl:text></strong>
+                <strong style="color:red"><xsl:text>not reachable</xsl:text></strong>
                 <xsl:text> via our load balancer yet.</xsl:text>
                 <xsl:text> Create a new CNAME in your NS record and point it to </xsl:text>
                 <code><xsl:text>relay.thindeck.com</xsl:text></code>
                 <xsl:text>. When ready, enter </xsl:text>
                 <code><xsl:text>domains add X</xsl:text></code>
-                <xsl:text> into the form above, where X is a full name of your domain, for example</xsl:text>
+                <xsl:text> into the form above, where X is a full name of your domain, for example </xsl:text>
                 <code><xsl:text>php.demo.thindeck.com</xsl:text></code>
                 <xsl:text>.</xsl:text>
             </p>
@@ -111,6 +111,7 @@
         <table>
             <tr>
                 <th>Image</th>
+                <th>URI</th>
             </tr>
             <xsl:for-each select="image">
                 <tr>
@@ -134,6 +135,9 @@
                             </xsl:if>
                         </xsl:attribute>
                         <xsl:value-of select="name"/>
+                    </td>
+                    <td>
+                        <xsl:value-of select="uri"/>
                     </td>
                 </tr>
             </xsl:for-each>

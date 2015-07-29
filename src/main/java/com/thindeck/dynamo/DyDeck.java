@@ -130,7 +130,9 @@ final class DyDeck implements Deck {
     public void exec(final Agent agent) throws IOException {
         final String text = this.item().get(DyDeck.ATTR_MEMO).getS();
         final XML xml = new StrictXML(
-            DyDeck.CLEANUP.transform(new XMLDocument(text)),
+            Deck.UPGRADE.transform(
+                DyDeck.CLEANUP.transform(new XMLDocument(text))
+            ),
             Deck.SCHEMA
         );
         final Iterable<Directive> dirs = agent.exec(xml);

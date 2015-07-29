@@ -52,6 +52,7 @@
         <xs:all>
             <xs:element name="name" type="imageName"/>
             <xs:element name="repo" type="repoName"/>
+            <xs:element name="uri" type="xs:string"/>
         </xs:all>
         <xs:attribute name="waste" type="xs:dateTime" use="optional"/>
         <xs:attribute name="type" use="required">

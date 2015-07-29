@@ -34,7 +34,11 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSD;
 import com.jcabi.xml.XSDDocument;
+import com.jcabi.xml.XSL;
+import com.jcabi.xml.XSLChain;
+import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.validation.constraints.NotNull;
@@ -68,6 +72,19 @@ public interface Deck {
      */
     XSD SCHEMA = XSDDocument.make(
         Deck.class.getResourceAsStream("deck.xsd")
+    );
+
+    /**
+     * XSL for upgrade.
+     */
+    XSL UPGRADE = new XSLChain(
+        Arrays.asList(
+            XSLDocument.make(
+                Deck.class.getResourceAsStream(
+                    "upgrades/001-uri-for-image.xsl"
+                )
+            )
+        )
     );
 
     /**
