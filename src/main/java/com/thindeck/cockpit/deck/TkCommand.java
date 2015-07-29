@@ -29,6 +29,7 @@
  */
 package com.thindeck.cockpit.deck;
 
+import com.jcabi.xml.XML;
 import com.thindeck.api.Base;
 import com.thindeck.api.Deck;
 import com.thindeck.api.Decks;
@@ -84,17 +85,19 @@ public final class TkCommand implements Take {
         final String cmd = new RqForm.Smart(
             new RqForm.Base(req)
         ).single("command");
-        new Deck.Smart(decks.get(deck)).update(TkCommand.answer(cmd));
+        final Deck.Smart smart = new Deck.Smart(decks.get(deck));
+        smart.update(TkCommand.answer(smart.xml(), cmd));
         return new RsForward(new RsFlash("thanks!"));
     }
 
     /**
      * Process command.
+     * @param deck XML deck
      * @param cmd Command
      * @return Directives
      * @throws IOException If fails
      */
-    private static Iterable<Directive> answer(final String cmd)
+    private static Iterable<Directive> answer(final XML deck, final String cmd)
         throws IOException {
         final Directives dirs = new Directives().xpath("/deck");
         final String[] parts = cmd.trim().split("\\s+");
@@ -107,6 +110,7 @@ public final class TkCommand implements Take {
         } else if ("repo".equals(parts[0])) {
             dirs.append(
                 TkCommand.repo(
+                    deck,
                     Arrays.copyOfRange(parts, 1, parts.length)
                 )
             );
@@ -159,12 +163,13 @@ public final class TkCommand implements Take {
 
     /**
      * Repo command.
+     * @param deck XML deck
      * @param args Arguments
      * @return Directives
      * @throws IOException If fails
      */
-    private static Iterable<Directive> repo(final String... args)
-        throws IOException {
+    private static Iterable<Directive> repo(final XML deck,
+        final String... args) throws IOException {
         if (args.length == 0) {
             throw new RsForward(
                 new RsFlash(
@@ -174,6 +179,11 @@ public final class TkCommand implements Take {
         }
         final Directives dirs = new Directives();
         if ("put".equals(args[0])) {
+            if (deck.nodes("/deck/images/image").size() > 2) {
+                throw new IllegalArgumentException(
+                    "there are too many images as is, waste a few first"
+                );
+            }
             final String today = DateFormatUtils.ISO_DATETIME_FORMAT.format(
                 new Date()
             );
