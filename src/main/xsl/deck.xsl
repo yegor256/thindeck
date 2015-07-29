@@ -40,6 +40,14 @@
         <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1-rc1.min.js">
             <xsl:text> </xsl:text>
         </script>
+        <style>
+            .event {
+                cursor: pointer;
+            }
+            .event:hover {
+                color: blue;
+            }
+        </style>
     </xsl:template>
     <xsl:template match="page" mode="body">
         <xsl:apply-templates select="deck"/>
@@ -214,7 +222,7 @@
     </xsl:template>
     <xsl:template match="events[event]">
         <xsl:for-each select="event">
-            <p onclick="$('#evt{@msec}').toggle();" style="cursor:pointer">
+            <p onclick="$('#evt{@msec}').toggle();" class="event">
                 <xsl:value-of select="@head"/>
                 <xsl:text> (</xsl:text>
                 <xsl:value-of select="@ago"/>
