@@ -48,7 +48,6 @@ import com.thindeck.agents.StopDocker;
 import com.thindeck.agents.Swap;
 import com.thindeck.agents.TerminateDocker;
 import com.thindeck.agents.UpdateNginx;
-import com.thindeck.agents.UploadKeys;
 import com.thindeck.agents.WasteContainers;
 import com.thindeck.agents.WasteImages;
 import com.thindeck.agents.WipeRepo;
@@ -57,6 +56,7 @@ import com.thindeck.api.Base;
 import com.thindeck.api.Boss;
 import com.thindeck.api.Deck;
 import com.thindeck.bosses.SetupNginx;
+import com.thindeck.bosses.UploadKeys;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -222,7 +222,6 @@ final class Routine implements Runnable {
     private static Iterable<Agent> allAgents() throws IOException {
         return Arrays.asList(
             new WipeRepo(),
-            new UploadKeys(),
             new DetectPorts(),
             new TerminateDocker(),
             new PingContainers(),
@@ -247,8 +246,9 @@ final class Routine implements Runnable {
      * @throws IOException If fails
      */
     private static Iterable<Boss> allBosses() throws IOException {
-        return Arrays.<Boss>asList(
-            new SetupNginx()
+        return Arrays.asList(
+            new SetupNginx(),
+            new UploadKeys()
         );
     }
 

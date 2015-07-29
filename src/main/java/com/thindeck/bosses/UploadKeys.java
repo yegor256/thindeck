@@ -27,19 +27,18 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.agents;
+package com.thindeck.bosses;
 
 import com.google.common.base.Joiner;
 import com.jcabi.ssh.Shell;
-import com.jcabi.xml.XML;
-import com.thindeck.api.Agent;
+import com.thindeck.agents.Remote;
+import com.thindeck.api.Boss;
+import com.thindeck.api.Deck;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import org.apache.commons.io.IOUtils;
-import org.xembly.Directive;
-import org.xembly.Directives;
 
 /**
  * Upload SSH keys to the servers.
@@ -47,10 +46,10 @@ import org.xembly.Directives;
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  */
-public final class UploadKeys implements Agent {
+public final class UploadKeys implements Boss {
 
     @Override
-    public Iterable<Directive> exec(final XML deck) throws IOException {
+    public void exec(final Iterable<Deck> decks) throws IOException {
         final Shell shell = new Remote("t1.thindeck.com");
         new Shell.Plain(shell).exec("mkdir -p ~/.ssh");
         shell.exec(
@@ -76,7 +75,6 @@ public final class UploadKeys implements Agent {
         );
         new Shell.Plain(shell).exec("chmod 700 ~/.ssh");
         new Shell.Plain(shell).exec("chmod -R 600 ~/.ssh/*");
-        return new Directives();
     }
 
 }
