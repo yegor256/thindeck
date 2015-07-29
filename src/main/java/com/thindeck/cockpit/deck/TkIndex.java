@@ -89,6 +89,7 @@ public final class TkIndex implements Take {
                 ),
                 new XeChain(
                     new XeLink("open", home.path("open")),
+                    new XeLink("help", home.path("help")),
                     new XeLink("command", home.path("command"))
                 )
             ),

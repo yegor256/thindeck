@@ -30,38 +30,40 @@
 package com.thindeck.cockpit.deck;
 
 import com.thindeck.api.Base;
+import com.thindeck.cockpit.RsPage;
+import java.io.IOException;
+import org.takes.Request;
+import org.takes.Response;
 import org.takes.Take;
-import org.takes.facets.fork.TkFork;
-import org.takes.tk.TkWrap;
 
 /**
- * Deck.
+ * Help.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.5
  */
-public final class TkDeck extends TkWrap {
+public final class TkHelp implements Take {
+
+    /**
+     * Base.
+     */
+    private final transient Base base;
 
     /**
      * Ctor.
-     * @param base Base
+     * @param bse Base
      */
-    public TkDeck(final Base base) {
-        super(TkDeck.make(base));
+    TkHelp(final Base bse) {
+        this.base = bse;
     }
 
-    /**
-     * Ctor.
-     * @param base Base
-     * @return Take
-     */
-    private static Take make(final Base base) {
-        return new TkFork(
-            new FkDeck("", new TkIndex(base)),
-            new FkDeck("/help", new TkHelp(base)),
-            new FkDeck("/delete", new TkDelete(base)),
-            new FkDeck("/command", new TkCommand(base))
+    @Override
+    public Response act(final Request req) throws IOException {
+        return new RsPage(
+            "/xsl/help.xsl",
+            this.base,
+            req
         );
     }
 
