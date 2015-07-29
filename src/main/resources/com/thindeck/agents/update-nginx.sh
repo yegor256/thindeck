@@ -9,7 +9,7 @@ if [ -n "${servers}" ]; then
     ${servers}
   }
   server {
-    listen ${domain}:${port};
+    listen ${port};
     server_name ${domain};
     location / {
       proxy_set_header X-Real-IP \$remote_addr;
