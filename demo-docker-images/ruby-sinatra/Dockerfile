@@ -29,20 +29,16 @@
 
 FROM ubuntu:14.04
 MAINTAINER Yegor Bugayenko <yegor@teamed.io>
-LABEL Description="Demo PHP Docker image for Thindeck.com" Vendor="Thindeck.com" Version="1.0"
+LABEL Description="Demo Ruby Docker image for Thindeck.com" Vendor="Thindeck.com" Version="1.0"
 WORKDIR /app
 ADD app/ /app
-ADD start.sh /start.sh
-RUN chmod a+x /start.sh
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Basic Linux tools
 RUN apt-get update
-RUN apt-get install -y apache2
-RUN apt-get install -y php5
-RUN rm -fr /var/www/html && ln -s /app /var/www/html
-RUN chown www-data:www-data /app -R
+RUN apt-get install -y ruby
+RUN gem install sinatra
 
 EXPOSE 80
-CMD ["/start.sh"]
+CMD ["ruby", "hello.rb"]
