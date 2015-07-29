@@ -8,7 +8,7 @@ sudo mkdir -p /etc/nginx/conf.d/thindeck
 tmp=$(mktemp)
 echo "include /etc/nginx/conf.d/thindeck/*.conf;
   server {
-    listen 80;
+    listen 80 default_server;
     server_name \"\";
     return 444;
   }
