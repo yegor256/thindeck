@@ -104,6 +104,20 @@ final class DyDecks implements Decks {
                 )
             );
         }
+        final Iterator<Item> items = this.region.table(DyDeck.TBL)
+            .frame()
+            .through(new QueryValve().withLimit(1))
+            .where(DyDeck.HASH, this.user)
+            .where(DyDeck.RANGE, name)
+            .iterator();
+        if (items.hasNext()) {
+            throw new IllegalStateException(
+                String.format(
+                    "deck '%s' already exists, can't add it again",
+                    name
+                )
+            );
+        }
         this.region.table(DyDeck.TBL).put(
             new Attributes()
                 .with(DyDeck.HASH, this.user)
@@ -124,6 +138,14 @@ final class DyDecks implements Decks {
             .where(DyDeck.HASH, this.user)
             .where(DyDeck.RANGE, name)
             .iterator();
+        if (!items.hasNext()) {
+            throw new IllegalStateException(
+                String.format(
+                    "deck '%s' not found, can't delete",
+                    name
+                )
+            );
+        }
         items.next();
         items.remove();
     }
