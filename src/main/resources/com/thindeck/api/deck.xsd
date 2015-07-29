@@ -93,6 +93,7 @@
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
+        <xs:attribute name="checked" use="optional" type="xs:dateTime"/>
         <xs:attribute name="type" use="required">
             <xs:simpleType>
                 <xs:restriction base="xs:string">

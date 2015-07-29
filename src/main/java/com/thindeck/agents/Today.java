@@ -30,43 +30,27 @@
 package com.thindeck.agents;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.log.Logger;
-import com.jcabi.xml.XML;
-import com.thindeck.api.Agent;
-import java.util.Collection;
-import org.xembly.Directive;
-import org.xembly.Directives;
+import java.util.Date;
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
- * Mark containers as waste if they don't have HTTP port.
+ * ISO date.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.5
+ * @since 0.7
  */
 @Immutable
-public final class WasteContainers implements Agent {
+final class Today {
 
-    @Override
-    public Iterable<Directive> exec(final XML deck) {
-        final Collection<String> containers = deck.xpath(
-            "/deck/containers/container[not(http) and not(@waste)]/name/text()"
+    /**
+     * In ISO 8601.
+     * @return ISO date/time
+     */
+    public String iso() {
+        return DateFormatUtils.ISO_DATETIME_FORMAT.format(
+            new Date()
         );
-        final Directives dirs = new Directives();
-        final String today = new Today().iso();
-        for (final String ctr : containers) {
-            dirs.xpath(
-                String.format(
-                    "/deck/containers/container[name='%s']",
-                    ctr
-                )
-            ).attr("waste", today).attr("state", "dead");
-            Logger.info(
-                this, "container %s has no HTTP port, wasting it",
-                ctr
-            );
-        }
-        return dirs;
     }
 
 }

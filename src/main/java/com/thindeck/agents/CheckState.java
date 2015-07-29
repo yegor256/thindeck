@@ -76,6 +76,7 @@ public final class CheckState implements Agent {
         final Collection<XML> containers = deck.nodes(
             "/deck/containers/container[host and http]"
         );
+        final String today = new Today().iso();
         for (final XML ctr : containers) {
             final Integer port = Integer.parseInt(
                 ctr.xpath("http/text()").get(0)
@@ -86,7 +87,9 @@ public final class CheckState implements Agent {
                     "/deck/containers/container[name='%s']",
                     ctr.xpath("name/text()").get(0)
                 )
-            ).attr("state", this.state(host, port));
+            );
+            dirs.attr("state", this.state(host, port))
+                .attr("checked", today);
         }
         return dirs;
     }

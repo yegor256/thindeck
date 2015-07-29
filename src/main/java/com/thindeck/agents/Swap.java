@@ -34,8 +34,6 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
-import java.util.Date;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -62,9 +60,7 @@ public final class Swap implements Agent {
         ).isEmpty();
         final Directives dirs = new Directives();
         if (ready) {
-            final String today = DateFormatUtils.ISO_DATETIME_FORMAT.format(
-                new Date()
-            );
+            final String today = new Today().iso();
             for (final XML ctr : deck.nodes("/deck/containers/container")) {
                 final String name = ctr.xpath("name/text()").get(0);
                 dirs.xpath(

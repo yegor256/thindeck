@@ -35,6 +35,7 @@ import com.jcabi.aspects.ScheduleWithFixedDelay;
 import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
 import com.thindeck.agents.BuildImage;
+import com.thindeck.agents.BuryContainers;
 import com.thindeck.agents.CheckState;
 import com.thindeck.agents.DetectPorts;
 import com.thindeck.agents.FindTanks;
@@ -201,6 +202,7 @@ final class Routine implements Runnable {
             new TerminateDocker(),
             new PingContainers(),
             new PingImages(),
+            new BuryContainers(),
             new WasteContainers(),
             new WasteImages(),
             new StopDocker(),
