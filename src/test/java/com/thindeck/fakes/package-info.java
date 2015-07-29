@@ -27,34 +27,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.mock;
-
-import com.jcabi.aspects.Immutable;
-import com.thindeck.api.Events;
-import java.util.Collections;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
- * Mock of {@link com.thindeck.api.Events}.
+ * API fakes implementation tests.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
+ * @since 0.1
  */
-@Immutable
-@ToString
-@EqualsAndHashCode
-public final class MkEvents implements Events {
-
-    @Override
-    public Iterable<String> iterate(final long since) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public void create(final String text) {
-        // nothing
-    }
-
-}
+package com.thindeck.fakes;

@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.mock;
+package com.thindeck.fakes;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import com.jcabi.xml.XML;
@@ -41,21 +41,21 @@ import org.xembly.Directive;
 import org.xembly.Directives;
 
 /**
- * Test case for {@link MkDeck}.
+ * Test case for {@link FkDeck}.
  *
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  * @since 0.3
  */
-public final class MkDeckTest {
+public final class FkDeckTest {
 
     /**
-     * MkDeck can accept info about domain configuration.
+     * FkDeck can accept info about domain configuration.
      * @throws IOException If an IO error gets thrown
      */
     @Test
     public void acceptsDomainDefinition() throws IOException {
-        final Deck deck = new MkDeck();
+        final Deck deck = new FkDeck();
         deck.exec(
             new Agent() {
                 @Override

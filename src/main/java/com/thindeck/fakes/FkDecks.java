@@ -27,27 +27,24 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.mock;
+package com.thindeck.fakes;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+import com.google.common.io.Files;
 import com.jcabi.aspects.Immutable;
-import com.jcabi.log.Logger;
-import com.jcabi.xml.StrictXML;
-import com.jcabi.xml.XML;
-import com.jcabi.xml.XMLDocument;
-import com.thindeck.api.Agent;
 import com.thindeck.api.Deck;
-import com.thindeck.api.Events;
+import com.thindeck.api.Decks;
 import java.io.File;
 import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.CharEncoding;
-import org.xembly.Xembler;
+import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.xembly.Directives;
 
 /**
- * Mock of {@link com.thindeck.api.Deck}.
+ * Mock of {@link com.thindeck.api.Decks}.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
@@ -56,10 +53,10 @@ import org.xembly.Xembler;
 @Immutable
 @ToString
 @EqualsAndHashCode
-public final class MkDeck implements Deck {
+public final class FkDecks implements Decks {
 
     /**
-     * File path.
+     * Dir path.
      */
     private final transient String path;
 
@@ -67,59 +64,63 @@ public final class MkDeck implements Deck {
      * Ctor.
      * @throws IOException If fails
      */
-    public MkDeck() throws IOException {
-        this(MkDeck.temp());
+    public FkDecks() throws IOException {
+        this(FkDecks.temp());
     }
 
     /**
      * Ctor.
      * @param file File to use for XML
      */
-    public MkDeck(final File file) {
+    public FkDecks(final File file) {
         this.path = file.getAbsolutePath();
     }
 
     @Override
-    public String name() {
-        return FilenameUtils.getBaseName(this.path);
+    public Deck get(final String name) {
+        return new FkDeck(new File(this.path, name));
     }
 
     @Override
-    public void exec(final Agent agent) throws IOException {
-        final XML before = new StrictXML(
-            new XMLDocument(new File(this.path)),
-            Deck.SCHEMA
-        );
-        final XML after = new XMLDocument(
-            new Xembler(agent.exec(before)).applyQuietly(before.node())
-        );
-        FileUtils.write(
-            new File(this.path),
-            new StrictXML(
-                after,
-                Deck.SCHEMA
-            ).toString(),
-            CharEncoding.UTF_8
-        );
-        Logger.info(
-            this, "deck saved to %s (%d bytes):\n%s", this.path,
-            new File(this.path).length(), after
+    public void add(final String name) throws IOException {
+        final File file = new File(this.path, name);
+        FileUtils.write(file, "<deck/>");
+        new Deck.Smart(new FkDeck(file)).update(
+            new Directives().xpath("/deck").attr(
+                "name", String.format("test/%s", name)
+            )
         );
     }
 
     @Override
-    public Events events() {
-        return new MkEvents();
+    public void delete(final String name) {
+        new File(this.path, name).delete();
+    }
+
+    @Override
+    public Iterable<Deck> iterate() {
+        return Iterables.transform(
+            FileUtils.listFiles(
+                new File(this.path),
+                TrueFileFilter.INSTANCE,
+                TrueFileFilter.INSTANCE
+            ),
+            new Function<File, Deck>() {
+                @Override
+                public Deck apply(final File input) {
+                    return new FkDeck(input);
+                }
+            }
+        );
     }
 
     /**
-     * Create temp file.
-     * @return Temp file with XML
+     * Create temp dir.
+     * @return Temp dir
      * @throws IOException If fails
      */
     private static File temp() throws IOException {
-        final File file = File.createTempFile("thindeck-", ".xml");
-        FileUtils.write(file, "<deck/>");
+        final File file = Files.createTempDir();
         FileUtils.forceDeleteOnExit(file);
         return file;
     }

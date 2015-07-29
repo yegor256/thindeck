@@ -30,7 +30,7 @@
 package com.thindeck.cockpit;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import com.thindeck.mock.MkBase;
+import com.thindeck.fakes.FkBase;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.takes.facets.auth.RqWithAuth;
@@ -52,7 +52,7 @@ public final class TkAppTest {
     public void rendersHomePage() throws Exception {
         MatcherAssert.assertThat(
             new RsPrint(
-                new TkApp(new MkBase()).act(new RqWithAuth("urn:test:1"))
+                new TkApp(new FkBase()).act(new RqWithAuth("urn:test:1"))
             ).printBody(),
             XhtmlMatchers.hasXPaths(
                 "/page[@date]",

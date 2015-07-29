@@ -30,7 +30,7 @@
 package com.thindeck.cockpit;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import com.thindeck.mock.MkBase;
+import com.thindeck.fakes.FkBase;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.takes.rq.RqFake;
@@ -54,7 +54,7 @@ public final class TkIndexTest {
         MatcherAssert.assertThat(
             new RsPrint(
                 new RsPrettyXML(
-                    new TkIndex(new MkBase()).act(new RqFake())
+                    new TkIndex(new FkBase()).act(new RqFake())
                 )
             ).printBody(),
             XhtmlMatchers.hasXPaths(

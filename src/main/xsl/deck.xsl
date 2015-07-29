@@ -66,7 +66,7 @@
                 <xsl:text> Create a new CNAME in your NS record and point it to </xsl:text>
                 <code><xsl:text>relay.thindeck.com</xsl:text></code>
                 <xsl:text>. When ready, enter </xsl:text>
-                <code><xsl:text>domains add X</xsl:text></code>
+                <code><xsl:text>domain add X</xsl:text></code>
                 <xsl:text> into the form above, where X is a full name of your domain, for example </xsl:text>
                 <code><xsl:text>php.demo.thindeck.com</xsl:text></code>
                 <xsl:text>.</xsl:text>

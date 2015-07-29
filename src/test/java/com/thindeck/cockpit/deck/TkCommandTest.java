@@ -34,7 +34,7 @@ import com.jcabi.matchers.XhtmlMatchers;
 import com.thindeck.api.Base;
 import com.thindeck.api.Deck;
 import com.thindeck.api.Decks;
-import com.thindeck.mock.MkBase;
+import com.thindeck.fakes.FkBase;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.takes.Request;
@@ -65,7 +65,7 @@ public final class TkCommandTest {
                 "command=domain+add+test.thindeck.com"
             )
         );
-        final Base base = new MkBase();
+        final Base base = new FkBase();
         final Decks decks = base.user(urn).decks();
         decks.add(name);
         new FkDeck("", new TkCommand(base)).route(req).get();
@@ -94,7 +94,7 @@ public final class TkCommandTest {
                 "command=repo+put+https://github.com/yegor256/thindeck.git"
             )
         );
-        final Base base = new MkBase();
+        final Base base = new FkBase();
         final Decks decks = base.user(urn).decks();
         decks.add(name);
         new FkDeck("", new TkCommand(base)).route(req).get();
@@ -123,7 +123,7 @@ public final class TkCommandTest {
                 "command=container+waste+a1b2c3e4"
             )
         );
-        final Base base = new MkBase();
+        final Base base = new FkBase();
         final Decks decks = base.user(urn).decks();
         decks.add(name);
         new Deck.Smart(decks.get(name)).update(

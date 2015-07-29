@@ -31,7 +31,7 @@ package com.thindeck.cockpit;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import com.thindeck.api.Base;
-import com.thindeck.mock.MkBase;
+import com.thindeck.fakes.FkBase;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.takes.facets.auth.RqWithAuth;
@@ -52,7 +52,7 @@ public final class TkDecksTest {
      */
     @Test
     public void rendersXmlPage() throws Exception {
-        final Base base = new MkBase();
+        final Base base = new FkBase();
         final String urn = "urn:test:199";
         base.user(urn).decks().add("elephant");
         MatcherAssert.assertThat(
