@@ -8,7 +8,7 @@ upstream ${group} { \
   ${servers}
 } \
 server { \
-  listen ${port}; \
+  listen ${domain}:${port}; \
   server_name ${domain}; \
   location / { \
     proxy_set_header X-Real-IP \$remote_addr;
