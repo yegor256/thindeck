@@ -36,6 +36,7 @@ ADD . /app
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
+RUN apt-get install -y wget
 RUN apt-get install -y default-jdk
 RUN apt-get install -y gdebi && \
   wget http://ppa.launchpad.net/natecarlson/maven3/ubuntu/pool/main/m/maven3/maven3_3.2.1-0~ppa1_all.deb && \
