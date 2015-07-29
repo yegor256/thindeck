@@ -36,7 +36,7 @@
     version="2.0" exclude-result-prefixes="xs">
     <xsl:output method="xml"/>
     <xsl:strip-space elements="*"/>
-    <xsl:template match="image[not(uri)]">
+    <xsl:template match="/deck/images/image[not(uri)]">
         <xsl:copy>
             <xsl:apply-templates select="node()|@*"/>
             <uri>unknown</uri>
