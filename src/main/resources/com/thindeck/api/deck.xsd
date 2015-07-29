@@ -109,7 +109,7 @@
                 <xs:element name="domains" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="domain" minOccurs="1" maxOccurs="unbounded">
+                            <xs:element name="domain" minOccurs="0" maxOccurs="unbounded">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
                                         <xs:pattern value="[a-zA-Z0-9\-\.]+"/>
@@ -164,12 +164,6 @@
                         <xs:selector xpath="./container" />
                         <xs:field xpath="name" />
                     </xs:unique>
-                    <!--
-                    <xs:unique name="oneContainerPerHost">
-                        <xs:selector xpath="./container" />
-                        <xs:field xpath="host" />
-                    </xs:unique>
-                    -->
                 </xs:element>
             </xs:all>
             <xs:attribute name="name">
