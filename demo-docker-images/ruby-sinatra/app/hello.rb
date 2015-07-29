@@ -1,5 +1,7 @@
 require 'sinatra'
 
+set :port, 80
+
 get '/' do
   "<html>
     <body>
