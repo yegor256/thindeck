@@ -35,7 +35,6 @@ ADD app/ /app
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Basic Linux tools
 RUN apt-get update
 RUN apt-get install -y ruby
 RUN gem install sinatra
