@@ -55,6 +55,7 @@ import com.thindeck.api.Agent;
 import com.thindeck.api.Base;
 import com.thindeck.api.Boss;
 import com.thindeck.api.Deck;
+import com.thindeck.bosses.CleanNginx;
 import com.thindeck.bosses.SetupNginx;
 import com.thindeck.bosses.UploadKeys;
 import java.io.IOException;
@@ -138,21 +139,8 @@ final class Routine implements Runnable {
                 }
             }
         );
-        final Collection<Future<Integer>> futures = new LinkedList<>();
         final Iterable<Deck> decks = this.decks();
-        for (final Deck deck : decks) {
-            futures.add(
-                exec.submit(
-                    new Callable<Integer>() {
-                        @Override
-                        public Integer call() throws Exception {
-                            Routine.this.exec(deck);
-                            return 1;
-                        }
-                    }
-                )
-            );
-        }
+        final Collection<Future<Integer>> futures = new LinkedList<>();
         futures.add(
             exec.submit(
                 new Callable<Integer>() {
@@ -167,6 +155,19 @@ final class Routine implements Runnable {
                 }
             )
         );
+        for (final Deck deck : decks) {
+            futures.add(
+                exec.submit(
+                    new Callable<Integer>() {
+                        @Override
+                        public Integer call() throws Exception {
+                            Routine.this.exec(deck);
+                            return 1;
+                        }
+                    }
+                )
+            );
+        }
         for (final Future<?> future : futures) {
             try {
                 future.get();
@@ -247,8 +248,9 @@ final class Routine implements Runnable {
      */
     private static Iterable<Boss> allBosses() throws IOException {
         return Arrays.asList(
+            new UploadKeys(),
             new SetupNginx(),
-            new UploadKeys()
+            new CleanNginx()
         );
     }
 
