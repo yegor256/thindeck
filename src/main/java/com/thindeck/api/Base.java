@@ -61,7 +61,7 @@ public interface Base {
     User user(String name);
 
     /**
-     * Get active decksitories, no matter what users they belong to.
+     * Get active decks, no matter what users they belong to.
      *
      * <p>This method is used only by a system-wide routine procedure
      * that goes through ALL decksitories and increments their tasks.

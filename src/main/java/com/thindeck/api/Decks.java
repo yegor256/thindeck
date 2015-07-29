@@ -81,7 +81,7 @@ public interface Decks {
 
     /**
      * Iterate them all.
-     * @return All decksitories of the user
+     * @return All decks of the user
      * @throws IOException If fails
      */
     @NotNull(message = "iterable of decks can't be null")
