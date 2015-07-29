@@ -17,6 +17,7 @@ sudo mv "${tmp}" /etc/nginx/conf.d/thindeck.conf
 sudo chown nginx /etc/nginx/conf.d/thindeck.conf
 sudo chmod 644 /etc/nginx/conf.d/thindeck.conf
 
+sudo mkdir -p /var/nginx
 echo "<html><body>The site is down :(</body></html>" > "${tmp}"
 sudo mv "${tmp}" /var/nginx/no_containers.html
 sudo chown nginx /var/nginx/no_containers.html
