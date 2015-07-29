@@ -58,6 +58,7 @@ import org.xembly.Directives;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class TkCommand implements Take {
 
     /**
@@ -117,6 +118,12 @@ public final class TkCommand implements Take {
         } else if ("container".equals(parts[0])) {
             dirs.append(
                 TkCommand.container(
+                    Arrays.copyOfRange(parts, 1, parts.length)
+                )
+            );
+        } else if ("image".equals(parts[0])) {
+            dirs.append(
+                TkCommand.image(
                     Arrays.copyOfRange(parts, 1, parts.length)
                 )
             );
@@ -233,6 +240,43 @@ public final class TkCommand implements Take {
             throw new IllegalArgumentException(
                 String.format(
                     "should be only 'waste': '%s' is wrong",
+                    args[0]
+                )
+            );
+        }
+        return dirs;
+    }
+
+    /**
+     * Image command.
+     * @param args Arguments
+     * @return Directives
+     * @throws IOException If fails
+     */
+    private static Iterable<Directive> image(final String... args)
+        throws IOException {
+        if (args.length == 0) {
+            throw new RsForward(
+                new RsFlash(
+                    "'image' command supports 'waste'"
+                )
+            );
+        }
+        final Directives dirs = new Directives();
+        if ("waste".equals(args[0])) {
+            final String today = DateFormatUtils.ISO_DATETIME_FORMAT.format(
+                new Date()
+            );
+            dirs.xpath(
+                String.format(
+                    "/deck/images/image[name='%s']",
+                    args[1]
+                )
+            ).attr("waste", today);
+        } else {
+            throw new IllegalArgumentException(
+                String.format(
+                    "should be only 'waste': '%s' is wrong argument",
                     args[0]
                 )
             );

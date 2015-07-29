@@ -142,4 +142,40 @@ public final class TkCommandTest {
             )
         );
     }
+
+    /**
+     * TkCommand can waste an image.
+     * @throws Exception If something goes wrong.
+     */
+    @Test
+    public void wastesSelectedImage() throws Exception {
+        final String name = "panda";
+        final String urn = "urn:test:4333";
+        final Request req = new RqWithAuth(
+            urn,
+            new RqFake(
+                "INFO",
+                String.format("/d/%s?hey-you", name),
+                "command=image+waste+test/test-a1b2c3e4"
+            )
+        );
+        final Base base = new FkBase();
+        final Decks decks = base.user(urn).decks();
+        decks.add(name);
+        new Deck.Smart(decks.get(name)).update(
+            Joiner.on(' ').join(
+                "<deck><images><image",
+                " type='blue'><name>test/test-a1b2c3e4</name>",
+                "<repo>abcd0099</repo><uri>#</uri>",
+                "</image></images></deck>"
+            )
+        );
+        new FkDeck("", new TkCommand(base)).route(req).get();
+        MatcherAssert.assertThat(
+            new Deck.Smart(decks.get(name)).xml(),
+            XhtmlMatchers.hasXPaths(
+                "/deck/images/image[name='test/test-a1b2c3e4' and @waste]"
+            )
+        );
+    }
 }
