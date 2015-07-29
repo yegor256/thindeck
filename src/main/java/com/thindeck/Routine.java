@@ -147,10 +147,13 @@ final class Routine implements Runnable {
                     @Override
                     @LogExceptions
                     public Integer call() throws Exception {
+                        int total = 0;
                         for (final Boss boss : Routine.this.bosses) {
                             boss.exec(decks);
+                            ++total;
                         }
-                        return 1;
+                        Logger.info(this, "%d bosses succeeded", total);
+                        return total;
                     }
                 }
             )
