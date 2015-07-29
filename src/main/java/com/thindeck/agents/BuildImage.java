@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.Random;
+import org.apache.commons.lang3.StringUtils;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -114,12 +115,28 @@ public final class BuildImage implements Agent {
             "%s-%08x", deck,
             BuildImage.RND.nextInt()
         );
+        final String hash = "#";
+        String uri = repo.xpath("uri/text()").get(0);
+        final String branch;
+        final String path;
+        if (uri.contains(hash)) {
+            final String[] tail = StringUtils.substringAfter(uri, hash)
+                .split(":", 2);
+            branch = tail[0];
+            path = tail[1];
+            uri = StringUtils.substringBefore(uri, hash);
+        } else {
+            branch = "master";
+            path = "/";
+        }
         final long start = System.currentTimeMillis();
         this.script.exec(
             "t1.thindeck.com",
             new ArrayMap<String, String>()
                 .with("image", name)
-                .with("uri", repo.xpath("uri/text()").get(0))
+                .with("uri", uri)
+                .with("branch", branch)
+                .with("path", path)
         );
         Logger.info(
             this, "Docker image %s built in %[ms]s",
