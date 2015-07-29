@@ -18,9 +18,18 @@ if [ -n "${servers}" ]; then
       proxy_pass http://${group};
     }
   }" > "${tmp}"
-  sudo mv "${tmp}" "/etc/nginx/conf.d/thindeck/${domain}.conf"
-  sudo chown nginx "/etc/nginx/conf.d/thindeck/${domain}.conf"
-  sudo chmod 644 "/etc/nginx/conf.d/thindeck/${domain}.conf"
 else
-  sudo rm -f "/etc/nginx/conf.d/thindeck/${domain}.conf"
+  echo "
+  server {
+    listen ${port};
+    server_name ${domain};
+    location / {
+      try_files \$uri /no_containers.html;
+      root /var/nginx;
+    }
+  }" > "${tmp}"
 fi
+
+sudo mv "${tmp}" "/etc/nginx/conf.d/thindeck/${domain}.conf"
+sudo chown nginx "/etc/nginx/conf.d/thindeck/${domain}.conf"
+sudo chmod 644 "/etc/nginx/conf.d/thindeck/${domain}.conf"
