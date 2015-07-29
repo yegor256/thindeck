@@ -2,6 +2,7 @@
 set -e
 
 dir=/etc/nginx/conf.d/thindeck
+mkdir -p "${dir}"
 for i in $(ls "${dir}"); do
   if ! grep -q "${i}" ~/domains; then
     sudo rm -rf "${dir}/${i}"
