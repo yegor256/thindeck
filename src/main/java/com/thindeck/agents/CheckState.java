@@ -119,14 +119,14 @@ public final class CheckState implements Agent {
             new ArrayMap<String, String>().with("port", Integer.toString(port))
         );
         final String state;
-        if (stdout.contains("ALIVE")) {
-            state = "alive";
-        } else {
+        if (stdout.contains("DEAD")) {
             state = "dead";
             Logger.info(
                 this, "HTTP port %d at %s doesn't respond",
                 port, host
             );
+        } else {
+            state = "alive";
         }
         return state;
     }
