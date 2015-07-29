@@ -58,6 +58,20 @@
             </fieldset>
         </form>
         <xsl:apply-templates select="deck/domains"/>
+        <xsl:if test="not(domains/domain)">
+            <p>
+                <xsl:text>No domains registered yet, your deck is </xsl:text>
+                <strong><xsl:text>not reachable</xsl:text></strong>
+                <xsl:text> via our load balancer yet.</xsl:text>
+                <xsl:text> Create a new CNAME in your NS record and point it to </xsl:text>
+                <code><xsl:text>relay.thindeck.com</xsl:text></code>
+                <xsl:text>. When ready, enter </xsl:text>
+                <code><xsl:text>domains add X</xsl:text></code>
+                <xsl:text> into the form above, where X is a full name of your domain, for example</xsl:text>
+                <code><xsl:text>php.demo.thindeck.com</xsl:text></code>
+                <xsl:text>.</xsl:text>
+            </p>
+        </xsl:if>
         <xsl:apply-templates select="deck/tanks"/>
         <xsl:apply-templates select="deck/repo"/>
         <xsl:apply-templates select="deck/images"/>
