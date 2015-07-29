@@ -59,7 +59,7 @@ public final class CheckStateTest {
         );
         final XML deck = new XMLDocument(
             Joiner.on(' ').join(
-                "<deck><containers><container>",
+                "<deck><containers><container state='unknown'>",
                 "<name>abcd1234</name><host>127.0.0.1</host>",
                 "<http>80</http>",
                 "</container></containers></deck>"

@@ -88,8 +88,15 @@ public final class CheckState implements Agent {
                     ctr.xpath("name/text()").get(0)
                 )
             );
-            dirs.attr("state", this.state(host, port))
-                .attr("checked", today);
+            final String before = ctr.xpath("@state").get(0);
+            final String after = this.state(host, port);
+            if (!after.equals(before)) {
+                dirs.attr("state", after).attr("checked", today);
+                Logger.info(
+                    this, "State of container %s changed from %s to %s",
+                    ctr.xpath("name/text()").get(0), before, after
+                );
+            }
         }
         return dirs;
     }
