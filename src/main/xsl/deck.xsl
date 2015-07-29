@@ -50,7 +50,7 @@
             <xsl:text>Deck </xsl:text>
             <strong><xsl:value-of select="deck/@name"/></strong>
             <xsl:text> is ready for your instructions (</xsl:text>
-            <a href="links/link[@rel='help']/@href">
+            <a href="{links/link[@rel='help']/@href}">
                 <xsl:text>need help?</xsl:text>
             </a>
             <xsl:text>):</xsl:text>
