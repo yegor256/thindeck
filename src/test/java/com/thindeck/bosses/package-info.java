@@ -27,41 +27,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck;
-
-import com.thindeck.api.Base;
-import com.thindeck.cockpit.TkApp;
-import com.thindeck.dynamo.DyBase;
-import java.io.IOException;
-import org.takes.http.Exit;
-import org.takes.http.FtCLI;
 
 /**
- * Launch (used only for heroku).
+ * Bosses, tests.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @since 0.5
  */
-public final class Entrance {
-
-    /**
-     * Utility class.
-     */
-    private Entrance() {
-        // intentionally empty
-    }
-
-    /**
-     * Entry point.
-     * @param args Command line args
-     * @throws IOException If fails
-     */
-    public static void main(final String... args) throws IOException {
-        final Base base = new DyBase();
-        new Routine(base);
-        new FtCLI(new TkApp(base), args).start(Exit.NEVER);
-    }
-
-}
+package com.thindeck.bosses;

@@ -38,8 +38,10 @@ import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Map;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.NullOutputStream;
 
 /**
@@ -50,7 +52,7 @@ import org.apache.commons.io.output.NullOutputStream;
  * @since 0.1
  */
 @Immutable
-interface Script {
+public interface Script {
 
     /**
      * Run it.
@@ -68,20 +70,28 @@ interface Script {
     @Immutable
     final class Default implements Script {
         /**
-         * Sript name.
+         * Script.
          */
-        private final transient String name;
+        private final transient String script;
         /**
          * Ctor.
-         * @param res Resource name
+         * @param url Resource URL
+         * @throws IOException If fails
          */
-        Default(final String res) {
-            this.name = res;
+        public Default(final URL url) throws IOException {
+            this(IOUtils.toString(url.openStream()));
+        }
+        /**
+         * Ctor.
+         * @param text Content of script
+         */
+        public Default(final String text) {
+            this.script = text;
         }
         @Override
         public String exec(final String host, final Map<String, String> args)
             throws IOException {
-            final String script = Joiner.on(" && ").join(
+            final String command = Joiner.on(" && ").join(
                 Iterables.concat(
                     Arrays.asList(
                         "dir=$(mktemp -d -t td-XXXX)",
@@ -110,8 +120,8 @@ interface Script {
             );
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             new Shell.Safe(new Shell.Safe(new Remote(host))).exec(
-                script,
-                this.getClass().getResourceAsStream(this.name),
+                command,
+                IOUtils.toInputStream(this.script),
                 baos,
                 new NullOutputStream()
             );
@@ -132,7 +142,7 @@ interface Script {
          * Ctor.
          * @param txt Text of stdout
          */
-        Fake(final String txt) {
+        public Fake(final String txt) {
             this.stdout = txt;
         }
         @Override

@@ -64,9 +64,14 @@ public final class StartDocker implements Agent {
 
     /**
      * Ctor.
+     * @throws IOException If fails
      */
-    public StartDocker() {
-        this(new Script.Default("start-docker.sh"));
+    public StartDocker() throws IOException {
+        this(
+            new Script.Default(
+                StartDocker.class.getResource("start-docker.sh")
+            )
+        );
     }
 
     /**

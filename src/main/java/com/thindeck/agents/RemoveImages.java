@@ -56,9 +56,14 @@ public final class RemoveImages implements Agent {
 
     /**
      * Ctor.
+     * @throws IOException If fails
      */
-    public RemoveImages() {
-        this(new Script.Default("remove-image.sh"));
+    public RemoveImages() throws IOException {
+        this(
+            new Script.Default(
+                RemoveImages.class.getResource("remove-image.sh")
+            )
+        );
     }
 
     /**

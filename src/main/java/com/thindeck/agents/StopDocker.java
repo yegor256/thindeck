@@ -56,9 +56,14 @@ public final class StopDocker implements Agent {
 
     /**
      * Ctor.
+     * @throws IOException If fails
      */
-    public StopDocker() {
-        this(new Script.Default("stop-docker.sh"));
+    public StopDocker() throws IOException {
+        this(
+            new Script.Default(
+                StopDocker.class.getResource("stop-docker.sh")
+            )
+        );
     }
 
     /**

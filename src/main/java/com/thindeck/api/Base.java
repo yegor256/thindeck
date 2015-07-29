@@ -64,7 +64,7 @@ public interface Base {
      * Get active decks, no matter what users they belong to.
      *
      * <p>This method is used only by a system-wide routine procedure
-     * that goes through ALL decksitories and increments their tasks.
+     * that goes through ALL decks.
      *
      * @return Decks
      * @throws IOException If fails

@@ -57,9 +57,14 @@ public final class PingContainers implements Agent {
 
     /**
      * Ctor.
+     * @throws IOException If fails
      */
-    public PingContainers() {
-        this(new Script.Default("ping-container.sh"));
+    public PingContainers() throws IOException {
+        this(
+            new Script.Default(
+                PingContainers.class.getResource("ping-container.sh")
+            )
+        );
     }
 
     /**

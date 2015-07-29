@@ -27,41 +27,57 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck;
+package com.thindeck.bosses;
 
-import com.thindeck.api.Base;
-import com.thindeck.cockpit.TkApp;
-import com.thindeck.dynamo.DyBase;
+import com.jcabi.immutable.ArrayMap;
+import com.thindeck.agents.Script;
+import com.thindeck.api.Boss;
+import com.thindeck.api.Deck;
 import java.io.IOException;
-import org.takes.http.Exit;
-import org.takes.http.FtCLI;
 
 /**
- * Launch (used only for heroku).
+ * Setup nginx load balancer.
+ *
+ * <p>To install nginx on a clean server, just install it first using
+ * "apt-get" or "yum" and that's it.</>
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @since 0.4
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle MultipleStringLiterals (300 lines)
  */
-public final class Entrance {
+public final class SetupNginx implements Boss {
 
     /**
-     * Utility class.
+     * Script to use.
      */
-    private Entrance() {
-        // intentionally empty
+    private final transient Script script;
+
+    /**
+     * Ctor.
+     * @throws IOException If fails
+     */
+    public SetupNginx() throws IOException {
+        this(
+            new Script.Default(
+                SetupNginx.class.getResource("setup-nginx.sh")
+            )
+        );
     }
 
     /**
-     * Entry point.
-     * @param args Command line args
-     * @throws IOException If fails
+     * Ctor.
+     * @param spt Script.
      */
-    public static void main(final String... args) throws IOException {
-        final Base base = new DyBase();
-        new Routine(base);
-        new FtCLI(new TkApp(base), args).start(Exit.NEVER);
+    public SetupNginx(final Script spt) {
+        this.script = spt;
+    }
+
+    @Override
+    public void exec(final Iterable<Deck> decks) throws IOException {
+        this.script.exec(
+            "t1.thindeck.com",
+            new ArrayMap<String, String>()
+        );
     }
 
 }

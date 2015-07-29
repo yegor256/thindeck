@@ -61,9 +61,14 @@ public final class TerminateDocker implements Agent {
 
     /**
      * Ctor.
+     * @throws IOException If fails
      */
-    public TerminateDocker() {
-        this(new Script.Default("terminate-docker.sh"));
+    public TerminateDocker() throws IOException {
+        this(
+            new Script.Default(
+                TerminateDocker.class.getResource("terminate-docker.sh")
+            )
+        );
     }
 
     /**

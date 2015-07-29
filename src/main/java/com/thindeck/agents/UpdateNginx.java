@@ -78,9 +78,14 @@ public final class UpdateNginx implements Agent {
 
     /**
      * Ctor.
+     * @throws IOException If fails
      */
-    public UpdateNginx() {
-        this(new Script.Default("update-nginx.sh"));
+    public UpdateNginx() throws IOException {
+        this(
+            new Script.Default(
+                UpdateNginx.class.getResource("update-nginx.sh")
+            )
+        );
     }
 
     /**

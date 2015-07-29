@@ -27,54 +27,26 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.agents;
+package com.thindeck.api;
 
-import com.jcabi.immutable.ArrayMap;
-import com.jcabi.xml.XML;
-import com.thindeck.api.Agent;
+import com.jcabi.aspects.Immutable;
 import java.io.IOException;
-import org.xembly.Directive;
-import org.xembly.Directives;
 
 /**
- * Setup nginx load balancer.
- *
- * <p>To install nginx on a clean server, just install it first using
- * "apt-get" or "yum" and that's it.</>
+ * Boss (a super agent).
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @checkstyle MultipleStringLiterals (300 lines)
+ * @since 0.5
  */
-public final class SetupNginx implements Agent {
+@Immutable
+public interface Boss {
 
     /**
-     * Script to use.
+     * Execute it on all decks.
+     * @param decks All decks
+     * @throws IOException If fails
      */
-    private final transient Script script;
-
-    /**
-     * Ctor.
-     */
-    public SetupNginx() {
-        this(new Script.Default("setup-nginx.sh"));
-    }
-
-    /**
-     * Ctor.
-     * @param spt Script.
-     */
-    public SetupNginx(final Script spt) {
-        this.script = spt;
-    }
-
-    @Override
-    public Iterable<Directive> exec(final XML deck) throws IOException {
-        this.script.exec(
-            "t1.thindeck.com",
-            new ArrayMap<String, String>()
-        );
-        return new Directives();
-    }
+    void exec(Iterable<Deck> decks) throws IOException;
 
 }

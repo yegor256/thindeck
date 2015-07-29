@@ -65,9 +65,14 @@ public final class BuildImage implements Agent {
 
     /**
      * Ctor.
+     * @throws IOException If fails
      */
-    public BuildImage() {
-        this(new Script.Default("build-image.sh"));
+    public BuildImage() throws IOException {
+        this(
+            new Script.Default(
+                BuildImage.class.getResource("build-image.sh")
+            )
+        );
     }
 
     /**

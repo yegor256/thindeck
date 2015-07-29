@@ -57,9 +57,14 @@ public final class CheckState implements Agent {
 
     /**
      * Ctor.
+     * @throws IOException If fails
      */
-    public CheckState() {
-        this(new Script.Default("check-state.sh"));
+    public CheckState() throws IOException {
+        this(
+            new Script.Default(
+                CheckState.class.getResource("check-state.sh")
+            )
+        );
     }
 
     /**

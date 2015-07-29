@@ -57,9 +57,14 @@ public final class PingImages implements Agent {
 
     /**
      * Ctor.
+     * @throws IOException If fails
      */
-    public PingImages() {
-        this(new Script.Default("ping-image.sh"));
+    public PingImages() throws IOException {
+        this(
+            new Script.Default(
+                PingImages.class.getResource("ping-image.sh")
+            )
+        );
     }
 
     /**

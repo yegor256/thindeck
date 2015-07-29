@@ -70,9 +70,14 @@ public final class DetectPorts implements Agent {
 
     /**
      * Ctor.
+     * @throws IOException If fails
      */
-    public DetectPorts() {
-        this(new Script.Default("docker-ports.sh"));
+    public DetectPorts() throws IOException {
+        this(
+            new Script.Default(
+                DetectPorts.class.getResource("docker-ports.sh")
+            )
+        );
     }
 
     /**

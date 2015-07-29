@@ -27,19 +27,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.thindeck.agents;
+package com.thindeck.bosses;
 
-import com.jcabi.matchers.XhtmlMatchers;
-import com.jcabi.xml.XML;
-import com.jcabi.xml.XMLDocument;
-import com.thindeck.api.Agent;
+import com.thindeck.agents.Script;
+import com.thindeck.api.Boss;
+import com.thindeck.api.Deck;
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
+import java.util.Collections;
 import org.junit.Test;
-import org.xembly.Xembler;
 
 /**
- * Test case for {@link SetupNginx}.
+ * Test case for {@link com.thindeck.bosses.SetupNginx}.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
@@ -53,16 +51,10 @@ public final class SetupNginxTest {
      */
     @Test
     public void setsNginxUp() throws IOException {
-        final Agent agent = new SetupNginx(
+        final Boss boss = new SetupNginx(
             new Script.Fake("")
         );
-        final XML deck = new XMLDocument("<deck name='test/test'/>");
-        MatcherAssert.assertThat(
-            new XMLDocument(
-                new Xembler(agent.exec(deck)).applyQuietly(deck.node())
-            ),
-            XhtmlMatchers.hasXPaths("/deck")
-        );
+        boss.exec(Collections.<Deck>emptyList());
     }
 
 }

@@ -30,6 +30,7 @@
 package com.thindeck;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.aspects.LogExceptions;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.ScheduleWithFixedDelay;
 import com.jcabi.immutable.Array;
@@ -42,7 +43,6 @@ import com.thindeck.agents.FindTanks;
 import com.thindeck.agents.PingContainers;
 import com.thindeck.agents.PingImages;
 import com.thindeck.agents.RemoveImages;
-import com.thindeck.agents.SetupNginx;
 import com.thindeck.agents.StartDocker;
 import com.thindeck.agents.StopDocker;
 import com.thindeck.agents.Swap;
@@ -54,7 +54,9 @@ import com.thindeck.agents.WasteImages;
 import com.thindeck.agents.WipeRepo;
 import com.thindeck.api.Agent;
 import com.thindeck.api.Base;
+import com.thindeck.api.Boss;
 import com.thindeck.api.Deck;
+import com.thindeck.bosses.SetupNginx;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -104,12 +106,19 @@ final class Routine implements Runnable {
     private final transient Array<Agent> agents;
 
     /**
+     * Bosses.
+     */
+    private final transient Array<Boss> bosses;
+
+    /**
      * Execute them all.
      * @param bse Base
+     * @throws IOException If fails
      */
-    Routine(final Base bse) {
+    Routine(final Base bse) throws IOException {
         this.base = bse;
-        this.agents = new Array<>(Routine.all());
+        this.agents = new Array<>(Routine.allAgents());
+        this.bosses = new Array<>(Routine.allBosses());
     }
 
     @Override
@@ -130,7 +139,8 @@ final class Routine implements Runnable {
             }
         );
         final Collection<Future<Integer>> futures = new LinkedList<>();
-        for (final Deck deck : this.decks()) {
+        final Iterable<Deck> decks = this.decks();
+        for (final Deck deck : decks) {
             futures.add(
                 exec.submit(
                     new Callable<Integer>() {
@@ -143,6 +153,20 @@ final class Routine implements Runnable {
                 )
             );
         }
+        futures.add(
+            exec.submit(
+                new Callable<Integer>() {
+                    @Override
+                    @LogExceptions
+                    public Integer call() throws Exception {
+                        for (final Boss boss : Routine.this.bosses) {
+                            boss.exec(decks);
+                        }
+                        return 1;
+                    }
+                }
+            )
+        );
         for (final Future<?> future : futures) {
             try {
                 future.get();
@@ -193,8 +217,9 @@ final class Routine implements Runnable {
     /**
      * Create a list of agents.
      * @return List of agents
+     * @throws IOException If fails
      */
-    private static Iterable<Agent> all() {
+    private static Iterable<Agent> allAgents() throws IOException {
         return Arrays.asList(
             new WipeRepo(),
             new UploadKeys(),
@@ -212,8 +237,18 @@ final class Routine implements Runnable {
             new CheckState(),
             new Swap(),
             new StartDocker(),
-            new SetupNginx(),
             new UpdateNginx()
+        );
+    }
+
+    /**
+     * Create a list of bosses.
+     * @return List of bosses
+     * @throws IOException If fails
+     */
+    private static Iterable<Boss> allBosses() throws IOException {
+        return Arrays.<Boss>asList(
+            new SetupNginx()
         );
     }
 
