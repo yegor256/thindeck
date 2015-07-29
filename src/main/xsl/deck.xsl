@@ -78,7 +78,7 @@
                 <xsl:text>.</xsl:text>
             </p>
         </xsl:if>
-        <xsl:apply-templates select="deck/tanks"/>
+        <!-- <xsl:apply-templates select="deck/tanks"/> -->
         <xsl:apply-templates select="deck/repo"/>
         <xsl:apply-templates select="deck/images"/>
         <xsl:apply-templates select="deck/containers"/>
