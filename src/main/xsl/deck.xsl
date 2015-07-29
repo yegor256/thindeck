@@ -84,7 +84,9 @@
             <xsl:text>): </xsl:text>
             <xsl:for-each select="domain">
                 <xsl:if test="position()!=1">, </xsl:if>
-                <xsl:value-of select="."/>
+                <a href="http://{.}">
+                    <xsl:value-of select="."/>
+                </a>
             </xsl:for-each>
         </p>
     </xsl:template>
