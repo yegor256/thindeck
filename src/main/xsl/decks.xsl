@@ -108,6 +108,9 @@
                 <span style="color:blue">
                     <xsl:value-of select="count(deck/images/image[@type='blue'])"/>
                 </span>
+                <xsl:if test="deck/repo">
+                    <xsl:text> +repo</xsl:text>
+                </xsl:if>
             </td>
             <td>
                 <span style="color:green">
