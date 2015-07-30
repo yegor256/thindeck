@@ -72,16 +72,16 @@
         </p>
         <table>
             <colgroup>
+                <col style="width:8em"/>
                 <col style="width:6em"/>
-                <col style="width:5em"/>
-                <col style="width:5em"/>
+                <col style="width:6em"/>
                 <col/>
             </colgroup>
             <thead>
                 <tr>
                     <th><xsl:text>Name</xsl:text></th>
                     <th><xsl:text>Images</xsl:text></th>
-                    <th><xsl:text>Containers</xsl:text></th>
+                    <th><xsl:text>Cntrs</xsl:text></th>
                     <th><xsl:text>Opts</xsl:text></th>
                 </tr>
             </thead>
