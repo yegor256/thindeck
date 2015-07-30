@@ -42,7 +42,7 @@
         </title>
     </xsl:template>
     <xsl:template match="page" mode="body">
-        <xsl:apply-templates select="decks"/>
+        <xsl:apply-templates select="items"/>
         <form action="{links/link[@rel='add']/@href}" method="post">
             <fieldset>
                 <label><xsl:text>Name:</xsl:text></label>
@@ -56,36 +56,73 @@
             </fieldset>
         </form>
     </xsl:template>
-    <xsl:template match="decks[deck]">
+    <xsl:template match="items[item]">
         <p>
             <xsl:text>Your </xsl:text>
             <xsl:choose>
-                <xsl:when test="count(deck) = 1">
+                <xsl:when test="count(item) = 1">
                     <xsl:text>deck</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="count(deck)"/>
+                    <xsl:value-of select="count(item)"/>
                     <xsl:text> decks</xsl:text>
                 </xsl:otherwise>
             </xsl:choose>
             <xsl:text>:</xsl:text>
         </p>
-        <ul>
-            <xsl:apply-templates select="deck"/>
-        </ul>
+        <table>
+            <colgroup>
+                <col style="width:6em"/>
+                <col style="width:5em"/>
+                <col style="width:5em"/>
+                <col/>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th><xsl:text>Name</xsl:text></th>
+                    <th><xsl:text>Images</xsl:text></th>
+                    <th><xsl:text>Containers</xsl:text></th>
+                    <th><xsl:text>Opts</xsl:text></th>
+                </tr>
+            </thead>
+            <tbody>
+                <xsl:apply-templates select="item"/>
+            </tbody>
+        </table>
     </xsl:template>
-    <xsl:template match="decks[not(deck)]">
+    <xsl:template match="items[not(item)]">
         <p><xsl:text>You don't have any decks yet.</xsl:text></p>
     </xsl:template>
-    <xsl:template match="deck">
-        <li>
-            <a href="{links/link[@rel='open']/@href}">
-                <xsl:value-of select="name"/>
-            </a>
-            <xsl:text> </xsl:text>
-            <a href="{links/link[@rel='delete']/@href}" title="delete it">
-                <xsl:text>&#x2718;</xsl:text>
-            </a>
-        </li>
+    <xsl:template match="item">
+        <tr>
+            <td>
+                <a href="{links/link[@rel='open']/@href}">
+                    <xsl:value-of select="deck/name"/>
+                </a>
+            </td>
+            <td>
+                <span style="color:green">
+                    <xsl:value-of select="count(deck/images/image[@type='green'])"/>
+                </span>
+                <xsl:text>/</xsl:text>
+                <span style="color:blue">
+                    <xsl:value-of select="count(deck/images/image[@type='blue'])"/>
+                </span>
+            </td>
+            <td>
+                <span style="color:green">
+                    <xsl:value-of select="count(deck/containers/container[@type='green'])"/>
+                </span>
+                <xsl:text>/</xsl:text>
+                <span style="color:blue">
+                    <xsl:value-of select="count(deck/containers/container[@type='blue'])"/>
+                </span>
+            </td>
+            <td>
+                <a href="{links/link[@rel='delete']/@href}" title="delete it">
+                    <xsl:text>&#x2718;</xsl:text>
+                </a>
+            </td>
+        </tr>
     </xsl:template>
 </xsl:stylesheet>

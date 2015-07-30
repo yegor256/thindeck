@@ -70,39 +70,43 @@ public final class TkDecks implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Href home = new Href("/d");
         return new RsPage(
             "/xsl/decks.xsl",
             this.base,
             req,
             new XeLink("add", "/add"),
             new XeAppend(
-                "decks",
+                "items",
                 new XeTransform<>(
                     new RqUser(req, this.base).get().decks().iterate(),
-                    // @checkstyle AnonInnerLengthCheck (50 lines)
                     new XeTransform.Func<Deck>() {
                         @Override
                         public XeSource transform(final Deck deck)
                             throws IOException {
-                            return new XeAppend(
-                                "deck",
-                                new XeDirectives(
-                                    new Directives().add("name").set(
-                                        deck.name()
-                                    )
-                                ),
-                                new XeChain(
-                                    new XeLink("open", home.path(deck.name())),
-                                    new XeLink(
-                                        "delete",
-                                        home.path(deck.name()).path("delete")
-                                    )
-                                )
-                            );
+                            return TkDecks.source(deck);
                         }
                     }
                 )
+            )
+        );
+    }
+
+    /**
+     * Deck as Xembly source.
+     * @param deck The deck
+     * @return Source
+     * @throws IOException If fails
+     */
+    private static XeSource source(final Deck deck) throws IOException {
+        final Href home = new Href("/d");
+        return new XeAppend(
+            "item",
+            new XeDirectives(
+                Directives.copyOf(new Deck.Smart(deck).xml().node())
+            ),
+            new XeChain(
+                new XeLink("open", home.path(deck.name())),
+                new XeLink("delete", home.path(deck.name()).path("delete"))
             )
         );
     }

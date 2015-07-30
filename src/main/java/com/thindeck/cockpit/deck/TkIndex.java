@@ -48,6 +48,7 @@ import org.takes.rs.xe.XeLink;
 import org.takes.rs.xe.XeSource;
 import org.takes.rs.xe.XeTransform;
 import org.xembly.Directives;
+import org.xembly.Xembler;
 
 /**
  * Deck.
@@ -107,10 +108,10 @@ public final class TkIndex implements Take {
                             final long msec = Long.parseLong(parts[1]);
                             return new XeDirectives(
                                 new Directives().add("event")
-                                    .attr("head", parts[0])
+                                    .attr("head", Xembler.escape(parts[0]))
                                     .attr("msec", Long.toString(msec))
                                     .attr("ago", pretty.format(new Date(msec)))
-                                    .set(parts[2])
+                                    .set(Xembler.escape(parts[2]))
                             );
                         }
                     }

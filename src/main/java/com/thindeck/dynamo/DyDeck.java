@@ -29,6 +29,7 @@
  */
 package com.thindeck.dynamo;
 
+import com.amazonaws.services.dynamodbv2.model.Select;
 import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.AttributeUpdates;
@@ -169,8 +170,8 @@ final class DyDeck implements Deck {
             .frame()
             .through(
                 new QueryValve()
+                    .withSelect(Select.ALL_ATTRIBUTES)
                     .withLimit(1)
-                    .withAttributesToGet(DyDeck.ATTR_UPDATED, DyDeck.ATTR_MEMO)
             )
             .where(DyDeck.HASH, this.user)
             .where(DyDeck.RANGE, this.deck)

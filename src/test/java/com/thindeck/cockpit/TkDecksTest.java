@@ -63,9 +63,9 @@ public final class TkDecksTest {
             ).printBody(),
             XhtmlMatchers.hasXPaths(
                 "/page/links/link[@rel='home']",
-                "/page/decks[count(deck)=1]",
-                "//deck[name='elephant']",
-                "//deck/links/link[@rel='open']"
+                "/page/items[count(item)=1]",
+                "//deck[@name='test/elephant']",
+                "//item/links/link[@rel='open']"
             )
         );
     }

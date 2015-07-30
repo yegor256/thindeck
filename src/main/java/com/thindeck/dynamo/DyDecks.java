@@ -29,6 +29,7 @@
  */
 package com.thindeck.dynamo;
 
+import com.amazonaws.services.dynamodbv2.model.Select;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
@@ -155,7 +156,7 @@ final class DyDecks implements Decks {
         return Iterables.transform(
             this.region.table(DyDeck.TBL)
                 .frame()
-                .through(new QueryValve())
+                .through(new QueryValve().withSelect(Select.ALL_ATTRIBUTES))
                 .where(DyDeck.HASH, this.user),
             new Function<Item, Deck>() {
                 @Override
