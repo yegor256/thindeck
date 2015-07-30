@@ -27,7 +27,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 
-FROM ubuntu:14.04
+FROM yegor256:apache-php
 MAINTAINER Yegor Bugayenko <yegor@teamed.io>
 LABEL Description="Demo PHP Docker image for Thindeck.com" Vendor="Thindeck.com" Version="1.0"
 WORKDIR /app
@@ -35,11 +35,6 @@ ADD app/ /app
 ADD start.sh /start.sh
 RUN chmod a+x /start.sh
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update
-RUN apt-get install -y apache2
-RUN apt-get install -y php5
 RUN rm -fr /var/www/html && ln -s /app /var/www/html
 RUN chown www-data:www-data /app -R
 

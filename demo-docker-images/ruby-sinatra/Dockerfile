@@ -27,16 +27,12 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 
-FROM ubuntu:14.04
+FROM yegor256:ruby
 MAINTAINER Yegor Bugayenko <yegor@teamed.io>
 LABEL Description="Demo Ruby Docker image for Thindeck.com" Vendor="Thindeck.com" Version="1.0"
 WORKDIR /app
 ADD app/ /app
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update
-RUN apt-get install -y ruby
 RUN gem install sinatra
 
 EXPOSE 80

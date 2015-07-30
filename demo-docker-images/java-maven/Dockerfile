@@ -27,22 +27,12 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 
-FROM ubuntu:14.04
+FROM yegor256:java-maven
 MAINTAINER Yegor Bugayenko <yegor@teamed.io>
 LABEL Description="Demo Java Docker image for Thindeck.com" Vendor="Thindeck.com" Version="1.0"
 WORKDIR /app
 ADD . /app
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update
-RUN apt-get install -y wget
-RUN apt-get install -y default-jdk
-RUN apt-get install -y gdebi && \
-  wget http://ppa.launchpad.net/natecarlson/maven3/ubuntu/pool/main/m/maven3/maven3_3.2.1-0~ppa1_all.deb && \
-  gdebi --non-interactive maven3_3.2.1-0~ppa1_all.deb && \
-  ln -s /usr/share/maven3/bin/mvn /usr/bin/mvn && \
-  rm -rf maven3_3.2.1-0~ppa1_all.deb
 RUN mvn clean package
 
 EXPOSE 80
