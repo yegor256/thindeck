@@ -27,7 +27,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 
-FROM yegor256:ruby
+FROM yegor256/ruby
 MAINTAINER Yegor Bugayenko <yegor@teamed.io>
 LABEL Description="Demo Ruby Docker image for Thindeck.com" Vendor="Thindeck.com" Version="1.0"
 WORKDIR /app
