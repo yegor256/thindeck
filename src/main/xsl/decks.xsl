@@ -97,7 +97,7 @@
         <tr>
             <td>
                 <a href="{links/link[@rel='open']/@href}">
-                    <xsl:value-of select="deck/name"/>
+                    <xsl:value-of select="deck/@name"/>
                 </a>
             </td>
             <td>
