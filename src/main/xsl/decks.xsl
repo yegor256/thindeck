@@ -72,9 +72,9 @@
         </p>
         <table>
             <colgroup>
-                <col style="width:8em"/>
-                <col style="width:6em"/>
-                <col style="width:6em"/>
+                <col style="width:12em"/>
+                <col style="width:10em"/>
+                <col style="width:10em"/>
                 <col/>
             </colgroup>
             <thead>
