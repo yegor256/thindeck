@@ -79,7 +79,7 @@
         <p>
             <code><xsl:text>image waste foo/foo-a1b2c3d4</xsl:text></code>
             <xsl:text> marks image </xsl:text>
-            <code><xsl:text>foo/foo-</xsl:text></code>
+            <code><xsl:text>foo/foo-a1b2c3d4</xsl:text></code>
             <xsl:text> as waste. It will be automatically terminated and</xsl:text>
             <xsl:text> destroyed soon.</xsl:text>
         </p>
