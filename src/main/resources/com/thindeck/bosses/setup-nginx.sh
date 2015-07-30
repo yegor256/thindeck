@@ -23,7 +23,7 @@ echo "<html>
     <title>oops...</title>
   </head>
   <body>
-    <p style='color:red'>The site is down :(</p>
+    <p style='color:red'>The site is temporarily down :(</p>
   </body>
 </html>" > "${tmp}"
 sudo mv "${tmp}" /var/nginx/no_containers.html
