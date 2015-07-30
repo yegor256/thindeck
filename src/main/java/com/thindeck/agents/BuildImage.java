@@ -133,7 +133,7 @@ public final class BuildImage implements Agent {
             uri = StringUtils.substringBefore(uri, hash);
         } else {
             branch = "master";
-            path = "/";
+            path = ".";
         }
         final long start = System.currentTimeMillis();
         this.script.exec(
