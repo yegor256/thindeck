@@ -30,8 +30,6 @@
 FROM ubuntu:14.04
 MAINTAINER Yegor Bugayenko <yegor@teamed.io>
 LABEL Description="Ruby Docker image" Vendor="Thindeck.com" Version="1.0"
-WORKDIR /app
-ADD app/ /app
 
 ENV DEBIAN_FRONTEND=noninteractive
 
