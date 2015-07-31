@@ -41,3 +41,4 @@ RUN apt-get install -y gdebi && \
   gdebi --non-interactive maven3_3.2.1-0~ppa1_all.deb && \
   ln -s /usr/share/maven3/bin/mvn /usr/bin/mvn && \
   rm -rf maven3_3.2.1-0~ppa1_all.deb
+RUN apt-get update
