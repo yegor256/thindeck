@@ -45,7 +45,7 @@ import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.flash.RsFlash;
 import org.takes.facets.forward.RsForward;
-import org.takes.rq.RqForm;
+import org.takes.rq.RqHref;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -83,9 +83,8 @@ public final class TkCommand implements Take {
     public Response act(final Request req) throws IOException {
         final Decks decks = new RqUser(req, this.base).get().decks();
         final String deck = new RqDeck(this.base, req).deck().name();
-        final String cmd = new RqForm.Smart(
-            new RqForm.Base(req)
-        ).single("command");
+        final String cmd = new RqHref.Smart(new RqHref.Base(req))
+            .single("command");
         final Deck.Smart smart = new Deck.Smart(decks.get(deck));
         smart.update(TkCommand.answer(smart.xml(), cmd));
         return new RsForward(new RsFlash("thanks!"));

@@ -63,7 +63,7 @@
             </a>
             <xsl:text>):</xsl:text>
         </p>
-        <form action="{links/link[@rel='command']/@href}" method="post">
+        <form action="{links/link[@rel='command']/@href}" method="get">
             <fieldset>
                 <input type="text" name="command"
                     size="50" maxlength="1000"
@@ -128,6 +128,7 @@
             <tr>
                 <th>Image</th>
                 <th>URI</th>
+                <th>Opts</th>
             </tr>
             <xsl:for-each select="image">
                 <tr>
@@ -155,6 +156,15 @@
                     <td>
                         <xsl:value-of select="uri"/>
                     </td>
+                    <td>
+                        <a href="{/page/deck/links/link[@rel='command']/@href}?command=repo+put+{uri}" alt="re-deploy it">
+                            <xsl:text>&#x27F3;</xsl:text>
+                        </a>
+                        <xsl:text> </xsl:text>
+                        <a href="{/page/deck/links/link[@rel='command']/@href}?command=image+waste+{name}" alt="waste it">
+                            <xsl:text>&#x2718;</xsl:text>
+                        </a>
+                    </td>
                 </tr>
             </xsl:for-each>
         </table>
@@ -167,6 +177,7 @@
                 <th>Tank</th>
                 <th>State</th>
                 <th>Ports</th>
+                <th>Opts</th>
             </tr>
             <xsl:for-each select="container">
                 <tr>
@@ -215,6 +226,11 @@
                         <xsl:value-of select="http"/>
                         <xsl:text>, HTTPS=</xsl:text>
                         <xsl:value-of select="https"/>
+                    </td>
+                    <td>
+                        <a href="{/page/deck/links/link[@rel='command']/@href}?command=container+waste+{name}" title="waste it">
+                            <xsl:text>&#x2718;</xsl:text>
+                        </a>
                     </td>
                 </tr>
             </xsl:for-each>
