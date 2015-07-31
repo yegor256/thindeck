@@ -56,8 +56,8 @@
         <p>
             <code><xsl:text>repo put git@github.com:jeff/foo</xsl:text></code>
             <xsl:text> puts a new repository to the deck and instructs</xsl:text>
-            <xsl:text> us to build a Docker image from it, start a few</xsl:text>
-            <xsl:text> Docker containers and basically make them available online.</xsl:text>
+            <xsl:text> us to build a Docker image from it, starts a few</xsl:text>
+            <xsl:text> Docker containers and basically makes them available online.</xsl:text>
             <xsl:text> The third argument of this command is the URI of</xsl:text>
             <xsl:text> the repository. At the moment we support only</xsl:text>
             <xsl:text> Github repositories. To point us to a specific branch or</xsl:text>
