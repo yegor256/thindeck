@@ -38,3 +38,6 @@ RUN apt-get install -y apache2
 RUN apt-get install -y php5
 RUN a2enmod rewrite
 RUN apt-get update
+RUN apt-get install -y php5-curl curl php5-cgi php5-mysql
+RUN apt-get install -y imagemagick php5-imagick
+RUN apt-get update
