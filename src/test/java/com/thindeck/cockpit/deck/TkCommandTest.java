@@ -61,8 +61,9 @@ public final class TkCommandTest {
             urn,
             new RqFake(
                 "GET",
-                String.format("/d/%s", name),
-                "command=domain+add+test.thindeck.com"
+                String.format(
+                    "/d/%s?command=domain+add+test.thindeck.com", name
+                )
             )
         );
         final Base base = new FkBase();
@@ -90,8 +91,10 @@ public final class TkCommandTest {
             urn,
             new RqFake(
                 "PUT",
-                String.format("/d/%s?ooo", name),
-                "command=repo+put+https://github.com/yegor256/thindeck.git"
+                String.format(
+                    "/d/%s?command=repo+put+https://github.com/yegor256/x.git",
+                    name
+                )
             )
         );
         final Base base = new FkBase();
@@ -119,8 +122,7 @@ public final class TkCommandTest {
             urn,
             new RqFake(
                 "POST",
-                String.format("/d/%s?hey", name),
-                "command=container+waste+a1b2c3e4"
+                String.format("/d/%s?command=container+waste+a1b2c3e4", name)
             )
         );
         final Base base = new FkBase();
@@ -155,8 +157,9 @@ public final class TkCommandTest {
             urn,
             new RqFake(
                 "INFO",
-                String.format("/d/%s?hey-you", name),
-                "command=image+waste+test/test-a1b2c3e4"
+                String.format(
+                    "/d/%s?command=image+waste+test/test-a1b2c3e4", name
+                )
             )
         );
         final Base base = new FkBase();
