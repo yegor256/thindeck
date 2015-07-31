@@ -2,4 +2,4 @@
 set -e
 set -x
 
-docker rmi ${image} .
+docker rmi -f ${image} .
