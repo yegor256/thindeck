@@ -68,6 +68,13 @@
             <xsl:text> is the branch and </xsl:text>
             <code><xsl:text>src/docker</xsl:text></code>
             <xsl:text> is the directory.</xsl:text>
+            <xsl:text> The repository must contain a </xsl:text>
+            <code><xsl:text>Dockerfile</xsl:text></code>
+            <xsl:text>. See some examples </xsl:text>
+            <a href="https://github.com/yegor256/thindeck/tree/master/demo-docker-images">
+                <xsl:text>here</xsl:text>
+            </a>
+            <xsl:text>.</xsl:text>
         </p>
         <p>
             <code><xsl:text>container waste a1b2c3d4</xsl:text></code>
