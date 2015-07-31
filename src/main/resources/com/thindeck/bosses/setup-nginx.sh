@@ -29,6 +29,6 @@ echo "<html>
 sudo mv "${tmp}" /var/nginx/no_containers.html
 sudo chown nginx /var/nginx/no_containers.html
 
-echo "*/5 * * * * sudo service nginx reload >/dev/null 2>&1" > "${tmp}"
+echo "*/2 * * * * sudo service nginx reload >/dev/null 2>&1" > "${tmp}"
 crontab "${tmp}"
 rm "${tmp}"
