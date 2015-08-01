@@ -60,8 +60,8 @@ public final class UpdateNginxTest {
         final XML deck = new XMLDocument(
             Joiner.on(' ').join(
                 "<deck name='test/test'><containers>",
-                " <container type='green' state='alive'>",
-                "  <name>aaaaaaaa</name>",
+                " <container type='green' state='alive'><http>80</http>",
+                "  <host>localhost</host><name>aaaaaaaa</name>",
                 "  <image>ffffffff</image>",
                 " </container></containers>",
                 "<domains><domain>test.thindeck.com</domain></domains></deck>"

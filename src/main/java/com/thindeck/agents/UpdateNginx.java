@@ -137,7 +137,7 @@ public final class UpdateNginx implements Agent {
                     "images",
                     Joiner.on(',').join(
                         deck.xpath(
-                            String.format("//container[%s]/image", terms)
+                            String.format("//container[%s]/image/text()", terms)
                         )
                     )
                 )
