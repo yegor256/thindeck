@@ -16,6 +16,7 @@ if [ -n "${servers}" ]; then
       proxy_set_header X-Forwarded-For \$remote_addr;
       proxy_set_header Host \$host;
       proxy_pass http://${group};
+      add_header X-Thindeck-Images \"${images}\";
     }
   }" > "${tmp}"
 else

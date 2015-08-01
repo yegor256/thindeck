@@ -112,12 +112,11 @@ public final class UpdateNginx implements Agent {
      */
     private void update(final String domain, final XML deck)
         throws IOException {
+        // @checkstyle LineLength (1 line)
+        final String terms = "not(@waste) and @type='green' and @state='alive' and http";
         final String servers = Joiner.on(' ').join(
             Iterables.transform(
-                deck.nodes(
-                    // @checkstyle LineLength (1 line)
-                    "//container[not(@waste) and @type='green' and @state='alive' and http]"
-                ),
+                deck.nodes(String.format("//container[%s]", terms)),
                 new Function<XML, String>() {
                     @Override
                     public String apply(final XML ctr) {
@@ -134,6 +133,14 @@ public final class UpdateNginx implements Agent {
             "t1.thindeck.com",
             new ArrayMap<String, String>()
                 .with("deck", deck.xpath("/deck/@name").get(0))
+                .with(
+                    "images",
+                    Joiner.on(',').join(
+                        deck.xpath(
+                            String.format("//container[%s]/image", terms)
+                        )
+                    )
+                )
                 .with("port", "80")
                 .with("group", domain.replace(".", "_"))
                 .with("domain", domain)
