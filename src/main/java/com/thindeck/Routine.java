@@ -206,15 +206,20 @@ final class Routine implements Runnable {
      */
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     private void exec(final Deck deck) throws IOException {
-        try {
-            for (final Agent agent : this.agents) {
+        final Collection<String> failure = new LinkedList<>();
+        for (final Agent agent : this.agents) {
+            try {
                 deck.exec(agent);
+                // @checkstyle IllegalCatchCheck (1 line)
+            } catch (final Throwable ex) {
+                Logger.error(this, "%s", ExceptionUtils.getStackTrace(ex));
+                failure.add(agent.getClass().getSimpleName());
             }
+        }
+        if (failure.isEmpty()) {
             deck.events().create("success");
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Throwable ex) {
-            Logger.error(this, "%s", ExceptionUtils.getStackTrace(ex));
-            deck.events().create(ex.getLocalizedMessage());
+        } else {
+            deck.events().create(String.format("failed: %s", failure));
         }
     }
 
