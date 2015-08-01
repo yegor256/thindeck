@@ -35,6 +35,9 @@ ADD app/ /app
 ADD start.sh /start.sh
 RUN chmod a+x /start.sh
 
+ADD php.ini /etc/php5/apache2/conf.d/thindeck.ini
+ADD httpd.conf /etc/apache2/sites-enabled/thindeck.conf
+
 RUN rm -fr /var/www/html && ln -s /app /var/www/html
 RUN chown www-data:www-data /app -R
 
