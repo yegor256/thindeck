@@ -126,7 +126,7 @@
     <xsl:template match="images[image]">
         <table>
             <tr>
-                <th>Image</th>
+                <th>Docker image</th>
                 <th>URI</th>
                 <th>Opts</th>
             </tr>
@@ -176,7 +176,7 @@
             <tr>
                 <th>Container</th>
                 <th>Image</th>
-                <th>Tank</th>
+                <th>Server</th>
                 <th>State</th>
                 <th>Ports</th>
                 <th>Opts</th>
