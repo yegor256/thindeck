@@ -51,7 +51,7 @@
         </p>
         <p>
             <code><xsl:text>domain remove www.thindeck.com</xsl:text></code>
-            <xsl:text> remove a domain from our load balancer.</xsl:text>
+            <xsl:text> removes a domain from our load balancer.</xsl:text>
         </p>
         <p>
             <code><xsl:text>repo put git@github.com:jeff/foo</xsl:text></code>
