@@ -157,11 +157,13 @@
                         <xsl:value-of select="uri"/>
                     </td>
                     <td>
-                        <a href="{/page/deck/links/link[@rel='command']/@href}?command=repo+put+{uri}" alt="re-deploy it">
+                        <a href="{/page/deck/links/link[@rel='command']/@href}?command=repo+put+{uri}"
+                            title="re-deploy it">
                             <xsl:text>&#x27F3;</xsl:text>
                         </a>
                         <xsl:text> </xsl:text>
-                        <a href="{/page/deck/links/link[@rel='command']/@href}?command=image+waste+{name}" alt="waste it">
+                        <a href="{/page/deck/links/link[@rel='command']/@href}?command=image+waste+{name}"
+                            title="waste it">
                             <xsl:text>&#x2718;</xsl:text>
                         </a>
                     </td>
@@ -228,7 +230,8 @@
                         <xsl:value-of select="https"/>
                     </td>
                     <td>
-                        <a href="{/page/deck/links/link[@rel='command']/@href}?command=container+waste+{name}" title="waste it">
+                        <a href="{/page/deck/links/link[@rel='command']/@href}?command=container+waste+{name}"
+                            title="waste it">
                             <xsl:text>&#x2718;</xsl:text>
                         </a>
                     </td>
