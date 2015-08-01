@@ -87,7 +87,7 @@ public final class TkCommand implements Take {
             .single("command");
         final Deck.Smart smart = new Deck.Smart(decks.get(deck));
         smart.update(TkCommand.answer(smart.xml(), cmd));
-        return new RsForward(new RsFlash("thanks!"));
+        throw new RsForward(new RsFlash("thanks!"));
     }
 
     /**

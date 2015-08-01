@@ -36,18 +36,57 @@ import com.thindeck.api.Deck;
 import com.thindeck.api.Decks;
 import com.thindeck.fakes.FkBase;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.takes.Request;
 import org.takes.facets.auth.RqWithAuth;
+import org.takes.facets.fork.TkFork;
+import org.takes.facets.forward.TkForward;
 import org.takes.rq.RqFake;
+import org.takes.rs.RsPrint;
 
 /**
  * Test case for {@link TkCommand}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.4
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class TkCommandTest {
+
+    /**
+     * TkCommand can forward to the right URL.
+     * @throws Exception If something goes wrong.
+     */
+    @Test
+    public void forwardsCorrectly() throws Exception {
+        final String name = "orchard";
+        final String urn = "urn:test:554";
+        final Request req = new RqWithAuth(
+            urn,
+            new RqFake(
+                "X",
+                String.format(
+                    "/d/%s?command=domain+remove+x.com", name
+                )
+            )
+        );
+        final Base base = new FkBase();
+        final Decks decks = base.user(urn).decks();
+        decks.add(name);
+        MatcherAssert.assertThat(
+            new RsPrint(
+                new TkForward(
+                    new TkFork(
+                        new FkDeck("", new TkCommand(base))
+                    )
+                ).act(req)
+            ).printHead(),
+            Matchers.containsString(
+                String.format("Location: http://www.example.com/d/%s", name)
+            )
+        );
+    }
 
     /**
      * TkCommand can add new domain.
@@ -69,7 +108,7 @@ public final class TkCommandTest {
         final Base base = new FkBase();
         final Decks decks = base.user(urn).decks();
         decks.add(name);
-        new FkDeck("", new TkCommand(base)).route(req).get();
+        new FkDeck("", new TkForward(new TkCommand(base))).route(req).get();
         MatcherAssert.assertThat(
             new Deck.Smart(decks.get(name)).xml(),
             XhtmlMatchers.hasXPaths(
@@ -100,7 +139,7 @@ public final class TkCommandTest {
         final Base base = new FkBase();
         final Decks decks = base.user(urn).decks();
         decks.add(name);
-        new FkDeck("", new TkCommand(base)).route(req).get();
+        new FkDeck("", new TkForward(new TkCommand(base))).route(req).get();
         MatcherAssert.assertThat(
             new Deck.Smart(decks.get(name)).xml(),
             XhtmlMatchers.hasXPaths(
@@ -136,7 +175,7 @@ public final class TkCommandTest {
                 "</container></containers></deck>"
             )
         );
-        new FkDeck("", new TkCommand(base)).route(req).get();
+        new FkDeck("", new TkForward(new TkCommand(base))).route(req).get();
         MatcherAssert.assertThat(
             new Deck.Smart(decks.get(name)).xml(),
             XhtmlMatchers.hasXPaths(
@@ -173,7 +212,7 @@ public final class TkCommandTest {
                 "</image></images></deck>"
             )
         );
-        new FkDeck("", new TkCommand(base)).route(req).get();
+        new FkDeck("", new TkForward(new TkCommand(base))).route(req).get();
         MatcherAssert.assertThat(
             new Deck.Smart(decks.get(name)).xml(),
             XhtmlMatchers.hasXPaths(
