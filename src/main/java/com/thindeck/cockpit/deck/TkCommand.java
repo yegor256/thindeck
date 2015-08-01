@@ -198,6 +198,8 @@ public final class TkCommand implements Take {
                 .add("name")
                 .set(String.format("%08x", TkCommand.RND.nextInt())).up()
                 .add("uri").set(args[1]);
+        } else if ("remove".equals(args[0])) {
+            dirs.xpath("/deck/repo").remove();
         } else {
             throw new IllegalArgumentException(
                 String.format(
