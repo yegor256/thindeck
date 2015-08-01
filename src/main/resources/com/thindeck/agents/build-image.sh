@@ -14,7 +14,7 @@ if [ ! -f Dockerfile ]; then
   exit -1
 fi
 
-docker build -t "${image}" .
+docker build --pull=true --force-rm=true --tag="${image}" .
 cd /tmp
 
 rm -rf "${dir}"
