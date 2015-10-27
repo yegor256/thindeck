@@ -42,8 +42,6 @@ deploy:
     s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml
     est --dir=$(pwd)/est --verbose --file=thindeck.xml --format=xml
     s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://est.teamed.io/thindeck.xml
-  commanders:
-  - yegor256
 env:
   MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
 release:
