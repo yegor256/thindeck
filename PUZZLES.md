@@ -1,118 +1,87 @@
 ## Puzzles
 
-There are 0 active puzzles (82 total), updated on 2015-12-09T13:37:39Z:
-
-unknown ?
-&nbsp;[UC1](https://github.com/yegor256/thindeck/issues/1) ?
-&nbsp;&nbsp;1-87e4ea39 src/site/apt/architecture.apt.vm:49-50
-&nbsp;&nbsp;[1-422bba33](https://github.com/yegor256/thindeck/issues/261) src/site/apt/architecture.apt.vm:56-59
-&nbsp;&nbsp;&nbsp;261-83965aa4 src/jekyll/_posts/2014/apr/2014-04-01-architecture.md:39-42
-
-&nbsp;&nbsp;1-0c2dd6e7 src/site/apt/architecture.apt.vm:60-62
-&nbsp;&nbsp;1-8220001d src/site/apt/architecture.apt.vm:68-71
-&nbsp;&nbsp;1-21a7e6b2 src/site/apt/architecture.apt.vm:77-79
-&nbsp;&nbsp;1-4e36e10e src/site/apt/architecture.apt.vm:85-86
-&nbsp;&nbsp;1-0f336fa3 src/site/apt/architecture.apt.vm:92-93
-&nbsp;&nbsp;1-2ac4b43a src/site/apt/architecture.apt.vm:99-100
-&nbsp;&nbsp;1-9b3a63bd target/site/architecture.html:106-108
-
-&nbsp;[239](https://github.com/yegor256/thindeck/issues/239) ?
-&nbsp;&nbsp;239-59e78fdb src/jekyll/_posts/2014/jun/2014-06-24-component-view.md:162-165
-&nbsp;&nbsp;239-fde3f532 src/jekyll/_posts/2014/jun/2014-06-24-component-view.md:172-174
-
-&nbsp;[UC9.1](https://github.com/yegor256/thindeck/issues/136) ?
-&nbsp;&nbsp;136-94e0aa31 thindeck-cockpit/src/main/webapp/xsl/stats.xsl:41-41
-&nbsp;&nbsp;136-59781d81 thindeck-cockpit/src/main/webapp/xsl/welcome.xsl:41-41
-&nbsp;&nbsp;136-1ffa9f73 thindeck-cockpit/src/main/webapp/xsl/welcome.xsl:47-47
-&nbsp;&nbsp;136-360ecdbc thindeck-cockpit/src/main/webapp/xsl/welcome.xsl:55-56
-&nbsp;&nbsp;136-c30c85e1 thindeck-cockpit/src/main/webapp/xsl/welcome.xsl:63-64
-
-&nbsp;[UC2.3](https://github.com/yegor256/thindeck/issues/256) ?
-&nbsp;&nbsp;256-65bbc8b6 src/jekyll/_posts/2014/apr/2014-04-01-architecture.md:125-126
-&nbsp;&nbsp;256-25d36e08 src/jekyll/_posts/2014/aug/2014-08-03-packaging.md:20-20
-
-&nbsp;[293](https://github.com/yegor256/thindeck/issues/293) ?
-&nbsp;&nbsp;[293-c68bbdc4](https://github.com/yegor256/thindeck/issues/312) src/main/java/com/thindeck/steps/LoadBalancer.java:40-44
-&nbsp;&nbsp;&nbsp;[312-b2cbc220](https://github.com/yegor256/thindeck/issues/345) src/main/java/com/thindeck/steps/Nginx.java:67-68
-&nbsp;&nbsp;&nbsp;&nbsp;345-7e2a1db1 src/main/java/com/thindeck/steps/Nginx.java:69-72
-&nbsp;&nbsp;&nbsp;&nbsp;345-8793b688 src/main/java/com/thindeck/steps/Nginx.java:73-79
-&nbsp;&nbsp;&nbsp;&nbsp;345-06272fcc src/main/java/com/thindeck/steps/Nginx.java:71-78
-
-&nbsp;&nbsp;&nbsp;312-375f6020 src/main/java/com/thindeck/steps/Nginx.java:69-70
-&nbsp;&nbsp;&nbsp;312-6fb7b082 src/main/java/com/thindeck/steps/Nginx.java:71-71
-&nbsp;&nbsp;&nbsp;312-8be93123 src/test/java/com/thindeck/steps/NginxTest.java:51-52
-
-&nbsp;&nbsp;[293-6e4765a2](https://github.com/yegor256/thindeck/issues/311) src/test/java/com/thindeck/steps/UpdateLBTest.java:52-58
-&nbsp;&nbsp;&nbsp;311-b0b102b2 src/test/java/com/thindeck/steps/UpdateLBTest.java:52-54
+There are 0 active puzzles (82 total), updated on 2015-12-09T15:11:49Z:
 
 
-&nbsp;[291](https://github.com/yegor256/thindeck/issues/291) ?
-&nbsp;&nbsp;[291-536f8d9b](https://github.com/yegor256/thindeck/issues/310) src/test/java/com/thindeck/steps/ReadConfigTest.java:57-60
-&nbsp;&nbsp;&nbsp;[310-82db8b8c](https://github.com/yegor256/thindeck/issues/369) src/main/java/com/thindeck/steps/ReadConfig.java:53-55
-&nbsp;&nbsp;&nbsp;&nbsp;369-8972f543 src/test/java/com/thindeck/steps/ReadConfigTest.java:59-61
-
-
-
-&nbsp;[289](https://github.com/yegor256/thindeck/issues/289) ?
-&nbsp;&nbsp;[289-341cbc3a](https://github.com/yegor256/thindeck/issues/319) pom.xml:480-481
-&nbsp;&nbsp;&nbsp;319-be3482ea src/test/java/com/thindeck/life/LifecycleTest.java:57-57
-&nbsp;&nbsp;&nbsp;[319-17808bfb](https://github.com/yegor256/thindeck/issues/351) src/test/java/com/thindeck/life/LifecycleTest.java:81-81
-&nbsp;&nbsp;&nbsp;&nbsp;351-ebb2c3b5 src/test/java/com/thindeck/life/LifecycleTest.java:81-83
-
-
-
-&nbsp;[290](https://github.com/yegor256/thindeck/issues/290) ?
-&nbsp;&nbsp;290-3defbeba src/main/java/com/thindeck/cockpit/ReposRs.java:93-93
-&nbsp;&nbsp;[290-ed461ae0](https://github.com/yegor256/thindeck/issues/322) src/main/java/com/thindeck/dynamo/DyBase.java:47-47
-&nbsp;&nbsp;&nbsp;[322-31a411b0](https://github.com/yegor256/thindeck/issues/372) src/main/java/com/thindeck/dynamo/DyBase.java:47-47
-&nbsp;&nbsp;&nbsp;&nbsp;[372-437563d3](https://github.com/yegor256/thindeck/issues/462) src/main/java/com/thindeck/dynamo/DyTxn.java:60-60
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;462-c5de49b4 src/main/java/com/thindeck/dynamo/DyContext.java:45-46
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;462-ec070d26 src/main/java/com/thindeck/dynamo/DyContext.java:52-53
-
-&nbsp;&nbsp;&nbsp;&nbsp;[372-6dfa5421](https://github.com/yegor256/thindeck/issues/464) src/test/java/com/thindeck/dynamo/DyBaseTest.java:66-66
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;464-b7102912 src/test/java/com/thindeck/dynamo/DyBaseTest.java:68-68
-
-
-&nbsp;&nbsp;&nbsp;[322-5e7e33aa](https://github.com/yegor256/thindeck/issues/373) src/main/java/com/thindeck/dynamo/DyRepo.java:43-43
-&nbsp;&nbsp;&nbsp;&nbsp;[373-67a7ac85](https://github.com/yegor256/thindeck/issues/405) src/main/java/com/thindeck/dynamo/DyRepo.java:44-44
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;405-d6ee4a6b src/main/java/com/thindeck/dynamo/DyMemo.java:47-47
-
-&nbsp;&nbsp;&nbsp;&nbsp;[373-e9bbc535](https://github.com/yegor256/thindeck/issues/406) src/main/java/com/thindeck/dynamo/DyTasks.java:46-46
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;406-e0d78f7e src/main/java/com/thindeck/dynamo/DyTask.java:46-46
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[406-14dae9d0](https://github.com/yegor256/thindeck/issues/420) src/main/java/com/thindeck/dynamo/DyTask.java:47-47
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;420-427af42c src/main/java/com/thindeck/dynamo/DyScenario.java:42-42
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;406-b5fe8676 src/main/java/com/thindeck/dynamo/DyTasks.java:50-50
-
-&nbsp;&nbsp;&nbsp;&nbsp;373-400c0a90 src/main/java/com/thindeck/dynamo/DyTasks.java:47-47
-
-&nbsp;&nbsp;&nbsp;322-1ad9bb23 src/main/java/com/thindeck/dynamo/DyRepos.java:43-43
-&nbsp;&nbsp;&nbsp;[322-123c6c41](https://github.com/yegor256/thindeck/issues/370) src/main/java/com/thindeck/dynamo/DyRepos.java:44-44
-&nbsp;&nbsp;&nbsp;&nbsp;370-bb822dca src/main/java/com/thindeck/dynamo/DyRepos.java:48-48
-
-&nbsp;&nbsp;&nbsp;[322-75940d12](https://github.com/yegor256/thindeck/issues/374) src/main/java/com/thindeck/dynamo/DyUser.java:43-43
-&nbsp;&nbsp;&nbsp;&nbsp;[374-bb504035](https://github.com/yegor256/thindeck/issues/409) src/main/java/com/thindeck/dynamo/DyUser.java:44-50
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;409-272f0225 src/main/java/com/thindeck/api/Repo.java:46-48
-
-&nbsp;&nbsp;&nbsp;&nbsp;[374-a01072dc](https://github.com/yegor256/thindeck/issues/408) src/main/java/com/thindeck/dynamo/DyUser.java:51-53
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;408-195c40b4 src/main/java/com/thindeck/dynamo/DyUsage.java:69-71
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;408-b5d67474 src/main/java/com/thindeck/dynamo/DyUsage.java:77-79
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;408-75ca2bde src/main/java/com/thindeck/dynamo/DyUsage.java:85-87
-
-&nbsp;&nbsp;&nbsp;&nbsp;[374-c45270af](https://github.com/yegor256/thindeck/issues/410) src/test/java/com/thindeck/dynamo/DyUserTest.java:52-54
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;410-108e5987 src/test/java/com/thindeck/dynamo/DyUserTestITCase.java:45-45
-
-
-&nbsp;&nbsp;&nbsp;322-7e6f773d src/test/java/com/thindeck/dynamo/DyBaseTest.java:55-55
-
-&nbsp;&nbsp;[290-5f41f67f](https://github.com/yegor256/thindeck/issues/321) src/main/java/com/thindeck/dynamo/DyBase.java:49-50
-&nbsp;&nbsp;&nbsp;[321-7e1601a9](https://github.com/yegor256/thindeck/issues/341) src/test/java/dynamo/DyBaseITCase.java:51-54
-&nbsp;&nbsp;&nbsp;&nbsp;341-7e1601a9 src/test/java/dynamo/DyBaseITCase.java:52-55
-&nbsp;&nbsp;&nbsp;&nbsp;341-c00e1503 src/test/java/dynamo/DyBaseITCase.java:53-54
-
-
-
-&nbsp;345-f56694d0 src/main/java/com/thindeck/steps/Nginx.java:66-72
-&nbsp;[491](https://github.com/yegor256/thindeck/issues/491) ?
-&nbsp;&nbsp;491-fa4a100f src/test/java/com/thindeck/dynamo/DyTasksTest.java:81-82
-
+unknown [`?`](../blob/master/?)<br/>
+&nbsp;[UC1](https://github.com/yegor256/thindeck/issues/1) [`?`](../blob/master/?)<br/>
+&nbsp;&nbsp;1-87e4ea39 [`architecture.apt.vm:49-50`](../blob/master/src/site/apt/architecture.apt.vm#L49-L50)<br/>
+&nbsp;&nbsp;[1-422bba33](https://github.com/yegor256/thindeck/issues/261) [`architecture.apt.vm:56-59`](../blob/master/src/site/apt/architecture.apt.vm#L56-L59)<br/>
+&nbsp;&nbsp;&nbsp;261-83965aa4 [`2014-04-01-architecture.md:39-42`](../blob/master/src/jekyll/_posts/2014/apr/2014-04-01-architecture.md#L39-L42)<br/>
+&nbsp;&nbsp;1-0c2dd6e7 [`architecture.apt.vm:60-62`](../blob/master/src/site/apt/architecture.apt.vm#L60-L62)<br/>
+&nbsp;&nbsp;1-8220001d [`architecture.apt.vm:68-71`](../blob/master/src/site/apt/architecture.apt.vm#L68-L71)<br/>
+&nbsp;&nbsp;1-21a7e6b2 [`architecture.apt.vm:77-79`](../blob/master/src/site/apt/architecture.apt.vm#L77-L79)<br/>
+&nbsp;&nbsp;1-4e36e10e [`architecture.apt.vm:85-86`](../blob/master/src/site/apt/architecture.apt.vm#L85-L86)<br/>
+&nbsp;&nbsp;1-0f336fa3 [`architecture.apt.vm:92-93`](../blob/master/src/site/apt/architecture.apt.vm#L92-L93)<br/>
+&nbsp;&nbsp;1-2ac4b43a [`architecture.apt.vm:99-100`](../blob/master/src/site/apt/architecture.apt.vm#L99-L100)<br/>
+&nbsp;&nbsp;1-9b3a63bd [`architecture.html:106-108`](../blob/master/target/site/architecture.html#L106-L108)<br/>
+&nbsp;[239](https://github.com/yegor256/thindeck/issues/239) [`?`](../blob/master/?)<br/>
+&nbsp;&nbsp;239-59e78fdb [`2014-06-24-component-view.md:162-165`](../blob/master/src/jekyll/_posts/2014/jun/2014-06-24-component-view.md#L162-L165)<br/>
+&nbsp;&nbsp;239-fde3f532 [`2014-06-24-component-view.md:172-174`](../blob/master/src/jekyll/_posts/2014/jun/2014-06-24-component-view.md#L172-L174)<br/>
+&nbsp;[UC9.1](https://github.com/yegor256/thindeck/issues/136) [`?`](../blob/master/?)<br/>
+&nbsp;&nbsp;136-94e0aa31 [`stats.xsl:41-41`](../blob/master/thindeck-cockpit/src/main/webapp/xsl/stats.xsl#L41-L41)<br/>
+&nbsp;&nbsp;136-59781d81 [`welcome.xsl:41-41`](../blob/master/thindeck-cockpit/src/main/webapp/xsl/welcome.xsl#L41-L41)<br/>
+&nbsp;&nbsp;136-1ffa9f73 [`welcome.xsl:47-47`](../blob/master/thindeck-cockpit/src/main/webapp/xsl/welcome.xsl#L47-L47)<br/>
+&nbsp;&nbsp;136-360ecdbc [`welcome.xsl:55-56`](../blob/master/thindeck-cockpit/src/main/webapp/xsl/welcome.xsl#L55-L56)<br/>
+&nbsp;&nbsp;136-c30c85e1 [`welcome.xsl:63-64`](../blob/master/thindeck-cockpit/src/main/webapp/xsl/welcome.xsl#L63-L64)<br/>
+&nbsp;[UC2.3](https://github.com/yegor256/thindeck/issues/256) [`?`](../blob/master/?)<br/>
+&nbsp;&nbsp;256-65bbc8b6 [`2014-04-01-architecture.md:125-126`](../blob/master/src/jekyll/_posts/2014/apr/2014-04-01-architecture.md#L125-L126)<br/>
+&nbsp;&nbsp;256-25d36e08 [`2014-08-03-packaging.md:20-20`](../blob/master/src/jekyll/_posts/2014/aug/2014-08-03-packaging.md#L20-L20)<br/>
+&nbsp;[293](https://github.com/yegor256/thindeck/issues/293) [`?`](../blob/master/?)<br/>
+&nbsp;&nbsp;[293-c68bbdc4](https://github.com/yegor256/thindeck/issues/312) [`LoadBalancer.java:40-44`](../blob/master/src/main/java/com/thindeck/steps/LoadBalancer.java#L40-L44)<br/>
+&nbsp;&nbsp;&nbsp;[312-b2cbc220](https://github.com/yegor256/thindeck/issues/345) [`Nginx.java:67-68`](../blob/master/src/main/java/com/thindeck/steps/Nginx.java#L67-L68)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;345-7e2a1db1 [`Nginx.java:69-72`](../blob/master/src/main/java/com/thindeck/steps/Nginx.java#L69-L72)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;345-8793b688 [`Nginx.java:73-79`](../blob/master/src/main/java/com/thindeck/steps/Nginx.java#L73-L79)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;345-06272fcc [`Nginx.java:71-78`](../blob/master/src/main/java/com/thindeck/steps/Nginx.java#L71-L78)<br/>
+&nbsp;&nbsp;&nbsp;312-375f6020 [`Nginx.java:69-70`](../blob/master/src/main/java/com/thindeck/steps/Nginx.java#L69-L70)<br/>
+&nbsp;&nbsp;&nbsp;312-6fb7b082 [`Nginx.java:71-71`](../blob/master/src/main/java/com/thindeck/steps/Nginx.java#L71-L71)<br/>
+&nbsp;&nbsp;&nbsp;312-8be93123 [`NginxTest.java:51-52`](../blob/master/src/test/java/com/thindeck/steps/NginxTest.java#L51-L52)<br/>
+&nbsp;&nbsp;[293-6e4765a2](https://github.com/yegor256/thindeck/issues/311) [`UpdateLBTest.java:52-58`](../blob/master/src/test/java/com/thindeck/steps/UpdateLBTest.java#L52-L58)<br/>
+&nbsp;&nbsp;&nbsp;311-b0b102b2 [`UpdateLBTest.java:52-54`](../blob/master/src/test/java/com/thindeck/steps/UpdateLBTest.java#L52-L54)<br/>
+&nbsp;[291](https://github.com/yegor256/thindeck/issues/291) [`?`](../blob/master/?)<br/>
+&nbsp;&nbsp;[291-536f8d9b](https://github.com/yegor256/thindeck/issues/310) [`ReadConfigTest.java:57-60`](../blob/master/src/test/java/com/thindeck/steps/ReadConfigTest.java#L57-L60)<br/>
+&nbsp;&nbsp;&nbsp;[310-82db8b8c](https://github.com/yegor256/thindeck/issues/369) [`ReadConfig.java:53-55`](../blob/master/src/main/java/com/thindeck/steps/ReadConfig.java#L53-L55)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;369-8972f543 [`ReadConfigTest.java:59-61`](../blob/master/src/test/java/com/thindeck/steps/ReadConfigTest.java#L59-L61)<br/>
+&nbsp;[289](https://github.com/yegor256/thindeck/issues/289) [`?`](../blob/master/?)<br/>
+&nbsp;&nbsp;[289-341cbc3a](https://github.com/yegor256/thindeck/issues/319) [`pom.xml:480-481`](../blob/master/pom.xml#L480-L481)<br/>
+&nbsp;&nbsp;&nbsp;319-be3482ea [`LifecycleTest.java:57-57`](../blob/master/src/test/java/com/thindeck/life/LifecycleTest.java#L57-L57)<br/>
+&nbsp;&nbsp;&nbsp;[319-17808bfb](https://github.com/yegor256/thindeck/issues/351) [`LifecycleTest.java:81-81`](../blob/master/src/test/java/com/thindeck/life/LifecycleTest.java#L81-L81)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;351-ebb2c3b5 [`LifecycleTest.java:81-83`](../blob/master/src/test/java/com/thindeck/life/LifecycleTest.java#L81-L83)<br/>
+&nbsp;[290](https://github.com/yegor256/thindeck/issues/290) [`?`](../blob/master/?)<br/>
+&nbsp;&nbsp;290-3defbeba [`ReposRs.java:93-93`](../blob/master/src/main/java/com/thindeck/cockpit/ReposRs.java#L93-L93)<br/>
+&nbsp;&nbsp;[290-ed461ae0](https://github.com/yegor256/thindeck/issues/322) [`DyBase.java:47-47`](../blob/master/src/main/java/com/thindeck/dynamo/DyBase.java#L47-L47)<br/>
+&nbsp;&nbsp;&nbsp;[322-31a411b0](https://github.com/yegor256/thindeck/issues/372) [`DyBase.java:47-47`](../blob/master/src/main/java/com/thindeck/dynamo/DyBase.java#L47-L47)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[372-437563d3](https://github.com/yegor256/thindeck/issues/462) [`DyTxn.java:60-60`](../blob/master/src/main/java/com/thindeck/dynamo/DyTxn.java#L60-L60)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;462-c5de49b4 [`DyContext.java:45-46`](../blob/master/src/main/java/com/thindeck/dynamo/DyContext.java#L45-L46)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;462-ec070d26 [`DyContext.java:52-53`](../blob/master/src/main/java/com/thindeck/dynamo/DyContext.java#L52-L53)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[372-6dfa5421](https://github.com/yegor256/thindeck/issues/464) [`DyBaseTest.java:66-66`](../blob/master/src/test/java/com/thindeck/dynamo/DyBaseTest.java#L66-L66)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;464-b7102912 [`DyBaseTest.java:68-68`](../blob/master/src/test/java/com/thindeck/dynamo/DyBaseTest.java#L68-L68)<br/>
+&nbsp;&nbsp;&nbsp;[322-5e7e33aa](https://github.com/yegor256/thindeck/issues/373) [`DyRepo.java:43-43`](../blob/master/src/main/java/com/thindeck/dynamo/DyRepo.java#L43-L43)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[373-67a7ac85](https://github.com/yegor256/thindeck/issues/405) [`DyRepo.java:44-44`](../blob/master/src/main/java/com/thindeck/dynamo/DyRepo.java#L44-L44)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;405-d6ee4a6b [`DyMemo.java:47-47`](../blob/master/src/main/java/com/thindeck/dynamo/DyMemo.java#L47-L47)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[373-e9bbc535](https://github.com/yegor256/thindeck/issues/406) [`DyTasks.java:46-46`](../blob/master/src/main/java/com/thindeck/dynamo/DyTasks.java#L46-L46)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;406-e0d78f7e [`DyTask.java:46-46`](../blob/master/src/main/java/com/thindeck/dynamo/DyTask.java#L46-L46)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[406-14dae9d0](https://github.com/yegor256/thindeck/issues/420) [`DyTask.java:47-47`](../blob/master/src/main/java/com/thindeck/dynamo/DyTask.java#L47-L47)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;420-427af42c [`DyScenario.java:42-42`](../blob/master/src/main/java/com/thindeck/dynamo/DyScenario.java#L42-L42)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;406-b5fe8676 [`DyTasks.java:50-50`](../blob/master/src/main/java/com/thindeck/dynamo/DyTasks.java#L50-L50)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;373-400c0a90 [`DyTasks.java:47-47`](../blob/master/src/main/java/com/thindeck/dynamo/DyTasks.java#L47-L47)<br/>
+&nbsp;&nbsp;&nbsp;322-1ad9bb23 [`DyRepos.java:43-43`](../blob/master/src/main/java/com/thindeck/dynamo/DyRepos.java#L43-L43)<br/>
+&nbsp;&nbsp;&nbsp;[322-123c6c41](https://github.com/yegor256/thindeck/issues/370) [`DyRepos.java:44-44`](../blob/master/src/main/java/com/thindeck/dynamo/DyRepos.java#L44-L44)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;370-bb822dca [`DyRepos.java:48-48`](../blob/master/src/main/java/com/thindeck/dynamo/DyRepos.java#L48-L48)<br/>
+&nbsp;&nbsp;&nbsp;[322-75940d12](https://github.com/yegor256/thindeck/issues/374) [`DyUser.java:43-43`](../blob/master/src/main/java/com/thindeck/dynamo/DyUser.java#L43-L43)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[374-bb504035](https://github.com/yegor256/thindeck/issues/409) [`DyUser.java:44-50`](../blob/master/src/main/java/com/thindeck/dynamo/DyUser.java#L44-L50)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;409-272f0225 [`Repo.java:46-48`](../blob/master/src/main/java/com/thindeck/api/Repo.java#L46-L48)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[374-a01072dc](https://github.com/yegor256/thindeck/issues/408) [`DyUser.java:51-53`](../blob/master/src/main/java/com/thindeck/dynamo/DyUser.java#L51-L53)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;408-195c40b4 [`DyUsage.java:69-71`](../blob/master/src/main/java/com/thindeck/dynamo/DyUsage.java#L69-L71)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;408-b5d67474 [`DyUsage.java:77-79`](../blob/master/src/main/java/com/thindeck/dynamo/DyUsage.java#L77-L79)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;408-75ca2bde [`DyUsage.java:85-87`](../blob/master/src/main/java/com/thindeck/dynamo/DyUsage.java#L85-L87)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[374-c45270af](https://github.com/yegor256/thindeck/issues/410) [`DyUserTest.java:52-54`](../blob/master/src/test/java/com/thindeck/dynamo/DyUserTest.java#L52-L54)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;410-108e5987 [`DyUserTestITCase.java:45-45`](../blob/master/src/test/java/com/thindeck/dynamo/DyUserTestITCase.java#L45-L45)<br/>
+&nbsp;&nbsp;&nbsp;322-7e6f773d [`DyBaseTest.java:55-55`](../blob/master/src/test/java/com/thindeck/dynamo/DyBaseTest.java#L55-L55)<br/>
+&nbsp;&nbsp;[290-5f41f67f](https://github.com/yegor256/thindeck/issues/321) [`DyBase.java:49-50`](../blob/master/src/main/java/com/thindeck/dynamo/DyBase.java#L49-L50)<br/>
+&nbsp;&nbsp;&nbsp;[321-7e1601a9](https://github.com/yegor256/thindeck/issues/341) [`DyBaseITCase.java:51-54`](../blob/master/src/test/java/dynamo/DyBaseITCase.java#L51-L54)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;341-7e1601a9 [`DyBaseITCase.java:52-55`](../blob/master/src/test/java/dynamo/DyBaseITCase.java#L52-L55)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;341-c00e1503 [`DyBaseITCase.java:53-54`](../blob/master/src/test/java/dynamo/DyBaseITCase.java#L53-L54)<br/>
+&nbsp;345-f56694d0 [`Nginx.java:66-72`](../blob/master/src/main/java/com/thindeck/steps/Nginx.java#L66-L72)<br/>
+&nbsp;[491](https://github.com/yegor256/thindeck/issues/491) [`?`](../blob/master/?)<br/>
+&nbsp;&nbsp;491-fa4a100f [`DyTasksTest.java:81-82`](../blob/master/src/test/java/com/thindeck/dynamo/DyTasksTest.java#L81-L82)<br/>
