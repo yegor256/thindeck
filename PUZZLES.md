@@ -1,6 +1,6 @@
 ## Puzzles
 
-There are 0 active puzzles (82 total), updated on 2015-12-09T11:56:35Z:
+There are 0 active puzzles (82 total), updated on 2015-12-09T13:37:39Z:
 
 unknown ?
 &nbsp;[UC1](https://github.com/yegor256/thindeck/issues/1) ?
