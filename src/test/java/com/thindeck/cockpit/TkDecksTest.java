@@ -35,6 +35,8 @@ import com.thindeck.fakes.FkBase;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.takes.facets.auth.RqWithAuth;
+import org.takes.rq.RqFake;
+import org.takes.rq.RqWithHeader;
 import org.takes.rs.RsPrettyXML;
 import org.takes.rs.RsPrint;
 
@@ -58,7 +60,16 @@ public final class TkDecksTest {
         MatcherAssert.assertThat(
             new RsPrint(
                 new RsPrettyXML(
-                    new TkDecks(base).act(new RqWithAuth(urn))
+                    new TkDecks(base).act(
+                        new RqWithAuth(
+                            urn,
+                            new RqWithHeader(
+                                new RqFake("GET", "/"),
+                                "Accept",
+                                "text/xml"
+                            )
+                        )
+                    )
                 )
             ).printBody(),
             XhtmlMatchers.hasXPaths(

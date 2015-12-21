@@ -26,7 +26,7 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>parent</artifactId>
-        <version>0.32.1</version>
+        <version>0.40</version>
     </parent>
     <groupId>com.thindeck</groupId>
     <artifactId>thindeck</artifactId>
@@ -103,7 +103,7 @@
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-dynamo</artifactId>
-            <version>0.18.4</version>
+            <version>0.19</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

@@ -56,14 +56,14 @@ final class Drain extends AppenderSkeleton {
     /**
      * Logs per threads.
      */
-    private final transient ConcurrentMap<ThreadGroup, StringBuffer> buffers =
-        new ConcurrentHashMap<>(0);
+    private final transient ConcurrentMap<ThreadGroup, StringBuffer> buffers;
 
     /**
      * Ctor.
      */
     private Drain() {
         super();
+        this.buffers = new ConcurrentHashMap<>(0);
         final Logger root = Logger.getRootLogger();
         root.addAppender(this);
         this.setLayout(new PatternLayout("%c %m\n"));

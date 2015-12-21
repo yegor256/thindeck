@@ -94,7 +94,7 @@ final class Routine implements Runnable {
     /**
      * Start.
      */
-    private final transient long start = System.currentTimeMillis();
+    private final transient long start;
 
     /**
      * Base.
@@ -117,6 +117,7 @@ final class Routine implements Runnable {
      * @throws IOException If fails
      */
     Routine(final Base bse) throws IOException {
+        this.start = System.currentTimeMillis();
         this.base = bse;
         this.agents = new Array<>(Routine.allAgents());
         this.bosses = new Array<>(Routine.allBosses());

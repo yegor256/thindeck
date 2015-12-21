@@ -34,6 +34,8 @@ import com.thindeck.fakes.FkBase;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.takes.facets.auth.RqWithAuth;
+import org.takes.rq.RqFake;
+import org.takes.rq.RqWithHeader;
 import org.takes.rs.RsPrint;
 
 /**
@@ -51,9 +53,20 @@ public final class TkAppTest {
     @Test
     public void rendersHomePage() throws Exception {
         MatcherAssert.assertThat(
-            new RsPrint(
-                new TkApp(new FkBase()).act(new RqWithAuth("urn:test:1"))
-            ).printBody(),
+            XhtmlMatchers.xhtml(
+                new RsPrint(
+                    new TkApp(new FkBase()).act(
+                        new RqWithAuth(
+                            "urn:test:1",
+                            new RqWithHeader(
+                                new RqFake("GET", "/"),
+                                "Accept",
+                                "text/xml"
+                            )
+                        )
+                    )
+                ).printBody()
+            ),
             XhtmlMatchers.hasXPaths(
                 "/page[@date]",
                 "/page/links/link[@rel='home']"
