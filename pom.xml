@@ -84,12 +84,12 @@
         <dependency>
             <groupId>org.takes</groupId>
             <artifactId>takes</artifactId>
-            <version>0.23.1</version>
+            <version>0.28.2</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-dynamodb</artifactId>
-            <version>1.9.39</version>
+            <version>1.10.42</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -98,7 +98,7 @@
         <dependency>
             <groupId>com.jcabi.incubator</groupId>
             <artifactId>xembly</artifactId>
-            <version>0.21.1</version>
+            <version>0.21.4</version>
         </dependency>
         <dependency>
             <groupId>com.jcabi</groupId>
@@ -120,7 +120,7 @@
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-ssh</artifactId>
-            <version>1.4</version>
+            <version>1.5</version>
         </dependency>
         <dependency>
             <groupId>com.jcabi</groupId>
@@ -145,7 +145,7 @@
         <dependency>
             <groupId>org.ocpsoft.prettytime</groupId>
             <artifactId>prettytime</artifactId>
-            <version>3.2.7.Final</version>
+            <version>4.0.1.Final</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -175,7 +175,7 @@
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-http</artifactId>
-            <version>1.10.4</version>
+            <version>1.14.1</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -199,7 +199,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.187</version>
+            <version>1.4.190</version>
             <scope>test</scope>
         </dependency>
         <dependency>
