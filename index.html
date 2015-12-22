@@ -1,74 +1,132 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
-  <head>
-    <meta charset="utf-8"/>
-    <meta name="description" content="Thinkdeck is a PaaS platform that automates blue-green deployment and up/down scaling of your web application in Docker containers" />
-    <meta name="keywords" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="icon" type="image/png" href="//img.thindeck.com/logo-128x128.png">
-    <link rel="shortcut icon" href="//img.thindeck.com/logo-128x128.png" />
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="http://doc.thindeck.com/rss.xml"/>
-    <link rel="author" href="//plus.google.com/u/0/114792568016408327418?rel=author" />
-    <link rel="stylesheet" href="/css/layout.css?"/>
-    <link rel="canonical" href="//doc.thindeck.com/index.html" />
-    <title>Technical Documentation</title>
-  </head>
-  <body>
-    <div class="wrapper">
-      <header class="header">
-        <p>
-          <a href="/">
-            <img src="http://www.thindeck.com/logo-512x512.png" class="logo" alt="logo"/>
-          </a>
-        </p>
-        <p>
-          <a href="http://www.teamed.io">
-            <img src="//img.teamed.io/btn.svg" alt="made by teamed.io"/>
-          </a>
-          <a href="http://www.rultor.com/p/yegor256/thindeck">
-            <img src="//www.rultor.com/b/yegor256/thinkdeck" alt="devops by rultor.com"/>
-          </a>
-        </p>
-        <p>
-          0.4.6 on 22 June 2014
-        </p>
-        <p>
-          Author(s): Yegor Bugayenko, Carlos Miranda
-        </p>
-      </header>
-      <h1>Technical Documentation</h1>
-      <div role="main"><p>Thindeck is a Platform as a Service (PaaS) cloud service that features:</p>
-
-<ul>
-<li><p>automatic up/down scaling of running nodes</p></li>
-<li><p>every web app node runs in its own Docker container</p></li>
-<li><p>resource usage is charged per second of CPU</p></li>
-<li><p>blue-green automated deployments</p></li>
-<li><p>built-in load balancing</p></li>
-</ul>
-
-<p>To start working with Thindeck,
-go to <a href="http://www.thindeck.com">www.thindeck.com</a>, create a repository
-and follow the instructions.</p>
-
-<p>There are two sections in the documentation, which are
-dedicated mostly to project contributors. If you&#39;re only a user
-of Thindeck, you can skip them:
-<a href="/architecture.html">Software Architecture Document (SAD)</a> and
-<a href="/requs/requs.xml">Software Requirements Specification (SRS)</a>.</p>
-</div>
-      <footer class="footer">
-        <p>
-          <a href="/apidocs-0.4.6">JavaDoc</a>
-          |
-          <a href="/cobertura">Code Coverage</a>
-          |
-          <a href="/team-list.html">Team</a>
-        </p>
-        <p>
-          &copy; <span itemprop="author">thindeck.com</span>, 2014
-        </p>
-      </footer>
-    </div>
-  </body>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>thindeck &#x2013; About</title>
+        <link media="all" rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"/>
+        <link media="all" rel="stylesheet" type="text/css" href="./css/jcabi.css"/>
+                            <script>
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-1963507-30']);
+                _gaq.push(['_trackPageview']);
+                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+                                                                                                                
+<link rel="shortcut icon" href="http://img.thindeck.com/logo-128x128.png"/>
+                                                                                                                
+<link rel="author" href="https://plus.google.com/u/0/114792568016408327418?rel=author"/>
+                                            <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+        <script>
+            $(document).ready(
+                function() {
+                    $(".menu-button").click(
+                        function() {
+                            if ($("#here-goes-menu").attr("class") == "menu-off") {
+                                $("#menu").clone().attr("class", "mobile-menu").appendTo("#here-goes-menu");
+                                $("#here-goes-menu").attr("class", "menu-on");
+                            } else {
+                                $(".mobile-menu").hide();
+                                $("#here-goes-menu").attr("class", "menu-off");
+                            }
+                        }
+                    );
+                }
+            );
+        </script>
+    </head>
+    <body>
+                <section class="page" itemscope="" itemtype="http://schema.org/BlogPosting">
+            <nav class="menu-section" role="navigation">
+                <ul class="menu" id="menu">
+                                                                                    <li>
+                            Overview
+                                                            <ul>
+                                                                                                    <li  class='active' >
+                            <span>                        <a href="index.html" title="Introduction">Introduction</a>
+        </span>
+                                                                                                                                                                <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li >
+                            <span>                        <a href="apidocs-0.7.1/index.html" title="JavaDoc 0.7.1">JavaDoc 0.7.1</a>
+        </span>
+                                                                                                                                                                <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li >
+                            <span>                        <a href="cobertura/index.html" title="Test Coverage">Test Coverage</a>
+        </span>
+                                                                                                                                                                <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li >
+                            <span>                        <a href="https://github.com/yegor256/thindeck/releases" title="Release History">Release History</a>
+        </span>
+                                                                                                                                                                <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                            <li>
+                            ${menu.name}
+                                                    </li>
+                                    </ul>
+            </nav>
+            <div class="right-side">
+                <main role="main">
+                    <div class="content">
+                        <header>
+                            <i class="menu-button fa fa-align-justify"></i>
+                            <div class="logo">
+                                <a href="http://doc.thindeck.com/"
+                                    title=" thindeck.com ">
+                                    <img src="http://img.thindeck.com/logo-384x128.png"
+                                        alt="thindeck"
+                                                                                    width="196"
+                                                                                                                            height="64"
+                                                                                itemprop="image"
+                                    />
+                                </a>
+                            </div>
+                            <div class="date">
+                                <div class="date-numbers">
+                                    <strong itemprop="version">0.7.1</strong>
+                                    
+                                    <time itemprop="datePublished" datetime="2015-12-22T07:35:07Z">
+                                        
+                                        22-Dec-2015
+                                    </time>
+                                </div>
+                                                                                                    <div>
+                                        <iframe src="http://ghbtns.com/github-btn.html?user=yegor256&amp;repo=thindeck&amp;type=watch&amp;count=true&amp;size=large"
+                                            style="border-width:0px;overflow:hidden;width:170px;height:30px;">
+                                        </iframe>
+                                    </div>
+                                                            </div>
+                            <div id="here-goes-menu" class="menu-off"></div>
+                        </header>
+                        <article role="article" itemprop="articleBody">
+                            <div class="section">
+<h2><a name="About_thindeck"></a>About thindeck</h2><a name="About_thindeck"></a>
+<p>Thindeck.com, Web Hosting That Deploys Itself</p></div>
+                            <img class="maven-logo" src="//img.jcabi.com/built-by-maven.png" alt="built by maven"/>
+                        </article>
+                    </div>
+                </main>
+                <footer class="legal-notes">
+                    <div>
+                        Copyright &#169;
+                                                                            2014-2015
+                                            </div>
+                    <div>Thindeck Inc., All Rights Reserved.</div>
+                    <div><a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.</div>
+                </footer>
+            </div>
+        </section>
+    </body>
 </html>
