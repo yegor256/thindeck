@@ -4,7 +4,7 @@
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/thindeck)](http://www.rultor.com/p/yegor256/thindeck)
 
 [![Build Status](https://travis-ci.org/yegor256/thindeck.svg?branch=master)](https://travis-ci.org/yegor256/thindeck)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.thindeck/thideck/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.thindeck/thindeck)
+[![Coverage Status](https://coveralls.io/repos/yegor256/thindeck/badge.svg?branch=__rultor&service=github)](https://coveralls.io/github/yegor256/thindeck?branch=__rultor)
 
 [Thindeck.com](http://www.thindeck.com) is a web hosting that deploys itself.
 
