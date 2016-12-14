@@ -4,6 +4,7 @@
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/thindeck)](http://www.rultor.com/p/yegor256/thindeck)
 
 [![Build Status](https://travis-ci.org/yegor256/thindeck.svg?branch=master)](https://travis-ci.org/yegor256/thindeck)
+[![PDD status](http://www.0pdd.com/svg?name=yegor256/thindeck)](http://www.0pdd.com/p?name=yegor256/thindeck)
 [![Coverage Status](https://coveralls.io/repos/yegor256/thindeck/badge.svg?branch=__rultor&service=github)](https://coveralls.io/github/yegor256/thindeck?branch=__rultor)
 
 [Thindeck.com](http://www.thindeck.com) is a web hosting that deploys itself.
