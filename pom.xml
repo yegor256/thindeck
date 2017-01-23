@@ -706,8 +706,10 @@
                         <executions>
                             <execution>
                                 <goals>
-                                    <!-- @todo 319 Increase code coverage > 30%, by uncommenting the lines below
-                                          and writting test classes.
+                                    <!--
+                                     @todo #319 Increase code coverage > 30%,
+                                      by uncommenting the lines below
+                                      and writting test classes.
                                      -->
                                     <!--
                                     <goal>instrument</goal>
@@ -717,7 +719,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- @todo 460 add EqualsAndHashCode verifier, e.g. http://www.jqno.nl/equalsverifier/
+                    <!-- @todo #460 add EqualsAndHashCode verifier, e.g. http://www.jqno.nl/equalsverifier/
                     -->
                 </plugins>
             </build>
