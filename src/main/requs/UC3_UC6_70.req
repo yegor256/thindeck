@@ -1,0 +1,21 @@
+433912:UC3 is specified.
+433912:UC3 is a must.
+UC3 where Repository deploys itself:
+    "We fetch the repository every five minutes and check the difference
+    between existing source code and the latest version. If there are
+    any changes, we stop its Docker container, and start a new one with
+    the latest version of the source code. Besides Dockerfile, which is used
+    for the Docker container, we should look for a Manifest of the repository.
+    According to the informaiton in the Manifest we should configure the
+    container after its start. While the repository is used, 
+	we should track its CPU and traffic consumption,
+	and assign to its owner both in quantity and money value".
+
+	
+cc7e07:UC6 is specified.
+cc7e07:UC6 is a must.
+UC6 where User compensates usage of Repository:
+    "The user prepays funds to his account. When it goes to a value below 5$
+	the account is blocked and needs to be topped up. Funds can be added through chosen payment system".
+
+	
