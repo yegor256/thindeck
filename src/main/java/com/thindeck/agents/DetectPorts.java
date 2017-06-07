@@ -47,7 +47,7 @@ import org.xembly.Directives;
 /**
  * Discover ports of Docker containers.
  *
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.5
  * @checkstyle MultipleStringLiteralsCheck (500 lines)

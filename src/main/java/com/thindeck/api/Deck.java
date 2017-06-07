@@ -60,7 +60,7 @@ import org.xembly.Directives;
  * <p>Full description of what information a deck should (and can)
  * include you can get from its XSD schema.
  *
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */

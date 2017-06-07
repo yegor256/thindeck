@@ -41,7 +41,7 @@ import java.io.IOException;
  * <p>To install nginx on a clean server, just install it first using
  * "apt-get" or "yum" and that's it.</>
  *
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  */
 public final class SetupNginx implements Boss {

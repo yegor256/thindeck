@@ -40,7 +40,7 @@ import org.xembly.Directives;
 /**
  * Mark containers as waste if they don't have HTTP port.
  *
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.5
  */

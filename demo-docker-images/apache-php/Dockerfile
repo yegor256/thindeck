@@ -28,7 +28,7 @@
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 
 FROM yegor256/apache-php
-MAINTAINER Yegor Bugayenko <yegor@teamed.io>
+MAINTAINER Yegor Bugayenko <yegor256@gmail.com>
 LABEL Description="Demo PHP Docker image for Thindeck.com" Vendor="Thindeck.com" Version="1.0"
 WORKDIR /app
 ADD app/ /app

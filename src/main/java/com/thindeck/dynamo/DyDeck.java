@@ -55,7 +55,7 @@ import org.xembly.Xembler;
  * Dynamo implementation of {@link com.thindeck.api.Deck}.
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  */
 @ToString

@@ -40,7 +40,7 @@ import org.xembly.Directives;
 /**
  * Swap BLUE and GREEN containers.
  *
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle MultipleStringLiteralsCheck (500 lines)

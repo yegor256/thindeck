@@ -41,7 +41,7 @@ import org.apache.log4j.spi.LoggingEvent;
 /**
  * Logs from LOG4J.
  *
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  */
 @ToString

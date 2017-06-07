@@ -45,7 +45,7 @@ import org.apache.commons.io.IOUtils;
 /**
  * Remove un-used expired domains from nginx load balancer.
  *
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  */
 public final class CleanNginx implements Boss {

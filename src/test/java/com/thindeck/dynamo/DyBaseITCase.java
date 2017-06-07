@@ -37,7 +37,7 @@ import org.junit.Test;
 /**
  * Integration case for {@link DyBase}.
  * @author Paul Polishchuk (ppol@ua.fm)
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  */
 public final class DyBaseITCase {
