@@ -1,6 +1,6 @@
 <img src="http://www.thindeck.com/logo-512x512.png" width="100px" height="100px" />
 
-[![Made By Teamed.io](http://img.teamed.io/btn.svg)](http://www.teamed.io)
+[![Managed by Zerocracy](http://www.zerocracy.com/badge.svg)](http://www.zerocracy.com)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/thindeck)](http://www.rultor.com/p/yegor256/thindeck)
 
 [![Build Status](https://travis-ci.org/yegor256/thindeck.svg?branch=master)](https://travis-ci.org/yegor256/thindeck)
