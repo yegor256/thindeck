@@ -8,6 +8,9 @@
 [![Build Status](https://travis-ci.org/yegor256/thindeck.svg?branch=master)](https://travis-ci.org/yegor256/thindeck)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/thindeck)](http://www.0pdd.com/p?name=yegor256/thindeck)
 [![Coverage Status](https://coveralls.io/repos/yegor256/thindeck/badge.svg?branch=__rultor&service=github)](https://coveralls.io/github/yegor256/thindeck?branch=__rultor)
+[![Hits-of-Code](https://hitsofcode.com/github/yegor256/thindeck)](https://hitsofcode.com/view/github/yegor256/thindeck)
+
+[![Availability at SixNines](https://www.sixnines.io/b/2e391)](https://www.sixnines.io/h/2e391)
 
 [Thindeck.com](http://www.thindeck.com) is a web hosting that deploys itself.
 
