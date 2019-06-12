@@ -10,7 +10,7 @@
 [![Coverage Status](https://coveralls.io/repos/yegor256/thindeck/badge.svg?branch=__rultor&service=github)](https://coveralls.io/github/yegor256/thindeck?branch=__rultor)
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/thindeck)](https://hitsofcode.com/view/github/yegor256/thindeck)
 
-[![Availability at SixNines](https://www.sixnines.io/b/2e391)](https://www.sixnines.io/h/2e391)
+[![Availability at SixNines](https://www.sixnines.io/b/d55e)](https://www.sixnines.io/h/d55e)
 
 [Thindeck.com](http://www.thindeck.com) is a web hosting that deploys itself.
 
