@@ -8,6 +8,7 @@
 [![Build Status](https://travis-ci.org/yegor256/thindeck.svg?branch=master)](https://travis-ci.org/yegor256/thindeck)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/thindeck)](http://www.0pdd.com/p?name=yegor256/thindeck)
 [![Coverage Status](https://coveralls.io/repos/yegor256/thindeck/badge.svg?branch=__rultor&service=github)](https://coveralls.io/github/yegor256/thindeck?branch=__rultor)
+[![Maintainability](https://api.codeclimate.com/v1/badges/830426c130d256aca6e7/maintainability)](https://codeclimate.com/github/yegor256/thindeck/maintainability)
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/thindeck)](https://hitsofcode.com/view/github/yegor256/thindeck)
 
 [![Availability at SixNines](https://www.sixnines.io/b/d55e)](https://www.sixnines.io/h/d55e)
@@ -21,8 +22,6 @@ How it works:
  3. We pull your deck and start a container (with a public IP and open ports)
  4. Every five minutes we check your deck for updates and re-deploy if any
  5. You pay for our CPU usage (per load!) and traffic (per Gb)
-
-Technical documentation is here: [doc.thindeck.com](http://doc.thindeck.com/)
 
 We're aware of their existence (you also should be):
 
@@ -40,6 +39,9 @@ Our unique advantages are:
  1. We fully automate blue/green deployments, pulling your sources
  2. We charge per second of CPU load, not per calendar hour
 
+Technical documentation is here (in progress):
+[doc.thindeck.com](http://doc.thindeck.com/)
+
 ## How to contribute
 
 Fork deck, make changes, send us a pull request. We will review
@@ -55,9 +57,5 @@ To avoid build errors use Maven 3.2+ and Java 7.
 
 Because of [MNG-5478](http://jira.codehaus.org/browse/MNG-5478)
 command `mvn clean install -Pqulice -Psite site` is not working properly.
-Please, use these two commands instead: `mvn clean install -Pqulice && mvn clean site -Psite`
-
-## Got questions?
-
-If you have questions or general suggestions, don't hesitate to submit
-a new [Github issue](https://github.com/yegor256/thindeck/issues/new).
+Please, use these two commands instead:
+`mvn clean install -Pqulice && mvn clean site -Psite`
