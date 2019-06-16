@@ -4,8 +4,8 @@ install: |-
   export LC_ALL=en_US.UTF-8
   export LANG=en_US.UTF-8
   export LANGUAGE=en_US.UTF-8
-  sudo gem install pdd
-  sudo gem install est
+  sudo gem install pdd -v 0.20.5
+  sudo gem install est -v 0.3.4
   git clone --depth=1 https://github.com/n1k0/casperjs.git /tmp/casperjs
   export PATH=$PATH:/tmp/casperjs/bin
 architect:
