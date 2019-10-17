@@ -10,6 +10,7 @@
 [![Coverage Status](https://coveralls.io/repos/yegor256/thindeck/badge.svg?branch=__rultor&service=github)](https://coveralls.io/github/yegor256/thindeck?branch=__rultor)
 [![Maintainability](https://api.codeclimate.com/v1/badges/830426c130d256aca6e7/maintainability)](https://codeclimate.com/github/yegor256/thindeck/maintainability)
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/thindeck)](https://hitsofcode.com/view/github/yegor256/thindeck)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/thindeck/blob/master/LICENSE.txt)
 
 [![Availability at SixNines](https://www.sixnines.io/b/d55e)](https://www.sixnines.io/h/d55e)
 
