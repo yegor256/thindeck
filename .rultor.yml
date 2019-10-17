@@ -1,4 +1,12 @@
+assets:
+  id_rsa: yegor256/home#assets/heroku-key
+  settings.xml: yegor256/home#assets/thindeck/settings.xml
+  id_rsa.pub: yegor256/home#assets/heroku-key.pub
+  s3cfg: yegor256/home#assets/s3cfg
+env:
+  MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
 install: |-
+  export DEBIAN_FRONTEND=noninteractive
   sudo locale-gen en_US en_US.UTF-8
   sudo dpkg-reconfigure locales
   export LC_ALL=en_US.UTF-8
@@ -8,28 +16,7 @@ install: |-
   sudo gem install est -v 0.3.4
   git clone --depth=1 https://github.com/n1k0/casperjs.git /tmp/casperjs
   export PATH=$PATH:/tmp/casperjs/bin
-architect:
-- yegor256
-- davvd
-assets:
-  id_rsa: yegor256/home#assets/heroku-key
-  settings.xml: yegor256/home#assets/thindeck/settings.xml
-  id_rsa.pub: yegor256/home#assets/heroku-key.pub
-  s3cfg: yegor256/home#assets/s3cfg
 merge:
-  commanders:
-  - carlosmiranda
-  - darkled
-  - dmzaytsev
-  - essobedo
-  - ggajos
-  - hdouss
-  - krzyk
-  - longtimeago
-  - mkordas
-  - original-brownbear
-  - pinaf
-  - yegor256
   script: |-
     export PATH=$PATH:/tmp/casperjs/bin
     mvn clean install -Ptomcat-test -Pqulice --errors --settings ../settings.xml
@@ -45,11 +32,7 @@ deploy:
     s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://pdd.teamed.io/thindeck.xml
     est --dir=$(pwd)/est --verbose --file=thindeck.xml --format=xml
     s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://est.teamed.io/thindeck.xml
-env:
-  MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
 release:
-  commanders:
-  - yegor256
   script: |-
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
