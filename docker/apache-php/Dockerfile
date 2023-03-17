@@ -27,7 +27,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 
-FROM ubuntu:14.04
+FROM ubuntu:14.04.5
 MAINTAINER Yegor Bugayenko <yegor256@gmail.com>
 LABEL Description="Apache+PHP Docker image" Vendor="Thindeck.com" Version="1.0"
 
