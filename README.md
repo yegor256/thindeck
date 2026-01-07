@@ -1,7 +1,5 @@
 # Thindeck
 
-![Thindeck Logo](http://www.thindeck.com/logo-512x512.png)
-
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/thinkdeck)](http://www.rultor.com/p/yegor256/thinkdeck)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
