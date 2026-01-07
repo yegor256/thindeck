@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
 # SPDX-License-Identifier: MIT
 
+# hadolint ignore=DL3007
 FROM yegor256/apache-php:latest
 LABEL maintainer="Yegor Bugayenko <yegor256@gmail.com>"
 LABEL org.opencontainers.image.description="Demo PHP Docker image for Thindeck.com"
