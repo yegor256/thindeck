@@ -1,9 +1,11 @@
-_site/
+*.iml
+.claude/
 .DS_Store
 .idea/
 .sass-cache
-*.iml
 /bin/
+_site/
+ajcore.*
 Gemfile.lock
 node_modules/
 src/jekyll/uml/
