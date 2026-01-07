@@ -64,7 +64,8 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 @SuppressWarnings({
     "PMD.DoNotUseThreads",
     "PMD.ExcessiveImports",
-    "PMD.AvoidThreadGroup"
+    "PMD.AvoidThreadGroup",
+    "PMD.CloseResource"
 })
 final class Routine implements Runnable {
 
