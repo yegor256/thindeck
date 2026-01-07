@@ -4,7 +4,6 @@
  */
 package com.thindeck.agents;
 
-import com.jcabi.aspects.Immutable;
 import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
 import java.io.IOException;
@@ -18,7 +17,6 @@ import org.apache.commons.io.IOUtils;
  *
  * @since 0.1
  */
-@Immutable
 public final class Remote implements Shell {
 
     /**

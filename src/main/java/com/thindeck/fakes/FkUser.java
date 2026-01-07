@@ -4,7 +4,6 @@
  */
 package com.thindeck.fakes;
 
-import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Decks;
 import com.thindeck.api.User;
 import java.io.File;
@@ -19,7 +18,6 @@ import org.apache.commons.io.FileUtils;
  *
  * @since 0.4
  */
-@Immutable
 @ToString
 @EqualsAndHashCode
 public final class FkUser implements User {

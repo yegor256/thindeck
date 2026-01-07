@@ -6,7 +6,6 @@ package com.thindeck.fakes;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
-import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Deck;
 import com.thindeck.api.Decks;
 import java.io.File;
@@ -24,7 +23,6 @@ import org.xembly.Directives;
  *
  * @since 0.4
  */
-@Immutable
 @ToString
 @EqualsAndHashCode
 public final class FkDecks implements Decks {

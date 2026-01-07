@@ -4,7 +4,6 @@
  */
 package com.thindeck.api;
 
-import com.jcabi.aspects.Immutable;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSL;
@@ -34,7 +33,6 @@ import org.xembly.Directives;
  *
  * @since 0.1
  */
-@Immutable
 public interface Deck {
 
     /**

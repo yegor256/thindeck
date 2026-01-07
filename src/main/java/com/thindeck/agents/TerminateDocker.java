@@ -4,7 +4,6 @@
  */
 package com.thindeck.agents;
 
-import com.jcabi.aspects.Immutable;
 import com.jcabi.immutable.ArrayMap;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
@@ -23,7 +22,6 @@ import org.xembly.Directives;
  *
  * @since 0.1
  */
-@Immutable
 public final class TerminateDocker implements Agent {
 
     /**

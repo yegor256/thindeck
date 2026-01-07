@@ -6,7 +6,6 @@ package com.thindeck.dynamo;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
-import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Credentials;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
@@ -26,7 +25,6 @@ import lombok.ToString;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @ToString
-@Immutable
 @EqualsAndHashCode(of = "region")
 public final class DyBase implements Base {
 

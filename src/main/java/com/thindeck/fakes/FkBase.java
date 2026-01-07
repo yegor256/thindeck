@@ -4,7 +4,6 @@
  */
 package com.thindeck.fakes;
 
-import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Base;
 import com.thindeck.api.Deck;
 import com.thindeck.api.User;
@@ -21,7 +20,6 @@ import org.apache.commons.io.FileUtils;
  *
  * @since 0.4
  */
-@Immutable
 @ToString
 @EqualsAndHashCode
 public final class FkBase implements Base {

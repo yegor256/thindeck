@@ -4,7 +4,6 @@
  */
 package com.thindeck.fakes;
 
-import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
@@ -26,7 +25,6 @@ import org.xembly.Xembler;
  *
  * @since 0.4
  */
-@Immutable
 @ToString
 @EqualsAndHashCode
 public final class FkDeck implements Deck {

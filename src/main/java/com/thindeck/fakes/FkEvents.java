@@ -4,7 +4,6 @@
  */
 package com.thindeck.fakes;
 
-import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Events;
 import java.util.Collections;
 import lombok.EqualsAndHashCode;
@@ -15,7 +14,6 @@ import lombok.ToString;
  *
  * @since 0.4
  */
-@Immutable
 @ToString
 @EqualsAndHashCode
 public final class FkEvents implements Events {

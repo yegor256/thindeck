@@ -4,7 +4,6 @@
  */
 package com.thindeck.dynamo;
 
-import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Region;
 import com.thindeck.api.Decks;
 import com.thindeck.api.User;
@@ -17,7 +16,6 @@ import lombok.ToString;
  * @since 0.3
  */
 @ToString
-@Immutable
 @EqualsAndHashCode(of = { "region", "login" })
 final class DyUser implements User {
 

@@ -4,7 +4,6 @@
  */
 package com.thindeck.agents;
 
-import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
@@ -17,7 +16,6 @@ import org.xembly.Directives;
  * @since 0.1
  * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
-@Immutable
 public final class FindTanks implements Agent {
 
     @Override

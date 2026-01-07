@@ -4,7 +4,6 @@
  */
 package com.thindeck.api;
 
-import com.jcabi.aspects.Immutable;
 import com.jcabi.xml.XML;
 import java.io.IOException;
 import org.xembly.Directive;
@@ -14,7 +13,6 @@ import org.xembly.Directive;
  *
  * @since 0.5
  */
-@Immutable
 public interface Agent {
 
     /**

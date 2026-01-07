@@ -4,7 +4,6 @@
  */
 package com.thindeck.api;
 
-import com.jcabi.aspects.Immutable;
 import java.io.IOException;
 
 /**
@@ -12,7 +11,6 @@ import java.io.IOException;
  *
  * @since 0.5
  */
-@Immutable
 public interface Boss {
 
     /**

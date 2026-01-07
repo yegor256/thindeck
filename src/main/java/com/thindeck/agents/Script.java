@@ -7,7 +7,6 @@ package com.thindeck.agents;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
-import com.jcabi.aspects.Immutable;
 import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.Shell;
 import java.io.ByteArrayOutputStream;
@@ -24,7 +23,6 @@ import org.apache.commons.io.output.NullOutputStream;
  *
  * @since 0.1
  */
-@Immutable
 public interface Script {
 
     /**
@@ -42,8 +40,7 @@ public interface Script {
      *
      * @since 0.1
      */
-    @Immutable
-    final class Default implements Script {
+        final class Default implements Script {
 
         /**
          * Script.
@@ -113,8 +110,7 @@ public interface Script {
      *
      * @since 0.1
      */
-    @Immutable
-    final class Fake implements Script {
+        final class Fake implements Script {
 
         /**
          * Stdout.

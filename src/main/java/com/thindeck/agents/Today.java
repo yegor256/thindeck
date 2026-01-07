@@ -4,7 +4,6 @@
  */
 package com.thindeck.agents;
 
-import com.jcabi.aspects.Immutable;
 import java.util.Date;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
@@ -14,7 +13,6 @@ import org.apache.commons.lang3.time.DateFormatUtils;
  * @since 0.7
  * @checkstyle NonStaticMethodCheck (100 lines)
  */
-@Immutable
 final class Today {
 
     /**

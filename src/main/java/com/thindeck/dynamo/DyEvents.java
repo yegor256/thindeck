@@ -9,7 +9,6 @@ import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
-import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
@@ -26,7 +25,6 @@ import lombok.ToString;
  * @since 0.5
  */
 @ToString
-@Immutable
 @EqualsAndHashCode(of = { "region", "deck" })
 final class DyEvents implements Events {
 

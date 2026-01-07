@@ -6,7 +6,6 @@ package com.thindeck.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.Select;
 import com.google.common.collect.Iterables;
-import com.jcabi.aspects.Immutable;
 import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
@@ -32,7 +31,6 @@ import org.xembly.Xembler;
  * @since 0.3
  */
 @ToString
-@Immutable
 @EqualsAndHashCode(of = { "region", "user", "deck" })
 final class DyDeck implements Deck {
 

@@ -4,7 +4,6 @@
  */
 package com.thindeck.api;
 
-import com.jcabi.aspects.Immutable;
 import java.io.IOException;
 import javax.validation.constraints.NotNull;
 
@@ -18,7 +17,6 @@ import javax.validation.constraints.NotNull;
  *
  * @since 0.1
  */
-@Immutable
 public interface Base {
 
     /**
