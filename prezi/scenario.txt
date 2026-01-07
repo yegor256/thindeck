@@ -17,7 +17,7 @@ Even though these platforms are successful,
 they have a few drawbacks.
 
 First, they are expensive. For example, to run
-a small Java web applicatio on Heroku you will have to
+a small Java web application on Heroku you will have to
 pay $34.50 per month, which is over $400 per year.
 An average web developer may have a dozen of web apps.
 
