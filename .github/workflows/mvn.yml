@@ -33,3 +33,5 @@ jobs:
       - run: java -version
       - run: mvn -version
       - run: mvn --errors --batch-mode clean install -Pqulice
+        env:
+          MAVEN_OPTS: -Dfile.encoding=UTF-8
