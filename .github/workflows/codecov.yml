@@ -16,15 +16,17 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: 11
-      - uses: actions/cache@v3
+          java-version: 17
+      - uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             maven-
       - run: mvn install -Pjacoco
+        env:
+          MAVEN_OPTS: -Dfile.encoding=UTF-8
       - uses: codecov/codecov-action@v5
         with:
-          file: ./target/site/jacoco/jacoco.xml
+          files: ./target/site/jacoco/jacoco.xml
           fail_ci_if_error: true

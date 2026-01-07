@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
+# SPDX-License-Identifier: MIT
+
+[default.extend-words]
+# Project-specific terms that are not typos
+
+[files]
+extend-exclude = ["target/", "node_modules/", ".git/"]

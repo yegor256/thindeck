@@ -1,4 +1,6 @@
 #!/bin/bash
+# SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
+# SPDX-License-Identifier: MIT
 set -e
 
 cd "$(dirname "$0")"

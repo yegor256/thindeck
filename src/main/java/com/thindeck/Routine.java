@@ -149,15 +149,19 @@ final class Routine implements Runnable {
                 )
             );
         }
-        for (final Future<?> future : futures) {
-            try {
-                future.get();
-            } catch (final InterruptedException ex) {
-                Thread.currentThread().interrupt();
-                throw new IllegalStateException(ex);
-            } catch (final ExecutionException ex) {
-                throw new IllegalStateException(ex);
+        try {
+            for (final Future<?> future : futures) {
+                try {
+                    future.get();
+                } catch (final InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                    throw new IllegalStateException(ex);
+                } catch (final ExecutionException ex) {
+                    throw new IllegalStateException(ex);
+                }
             }
+        } finally {
+            exec.shutdown();
         }
         Logger.info(
             this, "decks done, alive for %[ms]s",

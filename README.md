@@ -1,4 +1,6 @@
-<img src="http://www.thindeck.com/logo-512x512.png" width="92px" height="92px" />
+# Thindeck
+
+![Thindeck Logo](http://www.thindeck.com/logo-512x512.png)
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/thinkdeck)](http://www.rultor.com/p/yegor256/thinkdeck)
@@ -45,8 +47,8 @@ your changes and apply them to the `master` branch shortly, provided
 they don't violate our quality standards. To avoid frustration, before
 sending us your pull request please run full Maven build:
 
-```
-$ mvn clean install -Pqulice
+```bash
+mvn clean install -Pqulice
 ```
 
 To avoid build errors use Maven 3.2+ and Java 7.
