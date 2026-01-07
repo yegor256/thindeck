@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.takes.facets.auth.RqWithAuth;
 import org.takes.rq.RqFake;
 import org.takes.rq.RqWithHeader;
-import org.takes.rs.RsPrettyXML;
+import org.takes.rs.RsPrettyXml;
 import org.takes.rs.RsPrint;
 
 /**
@@ -33,7 +33,7 @@ final class TkDecksTest {
         MatcherAssert.assertThat(
             "decks page was not rendered correctly",
             new RsPrint(
-                new RsPrettyXML(
+                new RsPrettyXml(
                     new TkDecks(base).act(
                         new RqWithAuth(
                             urn,

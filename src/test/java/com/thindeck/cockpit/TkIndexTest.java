@@ -10,7 +10,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.takes.rq.RqFake;
 import org.takes.rq.RqWithHeader;
-import org.takes.rs.RsPrettyXML;
+import org.takes.rs.RsPrettyXml;
 import org.takes.rs.RsPrint;
 
 /**
@@ -28,7 +28,7 @@ final class TkIndexTest {
         MatcherAssert.assertThat(
             "XML page was not rendered correctly",
             new RsPrint(
-                new RsPrettyXML(
+                new RsPrettyXml(
                     new TkIndex(new FkBase()).act(
                         new RqWithHeader(
                             new RqFake("GET", "/"),
