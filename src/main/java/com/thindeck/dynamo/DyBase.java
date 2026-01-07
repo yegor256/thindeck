@@ -90,9 +90,10 @@ public final class DyBase implements Base {
      */
     private static Region dynamo() {
         final String key = Manifests.read("Thindeck-DynamoKey");
-        Credentials creds = new Credentials.Simple(
+        final Credentials.Simple simple = new Credentials.Simple(
             key, Manifests.read("Thindeck-DynamoSecret")
         );
+        final Credentials creds;
         if (key.startsWith("AAAAA")) {
             final String port = System.getProperty("dynamo.port");
             if (port == null) {
@@ -101,9 +102,11 @@ public final class DyBase implements Base {
                 );
             }
             creds = new Credentials.Direct(
-                creds,
+                simple,
                 Integer.parseInt(port)
             );
+        } else {
+            creds = simple;
         }
         return new Region.Prefixed(
             new ReRegion(new Region.Simple(creds)), "td-"

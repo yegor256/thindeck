@@ -152,7 +152,6 @@
       <groupId>ch.qos.reload4j</groupId>
       <artifactId>reload4j</artifactId>
       <version>1.2.26</version>
-      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.velocity</groupId>

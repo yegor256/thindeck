@@ -12,7 +12,8 @@ import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.flash.RsFlash;
 import org.takes.facets.forward.RsForward;
-import org.takes.rq.RqForm;
+import org.takes.rq.form.RqFormBase;
+import org.takes.rq.form.RqFormSmart;
 
 /**
  * Add deck.
@@ -37,7 +38,7 @@ public final class TkAddDeck implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final RqForm.Smart form = new RqForm.Smart(new RqForm.Base(req));
+        final RqFormSmart form = new RqFormSmart(new RqFormBase(req));
         final Decks decks = new RqUser(req, this.base).get().decks();
         final String name = form.single("name");
         decks.add(name);

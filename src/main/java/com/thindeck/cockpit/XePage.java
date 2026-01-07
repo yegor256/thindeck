@@ -20,7 +20,7 @@ import org.takes.rs.xe.XeLinkHome;
 import org.takes.rs.xe.XeLinkSelf;
 import org.takes.rs.xe.XeLocalhost;
 import org.takes.rs.xe.XeMillis;
-import org.takes.rs.xe.XeSLA;
+import org.takes.rs.xe.XeSla;
 import org.takes.rs.xe.XeSource;
 import org.takes.rs.xe.XeWrap;
 
@@ -61,7 +61,7 @@ public final class XePage extends XeWrap {
             new XeMillis(false),
             new XeChain(src),
             new XeDate(),
-            new XeSLA(),
+            new XeSla(),
             new XeLinkHome(req),
             new XeLinkSelf(req),
             new XeLocalhost(),

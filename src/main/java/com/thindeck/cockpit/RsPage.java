@@ -15,10 +15,10 @@ import org.takes.facets.fork.Fork;
 import org.takes.facets.fork.RsFork;
 import org.takes.misc.Opt;
 import org.takes.rq.RqHeaders;
-import org.takes.rs.RsPrettyXML;
+import org.takes.rs.RsPrettyXml;
 import org.takes.rs.RsWithType;
 import org.takes.rs.RsWrap;
-import org.takes.rs.RsXSLT;
+import org.takes.rs.RsXslt;
 import org.takes.rs.xe.RsXembly;
 import org.takes.rs.xe.XeSource;
 import org.takes.rs.xe.XeStylesheet;
@@ -76,7 +76,7 @@ public final class RsPage extends RsWrap {
                     if (agent.hasNext() && agent.next().contains("Firefox")) {
                         opt = new Opt.Single<Response>(
                             // @checkstyle MultipleStringLiteralsCheck (1 line)
-                            new RsXSLT(new RsWithType(raw, "text/html"))
+                            new RsXslt(new RsWithType(raw, "text/html"))
                         );
                     } else {
                         opt = new Opt.Empty<>();
@@ -84,10 +84,10 @@ public final class RsPage extends RsWrap {
                     return opt;
                 }
             },
-            new FkTypes("application/xml,text/xml", new RsPrettyXML(raw)),
+            new FkTypes("application/xml,text/xml", new RsPrettyXml(raw)),
             new FkTypes(
                 "*/*",
-                new RsXSLT(new RsWithType(raw, "text/html"))
+                new RsXslt(new RsWithType(raw, "text/html"))
             )
         );
     }

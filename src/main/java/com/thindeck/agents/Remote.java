@@ -4,7 +4,7 @@
  */
 package com.thindeck.agents;
 
-import com.jcabi.ssh.SSH;
+import com.jcabi.ssh.Ssh;
 import com.jcabi.ssh.Shell;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +39,7 @@ public final class Remote implements Shell {
         throws IOException {
         return new Shell.Verbose(
             new Shell.Safe(
-                new SSH(
+                new Ssh(
                     // @checkstyle MagicNumber (1 line)
                     this.host, 22, "thindeck",
                     IOUtils.toString(

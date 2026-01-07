@@ -22,7 +22,7 @@ import org.takes.facets.auth.codecs.CcCompact;
 import org.takes.facets.auth.codecs.CcHex;
 import org.takes.facets.auth.codecs.CcSafe;
 import org.takes.facets.auth.codecs.CcSalted;
-import org.takes.facets.auth.codecs.CcXOR;
+import org.takes.facets.auth.codecs.CcXor;
 import org.takes.facets.auth.social.PsGithub;
 import org.takes.misc.Opt;
 import org.takes.rq.RqHref;
@@ -81,7 +81,7 @@ final class TkAppAuth extends TkWrap {
                 new PsCookie(
                     new CcSafe(
                         new CcHex(
-                            new CcXOR(
+                            new CcXor(
                                 new CcSalted(new CcCompact()),
                                 Manifests.read("Thindeck-SecurityKey")
                             )

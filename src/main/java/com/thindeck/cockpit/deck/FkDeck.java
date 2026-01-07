@@ -37,7 +37,7 @@ final class FkDeck extends FkWrap {
             new Fork() {
                 @Override
                 public Opt<Response> route(final Request req)
-                    throws IOException {
+                    throws Exception {
                     return FkDeck.route(regex, take, req);
                 }
             }
@@ -50,15 +50,15 @@ final class FkDeck extends FkWrap {
      * @param take Take
      * @param req Request
      * @return Response or empty
-     * @throws IOException If fails
+     * @throws Exception If fails
      */
     private static Opt<Response> route(final String regex, final Take take,
-        final Request req) throws IOException {
+        final Request req) throws Exception {
         return new FkRegex(
             String.format("/d/([a-z\\-]+)%s", regex),
             new TkRegex() {
                 @Override
-                public Response act(final RqRegex rreq) throws IOException {
+                public Response act(final RqRegex rreq) throws Exception {
                     final String name = rreq.matcher().group(1);
                     return FkDeck.redirect(name, take).act(
                         new RqWithHeader(rreq, "X-Thindeck-Deck", name)
@@ -77,7 +77,7 @@ final class FkDeck extends FkWrap {
     private static Take redirect(final String deck, final Take take) {
         return new Take() {
             @Override
-            public Response act(final Request req) throws IOException {
+            public Response act(final Request req) throws Exception {
                 try {
                     return take.act(req);
                 } catch (final RsForward ex) {

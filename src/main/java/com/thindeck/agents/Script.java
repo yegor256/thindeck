@@ -7,7 +7,7 @@ package com.thindeck.agents;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
-import com.jcabi.ssh.SSH;
+import com.jcabi.ssh.Ssh;
 import com.jcabi.ssh.Shell;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -83,7 +83,7 @@ public interface Script {
                                 final Map.Entry<String, String> ent) {
                                 return String.format(
                                     "export %s=%s",
-                                    ent.getKey(), SSH.escape(ent.getValue())
+                                    ent.getKey(), Ssh.escape(ent.getValue())
                                 );
                             }
                         }

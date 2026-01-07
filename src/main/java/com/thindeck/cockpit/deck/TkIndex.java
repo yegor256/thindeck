@@ -73,19 +73,16 @@ public final class TkIndex implements Take {
                         deck.events().iterate(Long.MAX_VALUE),
                         20
                     ),
-                    new XeTransform.Func<String>() {
-                        @Override
-                        public XeSource transform(final String txt) {
-                            final String[] parts = txt.split("\n", 3);
-                            final long msec = Long.parseLong(parts[1]);
-                            return new XeDirectives(
-                                new Directives().add("event")
-                                    .attr("head", Xembler.escape(parts[0]))
-                                    .attr("msec", Long.toString(msec))
-                                    .attr("ago", pretty.format(new Date(msec)))
-                                    .set(Xembler.escape(parts[2]))
-                            );
-                        }
+                    txt -> {
+                        final String[] parts = txt.split("\n", 3);
+                        final long msec = Long.parseLong(parts[1]);
+                        return new XeDirectives(
+                            new Directives().add("event")
+                                .attr("head", Xembler.escape(parts[0]))
+                                .attr("msec", Long.toString(msec))
+                                .attr("ago", pretty.format(new Date(msec)))
+                                .set(Xembler.escape(parts[2]))
+                        );
                     }
                 )
             )

@@ -52,13 +52,7 @@ public final class TkDecks implements Take {
                 "items",
                 new XeTransform<>(
                     new RqUser(req, this.base).get().decks().iterate(),
-                    new XeTransform.Func<Deck>() {
-                        @Override
-                        public XeSource transform(final Deck deck)
-                            throws IOException {
-                            return TkDecks.source(deck);
-                        }
-                    }
+                    TkDecks::source
                 )
             )
         );
