@@ -69,13 +69,6 @@ public final class TkApp extends TkWrap {
      * @throws IOException If fails
      */
     private static Take make(final Base base) throws IOException {
-        if (!"UTF-8".equals(Charset.defaultCharset().name())) {
-            throw new IllegalStateException(
-                String.format(
-                    "default encoding is %s", Charset.defaultCharset()
-                )
-            );
-        }
         return new TkWithHeaders(
             new TkVersioned(
                 new TkMeasured(
