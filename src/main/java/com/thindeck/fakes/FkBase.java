@@ -4,13 +4,13 @@
  */
 package com.thindeck.fakes;
 
-import com.google.common.io.Files;
 import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Base;
 import com.thindeck.api.Deck;
 import com.thindeck.api.User;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Collections;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -63,7 +63,7 @@ public final class FkBase implements Base {
      * @throws IOException If fails
      */
     private static File temp() throws IOException {
-        final File file = Files.createTempDir();
+        final File file = Files.createTempDirectory("fkbase").toFile();
         FileUtils.forceDeleteOnExit(file);
         return file;
     }

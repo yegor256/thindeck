@@ -66,7 +66,7 @@ public final class FkDeck implements Deck {
             Deck.SCHEMA
         );
         final XML after = new XMLDocument(
-            new Xembler(agent.exec(before)).applyQuietly(before.node())
+            new Xembler(agent.exec(before)).applyQuietly(before.inner())
         );
         FileUtils.write(
             new File(this.path),
@@ -94,7 +94,7 @@ public final class FkDeck implements Deck {
      */
     private static File temp() throws IOException {
         final File file = File.createTempFile("thindeck-", ".xml");
-        FileUtils.write(file, "<deck/>");
+        FileUtils.write(file, "<deck/>", StandardCharsets.UTF_8);
         FileUtils.forceDeleteOnExit(file);
         return file;
     }

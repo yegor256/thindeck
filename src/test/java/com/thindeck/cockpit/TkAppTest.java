@@ -7,7 +7,7 @@ package com.thindeck.cockpit;
 import com.jcabi.matchers.XhtmlMatchers;
 import com.thindeck.fakes.FkBase;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.takes.facets.auth.RqWithAuth;
 import org.takes.rq.RqFake;
 import org.takes.rq.RqWithHeader;

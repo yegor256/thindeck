@@ -12,7 +12,7 @@ import com.thindeck.api.Deck;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -30,8 +30,10 @@ public final class UploadKeys implements Boss {
             "cat > ~/.ssh/id_rsa",
             IOUtils.toInputStream(
                 IOUtils.toString(
-                    this.getClass().getResourceAsStream("id_rsa")
-                ).replaceAll("\n\\s+", "\n")
+                    this.getClass().getResourceAsStream("id_rsa"),
+                    StandardCharsets.UTF_8
+                ).replaceAll("\n\\s+", "\n"),
+                StandardCharsets.UTF_8
             ),
             new ByteArrayOutputStream(),
             new ByteArrayOutputStream()
@@ -42,7 +44,7 @@ public final class UploadKeys implements Boss {
                 Joiner.on('\n').join(
                     "Host github.com",
                     "\tStrictHostKeyChecking no"
-                ).getBytes(Charset.defaultCharset())
+                ).getBytes(StandardCharsets.UTF_8)
             ),
             new ByteArrayOutputStream(),
             new ByteArrayOutputStream()

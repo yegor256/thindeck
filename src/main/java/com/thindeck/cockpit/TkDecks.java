@@ -75,7 +75,7 @@ public final class TkDecks implements Take {
         return new XeAppend(
             "item",
             new XeDirectives(
-                Directives.copyOf(new Deck.Smart(deck).xml().node())
+                Directives.copyOf(new Deck.Smart(deck).xml().inner())
             ),
             new XeChain(
                 new XeLink("open", home.path(deck.name())),

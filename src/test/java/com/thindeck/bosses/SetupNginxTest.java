@@ -9,7 +9,7 @@ import com.thindeck.api.Boss;
 import com.thindeck.api.Deck;
 import java.io.IOException;
 import java.util.Collections;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link com.thindeck.bosses.SetupNginx}.

@@ -6,12 +6,13 @@ package com.thindeck.fakes;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
-import com.google.common.io.Files;
 import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Deck;
 import com.thindeck.api.Decks;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.io.FileUtils;
@@ -57,7 +58,7 @@ public final class FkDecks implements Decks {
     @Override
     public void add(final String name) throws IOException {
         final File file = new File(this.path, name);
-        FileUtils.write(file, "<deck/>");
+        FileUtils.write(file, "<deck/>", StandardCharsets.UTF_8);
         new Deck.Smart(new FkDeck(file)).update(
             new Directives().xpath("/deck").attr(
                 "name", String.format("test/%s", name)
@@ -93,7 +94,7 @@ public final class FkDecks implements Decks {
      * @throws IOException If fails
      */
     private static File temp() throws IOException {
-        final File file = Files.createTempDir();
+        final File file = Files.createTempDirectory("fkdecks").toFile();
         FileUtils.forceDeleteOnExit(file);
         return file;
     }

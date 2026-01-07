@@ -5,7 +5,6 @@
 package com.thindeck.cockpit.deck;
 
 import com.google.common.collect.Iterables;
-import com.jcabi.aspects.Tv;
 import com.thindeck.api.Base;
 import com.thindeck.api.Deck;
 import com.thindeck.cockpit.RsPage;
@@ -59,7 +58,7 @@ public final class TkIndex implements Take {
             new XeAppend(
                 "deck",
                 new XeDirectives(
-                    Directives.copyOf(new Deck.Smart(deck).xml().node())
+                    Directives.copyOf(new Deck.Smart(deck).xml().inner())
                 ),
                 new XeChain(
                     new XeLink("open", home.path("open")),
@@ -72,12 +71,12 @@ public final class TkIndex implements Take {
                 new XeTransform<>(
                     Iterables.limit(
                         deck.events().iterate(Long.MAX_VALUE),
-                        Tv.TWENTY
+                        20
                     ),
                     new XeTransform.Func<String>() {
                         @Override
                         public XeSource transform(final String txt) {
-                            final String[] parts = txt.split("\n", Tv.THREE);
+                            final String[] parts = txt.split("\n", 3);
                             final long msec = Long.parseLong(parts[1]);
                             return new XeDirectives(
                                 new Directives().add("event")

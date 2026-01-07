@@ -4,12 +4,12 @@
  */
 package com.thindeck.fakes;
 
-import com.google.common.io.Files;
 import com.jcabi.aspects.Immutable;
 import com.thindeck.api.Decks;
 import com.thindeck.api.User;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.io.FileUtils;
@@ -61,7 +61,7 @@ public final class FkUser implements User {
      * @throws IOException If fails
      */
     private static File temp() throws IOException {
-        final File file = Files.createTempDir();
+        final File file = Files.createTempDirectory("fkuser").toFile();
         FileUtils.forceDeleteOnExit(file);
         return file;
     }

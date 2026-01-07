@@ -113,7 +113,7 @@ final class DyDeck implements Deck {
         if (!Iterables.isEmpty(dirs)) {
             final String update = new StrictXML(
                 new XMLDocument(
-                    new Xembler(dirs).applyQuietly(xml.node())
+                    new Xembler(dirs).applyQuietly(xml.inner())
                 ),
                 Deck.SCHEMA
             ).toString();

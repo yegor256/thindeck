@@ -8,7 +8,7 @@
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>parent</artifactId>
-    <version>0.40</version>
+    <version>0.71.0</version>
   </parent>
   <groupId>com.thindeck</groupId>
   <artifactId>thindeck</artifactId>
@@ -63,6 +63,16 @@
     </site>
   </distributionManagement>
   <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.17</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.2</version>
+    </dependency>
     <dependency>
       <groupId>org.takes</groupId>
       <artifactId>takes</artifactId>
@@ -132,7 +142,8 @@
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
+      <artifactId>slf4j-reload4j</artifactId>
+      <version>2.0.17</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -568,63 +579,7 @@
       </build>
     </profile>
     <profile>
-      <id>coveralls</id>
-      <activation>
-        <file>
-          <exists>pom.xml</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>cobertura-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <phase>site</phase>
-                <goals>
-                  <goal>cobertura</goal>
-                </goals>
-                <configuration>
-                  <format>xml</format>
-                  <maxmem>256m</maxmem>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.eluder.coveralls</groupId>
-            <artifactId>coveralls-maven-plugin</artifactId>
-            <version>4.1.0</version>
-            <executions>
-              <execution>
-                <phase>site</phase>
-                <goals>
-                  <goal>report</goal>
-                </goals>
-                <configuration>
-                  <repoToken>${coveralls.token}</repoToken>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
       <id>qulice</id>
-      <dependencies>
-        <dependency>
-          <!-- This dependency has to be either in runtime or compile scope
-          to prevent following error while testing instrumented classes:
-          java.lang.NoClassDefFoundError: net/sourceforge/cobertura/coveragedata/HasBeenInstrumented
-          -->
-          <groupId>net.sourceforge.cobertura</groupId>
-          <artifactId>cobertura</artifactId>
-          <version>1.9.4.1</version>
-          <scope>runtime</scope>
-        </dependency>
-      </dependencies>
       <build>
         <plugins>
           <plugin>

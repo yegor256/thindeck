@@ -11,7 +11,7 @@ import com.thindeck.api.Events;
 import com.thindeck.api.User;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Integration case for {@link DyEvents}.

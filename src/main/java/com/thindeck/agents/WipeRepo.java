@@ -5,7 +5,6 @@
 package com.thindeck.agents;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.aspects.Tv;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.thindeck.api.Agent;
@@ -37,13 +36,13 @@ public final class WipeRepo implements Agent {
             final int age;
             try {
                 age = (int) ((today.getTime()
-                    - DateFormatUtils.ISO_DATETIME_FORMAT.parse(
+                    - DateFormatUtils.ISO_8601_EXTENDED_DATETIME_FORMAT.parse(
                         deck.xpath("/deck/repo/@added").get(0)
                     ).getTime()) / TimeUnit.MINUTES.toMillis(1L));
             } catch (final ParseException ex) {
                 throw new IOException(ex);
             }
-            if (age > Tv.TEN) {
+            if (age > 10) {
                 Logger.info(
                     this, "Repo %s still has no images for over %d mins",
                     deck.xpath("/deck/repo/uri/text()"), age

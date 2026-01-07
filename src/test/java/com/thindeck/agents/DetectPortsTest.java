@@ -11,7 +11,7 @@ import com.jcabi.xml.XMLDocument;
 import com.thindeck.api.Agent;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xembly.Xembler;
 
 /**
@@ -46,7 +46,7 @@ public final class DetectPortsTest {
         MatcherAssert.assertThat(
             "ports were not detected correctly",
             new XMLDocument(
-                new Xembler(agent.exec(deck)).applyQuietly(deck.node())
+                new Xembler(agent.exec(deck)).applyQuietly(deck.inner())
             ),
             XhtmlMatchers.hasXPaths(
                 "/deck/containers/container[http=8080 and https=45600]"

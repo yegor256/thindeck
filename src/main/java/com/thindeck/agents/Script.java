@@ -56,7 +56,7 @@ public interface Script {
          * @throws IOException If fails
          */
         public Default(final URL url) throws IOException {
-            this(IOUtils.toString(url.openStream()));
+            this(IOUtils.toString(url.openStream(), StandardCharsets.UTF_8));
         }
 
         /**
@@ -100,9 +100,9 @@ public interface Script {
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             new Shell.Safe(new Shell.Safe(new Remote(host))).exec(
                 command,
-                IOUtils.toInputStream(this.script),
+                IOUtils.toInputStream(this.script, StandardCharsets.UTF_8),
                 baos,
-                new NullOutputStream()
+                NullOutputStream.INSTANCE
             );
             return new String(baos.toByteArray(), StandardCharsets.UTF_8);
         }

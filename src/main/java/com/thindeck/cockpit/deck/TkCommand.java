@@ -163,7 +163,7 @@ public final class TkCommand implements Take {
                     "there are too many images as is, waste a few first"
                 );
             }
-            final String today = DateFormatUtils.ISO_DATETIME_FORMAT.format(
+            final String today = DateFormatUtils.ISO_8601_EXTENDED_DATETIME_FORMAT.format(
                 new Date()
             );
             dirs.xpath("/deck").add("repo")
@@ -201,7 +201,7 @@ public final class TkCommand implements Take {
         }
         final Directives dirs = new Directives();
         if ("waste".equals(args[0])) {
-            final String today = DateFormatUtils.ISO_DATETIME_FORMAT.format(
+            final String today = DateFormatUtils.ISO_8601_EXTENDED_DATETIME_FORMAT.format(
                 new Date()
             );
             dirs.xpath(
@@ -238,7 +238,7 @@ public final class TkCommand implements Take {
         }
         final Directives dirs = new Directives();
         if ("waste".equals(args[0])) {
-            final String today = DateFormatUtils.ISO_DATETIME_FORMAT.format(
+            final String today = DateFormatUtils.ISO_8601_EXTENDED_DATETIME_FORMAT.format(
                 new Date()
             );
             dirs.xpath(

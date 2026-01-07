@@ -15,6 +15,7 @@ import com.thindeck.api.Boss;
 import com.thindeck.api.Deck;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -55,7 +56,7 @@ public final class CleanNginx implements Boss {
         final Shell shell = new Remote(host);
         shell.exec(
             "cat > ~/domains",
-            IOUtils.toInputStream(Joiner.on('\n').join(confs)),
+            IOUtils.toInputStream(Joiner.on('\n').join(confs), StandardCharsets.UTF_8),
             new ByteArrayOutputStream(),
             new ByteArrayOutputStream()
         );

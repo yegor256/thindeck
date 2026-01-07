@@ -10,6 +10,7 @@ import com.jcabi.ssh.Shell;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -44,7 +45,8 @@ public final class Remote implements Shell {
                     // @checkstyle MagicNumber (1 line)
                     this.host, 22, "thindeck",
                     IOUtils.toString(
-                        this.getClass().getResourceAsStream("thindeck.key")
+                        this.getClass().getResourceAsStream("thindeck.key"),
+                        StandardCharsets.UTF_8
                     )
                 )
             )

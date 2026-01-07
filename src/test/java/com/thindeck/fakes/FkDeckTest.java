@@ -11,7 +11,7 @@ import com.thindeck.api.Deck;
 import java.io.IOException;
 import java.util.Collections;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xembly.Directive;
 import org.xembly.Directives;
 

@@ -12,7 +12,7 @@ import com.thindeck.api.Decks;
 import com.thindeck.fakes.FkBase;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.takes.Request;
 import org.takes.facets.auth.RqWithAuth;
 import org.takes.facets.fork.TkFork;

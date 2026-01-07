@@ -5,7 +5,6 @@
 package com.thindeck.agents;
 
 import com.jcabi.aspects.Immutable;
-import com.jcabi.aspects.Tv;
 import com.jcabi.immutable.ArrayMap;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
@@ -62,13 +61,13 @@ public final class TerminateDocker implements Agent {
             final int age;
             try {
                 age = (int) ((today.getTime()
-                    - DateFormatUtils.ISO_DATETIME_FORMAT.parse(
+                    - DateFormatUtils.ISO_8601_EXTENDED_DATETIME_FORMAT.parse(
                         ctr.xpath("@waste").get(0)
                     ).getTime()) / TimeUnit.MINUTES.toMillis(1L));
             } catch (final ParseException ex) {
                 throw new IOException(ex);
             }
-            if (age < Tv.TEN) {
+            if (age < 10) {
                 continue;
             }
             final String name = ctr.xpath("name/text()").get(0);

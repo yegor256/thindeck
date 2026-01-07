@@ -22,7 +22,7 @@ final class Today {
      * @return ISO date/time
      */
     public String iso() {
-        return DateFormatUtils.ISO_DATETIME_FORMAT.format(
+        return DateFormatUtils.ISO_8601_EXTENDED_DATETIME_FORMAT.format(
             new Date()
         );
     }
