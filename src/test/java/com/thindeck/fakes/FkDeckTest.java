@@ -20,14 +20,14 @@ import org.xembly.Directives;
  *
  * @since 0.3
  */
-public final class FkDeckTest {
+final class FkDeckTest {
 
     /**
      * FkDeck can accept info about domain configuration.
      * @throws IOException If an IO error gets thrown
      */
     @Test
-    public void acceptsDomainDefinition() throws IOException {
+    void acceptsDomainDefinition() throws IOException {
         final Deck deck = new FkDeck();
         deck.exec(
             new Agent() {

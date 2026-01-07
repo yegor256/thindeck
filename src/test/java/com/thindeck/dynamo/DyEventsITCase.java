@@ -17,14 +17,14 @@ import org.junit.jupiter.api.Test;
  * Integration case for {@link DyEvents}.
  * @since 0.5
  */
-public final class DyEventsITCase {
+final class DyEventsITCase {
 
     /**
      * DyEvents can add an event.
      * @throws Exception If there is some problem inside
      */
     @Test
-    public void addsEvent() throws Exception {
+    void addsEvent() throws Exception {
         final Base base = new DyBase();
         final User user = base.user("sarah");
         user.decks().add("foo");

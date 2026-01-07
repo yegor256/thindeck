@@ -13,14 +13,14 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link Drain}.
  * @since 0.5
  */
-public final class DrainTest {
+final class DrainTest {
 
     /**
      * Drain can accumulate logs.
      * @throws Exception If there is some problem inside
      */
     @Test
-    public void accumulatesLongs() throws Exception {
+    void accumulatesLongs() throws Exception {
         Drain.INSTANCE.fetch();
         Logger.info(this, "simple log line");
         MatcherAssert.assertThat(

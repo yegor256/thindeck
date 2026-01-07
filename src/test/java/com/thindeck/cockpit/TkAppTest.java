@@ -17,14 +17,14 @@ import org.takes.rs.RsPrint;
  * Test case for {@link TkApp}.
  * @since 0.4
  */
-public final class TkAppTest {
+final class TkAppTest {
 
     /**
      * TkApp can render home page.
      * @throws Exception If something goes wrong.
      */
     @Test
-    public void rendersHomePage() throws Exception {
+    void rendersHomePage() throws Exception {
         MatcherAssert.assertThat(
             "home page was not rendered correctly",
             XhtmlMatchers.xhtml(

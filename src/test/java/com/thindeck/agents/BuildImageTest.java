@@ -19,14 +19,14 @@ import org.xembly.Xembler;
  *
  * @since 0.5
  */
-public final class BuildImageTest {
+final class BuildImageTest {
 
     /**
      * BuildImage can build image.
      * @throws IOException If fails
      */
     @Test
-    public void buildsImage() throws IOException {
+    void buildsImage() throws IOException {
         final Agent agent = new BuildImage(
             new Script.Fake("\n\n hey\nALIVE")
         );

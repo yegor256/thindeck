@@ -19,14 +19,14 @@ import org.xembly.Xembler;
  *
  * @since 0.5
  */
-public final class DetectPortsTest {
+final class DetectPortsTest {
 
     /**
      * DetectPorts can detect ports.
      * @throws IOException If fails
      */
     @Test
-    public void detectsPorts() throws IOException {
+    void detectsPorts() throws IOException {
         final Agent agent = new DetectPorts(
             new Script.Fake(
                 Joiner.on('\n').join(

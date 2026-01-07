@@ -19,14 +19,14 @@ import org.xembly.Xembler;
  *
  * @since 0.5
  */
-public final class CheckStateTest {
+final class CheckStateTest {
 
     /**
      * CheckState can check state.
      * @throws IOException If fails
      */
     @Test
-    public void checksState() throws IOException {
+    void checksState() throws IOException {
         final Agent agent = new CheckState(
             new Script.Fake("\n\n hey\nALIVE")
         );

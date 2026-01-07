@@ -16,14 +16,14 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.5
  */
-public final class SetupNginxTest {
+final class SetupNginxTest {
 
     /**
      * SetupNginx can setup nginx.
      * @throws IOException If fails
      */
     @Test
-    public void setsNginxUp() throws IOException {
+    void setsNginxUp() throws IOException {
         final Boss boss = new SetupNginx(
             new Script.Fake("")
         );

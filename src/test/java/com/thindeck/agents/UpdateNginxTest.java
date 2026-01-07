@@ -19,14 +19,14 @@ import org.xembly.Xembler;
  *
  * @since 0.5
  */
-public final class UpdateNginxTest {
+final class UpdateNginxTest {
 
     /**
      * UpdateNginx can update nginx.
      * @throws IOException If fails
      */
     @Test
-    public void updatesNginx() throws IOException {
+    void updatesNginx() throws IOException {
         final Agent agent = new UpdateNginx(
             new Script.Fake("")
         );

@@ -14,14 +14,14 @@ import org.junit.jupiter.api.Test;
  * Integration case for {@link DyDecks}.
  * @since 0.5
  */
-public final class DyDecksITCase {
+final class DyDecksITCase {
 
     /**
      * DyDecks can add and remove a deck.
      * @throws Exception If there is some problem inside
      */
     @Test
-    public void canAddAndRemoveDeck() throws Exception {
+    void canAddAndRemoveDeck() throws Exception {
         final Decks decks = new DyBase()
             .user("bobby")
             .decks();

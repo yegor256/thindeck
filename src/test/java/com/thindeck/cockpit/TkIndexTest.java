@@ -17,14 +17,14 @@ import org.takes.rs.RsPrint;
  * Test case for {@link TkIndex}.
  * @since 0.4
  */
-public final class TkIndexTest {
+final class TkIndexTest {
 
     /**
      * TkIndex can render a page in XML.
      * @throws Exception If something goes wrong.
      */
     @Test
-    public void rendersXmlPage() throws Exception {
+    void rendersXmlPage() throws Exception {
         MatcherAssert.assertThat(
             "XML page was not rendered correctly",
             new RsPrint(

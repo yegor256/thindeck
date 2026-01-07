@@ -19,14 +19,14 @@ import org.xembly.Xembler;
  *
  * @since 0.1
  */
-public final class WipeRepoTest {
+final class WipeRepoTest {
 
     /**
      * WipeRepo can wire a repo.
      * @throws IOException If fails
      */
     @Test
-    public void wipesRepo() throws IOException {
+    void wipesRepo() throws IOException {
         final Agent agent = new WipeRepo();
         final XML deck = new XMLDocument(
             Joiner.on(' ').join(

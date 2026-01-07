@@ -18,14 +18,14 @@ import org.xembly.Xembler;
  *
  * @since 0.1
  */
-public final class FindTanksTest {
+final class FindTanksTest {
 
     /**
      * FindTanks can find tanks and report them in XML.
      * @throws IOException If fails
      */
     @Test
-    public void findsTanksAndDocumentsInXml() throws IOException {
+    void findsTanksAndDocumentsInXml() throws IOException {
         final Agent agent = new FindTanks();
         final XML deck = new XMLDocument("<deck/>");
         MatcherAssert.assertThat(

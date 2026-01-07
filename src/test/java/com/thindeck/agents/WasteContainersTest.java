@@ -19,14 +19,14 @@ import org.xembly.Xembler;
  *
  * @since 0.1
  */
-public final class WasteContainersTest {
+final class WasteContainersTest {
 
     /**
      * WasteContainers can waste containers.
      * @throws IOException If fails
      */
     @Test
-    public void wastesContainers() throws IOException {
+    void wastesContainers() throws IOException {
         final Agent agent = new WasteContainers();
         final XML deck = new XMLDocument(
             Joiner.on(' ').join(

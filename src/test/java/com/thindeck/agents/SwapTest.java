@@ -19,14 +19,14 @@ import org.xembly.Xembler;
  *
  * @since 0.1
  */
-public final class SwapTest {
+final class SwapTest {
 
     /**
      * Swap can swap containers.
      * @throws IOException If fails
      */
     @Test
-    public void swapsGreenAndBlueContainers() throws IOException {
+    void swapsGreenAndBlueContainers() throws IOException {
         final Agent agent = new Swap();
         final XML deck = new XMLDocument(
             Joiner.on(' ').join(

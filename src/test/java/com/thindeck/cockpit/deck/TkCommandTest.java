@@ -25,14 +25,14 @@ import org.takes.rs.RsPrint;
  * @since 0.4
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class TkCommandTest {
+final class TkCommandTest {
 
     /**
      * TkCommand can forward to the right URL.
      * @throws Exception If something goes wrong.
      */
     @Test
-    public void forwardsCorrectly() throws Exception {
+    void forwardsCorrectly() throws Exception {
         final String name = "orchard";
         final String urn = "urn:test:554";
         final Request req = new RqWithAuth(
@@ -67,7 +67,7 @@ public final class TkCommandTest {
      * @throws Exception If something goes wrong.
      */
     @Test
-    public void addsNewDomain() throws Exception {
+    void addsNewDomain() throws Exception {
         final String name = "foo";
         final String urn = "urn:test:19";
         final Request req = new RqWithAuth(
@@ -98,7 +98,7 @@ public final class TkCommandTest {
      * @throws Exception If something goes wrong.
      */
     @Test
-    public void addsNewRepo() throws Exception {
+    void addsNewRepo() throws Exception {
         final String name = "lion";
         final String urn = "urn:test:443";
         final Request req = new RqWithAuth(
@@ -130,7 +130,7 @@ public final class TkCommandTest {
      * @throws Exception If something goes wrong.
      */
     @Test
-    public void wastesSelectedContainer() throws Exception {
+    void wastesSelectedContainer() throws Exception {
         final String name = "tiger";
         final String urn = "urn:test:909";
         final Request req = new RqWithAuth(
@@ -166,7 +166,7 @@ public final class TkCommandTest {
      * @throws Exception If something goes wrong.
      */
     @Test
-    public void wastesSelectedImage() throws Exception {
+    void wastesSelectedImage() throws Exception {
         final String name = "panda";
         final String urn = "urn:test:4333";
         final Request req = new RqWithAuth(

@@ -19,14 +19,14 @@ import org.xembly.Xembler;
  *
  * @since 0.7
  */
-public final class BuryContainersTest {
+final class BuryContainersTest {
 
     /**
      * BuryContainers can mark containers as waste.
      * @throws IOException If fails
      */
     @Test
-    public void buriesContainers() throws IOException {
+    void buriesContainers() throws IOException {
         final Agent agent = new BuryContainers();
         final XML deck = new XMLDocument(
             Joiner.on(' ').join(

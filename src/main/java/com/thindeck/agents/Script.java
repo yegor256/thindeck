@@ -40,7 +40,7 @@ public interface Script {
      *
      * @since 0.1
      */
-        final class Default implements Script {
+    final class Default implements Script {
 
         /**
          * Script.
@@ -110,7 +110,7 @@ public interface Script {
      *
      * @since 0.1
      */
-        final class Fake implements Script {
+    final class Fake implements Script {
 
         /**
          * Stdout.

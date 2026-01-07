@@ -19,14 +19,14 @@ import org.takes.rs.RsPrint;
  * Test case for {@link TkDecks}.
  * @since 0.4
  */
-public final class TkDecksTest {
+final class TkDecksTest {
 
     /**
      * TkDecks can render a page in XML.
      * @throws Exception If something goes wrong.
      */
     @Test
-    public void rendersXmlPage() throws Exception {
+    void rendersXmlPage() throws Exception {
         final Base base = new FkBase();
         final String urn = "urn:test:199";
         base.user(urn).decks().add("elephant");

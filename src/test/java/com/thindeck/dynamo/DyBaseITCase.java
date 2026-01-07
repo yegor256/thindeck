@@ -14,14 +14,14 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.3
  */
-public final class DyBaseITCase {
+final class DyBaseITCase {
 
     /**
      * DyBase can add a deck.
      * @throws Exception If there is some problem inside
      */
     @Test
-    public void canAddCommand() throws Exception {
+    void canAddCommand() throws Exception {
         final Decks decks = new DyBase()
             .user("jeff")
             .decks();

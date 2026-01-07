@@ -19,14 +19,14 @@ import org.xembly.Xembler;
  *
  * @since 0.1
  */
-public final class TerminateDockerTest {
+final class TerminateDockerTest {
 
     /**
      * TerminateDocker can kill containers.
      * @throws IOException If fails
      */
     @Test
-    public void killsContainers() throws IOException {
+    void killsContainers() throws IOException {
         final Agent agent = new TerminateDocker(
             new Script.Fake("\n\n")
         );
