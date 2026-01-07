@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
+# SPDX-License-Identifier: MIT
+---
+# yamllint disable rule:line-length
 assets:
   id_rsa: yegor256/home#assets/heroku-key
   settings.xml: yegor256/home#assets/thindeck/settings.xml
@@ -31,6 +35,7 @@ deploy:
     est --dir=$(pwd)/est --verbose --file=thindeck.xml --format=xml
     s3cmd --no-progress put thindeck.xml --config=../s3cfg s3://est.teamed.io/thindeck.xml
 release:
+  pre: false
   script: |-
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"

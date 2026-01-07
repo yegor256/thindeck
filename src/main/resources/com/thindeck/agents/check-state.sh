@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2154
 
 target="localhost:${port}"
 if curl --silent --show-error --fail "${target}" > /dev/null; then

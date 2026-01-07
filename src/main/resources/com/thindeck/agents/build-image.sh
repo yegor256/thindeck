@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2154
 set -e
 set -x
 
@@ -11,7 +12,7 @@ cd "${path}"
 
 if [ ! -f Dockerfile ]; then
   echo "Dockerfile is absent!"
-  exit -1
+  exit 1
 fi
 
 docker build --pull=true --force-rm=true --tag="${image}" .

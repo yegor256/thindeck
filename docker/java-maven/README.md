@@ -5,4 +5,3 @@ Use it like this in your `Dockerfile`:
 ```
 FROM yegor256/java-maven
 ```
-

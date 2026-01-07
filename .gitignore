@@ -1,9 +1,10 @@
-.DS_Store
-target/
 _site/
-.sass-cache
+.DS_Store
 .idea/
+.sass-cache
 *.iml
-Gemfile.lock
-src/jekyll/uml/
 /bin/
+Gemfile.lock
+node_modules/
+src/jekyll/uml/
+target/

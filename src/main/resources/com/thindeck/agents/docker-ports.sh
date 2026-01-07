@@ -1,6 +1,7 @@
 #!/bin/bash
+# shellcheck disable=SC2154
 set -e
 set -x
 
-echo "thindeck_http=$(docker port ${container} 80)"
-echo "thindeck_https=$(docker port ${container} 443)"
+echo "thindeck_http=$(docker port "${container}" 80)"
+echo "thindeck_https=$(docker port "${container}" 443)"

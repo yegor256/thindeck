@@ -1,4 +1,7 @@
+# SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
+# SPDX-License-Identifier: MIT
 ---
+# yamllint disable rule:line-length
 name: pdd
 on:
   push:
@@ -9,7 +12,8 @@ on:
       - master
 jobs:
   pdd:
-    runs-on: ubuntu-20.04
+    timeout-minutes: 15
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - uses: g4s8/pdd-action@master

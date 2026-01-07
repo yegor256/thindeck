@@ -62,4 +62,3 @@ Thindeck is being funded and developed by Teamed.io,
 a custom software development company from San Francisco. Teamed.io
 is developing software since 2001. Yegor Bugayenko is a
 CTO of Teamed.io and a chief architect of Thindeck.
-

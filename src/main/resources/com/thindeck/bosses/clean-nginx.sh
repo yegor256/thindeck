@@ -6,7 +6,8 @@ mkdir -p "${dir}"
 
 echo "There are $(wc -l ~/domains) legitimate"
 
-for i in $(ls "${dir}"); do
+for i in "${dir}"/*; do
+  i=$(basename "${i}")
   if ! grep -q "${i}" ~/domains; then
     echo "Removing Nginx config: ${dir}/${i}"
     sudo rm -rf "${dir}/${i}"
