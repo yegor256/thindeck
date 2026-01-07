@@ -4,8 +4,8 @@
  */
 package com.thindeck.agents;
 
-import com.jcabi.ssh.Ssh;
 import com.jcabi.ssh.Shell;
+import com.jcabi.ssh.Ssh;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;

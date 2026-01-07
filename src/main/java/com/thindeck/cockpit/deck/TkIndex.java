@@ -19,7 +19,6 @@ import org.takes.rs.xe.XeAppend;
 import org.takes.rs.xe.XeChain;
 import org.takes.rs.xe.XeDirectives;
 import org.takes.rs.xe.XeLink;
-import org.takes.rs.xe.XeSource;
 import org.takes.rs.xe.XeTransform;
 import org.xembly.Directives;
 import org.xembly.Xembler;

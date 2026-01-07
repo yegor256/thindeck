@@ -4,7 +4,6 @@
  */
 package com.thindeck.cockpit.deck;
 
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import org.takes.Request;
 import org.takes.Response;

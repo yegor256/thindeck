@@ -81,6 +81,11 @@
       <version>1.25.0</version>
     </dependency>
     <dependency>
+      <groupId>org.cactoos</groupId>
+      <artifactId>cactoos</artifactId>
+      <version>0.57.0</version>
+    </dependency>
+    <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-dynamodb</artifactId>
       <version>1.12.797</version>
