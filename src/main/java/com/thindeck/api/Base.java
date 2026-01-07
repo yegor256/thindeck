@@ -1,4 +1,4 @@
-/**
+/*
  * SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
  * SPDX-License-Identifier: MIT
  */
@@ -16,8 +16,6 @@ import javax.validation.constraints.NotNull;
  * from somewhere (depends on the implementation) and then
  * use one of the users or decks.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 @Immutable

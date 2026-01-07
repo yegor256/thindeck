@@ -1,4 +1,4 @@
-/**
+/*
  * SPDX-FileCopyrightText: Copyright (c) 2014-2026, thindeck.com
  * SPDX-License-Identifier: MIT
  */
@@ -16,8 +16,6 @@ import org.takes.rs.RsHTML;
 /**
  * App.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.8
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */

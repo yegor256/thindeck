@@ -1,4 +1,4 @@
-/**
+/*
  * SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
  * SPDX-License-Identifier: MIT
  */
@@ -17,8 +17,6 @@ import org.apache.commons.io.FileUtils;
 /**
  * Mock of {@link User}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.4
  */
 @Immutable

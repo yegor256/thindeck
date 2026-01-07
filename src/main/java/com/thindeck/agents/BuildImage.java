@@ -1,4 +1,4 @@
-/**
+/*
  * SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
  * SPDX-License-Identifier: MIT
  */
@@ -20,8 +20,6 @@ import org.xembly.Directives;
 /**
  * Builds image from repo.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */

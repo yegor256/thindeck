@@ -1,4 +1,4 @@
-/**
+/*
  * SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
  * SPDX-License-Identifier: MIT
  */
@@ -16,8 +16,6 @@ import org.apache.log4j.spi.LoggingEvent;
 /**
  * Logs from LOG4J.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  */
 @ToString
 @EqualsAndHashCode(callSuper = true)

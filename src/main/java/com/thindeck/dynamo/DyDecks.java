@@ -1,4 +1,4 @@
-/**
+/*
  * SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
  * SPDX-License-Identifier: MIT
  */
@@ -23,8 +23,6 @@ import lombok.ToString;
  * Dynamo implementation of {@link com.thindeck.api.Decks}.
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  */
 @ToString
 @Immutable

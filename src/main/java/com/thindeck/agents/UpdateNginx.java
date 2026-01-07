@@ -1,4 +1,4 @@
-/**
+/*
  * SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
  * SPDX-License-Identifier: MIT
  */
@@ -40,8 +40,6 @@ import org.xembly.Directives;
  * "apt-get" or "yum" and that's it.</>
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @checkstyle MultipleStringLiterals (300 lines)
  */
 public final class UpdateNginx implements Agent {

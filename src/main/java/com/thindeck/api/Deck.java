@@ -1,4 +1,4 @@
-/**
+/*
  * SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
  * SPDX-License-Identifier: MIT
  */
@@ -35,8 +35,6 @@ import org.xembly.Directives;
  * <p>Full description of what information a deck should (and can)
  * include you can get from its XSD schema.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 @Immutable

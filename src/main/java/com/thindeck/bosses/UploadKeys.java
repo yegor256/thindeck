@@ -1,4 +1,4 @@
-/**
+/*
  * SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
  * SPDX-License-Identifier: MIT
  */
@@ -18,8 +18,6 @@ import org.apache.commons.io.IOUtils;
 /**
  * Upload SSH keys to the servers.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  */
 public final class UploadKeys implements Boss {
 
