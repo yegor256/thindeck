@@ -10,7 +10,6 @@ import com.thindeck.api.Base;
 import com.thindeck.cockpit.deck.TkDeck;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.regex.Pattern;
 import org.takes.Take;
 import org.takes.facets.auth.PsByFlag;
