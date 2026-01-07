@@ -6,7 +6,6 @@
 /**
  * Dynamo tests.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  */
 package com.thindeck.dynamo;

@@ -39,7 +39,6 @@ import org.xembly.Directives;
  * <p>To install nginx on a clean server, just install it first using
  * "apt-get" or "yum" and that's it.</>
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @checkstyle MultipleStringLiterals (300 lines)
  */
 public final class UpdateNginx implements Agent {

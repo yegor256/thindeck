@@ -29,7 +29,6 @@ import org.xembly.Xembler;
 /**
  * Dynamo implementation of {@link com.thindeck.api.Deck}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  */
 @ToString
 @Immutable
