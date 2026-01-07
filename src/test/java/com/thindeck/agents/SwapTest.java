@@ -46,6 +46,7 @@ public final class SwapTest {
             )
         );
         MatcherAssert.assertThat(
+            "containers were not swapped correctly",
             new XMLDocument(
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),

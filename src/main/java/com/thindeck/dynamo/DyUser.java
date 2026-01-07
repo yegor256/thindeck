@@ -14,6 +14,7 @@ import lombok.ToString;
 /**
  * Dynamo implementation of the {@link User}.
  *
+ * @since 0.3
  */
 @ToString
 @Immutable

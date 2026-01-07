@@ -20,6 +20,7 @@ import org.apache.commons.io.IOUtils;
 /**
  * Remove un-used expired domains from nginx load balancer.
  *
+ * @since 0.5
  */
 public final class CleanNginx implements Boss {
 

@@ -38,6 +38,7 @@ public final class BuildImageTest {
             )
         );
         MatcherAssert.assertThat(
+            "image was not built correctly",
             new XMLDocument(
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),

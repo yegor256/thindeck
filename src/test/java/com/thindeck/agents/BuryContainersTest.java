@@ -43,6 +43,7 @@ public final class BuryContainersTest {
             )
         );
         MatcherAssert.assertThat(
+            "containers were not buried correctly",
             new XMLDocument(
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),

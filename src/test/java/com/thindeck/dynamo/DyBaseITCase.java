@@ -11,7 +11,8 @@ import org.junit.Test;
 
 /**
  * Integration case for {@link DyBase}.
- * @author Paul Polishchuk (ppol@ua.fm)
+ *
+ * @since 0.3
  */
 public final class DyBaseITCase {
 
@@ -26,6 +27,7 @@ public final class DyBaseITCase {
             .decks();
         decks.add("booodeck");
         MatcherAssert.assertThat(
+            "deck was not added correctly",
             decks.iterate().iterator().next().name(),
             Matchers.containsString("booo")
         );

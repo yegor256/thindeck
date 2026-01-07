@@ -16,9 +16,11 @@ import org.apache.log4j.spi.LoggingEvent;
 /**
  * Logs from LOG4J.
  *
+ * @since 0.5
  */
 @ToString
 @EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("PMD.AvoidThreadGroup")
 final class Drain extends AppenderSkeleton {
 
     /**
@@ -34,6 +36,7 @@ final class Drain extends AppenderSkeleton {
     /**
      * Ctor.
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     private Drain() {
         super();
         this.buffers = new ConcurrentHashMap<>(0);

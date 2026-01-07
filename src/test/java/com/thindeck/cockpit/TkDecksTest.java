@@ -31,6 +31,7 @@ public final class TkDecksTest {
         final String urn = "urn:test:199";
         base.user(urn).decks().add("elephant");
         MatcherAssert.assertThat(
+            "decks page was not rendered correctly",
             new RsPrint(
                 new RsPrettyXML(
                     new TkDecks(base).act(

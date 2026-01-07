@@ -42,6 +42,7 @@ public final class WasteContainersTest {
             )
         );
         MatcherAssert.assertThat(
+            "containers were not wasted correctly",
             new XMLDocument(
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),

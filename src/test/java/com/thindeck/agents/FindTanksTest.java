@@ -29,6 +29,7 @@ public final class FindTanksTest {
         final Agent agent = new FindTanks();
         final XML deck = new XMLDocument("<deck/>");
         MatcherAssert.assertThat(
+            "tanks were not found",
             new XMLDocument(
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),

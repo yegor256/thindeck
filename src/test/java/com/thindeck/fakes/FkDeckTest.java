@@ -18,8 +18,6 @@ import org.xembly.Directives;
 /**
  * Test case for {@link FkDeck}.
  *
- * @author Carlos Miranda (miranda.cma@gmail.com)
- * @version $Id$
  * @since 0.3
  */
 public final class FkDeckTest {
@@ -45,6 +43,7 @@ public final class FkDeckTest {
                 @Override
                 public Iterable<Directive> exec(final XML xml) {
                     MatcherAssert.assertThat(
+                        "deck name attribute is missing",
                         xml,
                         XhtmlMatchers.hasXPaths("/deck[@name='test/test']")
                     );

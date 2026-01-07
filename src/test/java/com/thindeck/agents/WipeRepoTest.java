@@ -35,6 +35,7 @@ public final class WipeRepoTest {
             )
         );
         MatcherAssert.assertThat(
+            "repo was not wiped",
             new XMLDocument(
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),

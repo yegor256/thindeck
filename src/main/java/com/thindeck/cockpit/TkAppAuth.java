@@ -94,8 +94,11 @@ final class TkAppAuth extends TkWrap {
 
     /**
      * Fake pass.
+     *
+     * @since 0.5
      */
     private static final class FakePass implements Pass {
+
         @Override
         public Opt<Identity> enter(final Request req) throws IOException {
             final Opt<Identity> user;
@@ -119,6 +122,7 @@ final class TkAppAuth extends TkWrap {
             }
             return user;
         }
+
         @Override
         public Response exit(final Response response, final Identity identity) {
             return response;

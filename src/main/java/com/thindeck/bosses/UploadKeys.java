@@ -18,6 +18,7 @@ import org.apache.commons.io.IOUtils;
 /**
  * Upload SSH keys to the servers.
  *
+ * @since 0.5
  */
 public final class UploadKeys implements Boss {
 

@@ -22,6 +22,7 @@ import lombok.ToString;
 /**
  * Dynamo implementation of {@link com.thindeck.api.Decks}.
  *
+ * @since 0.3
  */
 @ToString
 @Immutable

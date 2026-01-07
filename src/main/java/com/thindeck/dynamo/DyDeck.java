@@ -29,6 +29,7 @@ import org.xembly.Xembler;
 /**
  * Dynamo implementation of {@link com.thindeck.api.Deck}.
  *
+ * @since 0.3
  */
 @ToString
 @Immutable

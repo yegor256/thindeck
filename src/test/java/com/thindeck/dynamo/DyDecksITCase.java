@@ -28,11 +28,13 @@ public final class DyDecksITCase {
         final String name = "test";
         decks.add(name);
         MatcherAssert.assertThat(
+            "deck was not added",
             decks.iterate(),
             Matchers.<Deck>iterableWithSize(1)
         );
         decks.delete(name);
         MatcherAssert.assertThat(
+            "deck was not removed",
             decks.iterate(),
             Matchers.<Deck>emptyIterable()
         );

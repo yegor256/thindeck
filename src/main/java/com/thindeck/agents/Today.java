@@ -12,6 +12,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
  * ISO date.
  *
  * @since 0.7
+ * @checkstyle NonStaticMethodCheck (100 lines)
  */
 @Immutable
 final class Today {

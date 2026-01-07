@@ -14,8 +14,9 @@ import java.io.IOException;
  * Setup nginx load balancer.
  *
  * <p>To install nginx on a clean server, just install it first using
- * "apt-get" or "yum" and that's it.</>
+ * "apt-get" or "yum" and that's it.
  *
+ * @since 0.5
  */
 public final class SetupNginx implements Boss {
 

@@ -26,6 +26,7 @@ public final class TkAppTest {
     @Test
     public void rendersHomePage() throws Exception {
         MatcherAssert.assertThat(
+            "home page was not rendered correctly",
             XhtmlMatchers.xhtml(
                 new RsPrint(
                     new TkApp(new FkBase()).act(

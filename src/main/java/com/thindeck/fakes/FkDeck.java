@@ -14,11 +14,11 @@ import com.thindeck.api.Deck;
 import com.thindeck.api.Events;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.CharEncoding;
 import org.xembly.Xembler;
 
 /**
@@ -74,7 +74,7 @@ public final class FkDeck implements Deck {
                 after,
                 Deck.SCHEMA
             ).toString(),
-            CharEncoding.UTF_8
+            StandardCharsets.UTF_8
         );
         Logger.info(
             this, "deck saved to %s (%d bytes):\n%s", this.path,

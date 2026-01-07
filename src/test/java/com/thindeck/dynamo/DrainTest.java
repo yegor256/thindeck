@@ -24,6 +24,7 @@ public final class DrainTest {
         Drain.INSTANCE.fetch();
         Logger.info(this, "simple log line");
         MatcherAssert.assertThat(
+            "logs were not accumulated correctly",
             Drain.INSTANCE.fetch(),
             Matchers.containsString("simple")
         );

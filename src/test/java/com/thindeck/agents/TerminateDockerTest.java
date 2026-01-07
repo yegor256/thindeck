@@ -45,6 +45,7 @@ public final class TerminateDockerTest {
             )
         );
         MatcherAssert.assertThat(
+            "containers were not terminated correctly",
             new XMLDocument(
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),

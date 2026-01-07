@@ -83,12 +83,16 @@ public interface Deck {
 
     /**
      * Smart.
+     *
+     * @since 0.1
      */
     final class Smart {
+
         /**
          * Original deck.
          */
         private final transient Deck deck;
+
         /**
          * Ctor.
          * @param dck Deck
@@ -96,6 +100,7 @@ public interface Deck {
         public Smart(final Deck dck) {
             this.deck = dck;
         }
+
         /**
          * Get its XML.
          * @return XML of the deck
@@ -114,6 +119,7 @@ public interface Deck {
             );
             return xml.get();
         }
+
         /**
          * Update XML with these exact content.
          * @param xml XML to save
@@ -126,6 +132,7 @@ public interface Deck {
                 )
             );
         }
+
         /**
          * Update XML with these directives.
          * @param dirs Directives to use

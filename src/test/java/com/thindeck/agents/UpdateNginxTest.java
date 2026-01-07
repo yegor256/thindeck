@@ -41,6 +41,7 @@ public final class UpdateNginxTest {
             )
         );
         MatcherAssert.assertThat(
+            "nginx was not updated correctly",
             new XMLDocument(
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),

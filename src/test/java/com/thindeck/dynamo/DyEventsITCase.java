@@ -33,6 +33,7 @@ public final class DyEventsITCase {
         Logger.info(this, "some log line, for tests");
         events.create("first one");
         MatcherAssert.assertThat(
+            "event was not added correctly",
             events.iterate(Long.MAX_VALUE).iterator().next(),
             Matchers.startsWith("first ")
         );

@@ -39,6 +39,7 @@ public final class CheckStateTest {
             )
         );
         MatcherAssert.assertThat(
+            "state was not checked correctly",
             new XMLDocument(
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),

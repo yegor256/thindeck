@@ -61,7 +61,11 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 @EqualsAndHashCode
 @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.MINUTES)
 @Loggable(Loggable.INFO)
-@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.ExcessiveImports" })
+@SuppressWarnings({
+    "PMD.DoNotUseThreads",
+    "PMD.ExcessiveImports",
+    "PMD.AvoidThreadGroup"
+})
 final class Routine implements Runnable {
 
     /**

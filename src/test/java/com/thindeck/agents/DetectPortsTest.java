@@ -44,6 +44,7 @@ public final class DetectPortsTest {
             )
         );
         MatcherAssert.assertThat(
+            "ports were not detected correctly",
             new XMLDocument(
                 new Xembler(agent.exec(deck)).applyQuietly(deck.node())
             ),

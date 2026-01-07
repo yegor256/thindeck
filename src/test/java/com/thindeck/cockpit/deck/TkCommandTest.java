@@ -48,6 +48,7 @@ public final class TkCommandTest {
         final Decks decks = base.user(urn).decks();
         decks.add(name);
         MatcherAssert.assertThat(
+            "forward location is incorrect",
             new RsPrint(
                 new TkForward(
                     new TkFork(
@@ -83,6 +84,7 @@ public final class TkCommandTest {
         decks.add(name);
         new FkDeck("", new TkForward(new TkCommand(base))).route(req).get();
         MatcherAssert.assertThat(
+            "domain was not added",
             new Deck.Smart(decks.get(name)).xml(),
             XhtmlMatchers.hasXPaths(
                 "/deck/domains[count(domain)=1]",
@@ -114,6 +116,7 @@ public final class TkCommandTest {
         decks.add(name);
         new FkDeck("", new TkForward(new TkCommand(base))).route(req).get();
         MatcherAssert.assertThat(
+            "repo was not added",
             new Deck.Smart(decks.get(name)).xml(),
             XhtmlMatchers.hasXPaths(
                 "/deck/repo",
@@ -150,6 +153,7 @@ public final class TkCommandTest {
         );
         new FkDeck("", new TkForward(new TkCommand(base))).route(req).get();
         MatcherAssert.assertThat(
+            "container was not wasted",
             new Deck.Smart(decks.get(name)).xml(),
             XhtmlMatchers.hasXPaths(
                 "/deck/containers/container[name='a1b2c3e4' and @waste]"
@@ -187,6 +191,7 @@ public final class TkCommandTest {
         );
         new FkDeck("", new TkForward(new TkCommand(base))).route(req).get();
         MatcherAssert.assertThat(
+            "image was not wasted",
             new Deck.Smart(decks.get(name)).xml(),
             XhtmlMatchers.hasXPaths(
                 "/deck/images/image[name='test/test-a1b2c3e4' and @waste]"

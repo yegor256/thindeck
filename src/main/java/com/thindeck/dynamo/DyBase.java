@@ -46,6 +46,7 @@ public final class DyBase implements Base {
      * Constructor.
      * @param rgn Region
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public DyBase(final Region rgn) {
         this.region = rgn;
         Drain.INSTANCE.fetch();

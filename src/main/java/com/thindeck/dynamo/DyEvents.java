@@ -23,6 +23,7 @@ import lombok.ToString;
 /**
  * Dynamo implementation of {@link com.thindeck.api.Events}.
  *
+ * @since 0.5
  */
 @ToString
 @Immutable

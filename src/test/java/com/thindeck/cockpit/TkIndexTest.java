@@ -26,6 +26,7 @@ public final class TkIndexTest {
     @Test
     public void rendersXmlPage() throws Exception {
         MatcherAssert.assertThat(
+            "XML page was not rendered correctly",
             new RsPrint(
                 new RsPrettyXML(
                     new TkIndex(new FkBase()).act(
