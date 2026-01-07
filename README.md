@@ -1,44 +1,39 @@
 <img src="http://www.thindeck.com/logo-512x512.png" width="92px" height="92px" />
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
-[![Managed by Zerocracy](https://www.0crat.com/badge/C3RFVLU72.svg)](https://www.0crat.com/p/C3RFVLU72)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/thinkdeck)](http://www.rultor.com/p/yegor256/thinkdeck)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
-[![Build Status](https://travis-ci.org/yegor256/thindeck.svg?branch=master)](https://travis-ci.org/yegor256/thindeck)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/thindeck)](http://www.0pdd.com/p?name=yegor256/thindeck)
-[![Coverage Status](https://coveralls.io/repos/yegor256/thindeck/badge.svg?branch=__rultor&service=github)](https://coveralls.io/github/yegor256/thindeck?branch=__rultor)
-[![Maintainability](https://api.codeclimate.com/v1/badges/830426c130d256aca6e7/maintainability)](https://codeclimate.com/github/yegor256/thindeck/maintainability)
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/thindeck)](https://hitsofcode.com/view/github/yegor256/thindeck)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/thindeck/blob/master/LICENSE.txt)
-
 [![Availability at SixNines](https://www.sixnines.io/b/d55e)](https://www.sixnines.io/h/d55e)
 
 [Thindeck.com](http://www.thindeck.com) is a web hosting that deploys itself.
 
 How it works:
 
- 1. You create a [`Dockerfile`](https://www.docker.io/) in your Github deck
- 2. You give us your Github deck coordinates
- 3. We pull your deck and start a container (with a public IP and open ports)
- 4. Every five minutes we check your deck for updates and re-deploy if any
- 5. You pay for our CPU usage (per load!) and traffic (per Gb)
+1. You create a [`Dockerfile`](https://www.docker.io/) in your Github deck
+1. You give us your Github deck coordinates
+1. We pull your deck and start a container (with a public IP and open ports)
+1. Every five minutes we check your deck for updates and re-deploy if any
+1. You pay for our CPU usage (per load!) and traffic (per Gb)
 
 We're aware of their existence (you also should be):
 
- * [elastic beanstalk](http://aws.typepad.com/aws/2014/04/aws-elastic-beanstalk-for-docker.html)
- * [heroku.com](http://www.heroku.com)
- * [cloudbees.com](http://www.cloudbees.com)
- * [quay.io](http://www.quay.io)
- * [stackdock.com](http://www.stackdock.com)
- * [digitalocean.com](http://www.digitalocean.com)
- * [orchardup.com](http://www.orchardup.com)
+* [elastic beanstalk](http://aws.typepad.com/aws/2014/04/aws-elastic-beanstalk-for-docker.html)
+* [heroku.com](http://www.heroku.com)
+* [cloudbees.com](http://www.cloudbees.com)
+* [quay.io](http://www.quay.io)
+* [stackdock.com](http://www.stackdock.com)
+* [digitalocean.com](http://www.digitalocean.com)
+* [orchardup.com](http://www.orchardup.com)
 
 Our unique advantages are:
 
- 1. We can host any tech stack, because of Docker
- 1. We fully automate blue/green deployments, pulling your sources
- 2. We charge per second of CPU load, not per calendar hour
+1. We can host any tech stack, because of Docker
+1. We fully automate blue/green deployments, pulling your sources
+1. We charge per second of CPU load, not per calendar hour
 
 Technical documentation is here (in progress):
 [doc.thindeck.com](http://doc.thindeck.com/)
