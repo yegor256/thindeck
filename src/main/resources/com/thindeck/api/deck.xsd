@@ -4,147 +4,147 @@
  * SPDX-License-Identifier: MIT
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:simpleType name="imageName">
+  <xs:simpleType name="imageName">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9a-zA-Z\-]+/[0-9a-zA-Z\-]+-[0-9a-f]{8}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="repoName">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9a-f]{8}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="port">
+    <xs:restriction base="xs:integer">
+      <xs:maxExclusive value="65536"/>
+      <xs:minInclusive value="1024"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="image">
+    <xs:all>
+      <xs:element name="name" type="imageName"/>
+      <xs:element name="repo" type="repoName"/>
+      <xs:element name="uri" type="xs:string"/>
+    </xs:all>
+    <xs:attribute name="waste" type="xs:dateTime" use="optional"/>
+    <xs:attribute name="type" use="required">
+      <xs:simpleType>
         <xs:restriction base="xs:string">
-            <xs:pattern value="[0-9a-zA-Z\-]+/[0-9a-zA-Z\-]+-[0-9a-f]{8}"/>
+          <xs:enumeration value="green"/>
+          <xs:enumeration value="blue"/>
         </xs:restriction>
-    </xs:simpleType>
-    <xs:simpleType name="repoName">
-        <xs:restriction base="xs:string">
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="tank">
+    <xs:all>
+      <xs:element name="host" type="xs:string"/>
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="container">
+    <xs:all>
+      <xs:element name="image" type="imageName"/>
+      <xs:element name="host" type="xs:string"/>
+      <xs:element name="http" type="port" minOccurs="0"/>
+      <xs:element name="https" type="port" minOccurs="0"/>
+      <xs:element name="name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
             <xs:pattern value="[0-9a-f]{8}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:all>
+    <xs:attribute name="waste" type="xs:dateTime" use="optional"/>
+    <xs:attribute name="state" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="dead"/>
+          <xs:enumeration value="alive"/>
+          <xs:enumeration value="unknown"/>
         </xs:restriction>
-    </xs:simpleType>
-    <xs:simpleType name="port">
-        <xs:restriction base="xs:integer">
-            <xs:maxExclusive value="65536"/>
-            <xs:minInclusive value="1024"/>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="checked" use="optional" type="xs:dateTime"/>
+    <xs:attribute name="type" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="green"/>
+          <xs:enumeration value="blue"/>
         </xs:restriction>
-    </xs:simpleType>
-    <xs:complexType name="image">
-        <xs:all>
-            <xs:element name="name" type="imageName"/>
-            <xs:element name="repo" type="repoName"/>
-            <xs:element name="uri" type="xs:string"/>
-        </xs:all>
-        <xs:attribute name="waste" type="xs:dateTime" use="optional"/>
-        <xs:attribute name="type" use="required">
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:enumeration value="green"/>
-                    <xs:enumeration value="blue"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-    </xs:complexType>
-    <xs:complexType name="tank">
-        <xs:all>
-            <xs:element name="host" type="xs:string"/>
-        </xs:all>
-    </xs:complexType>
-    <xs:complexType name="container">
-        <xs:all>
-            <xs:element name="image" type="imageName"/>
-            <xs:element name="host" type="xs:string"/>
-            <xs:element name="http" type="port" minOccurs="0"/>
-            <xs:element name="https" type="port" minOccurs="0"/>
-            <xs:element name="name">
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:element name="deck">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="domains" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="domain" minOccurs="0" maxOccurs="unbounded">
                 <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:pattern value="[0-9a-f]{8}"/>
-                    </xs:restriction>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="[a-zA-Z0-9\-\.]+"/>
+                  </xs:restriction>
                 </xs:simpleType>
-            </xs:element>
-        </xs:all>
-        <xs:attribute name="waste" type="xs:dateTime" use="optional"/>
-        <xs:attribute name="state" use="required">
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:enumeration value="dead"/>
-                    <xs:enumeration value="alive"/>
-                    <xs:enumeration value="unknown"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-        <xs:attribute name="checked" use="optional" type="xs:dateTime"/>
-        <xs:attribute name="type" use="required">
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:enumeration value="green"/>
-                    <xs:enumeration value="blue"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-    </xs:complexType>
-    <xs:element name="deck">
-        <xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+          <xs:unique name="uniqueDomainName">
+            <xs:selector xpath="./domain"/>
+            <xs:field xpath="."/>
+          </xs:unique>
+        </xs:element>
+        <xs:element name="repo" minOccurs="0">
+          <xs:complexType>
             <xs:all>
-                <xs:element name="domains" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="domain" minOccurs="0" maxOccurs="unbounded">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:pattern value="[a-zA-Z0-9\-\.]+"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                    <xs:unique name="uniqueDomainName">
-                        <xs:selector xpath="./domain" />
-                        <xs:field xpath="." />
-                    </xs:unique>
-                </xs:element>
-                <xs:element name="repo" minOccurs="0">
-                    <xs:complexType>
-                        <xs:all>
-                            <xs:element name="name" type="repoName"/>
-                            <xs:element name="uri" type="xs:string"/>
-                        </xs:all>
-                        <xs:attribute name="added" type="xs:dateTime" use="required"/>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="images" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="image" type="image" minOccurs="0" maxOccurs="unbounded"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                    <xs:unique name="imageName">
-                        <xs:selector xpath="./image" />
-                        <xs:field xpath="name" />
-                    </xs:unique>
-                </xs:element>
-                <xs:element name="tanks" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="tank" type="tank" minOccurs="0" maxOccurs="unbounded"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                    <xs:unique name="uniqueTankHost">
-                        <xs:selector xpath="./tank" />
-                        <xs:field xpath="host" />
-                    </xs:unique>
-                </xs:element>
-                <xs:element name="containers" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="container" type="container" minOccurs="0" maxOccurs="unbounded"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                    <xs:unique name="uniqueContainerName">
-                        <xs:selector xpath="./container" />
-                        <xs:field xpath="name" />
-                    </xs:unique>
-                </xs:element>
+              <xs:element name="name" type="repoName"/>
+              <xs:element name="uri" type="xs:string"/>
             </xs:all>
-            <xs:attribute name="name">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:pattern value="[a-z0-9A-Z\-]+/[a-z]+"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
-        </xs:complexType>
-    </xs:element>
+            <xs:attribute name="added" type="xs:dateTime" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="images" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="image" type="image" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+          <xs:unique name="imageName">
+            <xs:selector xpath="./image"/>
+            <xs:field xpath="name"/>
+          </xs:unique>
+        </xs:element>
+        <xs:element name="tanks" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="tank" type="tank" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+          <xs:unique name="uniqueTankHost">
+            <xs:selector xpath="./tank"/>
+            <xs:field xpath="host"/>
+          </xs:unique>
+        </xs:element>
+        <xs:element name="containers" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="container" type="container" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+          <xs:unique name="uniqueContainerName">
+            <xs:selector xpath="./container"/>
+            <xs:field xpath="name"/>
+          </xs:unique>
+        </xs:element>
+      </xs:all>
+      <xs:attribute name="name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z0-9A-Z\-]+/[a-z]+"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
