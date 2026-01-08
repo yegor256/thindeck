@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
 # SPDX-License-Identifier: MIT
 
-FROM ubuntu:14.04
+FROM ubuntu:24.04
 LABEL maintainer="Yegor Bugayenko <yegor256@gmail.com>"
 LABEL org.opencontainers.image.description="Java+Maven Docker image"
 LABEL org.opencontainers.image.vendor="Thindeck.com"
