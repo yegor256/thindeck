@@ -20,12 +20,12 @@
   <inceptionYear>2014</inceptionYear>
   <organization>
     <name>Thindeck Inc.</name>
-    <url>http://www.thindeck.com</url>
+    <url>https://www.thindeck.com</url>
   </organization>
   <licenses>
     <license>
       <name>BSD</name>
-      <url>http://doc.thindeck.com/LICENSE.txt</url>
+      <url>https://doc.thindeck.com/LICENSE.txt</url>
       <distribution>site</distribution>
     </license>
   </licenses>
@@ -34,8 +34,8 @@
       <id>1</id>
       <name>Yegor Bugayenko</name>
       <email>yegor256@gmail.com</email>
-      <organization>TPC2</organization>
-      <organizationUrl>http://www.teamed.io</organizationUrl>
+      <organization>Zerocracy</organization>
+      <organizationUrl>https://www.zerocracy.com</organizationUrl>
       <roles>
         <role>Architect</role>
         <role>Developer</role>
@@ -53,13 +53,13 @@
     <url>https://github.com/yegor256/thindeck</url>
   </scm>
   <ciManagement>
-    <system>travis</system>
-    <url>https://travis-ci.org/yegor256/thindeck</url>
+    <system>github</system>
+    <url>https://github.com/yegor256/thindeck</url>
   </ciManagement>
   <distributionManagement>
     <site>
       <id>github</id>
-      <url>http://doc.thindeck.com</url>
+      <url>https://doc.thindeck.com</url>
     </site>
   </distributionManagement>
   <dependencies>
@@ -209,20 +209,6 @@
     </dependency>
   </dependencies>
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>build-helper-maven-plugin</artifactId>
-          <version>1.8</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>exec-maven-plugin</artifactId>
-          <version>1.3</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -595,24 +581,7 @@
                 <exclude>duplicatefinder:.*</exclude>
               </excludes>
             </configuration>
-            <executions>
-              <execution>
-                <goals>
-                  <!--
-                                     @todo #319 Increase code coverage > 30%,
-                                      by uncommenting the lines below
-                                      and writing test classes.
-                                     -->
-                  <!--
-                                    <goal>instrument</goal>
-                                    <goal>check</goal>
-                                    -->
-                </goals>
-              </execution>
-            </executions>
           </plugin>
-          <!-- @todo #460 add EqualsAndHashCode verifier, e.g. http://www.jqno.nl/equalsverifier/
-                    -->
         </plugins>
       </build>
     </profile>
