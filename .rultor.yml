@@ -21,13 +21,13 @@ install: |-
 merge:
   script: |-
     export PATH=$PATH:/tmp/casperjs/bin
-    mvn clean install -Ptomcat-test -Pqulice --errors --settings ../settings.xml
+    mvn clean install -ntp -Ptomcat-test -Pqulice --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
     mvn clean
     pdd --source=$(pwd) --verbose --file=/dev/null --rule min-words:2 --rule min-estimate:15
 deploy:
   script: |-
-    mvn clean install -Prultor --settings ../settings.xml
+    mvn clean install -ntp -Prultor --settings ../settings.xml
     s3cmd --no-progress put target/requs/requs.xml --config=../s3cfg s3://requs.teamed.io/thideck.xml
     mvn clean
     pdd --source=$(pwd) --verbose --file=thindeck.xml
@@ -40,7 +40,7 @@ release:
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mv ../settings.xml settings.xml
-    mvn clean install -Ptomcat-test -Pqulice --errors
+    mvn clean install -ntp -Ptomcat-test -Pqulice --errors
     git remote add dokku dokku@beta.thindeck.com:thindeck
     mkdir ~/.ssh
     mv ../id_rsa ../id_rsa.pub ~/.ssh
