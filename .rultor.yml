@@ -57,4 +57,4 @@ release:
     git push -f dokku $(git symbolic-ref --short HEAD):master
     git reset HEAD~1
     curl -f --connect-timeout 15 --retry 5 --retry-delay 30 http://beta.thindeck.com
-    mvn clean site-deploy -Psite --settings settings.xml || echo 'failed to deploy site'
+    mvn -ntp clean site-deploy -Psite --settings settings.xml || echo 'failed to deploy site'
