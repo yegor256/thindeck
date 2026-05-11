@@ -37,7 +37,7 @@ deploy:
 release:
   pre: false
   script: |-
-    mvn versions:set "-DnewVersion=${tag}"
+    mvn -ntp versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mv ../settings.xml settings.xml
     mvn clean install -ntp -Ptomcat-test -Pqulice --errors
