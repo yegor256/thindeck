@@ -26,7 +26,7 @@ jobs:
       - run: mvn install -Pjacoco
         env:
           MAVEN_OPTS: -Dfile.encoding=UTF-8
-      - uses: codecov/codecov-action@v6
+      - uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./target/site/jacoco/jacoco.xml
