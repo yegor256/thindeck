@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
- * SPDX-License-Identifier: MIT
- -->
+* SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
+* SPDX-License-Identifier: MIT
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
   <xsl:output method="xml"/>
   <xsl:strip-space elements="*"/>

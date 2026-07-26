@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
- * SPDX-License-Identifier: MIT
+* SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
+* SPDX-License-Identifier: MIT
 
- * @author Paul Polishchuk (ppol@ua.fm)
- * @version $Id$
- -->
+* @author Paul Polishchuk (ppol@ua.fm)
+* @version $Id$
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="1.0">
   <xsl:template match="/page">
     <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
