@@ -14,8 +14,6 @@ install: |-
   export LC_ALL=en_US.UTF-8
   export LANG=en_US.UTF-8
   export LANGUAGE=en_US.UTF-8
-  sudo gem install pdd -v 0.20.5
-  sudo gem install est -v 0.3.4
   git clone --depth=1 https://github.com/n1k0/casperjs.git /tmp/casperjs
   export PATH=$PATH:/tmp/casperjs/bin
 merge:
@@ -27,6 +25,7 @@ merge:
     pdd --source=$(pwd) --verbose --file=/dev/null --rule min-words:2 --rule min-estimate:15
 deploy:
   script: |-
+    sudo gem install est -v 0.3.4
     mvn clean install -ntp -Prultor --settings ../settings.xml
     s3cmd --no-progress put target/requs/requs.xml --config=../s3cfg s3://requs.teamed.io/thideck.xml
     mvn clean
