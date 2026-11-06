@@ -46,10 +46,10 @@ public final class TkCommand implements Take {
 
     /**
      * Ctor.
-     * @param bse Base
+     * @param origin Base
      */
-    TkCommand(final Base bse) {
-        this.base = bse;
+    TkCommand(final Base origin) {
+        this.base = origin;
     }
 
     @Override

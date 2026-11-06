@@ -24,10 +24,10 @@ public final class TkAccount implements Take {
 
     /**
      * Ctor.
-     * @param bse Base
+     * @param origin Base
      */
-    TkAccount(final Base bse) {
-        this.base = bse;
+    TkAccount(final Base origin) {
+        this.base = origin;
     }
 
     @Override

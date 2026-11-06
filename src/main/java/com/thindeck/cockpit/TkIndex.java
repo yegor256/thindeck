@@ -24,10 +24,10 @@ public final class TkIndex implements Take {
 
     /**
      * Ctor.
-     * @param bse Base
+     * @param origin Base
      */
-    TkIndex(final Base bse) {
-        this.base = bse;
+    TkIndex(final Base origin) {
+        this.base = origin;
     }
 
     @Override

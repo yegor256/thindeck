@@ -32,12 +32,12 @@ public final class RqDeck extends RqWrap {
 
     /**
      * Ctor.
-     * @param bse The base
+     * @param origin The base
      * @param req Request
      */
-    public RqDeck(final Base bse, final Request req) {
+    public RqDeck(final Base origin, final Request req) {
         super(req);
-        this.base = bse;
+        this.base = origin;
     }
 
     /**
