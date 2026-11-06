@@ -30,10 +30,10 @@ public final class TkAddDeck implements Take {
 
     /**
      * Ctor.
-     * @param bse Base
+     * @param origin Base
      */
-    TkAddDeck(final Base bse) {
-        this.base = bse;
+    TkAddDeck(final Base origin) {
+        this.base = origin;
     }
 
     @Override

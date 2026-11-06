@@ -29,11 +29,11 @@ public final class RqUser extends RqWrap {
     /**
      * Ctor.
      * @param req Request
-     * @param bse Base
+     * @param origin Base
      */
-    public RqUser(final Request req, final Base bse) {
+    public RqUser(final Request req, final Base origin) {
         super(req);
-        this.base = bse;
+        this.base = origin;
     }
 
     /**

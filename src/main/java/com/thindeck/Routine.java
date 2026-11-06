@@ -91,12 +91,12 @@ final class Routine implements Runnable {
 
     /**
      * Execute them all.
-     * @param bse Base
+     * @param origin Base
      * @throws IOException If fails
      */
-    Routine(final Base bse) throws IOException {
+    Routine(final Base origin) throws IOException {
         this.start = System.currentTimeMillis();
-        this.base = bse;
+        this.base = origin;
         this.agents = new Array<>(Routine.allAgents());
         this.bosses = new Array<>(Routine.allBosses());
     }

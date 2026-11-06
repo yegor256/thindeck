@@ -29,10 +29,10 @@ public final class TkDelete implements Take {
 
     /**
      * Ctor.
-     * @param bse Base
+     * @param origin Base
      */
-    TkDelete(final Base bse) {
-        this.base = bse;
+    TkDelete(final Base origin) {
+        this.base = origin;
     }
 
     @Override

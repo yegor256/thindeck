@@ -25,10 +25,10 @@ public final class TkHelp implements Take {
 
     /**
      * Ctor.
-     * @param bse Base
+     * @param origin Base
      */
-    TkHelp(final Base bse) {
-        this.base = bse;
+    TkHelp(final Base origin) {
+        this.base = origin;
     }
 
     @Override

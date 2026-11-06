@@ -17,7 +17,7 @@ import org.xembly.Directives;
 /**
  * Update nginx load balancer.
  *
- * <p>Assumption is that ngnix configuration loaded from {@code ngnix.conf}
+ * <p>Assumption is that nginx configuration loaded from {@code nginx.conf}
  * and each host has a conf file named {@code www.example.com.conf},
  * which will contain load balancing group, e.g:
  *
@@ -33,7 +33,7 @@ import org.xembly.Directives;
  *   }
  * }</pre>
  *
- * <p>This file is loaded from main {@code ngnix.conf}
+ * <p>This file is loaded from main {@code nginx.conf}
  * using {@code include} directive.
  *
  * <p>To install nginx on a clean server, just install it first using

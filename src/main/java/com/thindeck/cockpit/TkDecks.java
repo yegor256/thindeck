@@ -35,10 +35,10 @@ public final class TkDecks implements Take {
 
     /**
      * Ctor.
-     * @param bse Base
+     * @param origin Base
      */
-    TkDecks(final Base bse) {
-        this.base = bse;
+    TkDecks(final Base origin) {
+        this.base = origin;
     }
 
     @Override
