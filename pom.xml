@@ -8,7 +8,7 @@
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>parent</artifactId>
-    <version>0.73.1</version>
+    <version>0.73.4</version>
   </parent>
   <groupId>com.thindeck</groupId>
   <artifactId>thindeck</artifactId>
@@ -83,7 +83,7 @@
     <dependency>
       <groupId>org.cactoos</groupId>
       <artifactId>cactoos</artifactId>
-      <version>0.61.0</version>
+      <version>0.63.0</version>
     </dependency>
     <dependency>
       <groupId>com.amazonaws</groupId>
@@ -93,7 +93,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.46</version>
+      <version>1.18.48</version>
     </dependency>
     <dependency>
       <groupId>com.jcabi.incubator</groupId>
@@ -156,7 +156,7 @@
     <dependency>
       <groupId>ch.qos.reload4j</groupId>
       <artifactId>reload4j</artifactId>
-      <version>1.2.26</version>
+      <version>1.2.27</version>
     </dependency>
     <dependency>
       <groupId>org.apache.velocity</groupId>
@@ -336,7 +336,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>build-helper-maven-plugin</artifactId>
-            <version>3.6.1</version>
+            <version>3.6.2</version>
             <executions>
               <execution>
                 <goals>
@@ -370,7 +370,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>3.6.3</version>
+            <version>3.6.4</version>
             <executions>
               <execution>
                 <id>start-takes-server</id>
@@ -438,7 +438,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>build-helper-maven-plugin</artifactId>
-            <version>3.6.1</version>
+            <version>3.6.2</version>
             <executions>
               <execution>
                 <id>reserver-dynamodb-port</id>
@@ -496,7 +496,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>3.6.3</version>
+            <version>3.6.4</version>
             <executions>
               <execution>
                 <id>start-server</id>
