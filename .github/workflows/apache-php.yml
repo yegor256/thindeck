@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: Copyright (c) 2014-2026, Thindeck.com
+# SPDX-License-Identifier: MIT
+---
+name: apache-php
+'on':
+  push:
+    branches:
+      - master
+    paths:
+      - 'docker/apache-php/**'
+      - 'demo-docker-images/apache-php/**'
+      - '.github/workflows/apache-php.yml'
+  pull_request:
+    paths:
+      - 'docker/apache-php/**'
+      - 'demo-docker-images/apache-php/**'
+      - '.github/workflows/apache-php.yml'
+jobs:
+  smoke:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: bash docker/apache-php/test.sh

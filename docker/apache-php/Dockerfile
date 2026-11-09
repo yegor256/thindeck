@@ -12,12 +12,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         apache2 \
-        php5 \
-        php5-curl \
+        php \
+        php-cli \
+        libapache2-mod-php \
+        php-curl \
         curl \
-        php5-cgi \
-        php5-mysql \
+        php-cgi \
+        php-mysql \
         imagemagick \
-        php5-imagick && \
+        php-imagick && \
     a2enmod rewrite && \
     rm -rf /var/lib/apt/lists/*
